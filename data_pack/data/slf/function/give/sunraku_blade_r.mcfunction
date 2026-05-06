@@ -1,0 +1,1 @@
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.sunraku_blade_r"]},item_name='{"translate":"item.slf.sunraku_blade_r","color":"white","italic":false}',enchantments={levels:{"minecraft:sharpness":3}},lore=['{"text":"Sunraku\'s right-hand blade.","color":"gray","italic":true}']]

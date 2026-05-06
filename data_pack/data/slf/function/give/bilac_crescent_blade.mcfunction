@@ -1,0 +1,1 @@
+give @s minecraft:netherite_sword[custom_model_data={strings:["slf.bilac_crescent_blade"]},item_name='{"translate":"item.slf.bilac_crescent_blade","color":"aqua","italic":false}',enchantments={levels:{"minecraft:sharpness":4,"minecraft:looting":2}},lore=['{"text":"Unique Drop — Bilac the Full Moon Fangs","color":"dark_purple","italic":true}']]
