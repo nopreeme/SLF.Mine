@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [" B ", " S ", "   "],
+  "key": {
+    "B": {"item": "minecraft:bone"},
+    "S": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "id": "minecraft:iron_sword",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.wethermon_rib_dagger"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.wethermon_rib_dagger\",\"color\":\"gray\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Carved from the ribs of the undead.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

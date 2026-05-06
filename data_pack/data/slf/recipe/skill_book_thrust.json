@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" G ", "GBG", " G "],
+  "key": {
+    "G": {"item": "minecraft:gold_ingot"},
+    "B": {"item": "minecraft:book"}
+  },
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.skill_thrust"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.skill_thrust\",\"color\":\"gold\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"A focused piercing strike.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

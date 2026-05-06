@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [" NB", " SN", "S  "],
+  "key": {
+    "N": {"item": "minecraft:netherite_ingot"},
+    "B": {"item": "minecraft:bone"},
+    "S": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "id": "minecraft:netherite_sword",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.wethermon_scythe"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.wethermon_scythe\",\"color\":\"light_purple\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 5}},
+      "minecraft:lore": [
+        "{\"text\":\"Unique Drop \\u2014 Wethermon the Tombguard\",\"color\":\"dark_purple\",\"italic\":true}",
+        "{\"text\":\"A bone scythe of immense weight.\",\"color\":\"gray\",\"italic\":true}"
+      ]
+    }
+  }
+}

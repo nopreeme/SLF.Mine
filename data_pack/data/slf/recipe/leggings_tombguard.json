@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["NNN", "N N", "N N"],
+  "key": {"N": {"item": "minecraft:netherite_ingot"}},
+  "result": {
+    "id": "minecraft:netherite_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.leggings_tombguard"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.leggings_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Bone greaves of the Tombguard.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

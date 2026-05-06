@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["   ", "N N", "N N"],
+  "key": {"N": {"item": "minecraft:netherite_ingot"}},
+  "result": {
+    "id": "minecraft:netherite_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.boots_tombguard"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.boots_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Skeletal sabatons of the undead.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

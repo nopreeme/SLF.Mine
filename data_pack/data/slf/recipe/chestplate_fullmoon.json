@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["D D", "DID", "DDD"],
+  "key": {
+    "D": {"item": "minecraft:diamond"},
+    "I": {"item": "minecraft:iron_ingot"}
+  },
+  "result": {
+    "id": "minecraft:diamond_chestplate",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.chestplate_fullmoon"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.chestplate_fullmoon\",\"color\":\"aqua\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Etched with the crescent of Bilac.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

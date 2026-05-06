@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [" I ", " SI", "   "],
+  "key": {
+    "I": {"item": "minecraft:iron_ingot"},
+    "S": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "id": "minecraft:iron_sword",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.sunraku_blade_l"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.sunraku_blade_l\",\"color\":\"white\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 3, "minecraft:sweeping_edge": 2}},
+      "minecraft:lore": ["{\"text\":\"Sunraku's left-hand blade.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["NNN", "N N", "   "],
+  "key": {"N": {"item": "minecraft:netherite_ingot"}},
+  "result": {
+    "id": "minecraft:netherite_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.helmet_tombguard"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.helmet_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Forged from Wethermon's remains.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

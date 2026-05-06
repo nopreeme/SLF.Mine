@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" C ", "SBS", " C "],
+  "key": {
+    "C": {"item": "minecraft:phantom_membrane"},
+    "S": {"item": "minecraft:enchanted_book"},
+    "B": {"item": "minecraft:nether_star"}
+  },
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.skill_moonhowl"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.skill_moonhowl\",\"color\":\"aqua\",\"italic\":false}",
+      "minecraft:lore": [
+        "{\"text\":\"[FUSED] Moon Slash \\u2295 Wolf Cry\",\"color\":\"dark_purple\",\"italic\":true}",
+        "{\"text\":\"A lunar strike that blinds enemies.\",\"color\":\"gray\",\"italic\":true}"
+      ]
+    }
+  }
+}
