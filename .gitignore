@@ -1,0 +1,27 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Editor backups
+*~
+*.bak
+*.swp
+
+# Minecraft
+crash-reports/
+logs/
+
+# Build artifacts
+*.zip
+dist/
+build/

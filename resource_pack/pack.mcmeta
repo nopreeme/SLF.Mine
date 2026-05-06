@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "pack_format": 46,
+    "supported_formats": [34, 46],
+    "description": {
+      "text": "Shangri-La Frontier — SLF.Mine",
+      "color": "gold"
+    }
+  }
+}
