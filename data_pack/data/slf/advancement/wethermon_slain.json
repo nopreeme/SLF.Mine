@@ -1,0 +1,21 @@
+{
+  "parent": "slf:meet_wethermon",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_sword",
+      "components": {"minecraft:custom_model_data": {"strings": ["slf.wethermon_scythe"]}}
+    },
+    "title": {"translate": "advancements.slf.wethermon_slain.title"},
+    "description": {"translate": "advancements.slf.wethermon_slain.description"},
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "get_scythe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.wethermon_scythe"]}}}]}
+    }
+  },
+  "rewards": {"experience": 500}
+}

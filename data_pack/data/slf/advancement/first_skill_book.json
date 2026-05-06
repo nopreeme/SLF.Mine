@@ -1,0 +1,25 @@
+{
+  "parent": "slf:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book",
+      "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_slash"]}}
+    },
+    "title": {"translate": "advancements.slf.first_skill_book.title"},
+    "description": {"translate": "advancements.slf.first_skill_book.description"},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_slash": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {"recipe_id": "slf:skill_book_slash"}
+    },
+    "craft_thrust": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {"recipe_id": "slf:skill_book_thrust"}
+    }
+  },
+  "requirements": [["craft_slash", "craft_thrust"]]
+}

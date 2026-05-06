@@ -1,0 +1,20 @@
+{
+  "parent": "slf:root",
+  "display": {
+    "icon": {
+      "id": "minecraft:diamond_sword",
+      "components": {"minecraft:custom_model_data": {"strings": ["slf.oriana_scepter"]}}
+    },
+    "title": {"translate": "advancements.slf.meet_oriana.title"},
+    "description": {"translate": "advancements.slf.meet_oriana.description"},
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "craft_scepter": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {"recipe_id": "slf:oriana_scepter"}
+    }
+  }
+}

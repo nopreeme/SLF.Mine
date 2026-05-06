@@ -1,0 +1,28 @@
+{
+  "parent": "slf:wethermon_slain",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_chestplate",
+      "components": {"minecraft:custom_model_data": {"strings": ["slf.chestplate_tombguard"]}}
+    },
+    "title": {"translate": "advancements.slf.full_tombguard_set.title"},
+    "description": {"translate": "advancements.slf.full_tombguard_set.description"},
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "wear_set": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.helmet_tombguard"]}}},
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.chestplate_tombguard"]}}},
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.leggings_tombguard"]}}},
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.boots_tombguard"]}}}
+        ]
+      }
+    }
+  },
+  "rewards": {"experience": 1000}
+}

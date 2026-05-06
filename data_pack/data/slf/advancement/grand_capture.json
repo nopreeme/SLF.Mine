@@ -1,0 +1,21 @@
+{
+  "parent": "slf:unique_monster_hunter",
+  "display": {
+    "icon": {
+      "id": "minecraft:netherite_sword",
+      "components": {"minecraft:custom_model_data": {"strings": ["slf.nightclaw_talon"]}}
+    },
+    "title": {"translate": "advancements.slf.grand_capture.title"},
+    "description": {"translate": "advancements.slf.grand_capture.description"},
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "get_nightclaw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.nightclaw_talon"]}}}]}
+    }
+  },
+  "rewards": {"experience": 5000}
+}

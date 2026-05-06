@@ -1,0 +1,24 @@
+{
+  "parent": "slf:skill_fusion",
+  "display": {
+    "icon": {"id": "minecraft:nether_star"},
+    "title": {"translate": "advancements.slf.unique_monster_hunter.title"},
+    "description": {"translate": "advancements.slf.unique_monster_hunter.description"},
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "have_all_three": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.wethermon_scythe"]}}},
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.bilac_crescent_blade"]}}},
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.oriana_void_staff"]}}}
+        ]
+      }
+    }
+  },
+  "rewards": {"experience": 2000}
+}
