@@ -1,0 +1,11 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.oriana_scepter",   "model": {"type": "minecraft:model", "model": "slf:item/oriana_scepter"}},
+      {"when": "slf.oriana_void_staff","model": {"type": "minecraft:model", "model": "slf:item/oriana_void_staff"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/diamond_sword"}
+  }
+}

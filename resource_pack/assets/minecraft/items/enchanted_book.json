@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.skill_slash",      "model": {"type": "minecraft:model", "model": "slf:item/skill_book_slash"}},
+      {"when": "slf.skill_thrust",     "model": {"type": "minecraft:model", "model": "slf:item/skill_book_thrust"}},
+      {"when": "slf.skill_blade_rush", "model": {"type": "minecraft:model", "model": "slf:item/skill_book_blade_rush"}},
+      {"when": "slf.skill_moonhowl",   "model": {"type": "minecraft:model", "model": "slf:item/skill_book_moonhowl"}},
+      {"when": "slf.skill_void_lance", "model": {"type": "minecraft:model", "model": "slf:item/skill_book_void_lance"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/enchanted_book"}
+  }
+}

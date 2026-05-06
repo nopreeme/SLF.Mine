@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.unique_core", "model": {"type": "minecraft:model", "model": "slf:item/unique_core"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/book"}
+  }
+}

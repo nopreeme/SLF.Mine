@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.wethermon_scythe",    "model": {"type": "minecraft:model", "model": "slf:item/wethermon_scythe"}},
+      {"when": "slf.bilac_crescent_blade","model": {"type": "minecraft:model", "model": "slf:item/bilac_crescent_blade"}},
+      {"when": "slf.nightclaw_talon",     "model": {"type": "minecraft:model", "model": "slf:item/nightclaw_talon"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/netherite_sword"}
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.leggings_tombguard", "model": {"type": "minecraft:model", "model": "slf:item/leggings_tombguard"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/netherite_leggings"}
+  }
+}
