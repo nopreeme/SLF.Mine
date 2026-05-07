@@ -1,1 +1,0 @@
-give @s minecraft:diamond_sword[custom_model_data={strings:["slf.oriana_scepter"]},item_name='{"translate":"item.slf.oriana_scepter","color":"yellow","italic":false}',enchantments={levels:{"minecraft:smite":3,"minecraft:knockback":2}},lore=['{"text":"A scepter crowned in gold and diamond.","color":"gray","italic":true}']]
