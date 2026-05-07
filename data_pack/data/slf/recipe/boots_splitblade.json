@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["   ", "L L", "L L"],
+  "key": {"L": {"item": "minecraft:leather"}},
+  "result": {
+    "id": "minecraft:leather_boots",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.boots_splitblade"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.boots_splitblade\",\"color\":\"green\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Splitblade Boots. Mad Frog hide. VIT +4.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

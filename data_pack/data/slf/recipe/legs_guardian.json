@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["III", "I I", "I I"],
+  "key": {"I": {"item": "minecraft:iron_ingot"}},
+  "result": {
+    "id": "minecraft:iron_leggings",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.legs_guardian"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.legs_guardian\",\"color\":\"gold\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Guardian's Great Leggings. Crafted by Bilac. Defense +1000.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.chest_guardian", "model": {"type": "minecraft:model", "model": "slf:item/chest_guardian"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/iron_chestplate"}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["LLL", "L L", "   "],
+  "key": {"L": {"item": "minecraft:leather"}},
+  "result": {
+    "id": "minecraft:leather_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.mask_splitblade"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.mask_splitblade\",\"color\":\"green\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Splitblade Mask. Mad Frog hide, light as leaves. VIT +4.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

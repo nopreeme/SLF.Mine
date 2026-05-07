@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.pants_splitblade", "model": {"type": "minecraft:model", "model": "slf:item/pants_splitblade"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/leather_leggings"}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["III", "I I", "   "],
+  "key": {"I": {"item": "minecraft:iron_ingot"}},
+  "result": {
+    "id": "minecraft:iron_helmet",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.helm_guardian"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.helm_guardian\",\"color\":\"gold\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Guardian's Great Helm. Crafted by Bilac. Full tank protection.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}
