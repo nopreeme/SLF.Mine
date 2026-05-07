@@ -1,15 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "pattern": ["N N", "NNN", "NNN"],
-  "key": {"N": {"item": "minecraft:netherite_ingot"}},
+  "pattern": ["N N", "NBN", "NNN"],
+  "key": {
+    "N": {"item": "minecraft:netherite_ingot"},
+    "B": {"item": "minecraft:nether_brick"}
+  },
   "result": {
-    "id": "minecraft:netherite_chestplate",
-    "count": 1,
+    "id": "minecraft:netherite_chestplate", "count": 1,
     "components": {
-      "minecraft:custom_model_data": {"strings": ["slf.chestplate_tombguard"]},
-      "minecraft:item_name": "{\"translate\":\"item.slf.chestplate_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
-      "minecraft:lore": ["{\"text\":\"Ribcage plate of the undead guardian.\",\"color\":\"gray\",\"italic\":true}"]
+      "minecraft:custom_model_data": {"strings": ["slf.chest_tombguard"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.chest_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:protection": 4}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Wezaemon's chestplate. Unyielding steel from the Age of Divinity.\",\"color\":\"gray\",\"italic\":true}"]
     }
   }
 }

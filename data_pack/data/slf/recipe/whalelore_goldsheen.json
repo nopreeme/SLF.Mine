@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:iron_sword"},
+    {"item": "minecraft:blaze_rod"},
+    {"item": "minecraft:gold_ingot"},
+    {"item": "minecraft:gold_ingot"}
+  ],
+  "result": {
+    "id": "minecraft:diamond_sword", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.whalelore_goldsheen"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.whalelore_goldsheen\",\"color\":\"gold\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 7}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Togetsu ascended by the Golden Scorpion's sting. The longer blade.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

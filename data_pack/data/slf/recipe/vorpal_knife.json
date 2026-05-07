@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" F", "B ", "S "],
+  "key": {
+    "F": {"item": "minecraft:flint"},
+    "B": {"item": "minecraft:bone"},
+    "S": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "id": "minecraft:iron_sword", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.vorpal_knife"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.vorpal_knife\",\"color\":\"white\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 3}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"A claw from the Vorpal Bunny, honed by countless battles.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

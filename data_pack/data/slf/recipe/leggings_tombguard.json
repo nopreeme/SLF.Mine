@@ -1,15 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "equipment",
-  "pattern": ["NNN", "N N", "N N"],
-  "key": {"N": {"item": "minecraft:netherite_ingot"}},
+  "pattern": ["NBN", "N N", "N N"],
+  "key": {
+    "N": {"item": "minecraft:netherite_ingot"},
+    "B": {"item": "minecraft:nether_brick"}
+  },
   "result": {
-    "id": "minecraft:netherite_leggings",
-    "count": 1,
+    "id": "minecraft:netherite_leggings", "count": 1,
     "components": {
-      "minecraft:custom_model_data": {"strings": ["slf.leggings_tombguard"]},
-      "minecraft:item_name": "{\"translate\":\"item.slf.leggings_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
-      "minecraft:lore": ["{\"text\":\"Bone greaves of the Tombguard.\",\"color\":\"gray\",\"italic\":true}"]
+      "minecraft:custom_model_data": {"strings": ["slf.legs_tombguard"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.legs_tombguard\",\"color\":\"dark_gray\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:protection": 4}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Wezaemon's greaves. Heavy with honor and old blood.\",\"color\":\"gray\",\"italic\":true}"]
     }
   }
 }

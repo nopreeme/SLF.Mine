@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["ON ", " N ", " NB"],
+  "key": {
+    "O": {"item": "minecraft:obsidian"},
+    "N": {"item": "minecraft:netherite_ingot"},
+    "B": {"item": "minecraft:bone"}
+  },
+  "result": {
+    "id": "minecraft:netherite_sword", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.lycagon_fang"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.lycagon_fang\",\"color\":\"dark_purple\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 6}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Torn from Lycagon the Nightslayer. Shadow-infused fang of the black wolf.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

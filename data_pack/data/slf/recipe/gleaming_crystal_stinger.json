@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:gold_ingot"},
+    {"item": "minecraft:amethyst_shard"},
+    {"item": "minecraft:amethyst_shard"}
+  ],
+  "result": {
+    "id": "minecraft:book", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.gleaming_crystal_stinger"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.gleaming_crystal_stinger\",\"color\":\"gold\",\"italic\":false}",
+      "minecraft:lore": ["{\"text\":\"Crystallized stinger of the Golden Scorpion from Crystal Nest Cliff.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

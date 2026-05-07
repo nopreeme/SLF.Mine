@@ -1,18 +1,17 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     {"item": "minecraft:nether_star"},
+    {"item": "minecraft:amethyst_shard"},
     {"item": "minecraft:amethyst_shard"},
     {"item": "minecraft:amethyst_shard"}
   ],
   "result": {
-    "id": "minecraft:book",
-    "count": 1,
+    "id": "minecraft:book", "count": 1,
     "components": {
       "minecraft:custom_model_data": {"strings": ["slf.unique_core"]},
       "minecraft:item_name": "{\"translate\":\"item.slf.unique_core\",\"color\":\"light_purple\",\"italic\":false}",
-      "minecraft:lore": ["{\"text\":\"Distilled essence of a Unique Monster.\",\"color\":\"dark_purple\",\"italic\":true}"]
+      "minecraft:lore": ["{\"text\":\"Essence of a Seven Colossi. Cannot be replicated by any known means.\",\"color\":\"gray\",\"italic\":true}"]
     }
   }
 }

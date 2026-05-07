@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" NN", "EN ", " S "],
+  "key": {
+    "N": {"item": "minecraft:netherite_ingot"},
+    "E": {"item": "minecraft:egg"},
+    "S": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "id": "minecraft:iron_sword", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.togetsu_waning"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.togetsu_waning\",\"color\":\"dark_purple\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 5}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Rabbit Moon — Waning. The left blade, forged by Vysache.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

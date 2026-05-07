@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["DD ", "DE ", " S "],
+  "key": {
+    "D": {"item": "minecraft:diamond"},
+    "E": {"item": "minecraft:egg"},
+    "S": {"item": "minecraft:stick"}
+  },
+  "result": {
+    "id": "minecraft:iron_sword", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.togetsu_waxing"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.togetsu_waxing\",\"color\":\"aqua\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:sharpness": 5}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Rabbit Moon — Waxing. The right blade, forged by Vysache.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

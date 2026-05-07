@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["DAD", "D D"],
+  "key": {
+    "D": {"item": "minecraft:diamond"},
+    "A": {"item": "minecraft:amethyst_shard"}
+  },
+  "result": {
+    "id": "minecraft:diamond_helmet", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.helm_lacedaemon"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.helm_lacedaemon\",\"color\":\"aqua\",\"italic\":false}",
+      "minecraft:enchantments": {"levels": {"minecraft:protection": 3}},
+      "minecraft:unbreakable": {},
+      "minecraft:lore": ["{\"text\":\"Bilac's visor helm. Lightweight diamond craft from Arctus Regalecus.\",\"color\":\"gray\",\"italic\":true}"]
+    }
+  }
+}

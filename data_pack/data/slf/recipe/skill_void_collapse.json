@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"item": "minecraft:enchanted_book"},
+    {"item": "minecraft:enchanted_book"},
+    {"item": "minecraft:nether_star"},
+    {"item": "minecraft:ender_pearl"}
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book", "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.skill_void_collapse"]},
+      "minecraft:item_name": "{\"translate\":\"item.slf.skill_void_collapse\",\"color\":\"dark_purple\",\"italic\":false}",
+      "minecraft:lore": [
+        "{\"text\":\"FUSED: Evasion + Meteor Impact. Fall through the world.\",\"color\":\"gray\",\"italic\":true}",
+        "{\"text\":\"[Rabituza Fusion Facility]\",\"color\":\"dark_aqua\",\"italic\":true}"
+      ]
+    }
+  }
+}
