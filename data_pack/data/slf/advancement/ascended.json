@@ -1,0 +1,17 @@
+{
+  "display": {
+    "icon": {"id": "minecraft:diamond_sword", "components": {"minecraft:custom_model_data": {"strings": ["slf.whalelore_goldsheen"]}}},
+    "title": {"translate": "advancements.slf.ascended.title"},
+    "description": {"translate": "advancements.slf.ascended.description"},
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "slf:rookie_gear",
+  "criteria": {
+    "get_goldsheen": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.whalelore_goldsheen"]}}}]}
+    }
+  }
+}

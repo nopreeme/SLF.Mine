@@ -1,29 +1,22 @@
 {
-  "parent": "slf:first_skill_book",
   "display": {
-    "icon": {
-      "id": "minecraft:enchanted_book",
-      "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_blade_rush"]}}
-    },
+    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_night_rush"]}}},
     "title": {"translate": "advancements.slf.skill_fusion.title"},
     "description": {"translate": "advancements.slf.skill_fusion.description"},
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
   },
+  "parent": "slf:rabituza_forged",
   "criteria": {
-    "fuse_blade_rush": {
-      "trigger": "minecraft:recipe_crafted",
-      "conditions": {"recipe_id": "slf:skill_fusion_blade_rush"}
+    "get_night_rush": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_night_rush"]}}}]}
     },
-    "fuse_moonhowl": {
-      "trigger": "minecraft:recipe_crafted",
-      "conditions": {"recipe_id": "slf:skill_fusion_moonhowl"}
-    },
-    "fuse_void_lance": {
-      "trigger": "minecraft:recipe_crafted",
-      "conditions": {"recipe_id": "slf:skill_fusion_void_lance"}
+    "get_void_collapse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_void_collapse"]}}}]}
     }
   },
-  "requirements": [["fuse_blade_rush", "fuse_moonhowl", "fuse_void_lance"]]
+  "requirements": [["get_night_rush", "get_void_collapse"]]
 }

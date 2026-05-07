@@ -1,0 +1,17 @@
+{
+  "display": {
+    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_meteor"]}}},
+    "title": {"translate": "advancements.slf.rabituza_forged.title"},
+    "description": {"translate": "advancements.slf.rabituza_forged.description"},
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "slf:first_technique",
+  "criteria": {
+    "get_meteor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_meteor"]}}}]}
+    }
+  }
+}

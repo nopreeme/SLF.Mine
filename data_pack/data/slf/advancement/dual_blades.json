@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {"id": "minecraft:iron_sword", "components": {"minecraft:custom_model_data": {"strings": ["slf.togetsu_waning"]}}},
+    "title": {"translate": "advancements.slf.dual_blades.title"},
+    "description": {"translate": "advancements.slf.dual_blades.description"},
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "parent": "slf:rookie_gear",
+  "criteria": {
+    "hold_both": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.togetsu_waxing"]}}},
+          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.togetsu_waning"]}}}
+        ]
+      }
+    }
+  }
+}
