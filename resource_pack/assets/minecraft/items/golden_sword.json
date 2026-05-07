@@ -3,8 +3,7 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.bilac_fang_gauntlet", "model": {"type": "minecraft:model", "model": "slf:item/bilac_fang_gauntlet"}},
-      {"when": "slf.sunraku_chaos_rod",   "model": {"type": "minecraft:model", "model": "slf:item/sunraku_chaos_rod"}}
+      {"when": "slf.gilta_brille", "model": {"type": "minecraft:model", "model": "slf:item/gilta_brille"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/golden_sword"}
   }

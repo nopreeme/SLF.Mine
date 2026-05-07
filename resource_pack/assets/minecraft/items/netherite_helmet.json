@@ -3,7 +3,7 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.helmet_tombguard", "model": {"type": "minecraft:model", "model": "slf:item/helmet_tombguard"}}
+      {"when": "slf.helm_tombguard", "model": {"type": "minecraft:model", "model": "slf:item/helm_tombguard"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/netherite_helmet"}
   }

@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {"when": "slf.helm_lacedaemon", "model": {"type": "minecraft:model", "model": "slf:item/helm_lacedaemon"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "minecraft:item/diamond_helmet"}
+  }
+}

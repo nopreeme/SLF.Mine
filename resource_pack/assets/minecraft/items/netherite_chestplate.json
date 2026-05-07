@@ -3,7 +3,7 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.chestplate_tombguard", "model": {"type": "minecraft:model", "model": "slf:item/chestplate_tombguard"}}
+      {"when": "slf.chest_tombguard", "model": {"type": "minecraft:model", "model": "slf:item/chest_tombguard"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/netherite_chestplate"}
   }

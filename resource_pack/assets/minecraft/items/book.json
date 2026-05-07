@@ -3,7 +3,11 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.unique_core", "model": {"type": "minecraft:model", "model": "slf:item/unique_core"}}
+      {"when": "slf.quad_beetle_shell",        "model": {"type": "minecraft:model", "model": "slf:item/quad_beetle_shell"}},
+      {"when": "slf.gleaming_crystal_stinger", "model": {"type": "minecraft:model", "model": "slf:item/gleaming_crystal_stinger"}},
+      {"when": "slf.mud_frog_skin",            "model": {"type": "minecraft:model", "model": "slf:item/mud_frog_skin"}},
+      {"when": "slf.unique_core",              "model": {"type": "minecraft:model", "model": "slf:item/unique_core"}},
+      {"when": "slf.seiten_memory",            "model": {"type": "minecraft:model", "model": "slf:item/seiten_memory"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/book"}
   }

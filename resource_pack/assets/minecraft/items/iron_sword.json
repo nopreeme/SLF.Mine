@@ -3,9 +3,10 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.wethermon_rib_dagger", "model": {"type": "minecraft:model", "model": "slf:item/wethermon_rib_dagger"}},
-      {"when": "slf.sunraku_blade_r",      "model": {"type": "minecraft:model", "model": "slf:item/sunraku_blade_r"}},
-      {"when": "slf.sunraku_blade_l",      "model": {"type": "minecraft:model", "model": "slf:item/sunraku_blade_l"}}
+      {"when": "slf.vorpal_knife",    "model": {"type": "minecraft:model", "model": "slf:item/vorpal_knife"}},
+      {"when": "slf.togetsu_waxing", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waxing"}},
+      {"when": "slf.togetsu_waning", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning"}},
+      {"when": "slf.rust_saber",     "model": {"type": "minecraft:model", "model": "slf:item/rust_saber"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/iron_sword"}
   }

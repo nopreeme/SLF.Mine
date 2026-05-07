@@ -3,8 +3,8 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.oriana_scepter",   "model": {"type": "minecraft:model", "model": "slf:item/oriana_scepter"}},
-      {"when": "slf.oriana_void_staff","model": {"type": "minecraft:model", "model": "slf:item/oriana_void_staff"}}
+      {"when": "slf.whalelore_goldsheen",   "model": {"type": "minecraft:model", "model": "slf:item/whalelore_goldsheen"}},
+      {"when": "slf.whalelore_netherlight", "model": {"type": "minecraft:model", "model": "slf:item/whalelore_netherlight"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/diamond_sword"}
   }
