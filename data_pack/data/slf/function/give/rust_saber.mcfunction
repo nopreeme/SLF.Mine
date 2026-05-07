@@ -1,0 +1,1 @@
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.rust_saber"]},item_name='{"translate":"item.slf.rust_saber","color":"red","italic":false}',lore=['{"text":"A worn red blade. Rakuro\'s early scenario weapon.","color":"gray","italic":true}']] 1
