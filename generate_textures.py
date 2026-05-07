@@ -35,15 +35,26 @@ ITEMS = {
     'lycagon_fang':             (0x0a, 0x08, 0x10),
     'rust_saber':               (0x8b, 0x3a, 0x2a),
     'seiten_skillbook':         (0x00, 0x80, 0xff),
-    # Armor
-    'helm_battlehorn':          (0x48, 0x40, 0x40),
+    # Armor - Tombguard
     'helm_tombguard':           (0x38, 0x38, 0x40),
     'chest_tombguard':          (0x38, 0x38, 0x40),
     'legs_tombguard':           (0x38, 0x38, 0x40),
     'boots_tombguard':          (0x38, 0x38, 0x40),
+    # Armor - Splitblade (full 4-piece)
+    'mask_splitblade':          (0x4a, 0x60, 0x30),
     'chest_splitblade':         (0x4a, 0x60, 0x30),
+    'pants_splitblade':         (0x4a, 0x60, 0x30),
+    'boots_splitblade':         (0x4a, 0x60, 0x30),
+    # Armor - Battlehorn
+    'helm_battlehorn':          (0x48, 0x40, 0x40),
+    # Armor - Lacedaemon
     'helm_lacedaemon':          (0x60, 0xc0, 0xe0),
     'belt_lacedaemon':          (0x60, 0xc0, 0xe0),
+    # Armor - Guardian's Great
+    'helm_guardian':            (0x80, 0x60, 0x30),
+    'chest_guardian':           (0x80, 0x60, 0x30),
+    'legs_guardian':            (0x80, 0x60, 0x30),
+    'boots_guardian':           (0x80, 0x60, 0x30),
     # Skills
     'skill_slash':              (0xc0, 0x00, 0x00),
     'skill_evasion':            (0x00, 0xcc, 0x44),

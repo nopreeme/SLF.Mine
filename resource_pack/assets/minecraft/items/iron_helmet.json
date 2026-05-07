@@ -3,7 +3,8 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.helm_battlehorn", "model": {"type": "minecraft:model", "model": "slf:item/helm_battlehorn"}}
+      {"when": "slf.helm_battlehorn", "model": {"type": "minecraft:model", "model": "slf:item/helm_battlehorn"}},
+      {"when": "slf.helm_guardian", "model": {"type": "minecraft:model", "model": "slf:item/helm_guardian"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/iron_helmet"}
   }
