@@ -1,0 +1,1 @@
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.togetsu_waxing"]},item_name='{"translate":"item.slf.togetsu_waxing","color":"aqua","italic":false}',enchantments={levels:{"minecraft:sharpness":5}},unbreakable={},lore=['{"text":"Rabbit Moon - Waxing. The right blade, forged by Vysache.","color":"gray","italic":true}']] 1

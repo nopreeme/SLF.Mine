@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_sword",
+          "conditions": [
+            {"condition": "minecraft:random_chance", "chance": 0.05}
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:custom_model_data": {"strings": ["slf.vorpal_knife"]},
+                "minecraft:item_name": "{\"translate\":\"item.slf.vorpal_knife\",\"color\":\"white\",\"italic\":false}",
+                "minecraft:enchantments": {"levels": {"minecraft:sharpness": 3}},
+                "minecraft:unbreakable": {},
+                "minecraft:lore": ["{\"text\":\"A claw from the Vorpal Bunny, honed by countless battles.\",\"color\":\"gray\",\"italic\":true}"]
+              }
+            }
+          ]
+        },
+        {"type": "minecraft:empty"}
+      ]
+    },
+    {
+      "rolls": {"type": "minecraft:uniform", "min": 2, "max": 4},
+      "entries": [
+        {"type": "minecraft:item", "name": "minecraft:bone"}
+      ]
+    }
+  ]
+}

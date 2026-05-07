@@ -1,0 +1,1 @@
+give @s minecraft:golden_sword[custom_model_data={strings:["slf.gilta_brille"]},item_name='{"translate":"item.slf.gilta_brille","color":"light_purple","italic":false}',enchantments={levels:{"minecraft:sharpness":5}},unbreakable={},lore=['{"text":"Crystal gauntlets by Bilac. Right: moonlight charge. Left: twin crystal blasts.","color":"gray","italic":true}']] 1

@@ -1,0 +1,1 @@
+give @s minecraft:diamond_sword[custom_model_data={strings:["slf.whalelore_goldsheen"]},item_name='{"translate":"item.slf.whalelore_goldsheen","color":"gold","italic":false}',enchantments={levels:{"minecraft:sharpness":7}},unbreakable={},lore=['{"text":"Togetsu ascended by the Golden Scorpion sting. The longer blade of Whalelore.","color":"gray","italic":true}']] 1

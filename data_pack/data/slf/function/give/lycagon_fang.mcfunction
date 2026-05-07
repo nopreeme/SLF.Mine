@@ -1,0 +1,1 @@
+give @s minecraft:netherite_sword[custom_model_data={strings:["slf.lycagon_fang"]},item_name='{"translate":"item.slf.lycagon_fang","color":"dark_purple","italic":false}',enchantments={levels:{"minecraft:sharpness":6}},unbreakable={},lore=['{"text":"Torn from Lycagon the Nightslayer. Shadow-infused fang of the black wolf.","color":"gray","italic":true}']] 1

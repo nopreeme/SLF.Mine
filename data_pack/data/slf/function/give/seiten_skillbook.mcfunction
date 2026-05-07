@@ -1,0 +1,1 @@
+give @s minecraft:enchanted_book[custom_model_data={strings:["slf.seiten_skillbook"]},item_name='{"translate":"item.slf.seiten_skillbook","color":"blue","italic":false}',lore=['{"text":"Techniques of an Age of Divinity master swordsman.","color":"gray","italic":true}','{"text":"From the Grave of Setsuna Amatsuki.","color":"dark_blue","italic":true}']] 1
