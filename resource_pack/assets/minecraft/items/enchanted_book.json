@@ -3,12 +3,12 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.seiten_skillbook",   "model": {"type": "minecraft:model", "model": "slf:item/seiten_skillbook"}},
-      {"when": "slf.skill_slash",        "model": {"type": "minecraft:model", "model": "slf:item/skill_slash"}},
-      {"when": "slf.skill_evasion",      "model": {"type": "minecraft:model", "model": "slf:item/skill_evasion"}},
-      {"when": "slf.skill_meteor",       "model": {"type": "minecraft:model", "model": "slf:item/skill_meteor"}},
-      {"when": "slf.skill_night_rush",   "model": {"type": "minecraft:model", "model": "slf:item/skill_night_rush"}},
-      {"when": "slf.skill_void_collapse","model": {"type": "minecraft:model", "model": "slf:item/skill_void_collapse"}}
+      {"when": "slf.skill_ignition",     "model": {"type": "minecraft:model", "model": "slf:item/skill_ignition"}},
+      {"when": "slf.skill_skywalker",    "model": {"type": "minecraft:model", "model": "slf:item/skill_skywalker"}},
+      {"when": "slf.skill_formula_drift","model": {"type": "minecraft:model", "model": "slf:item/skill_formula_drift"}},
+      {"when": "slf.skill_flash_counter","model": {"type": "minecraft:model", "model": "slf:item/skill_flash_counter"}},
+      {"when": "slf.skill_meteor_fall",  "model": {"type": "minecraft:model", "model": "slf:item/skill_meteor_fall"}},
+      {"when": "slf.seiten_skillbook",   "model": {"type": "minecraft:model", "model": "slf:item/seiten_skillbook"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/enchanted_book"}
   }

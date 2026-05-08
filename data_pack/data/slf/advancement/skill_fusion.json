@@ -1,22 +1,20 @@
 {
+  "parent": "slf:rabituza_forged",
   "display": {
-    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_night_rush"]}}},
+    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_formula_drift"]}}},
     "title": {"translate": "advancements.slf.skill_fusion.title"},
     "description": {"translate": "advancements.slf.skill_fusion.description"},
-    "frame": "challenge",
+    "frame": "goal",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "slf:rabituza_forged",
   "criteria": {
-    "get_night_rush": {
+    "has_formula_drift": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_night_rush"]}}}]}
-    },
-    "get_void_collapse": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_void_collapse"]}}}]}
+      "conditions": {
+        "items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_formula_drift"]}}}]
+      }
     }
-  },
-  "requirements": [["get_night_rush", "get_void_collapse"]]
+  }
 }
