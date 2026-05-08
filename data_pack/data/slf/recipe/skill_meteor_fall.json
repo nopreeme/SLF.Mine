@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"id": "minecraft:book"},
+    {"id": "minecraft:fire_charge"},
+    {"id": "minecraft:iron_ingot"},
+    {"id": "minecraft:netherite_scrap"}
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.skill_meteor_fall"]}
+    }
+  }
+}

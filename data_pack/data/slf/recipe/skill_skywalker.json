@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {"id": "minecraft:book"},
+    {"id": "minecraft:ender_pearl"},
+    {"id": "minecraft:feather"},
+    {"id": "minecraft:phantom_membrane"}
+  ],
+  "result": {
+    "id": "minecraft:enchanted_book",
+    "count": 1,
+    "components": {
+      "minecraft:custom_model_data": {"strings": ["slf.skill_skywalker"]}
+    }
+  }
+}
