@@ -1,1 +1,1 @@
-give @s minecraft:iron_sword[custom_model_data={strings:["slf.rust_saber"]},item_name={translate:"item.slf.rust_saber",color:"red",italic:false},lore=[{text:"A worn blade from the early days of Sunraku's journey.",color:"gray",italic:true}]] 1
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.rust_saber"]},item_name={text:"Rust Saber",color:"red",italic:false},lore=[{text:"A worn blade from the early days of Sunraku's journey.",color:"gray",italic:true}]] 1

@@ -1,1 +1,1 @@
-give @s minecraft:enchanted_book[custom_model_data={strings:["slf.seiten_skillbook"]},item_name={translate:"item.slf.seiten_skillbook",color:"blue",italic:false},lore=[{text:"A memory bank containing the skills of an Age of Divinity master swordsman.",color:"gray",italic:true}]] 1
+give @s minecraft:enchanted_book[custom_model_data={strings:["slf.seiten_skillbook"]},item_name={text:"Seiten Skillbook",color:"blue",italic:false},lore=[{text:"A memory bank containing the skills of an Age of Divinity master swordsman.",color:"gray",italic:true}]] 1

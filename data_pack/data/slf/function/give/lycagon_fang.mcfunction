@@ -1,1 +1,1 @@
-give @s minecraft:netherite_sword[custom_model_data={strings:["slf.lycagon_fang"]},item_name={translate:"item.slf.lycagon_fang",color:"dark_purple",italic:false},lore=[{text:"A shadow-infused fang torn from Lycagon the Nightslayer.",color:"gray",italic:true}]] 1
+give @s minecraft:netherite_sword[custom_model_data={strings:["slf.lycagon_fang"]},item_name={text:"Lycagon's Fang",color:"dark_purple",italic:false},lore=[{text:"A shadow-infused fang torn from Lycagon the Nightslayer.",color:"gray",italic:true}]] 1

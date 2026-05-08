@@ -1,1 +1,1 @@
-give @s minecraft:iron_sword[custom_model_data={strings:["slf.togetsu_waxing"]},item_name={translate:"item.slf.togetsu_waxing",color:"aqua",italic:false},lore=[{text:"Rabbit Moon - Waxing. The white right blade, forged by Vysache.",color:"gray",italic:true}]] 1
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.togetsu_waxing"]},item_name={text:"Togetsu: Waxing",color:"aqua",italic:false},lore=[{text:"Rabbit Moon - Waxing. The white right blade, forged by Vysache.",color:"gray",italic:true}]] 1

@@ -1,1 +1,1 @@
-give @s minecraft:golden_sword[custom_model_data={strings:["slf.gilta_brille"]},item_name={translate:"item.slf.gilta_brille",color:"light_purple",italic:false},lore=[{text:"Crystal gauntlets crafted by Bilac. Right: Golden Stinger. Left: Twin crystal blasts.",color:"gray",italic:true}]] 1
+give @s minecraft:golden_sword[custom_model_data={strings:["slf.gilta_brille"]},item_name={text:"Gilta Brille",color:"light_purple",italic:false},lore=[{text:"Crystal gauntlets crafted by Bilac. Right: Golden Stinger. Left: Twin crystal blasts.",color:"gray",italic:true}]] 1
