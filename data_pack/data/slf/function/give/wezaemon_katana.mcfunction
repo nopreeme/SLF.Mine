@@ -1,1 +1,1 @@
-give @s minecraft:netherite_sword[custom_model_data={strings:["slf.wezaemon_katana"]},item_name='{"translate":"item.slf.wezaemon_katana","color":"dark_blue","italic":false}',lore=['{"text":"The blade of Wezaemon the Tombguard. Samurai-forged dark steel.","color":"gray","italic":true}']] 1
+give @s minecraft:netherite_sword[custom_model_data={strings:["slf.wezaemon_katana"]},item_name={translate:"item.slf.wezaemon_katana",color:"dark_blue",italic:false},lore=[{text:"The blade of Wezaemon the Tombguard. Forged in samurai steel.",color:"gray",italic:true}]] 1

@@ -1,1 +1,1 @@
-give @s minecraft:iron_sword[custom_model_data={strings:["slf.togetsu_waning"]},item_name='{"translate":"item.slf.togetsu_waning","color":"dark_gray","italic":false}',lore=['{"text":"Rabbit Moon - Waning. The black left blade, forged by Vysache.","color":"gray","italic":true}']] 1
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.togetsu_waning"]},item_name={translate:"item.slf.togetsu_waning",color:"dark_gray",italic:false},lore=[{text:"Rabbit Moon - Waning. The black left blade, forged by Vysache.",color:"gray",italic:true}]] 1

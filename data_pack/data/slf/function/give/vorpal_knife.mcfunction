@@ -1,1 +1,1 @@
-give @s minecraft:iron_sword[custom_model_data={strings:["slf.vorpal_knife"]},item_name='{"translate":"item.slf.vorpal_knife","color":"white","italic":false}',lore=['{"text":"A claw from the Vorpal Bunny, honed by countless battles.","color":"gray","italic":true}']] 1
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.vorpal_knife"]},item_name={translate:"item.slf.vorpal_knife",color:"white",italic:false},lore=[{text:"A dagger carved from Vorpal Bunny fang. 5% drop chance.",color:"gray",italic:true}]] 1
