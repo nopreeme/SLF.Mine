@@ -19,6 +19,16 @@ scoreboard objectives add slf.stat.tec dummy "TEC"
 scoreboard objectives add slf.stat.lck dummy "LCK"
 scoreboard objectives add slf.stat.stm dummy "STM"
 
+# --- Stat spend triggers (clickable from /function slf:stats/menu) ---
+scoreboard objectives add slf.stat_str trigger
+scoreboard objectives add slf.stat_dex trigger
+scoreboard objectives add slf.stat_vit trigger
+scoreboard objectives add slf.stat_agi trigger
+scoreboard objectives add slf.stat_int trigger
+scoreboard objectives add slf.stat_tec trigger
+scoreboard objectives add slf.stat_lck trigger
+scoreboard objectives add slf.stat_stm trigger
+
 # --- Motion Trace: vanilla criterion objectives ---
 scoreboard objectives add slf.raw.dmg stat minecraft.custom:minecraft.damage_dealt
 scoreboard objectives add slf.raw.move stat minecraft.custom:minecraft.sprint_one_cm
