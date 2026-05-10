@@ -1,8 +1,9 @@
-# SLF.Mine — runs on world load (via minecraft:load tag)
+# SLF.Mine — runs on world load
 
 # --- Class & Progression ---
 scoreboard objectives add slf.class dummy "Class"
 scoreboard objectives add slf.choose_class trigger "Choose Class"
+scoreboard objectives add slf.focus_choose trigger "Focus Choose"
 scoreboard objectives add slf.level dummy "Level"
 scoreboard objectives add slf.exp dummy "EXP"
 scoreboard objectives add slf.sp_points dummy "Stat Points"
@@ -18,13 +19,13 @@ scoreboard objectives add slf.stat.tec dummy "TEC"
 scoreboard objectives add slf.stat.lck dummy "LCK"
 scoreboard objectives add slf.stat.stm dummy "STM"
 
-# --- Motion Trace: vanilla criterion objectives (read-only, auto-populated by MC) ---
+# --- Motion Trace: vanilla criterion objectives ---
 scoreboard objectives add slf.raw.dmg stat minecraft.custom:minecraft.damage_dealt
 scoreboard objectives add slf.raw.move stat minecraft.custom:minecraft.sprint_one_cm
 scoreboard objectives add slf.raw.evade stat minecraft.custom:minecraft.jump
 scoreboard objectives add slf.raw.def stat minecraft.custom:minecraft.damage_taken
 
-# --- Motion Trace: delta computation (computed each 20t cycle) ---
+# --- Motion Trace: delta computation ---
 scoreboard objectives add slf.dmg_prev dummy
 scoreboard objectives add slf.dmg_delta dummy
 scoreboard objectives add slf.move_prev dummy
@@ -59,10 +60,10 @@ scoreboard objectives add slf.knight_trials dummy
 # --- Mob Level (set on mob entities at spawn) ---
 scoreboard objectives add slf.mob_level dummy
 
-# --- Ignition detection (separate from def_prev to avoid sequencing collision) ---
+# --- Ignition detection (separate from def_prev) ---
 scoreboard objectives add slf.ign.prev dummy
 
-# --- Temp computation scratch ---
+# --- Temp scratch ---
 scoreboard objectives add slf.tmp dummy
 
 # --- Misc ---
