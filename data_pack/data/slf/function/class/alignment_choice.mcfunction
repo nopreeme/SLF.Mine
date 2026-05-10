@@ -1,0 +1,3 @@
+# Called when a Knight chooses Holy or Dark path
+tellraw @s ["",{"text":"━━━ ","color":"dark_gray"},{"text":"Choose Your Path","color":"gold","bold":true},{"text":" ━━━","color":"dark_gray"},"\n",{"text":"[Swear to the Light — Holy Knight]","color":"yellow","bold":true,"clickEvent":{"action":"run_command","value":"/trigger slf.choose_class set 41"},"hoverEvent":{"action":"show_text","value":"Parry mastery and stamina arts"}},{"text":" "},{"text":"[Embrace the Dark — Dark Knight]","color":"dark_gray","bold":true,"clickEvent":{"action":"run_command","value":"/trigger slf.choose_class set 42"},"hoverEvent":{"action":"show_text","value":"Self-harm, blood war, and death arts"}}]
+scoreboard players enable @s slf.choose_class
