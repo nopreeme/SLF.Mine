@@ -1,0 +1,1 @@
+give @s minecraft:enchanted_book[custom_model_data={strings:["slf.skill_reflexus"]},item_name={text:"Reflexus",color:"yellow",italic:false},lore=[{text:"Ctarnidd's stolen patterns. Briefly mirror the last attack that struck you.",color:"gray",italic:true}]] 1

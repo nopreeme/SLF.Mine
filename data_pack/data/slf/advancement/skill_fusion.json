@@ -16,5 +16,6 @@
         "items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_formula_drift"]}}}]
       }
     }
-  }
+  },
+  "rewards": {"function": "slf:skills/learn/formula_drift"}
 }

@@ -1,0 +1,1 @@
+give @s minecraft:enchanted_book[custom_model_data={strings:["slf.skill_managarm_pride"]},item_name={text:"Managarm Pride",color:"light_purple",italic:false},lore=[{text:"The power of the wolf-god Lycagon. Strength grows with each wound.",color:"gray",italic:true}]] 1

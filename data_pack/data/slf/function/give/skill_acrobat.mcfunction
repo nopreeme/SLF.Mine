@@ -1,0 +1,1 @@
+give @s minecraft:enchanted_book[custom_model_data={strings:["slf.skill_acrobat"]},item_name={text:"Acrobat",color:"green",italic:false},lore=[{text:"The Vorpal Bunny's leap. Resistance surges when your feet leave the ground.",color:"gray",italic:true}]] 1

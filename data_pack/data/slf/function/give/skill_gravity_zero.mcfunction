@@ -1,0 +1,1 @@
+give @s minecraft:enchanted_book[custom_model_data={strings:["slf.skill_gravity_zero"]},item_name={text:"Gravity Zero",color:"aqua",italic:false},lore=[{text:"Siegwurm's sky-dominion. Nullifies gravity's pull.",color:"gray",italic:true}]] 1
