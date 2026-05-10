@@ -5,4 +5,6 @@ tag @s add slf.was_knight
 tag @s add slf.skill.flash_counter
 tag @s add slf.skill.paring_protect
 tag @s add slf.skill.total_body_takeshi
+scoreboard players set @s slf.knight_quest 1
 tellraw @s {"text":"You have become a Knight.","color":"gold","bold":true}
+tellraw @s {"text":"Complete 3 Knight Trials to unlock your alignment choice.","color":"gray"}
