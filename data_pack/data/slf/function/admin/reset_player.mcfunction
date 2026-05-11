@@ -142,7 +142,6 @@ scoreboard players set @s slf.stat.str 0
 scoreboard players set @s slf.stat.dex 0
 scoreboard players set @s slf.stat.vit 0
 scoreboard players set @s slf.stat.agi 0
-scoreboard players set @s slf.stat.int 0
 scoreboard players set @s slf.stat.tec 0
 scoreboard players set @s slf.stat.lck 0
 scoreboard players set @s slf.stat.stm 0

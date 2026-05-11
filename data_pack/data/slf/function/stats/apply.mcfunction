@@ -20,3 +20,16 @@ execute as @a[scores={slf.stat.vit=30..}]    run effect give @s minecraft:absorp
 # STR -> raw Strength effect (stacks with skill-granted strength, fine since effects merge)
 execute as @a[scores={slf.stat.str=10..19}]  run effect give @s minecraft:strength 3 0 true
 execute as @a[scores={slf.stat.str=20..}]    run effect give @s minecraft:strength 3 1 true
+
+# DEX -> attack speed: remove stale modifier then re-add at correct tier
+execute as @a run attribute @s minecraft:attack_speed modifier remove slf:dex_speed
+execute as @a[scores={slf.stat.dex=5..9}]   run attribute @s minecraft:attack_speed modifier add slf:dex_speed 0.4 add_value
+execute as @a[scores={slf.stat.dex=10..19}]  run attribute @s minecraft:attack_speed modifier add slf:dex_speed 0.8 add_value
+execute as @a[scores={slf.stat.dex=20..}]    run attribute @s minecraft:attack_speed modifier add slf:dex_speed 1.2 add_value
+
+# LCK -> Minecraft luck attribute (affects loot table rolls)
+execute as @a run attribute @s minecraft:luck base set 0
+execute as @a[scores={slf.stat.lck=10..19}]  run attribute @s minecraft:luck base set 1
+execute as @a[scores={slf.stat.lck=20..39}]  run attribute @s minecraft:luck base set 2
+execute as @a[scores={slf.stat.lck=40..59}]  run attribute @s minecraft:luck base set 3
+execute as @a[scores={slf.stat.lck=60..}]    run attribute @s minecraft:luck base set 4

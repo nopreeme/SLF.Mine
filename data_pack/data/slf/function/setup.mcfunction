@@ -14,7 +14,6 @@ scoreboard objectives add slf.stat.str dummy "STR"
 scoreboard objectives add slf.stat.dex dummy "DEX"
 scoreboard objectives add slf.stat.vit dummy "VIT"
 scoreboard objectives add slf.stat.agi dummy "AGI"
-scoreboard objectives add slf.stat.int dummy "INT"
 scoreboard objectives add slf.stat.tec dummy "TEC"
 scoreboard objectives add slf.stat.lck dummy "LCK"
 scoreboard objectives add slf.stat.stm dummy "STM"
@@ -24,7 +23,6 @@ scoreboard objectives add slf.stat_str trigger
 scoreboard objectives add slf.stat_dex trigger
 scoreboard objectives add slf.stat_vit trigger
 scoreboard objectives add slf.stat_agi trigger
-scoreboard objectives add slf.stat_int trigger
 scoreboard objectives add slf.stat_tec trigger
 scoreboard objectives add slf.stat_lck trigger
 scoreboard objectives add slf.stat_stm trigger
@@ -75,6 +73,7 @@ scoreboard objectives add slf.ign.prev dummy
 
 # --- Temp scratch ---
 scoreboard objectives add slf.tmp dummy
+scoreboard objectives add slf.lck_save_cd dummy
 
 # --- Misc ---
 scoreboard objectives add slf.timer dummy

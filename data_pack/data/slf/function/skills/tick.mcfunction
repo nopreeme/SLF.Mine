@@ -59,7 +59,6 @@ execute as @a[scores={slf.stat_str=1..},scores={slf.sp_points=1..}] run function
 execute as @a[scores={slf.stat_dex=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_dex
 execute as @a[scores={slf.stat_vit=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_vit
 execute as @a[scores={slf.stat_agi=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_agi
-execute as @a[scores={slf.stat_int=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_int
 execute as @a[scores={slf.stat_tec=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_tec
 execute as @a[scores={slf.stat_lck=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_lck
 execute as @a[scores={slf.stat_stm=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_stm
@@ -67,7 +66,6 @@ scoreboard players reset @a[scores={slf.stat_str=1..}] slf.stat_str
 scoreboard players reset @a[scores={slf.stat_dex=1..}] slf.stat_dex
 scoreboard players reset @a[scores={slf.stat_vit=1..}] slf.stat_vit
 scoreboard players reset @a[scores={slf.stat_agi=1..}] slf.stat_agi
-scoreboard players reset @a[scores={slf.stat_int=1..}] slf.stat_int
 scoreboard players reset @a[scores={slf.stat_tec=1..}] slf.stat_tec
 scoreboard players reset @a[scores={slf.stat_lck=1..}] slf.stat_lck
 scoreboard players reset @a[scores={slf.stat_stm=1..}] slf.stat_stm
@@ -75,7 +73,6 @@ scoreboard players enable @a[tag=slf.class_chosen] slf.stat_str
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_dex
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_vit
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_agi
-scoreboard players enable @a[tag=slf.class_chosen] slf.stat_int
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_tec
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_lck
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_stm
@@ -90,5 +87,6 @@ execute if score #timer slf.timer matches 20.. run function slf:skills/exp_tick
 execute if score #timer slf.timer matches 20.. run function slf:skills/passives
 execute if score #timer slf.timer matches 20.. run function slf:mask/karma_tick
 execute if score #timer slf.timer matches 20.. run function slf:stats/apply
+execute if score #timer slf.timer matches 20.. as @a[scores={slf.stat.lck=1..}] run function slf:stats/lck_check
 execute if score #timer slf.timer matches 20.. run function slf:class/select_expire
 execute if score #timer slf.timer matches 20.. run scoreboard players set #timer slf.timer 0
