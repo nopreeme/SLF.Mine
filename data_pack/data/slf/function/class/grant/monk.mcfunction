@@ -6,3 +6,4 @@ tag @s add slf.skill.tasram_fist
 tag @s add slf.skill.skull_shaker
 tag @s add slf.skill.tanda_breathing
 tellraw @s {"text":"You have become a Monk.","color":"dark_purple","bold":true}
+function slf:class/select_cleanup

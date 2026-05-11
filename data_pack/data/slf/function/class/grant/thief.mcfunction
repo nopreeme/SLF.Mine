@@ -6,3 +6,4 @@ tag @s add slf.skill.stealth_assault
 tag @s add slf.skill.slide_step
 tag @s add slf.skill.quick_spin
 tellraw @s {"text":"You have become a Thief.","color":"dark_green","bold":true}
+function slf:class/select_cleanup

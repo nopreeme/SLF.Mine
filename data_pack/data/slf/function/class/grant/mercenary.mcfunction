@@ -7,3 +7,4 @@ tag @s add slf.skill.duelism
 tag @s add slf.skill.overheat
 tag @s add slf.skill.ignition
 tellraw @s {"text":"You have become a Mercenary.","color":"yellow","bold":true}
+function slf:class/select_cleanup

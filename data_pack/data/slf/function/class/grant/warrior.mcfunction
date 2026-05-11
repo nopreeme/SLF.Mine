@@ -6,3 +6,4 @@ tag @s add slf.skill.megaton_swing
 tag @s add slf.skill.rigid_strength
 tag @s add slf.skill.front_position
 tellraw @s {"text":"You have become a Warrior.","color":"red","bold":true}
+function slf:class/select_cleanup

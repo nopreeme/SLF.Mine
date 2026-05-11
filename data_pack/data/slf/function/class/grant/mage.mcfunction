@@ -6,3 +6,4 @@ tag @s add slf.skill.wisdoms_divine_eye
 tag @s add slf.skill.chanting_and_memorizing
 tag @s add slf.skill.tanda_breathing
 tellraw @s {"text":"You have become a Mage.","color":"blue","bold":true}
+function slf:class/select_cleanup

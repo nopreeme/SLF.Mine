@@ -1,0 +1,12 @@
+data modify entity @e[type=chest_minecart,tag=slf.class_menu,distance=..20,limit=1] Items set value []
+kill @e[type=chest_minecart,tag=slf.class_menu,distance=..20]
+clear @s minecraft:iron_sword[custom_data~{slf_class_item:1b}]
+clear @s minecraft:iron_axe[custom_data~{slf_class_item:1b}]
+clear @s minecraft:iron_ingot[custom_data~{slf_class_item:1b}]
+clear @s minecraft:gold_ingot[custom_data~{slf_class_item:1b}]
+clear @s minecraft:feather[custom_data~{slf_class_item:1b}]
+clear @s minecraft:golden_apple[custom_data~{slf_class_item:1b}]
+clear @s minecraft:blaze_rod[custom_data~{slf_class_item:1b}]
+clear @s minecraft:ender_eye[custom_data~{slf_class_item:1b}]
+clear @s minecraft:red_stained_glass_pane[custom_data~{slf_close_menu:1b}]
+tag @s remove slf.class_choosing

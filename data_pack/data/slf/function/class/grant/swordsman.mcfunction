@@ -6,3 +6,4 @@ tag @s add slf.skill.power_slash
 tag @s add slf.skill.sword_of_rough_waves
 tag @s add slf.skill.spin_slash
 tellraw @s {"text":"You have become a Swordsman.","color":"aqua","bold":true}
+function slf:class/select_cleanup
