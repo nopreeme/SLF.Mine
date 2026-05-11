@@ -4,8 +4,18 @@
     "property": "minecraft:custom_model_data",
     "cases": [
       {"when": "slf.vorpal_knife",    "model": {"type": "minecraft:model", "model": "slf:item/vorpal_knife"}},
-      {"when": "slf.togetsu_waxing", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waxing"}},
-      {"when": "slf.togetsu_waning", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning"}},
+      {"when": "slf.togetsu_waxing", "model": {
+        "type": "minecraft:select",
+        "property": "minecraft:display_context",
+        "cases": [{"when": "gui", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waxing_icon"}}],
+        "fallback": {"type": "minecraft:model", "model": "slf:item/togetsu_waxing"}
+      }},
+      {"when": "slf.togetsu_waning", "model": {
+        "type": "minecraft:select",
+        "property": "minecraft:display_context",
+        "cases": [{"when": "gui", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning_icon"}}],
+        "fallback": {"type": "minecraft:model", "model": "slf:item/togetsu_waning"}
+      }},
       {"when": "slf.rust_saber",     "model": {"type": "minecraft:model", "model": "slf:item/rust_saber"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/iron_sword"}
