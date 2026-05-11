@@ -28,10 +28,10 @@ scoreboard objectives add slf.stat_lck trigger
 scoreboard objectives add slf.stat_stm trigger
 
 # --- Motion Trace: vanilla criterion objectives ---
-scoreboard objectives add slf.raw.dmg stat minecraft.custom:minecraft.damage_dealt
-scoreboard objectives add slf.raw.move stat minecraft.custom:minecraft.sprint_one_cm
-scoreboard objectives add slf.raw.evade stat minecraft.custom:minecraft.jump
-scoreboard objectives add slf.raw.def stat minecraft.custom:minecraft.damage_taken
+scoreboard objectives add slf.raw.dmg minecraft.custom:minecraft.damage_dealt
+scoreboard objectives add slf.raw.move minecraft.custom:minecraft.sprint_one_cm
+scoreboard objectives add slf.raw.evade minecraft.custom:minecraft.jump
+scoreboard objectives add slf.raw.def minecraft.custom:minecraft.damage_taken
 
 # --- Motion Trace: delta computation ---
 scoreboard objectives add slf.dmg_prev dummy
