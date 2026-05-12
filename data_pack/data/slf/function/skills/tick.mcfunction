@@ -45,6 +45,16 @@ scoreboard players reset @a[scores={slf.focus_choose=1..}] slf.focus_choose
 scoreboard players enable @a[tag=slf.class_chosen] slf.focus_choose
 
 # --- Stat spend triggers ---
+# Fail message if trying to spend with 0 points
+execute as @a[scores={slf.stat_str=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a[scores={slf.stat_dex=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a[scores={slf.stat_vit=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a[scores={slf.stat_agi=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a[scores={slf.stat_tec=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a[scores={slf.stat_lck=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a[scores={slf.stat_stm=1..},scores={slf.sp_points=..0}] run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+
+# Success execution
 execute as @a[scores={slf.stat_str=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_str
 execute as @a[scores={slf.stat_dex=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_dex
 execute as @a[scores={slf.stat_vit=1..},scores={slf.sp_points=1..}] run function slf:stats/spend_vit

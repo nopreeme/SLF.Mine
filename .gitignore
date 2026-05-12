@@ -27,5 +27,17 @@ dist/
 build/
 
 # Discord Bot
-discord_bot/node_modules/
-discord_bot/.env
+discord_bot/
+
+# Project Notes & Local Files
+CLAUDE.md
+GEMINI.md
+TESTING.md
+TESTING.md.save
+
+# Temporary Models/Textures
+model (4).json
+model (5).json
+texture.png
+togetsu_waning.png
+togetsu_waxing.png
