@@ -1,14 +1,4 @@
 # --- Class selection ---
-# Chest GUI: detect class item entering player inventory
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:iron_sword[custom_data~{slf_class_id:1}]   run function slf:class/grant/swordsman
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:iron_axe[custom_data~{slf_class_id:2}]     run function slf:class/grant/warrior
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:iron_ingot[custom_data~{slf_class_id:20}]  run function slf:class/grant/fighter
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:gold_ingot[custom_data~{slf_class_id:30}]  run function slf:class/grant/mercenary
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:feather[custom_data~{slf_class_id:3}]      run function slf:class/grant/thief
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:golden_apple[custom_data~{slf_class_id:4}] run function slf:class/grant/priest
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:blaze_rod[custom_data~{slf_class_id:5}]    run function slf:class/grant/monk
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:ender_eye[custom_data~{slf_class_id:6}]    run function slf:class/grant/mage
-execute as @a[tag=slf.class_choosing] at @s if items entity @s inventory.* minecraft:red_stained_glass_pane[custom_data~{slf_close_menu:1b}] run function slf:class/select_cleanup
 # Trigger-based (alignment_choice + admin direct grants)
 execute as @a[scores={slf.choose_class=1}]  run function slf:class/grant/swordsman
 execute as @a[scores={slf.choose_class=2}]  run function slf:class/grant/warrior
