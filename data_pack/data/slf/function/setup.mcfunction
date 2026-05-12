@@ -1,22 +1,22 @@
 # SLF.Mine — runs on world load
 
 # --- Class & Progression ---
-scoreboard objectives add slf.class dummy "Class"
-scoreboard objectives add slf.choose_class trigger "Choose Class"
-scoreboard objectives add slf.focus_choose trigger "Focus Choose"
-scoreboard objectives add slf.level dummy "Level"
-scoreboard objectives add slf.exp dummy "EXP"
-scoreboard objectives add slf.sp_points dummy "Stat Points"
-scoreboard objectives add slf.boss_kills dummy "Boss Kills"
+scoreboard objectives add slf.class dummy {"text":"Class"}
+scoreboard objectives add slf.choose_class trigger {"text":"Choose Class"}
+scoreboard objectives add slf.focus_choose trigger {"text":"Focus Choose"}
+scoreboard objectives add slf.level dummy {"text":"Level"}
+scoreboard objectives add slf.exp dummy {"text":"EXP"}
+scoreboard objectives add slf.sp_points dummy {"text":"Stat Points"}
+scoreboard objectives add slf.boss_kills dummy {"text":"Boss Kills"}
 
 # --- Stat Attributes (8 spendable) ---
-scoreboard objectives add slf.stat.str dummy "STR"
-scoreboard objectives add slf.stat.dex dummy "DEX"
-scoreboard objectives add slf.stat.vit dummy "VIT"
-scoreboard objectives add slf.stat.agi dummy "AGI"
-scoreboard objectives add slf.stat.tec dummy "TEC"
-scoreboard objectives add slf.stat.lck dummy "LCK"
-scoreboard objectives add slf.stat.stm dummy "STM"
+scoreboard objectives add slf.stat.str dummy {"text":"STR"}
+scoreboard objectives add slf.stat.dex dummy {"text":"DEX"}
+scoreboard objectives add slf.stat.vit dummy {"text":"VIT"}
+scoreboard objectives add slf.stat.agi dummy {"text":"AGI"}
+scoreboard objectives add slf.stat.tec dummy {"text":"TEC"}
+scoreboard objectives add slf.stat.lck dummy {"text":"LCK"}
+scoreboard objectives add slf.stat.stm dummy {"text":"STM"}
 
 # --- Stat spend triggers (clickable from /function slf:stats/menu) ---
 scoreboard objectives add slf.stat_str trigger
@@ -44,10 +44,10 @@ scoreboard objectives add slf.def_prev dummy
 scoreboard objectives add slf.def_delta dummy
 
 # --- Skill Focus System ---
-scoreboard objectives add slf.focus dummy "Focus"
-scoreboard objectives add slf.focus_stat dummy "Focus Stat"
-scoreboard objectives add slf.sp dummy "SP"
-scoreboard objectives add slf.threshold dummy "Threshold"
+scoreboard objectives add slf.focus dummy {"text":"Focus"}
+scoreboard objectives add slf.focus_stat dummy {"text":"Focus Stat"}
+scoreboard objectives add slf.sp dummy {"text":"SP"}
+scoreboard objectives add slf.threshold dummy {"text":"Threshold"}
 
 # --- Level 99 Standby Gate ---
 scoreboard objectives add slf.exp_extend dummy
