@@ -5,5 +5,9 @@ scoreboard players set @s slf.class 5
 tag @s add slf.skill.tasram_fist
 tag @s add slf.skill.skull_shaker
 tag @s add slf.skill.tanda_breathing
+give @s minecraft:leather_helmet
+give @s minecraft:leather_chestplate
+give @s minecraft:leather_leggings
+give @s minecraft:leather_boots
 tellraw @s {"text":"You have become a Monk.","color":"dark_purple","bold":true}
 function slf:class/select_cleanup

@@ -2,7 +2,7 @@
 # Trigger-based (alignment_choice + admin direct grants)
 execute as @a[scores={slf.choose_class=1}]  run function slf:class/grant/swordsman
 execute as @a[scores={slf.choose_class=2}]  run function slf:class/grant/warrior
-execute as @a[scores={slf.choose_class=3}]  run function slf:class/grant/thief
+execute as @a[scores={slf.choose_class=3}]  run function slf:class/grant/bandit
 execute as @a[scores={slf.choose_class=4}]  run function slf:class/grant/priest
 execute as @a[scores={slf.choose_class=5}]  run function slf:class/grant/monk
 execute as @a[scores={slf.choose_class=6}]  run function slf:class/grant/mage

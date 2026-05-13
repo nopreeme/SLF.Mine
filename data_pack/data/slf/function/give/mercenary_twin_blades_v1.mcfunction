@@ -1,0 +1,1 @@
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.mercenary_twin_blades_v1"]},item_name={text:"Mercenary Twin Blades (v1)",color:"yellow",italic:false},lore=[{text:"Mercenary twin blades - style v1.",color:"gray",italic:true}]] 1

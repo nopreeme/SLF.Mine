@@ -5,5 +5,8 @@ scoreboard players set @s slf.class 6
 tag @s add slf.skill.wisdoms_divine_eye
 tag @s add slf.skill.chanting_and_memorizing
 tag @s add slf.skill.tanda_breathing
+give @s minecraft:wooden_sword
+give @s minecraft:leather_helmet
+give @s minecraft:leather_chestplate
 tellraw @s {"text":"You have become a Mage.","color":"blue","bold":true}
 function slf:class/select_cleanup

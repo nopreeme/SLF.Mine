@@ -1,4 +1,4 @@
-execute unless entity @s[tag=slf.was_thief] run return fail
+execute unless entity @s[tag=slf.was_mercenary] run return fail
 scoreboard players set @s slf.class 31
 tag @s add slf.was_veteran
 tag @s add slf.title.apex_veteran

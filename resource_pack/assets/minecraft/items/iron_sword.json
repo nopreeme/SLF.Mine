@@ -16,7 +16,10 @@
         "cases": [{"when": "gui", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning_icon"}}],
         "fallback": {"type": "minecraft:model", "model": "slf:item/togetsu_waning"}
       }},
-      {"when": "slf.rust_saber",     "model": {"type": "minecraft:model", "model": "slf:item/rust_saber"}}
+      {"when": "slf.rust_saber",               "model": {"type": "minecraft:model", "model": "slf:item/rust_saber"}},
+      {"when": "slf.mercenary_twin_blades_v1", "model": {"type": "minecraft:model", "model": "slf:item/mercenary_twin_blades_v1"}},
+      {"when": "slf.mercenary_twin_blades_v2", "model": {"type": "minecraft:model", "model": "slf:item/mercenary_twin_blades_v2"}},
+      {"when": "slf.togetsu_waning_v2",        "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning_v2"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/iron_sword"}
   }

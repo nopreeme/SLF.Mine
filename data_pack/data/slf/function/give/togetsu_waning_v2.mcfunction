@@ -1,0 +1,1 @@
+give @s minecraft:iron_sword[custom_model_data={strings:["slf.togetsu_waning_v2"]},item_name={text:"Togetsu: Waning (v2)",color:"dark_gray",italic:false},lore=[{text:"Togetsu Waning - redesign v2.",color:"gray",italic:true}]] 1

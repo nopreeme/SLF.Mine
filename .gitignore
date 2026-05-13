@@ -29,11 +29,15 @@ build/
 # Discord Bot
 discord_bot/
 
+# Inbox (local staging area for new assets)
+INBOX/
+
 # Project Notes & Local Files
 CLAUDE.md
 GEMINI.md
 TESTING.md
 TESTING.md.save
+RESOURCES.md
 
 # Temporary Models/Textures
 model (4).json

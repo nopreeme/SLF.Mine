@@ -1,4 +1,4 @@
-execute unless entity @s[tag=slf.was_bandit] run return fail
+execute unless entity @s[tag=slf.was_thief] run return fail
 scoreboard players set @s slf.class 16
 tag @s add slf.was_assassin
 tag @s add slf.skill.desperate_sting
