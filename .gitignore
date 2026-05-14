@@ -26,6 +26,10 @@ logs/
 dist/
 build/
 
+# Python
+__pycache__/
+*.pyc
+
 # Discord Bot
 discord_bot/
 
