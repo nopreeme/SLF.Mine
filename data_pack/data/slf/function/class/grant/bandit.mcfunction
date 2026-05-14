@@ -6,10 +6,7 @@ tag @s add slf.skill.dirty_sword
 tag @s add slf.skill.assassin_pierce
 tag @s add slf.skill.big_tantrum
 give @s minecraft:stone_sword
-give @s minecraft:leather_helmet
-give @s minecraft:leather_chestplate
-give @s minecraft:leather_leggings
-give @s minecraft:leather_boots
+function slf:give/armor_leather_full
 give @s minecraft:bow
 give @s minecraft:arrow 16
 tellraw @s {"text":"You have become a Bandit.","color":"dark_green","bold":true}
