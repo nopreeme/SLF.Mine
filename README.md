@@ -33,7 +33,7 @@ Join world
                            └─ Spend stat points → /function slf:stats/menu
 ```
 
-Kill mobs to earn EXP and level up. Each level grants **3 stat points** (bonus at milestones). Reaching level 99 enters **Standby** — defeat a worthy boss and visit the **Altar of Awakening** to unlock levels 100–150.
+Kill mobs to earn EXP and level up. Each level grants **5 stat points** (bonus at milestones). Reaching level 99 enters **Standby** — defeat a worthy boss and visit the **Altar of Awakening** to unlock levels 100–150.
 
 ---
 
@@ -47,7 +47,7 @@ Choose one of **8 starting classes** on your first join. Your class determines w
 | Warrior | Raw power, wide swings | DMG |
 | Fighter | Bare-fist brawler | DMG |
 | Mercenary | All-weapon freelancer, combat ignition | DMG / DEF |
-| Thief | Speed and evasion | EVADE / MOVE |
+| Bandit | Speed and evasion | EVADE / MOVE |
 | Priest | Shield arts, stamina | DEF |
 | Monk | Body as weapon, iron defense | DMG / DEF |
 | Mage | Magic arts, chanting | DEF / DMG |
@@ -161,7 +161,7 @@ Stats are applied automatically every second via Minecraft status effects.
 | 10 – 98 | 5,000 per level |
 | 99 | **Standby gate** |
 
-Every 10 levels grants **2 bonus stat points** on top of the standard 3 per level.
+Every 10 levels grants **2 bonus stat points** on top of the standard 5 per level.
 
 ### Standby & Awakening
 
@@ -197,7 +197,7 @@ Some skills are earned from boss encounters rather than the focus system. Any cl
 | Wezaemon | Seitan skill book — *Clear Sky* (fast aerial slash) |
 | Siegwurm | *Critical Speed - Bradion* (sprint-based Haste buildup) |
 | Ctarnidd | *Reflexus* (briefly copy last enemy attack pattern) |
-| Lycagon | Title: **Tombguard Destroyer** (first 10 players) + materials |
+| Lycagon | Title: **** (first 10 players) + materials |
 | Vorpal Bunny *(rare enemy)* | *Acrobat* (Resistance I while airborne) |
 
 ---
@@ -232,13 +232,11 @@ Some skills are earned from boss encounters rather than the focus system. Any cl
 
 ## Skill Fusion
 
-Combine skills at the crafting table using a **Nether Star** as the fusion catalyst:
+Combine skills at the **Skill Garden** using a **<item>** as the fusion catalyst:
 
 | Fused Skill | Pattern | Reagent |
 |---|---|---|
-| **Blade Rush** | Book + Nether Star + Book | Blaze Powder |
-| **Moon Howl** | Book + Nether Star + Book | Phantom Membrane |
-| **Void Lance** | Ender Pearl + Nether Star + Ender Pearl | — |
+
 
 ---
 
@@ -251,7 +249,7 @@ Shangri-La Frontier (root)
 ├── Rookie Gear — craft Sunraku's right blade
 │   └── Dual Fangs — hold both Sunraku blades
 ├── The Tombguard Awaits — obtain any Tombguard armor piece
-│   └── Gravedigger — obtain the Wethermon Bone Scythe
+│   └── Gravedigger — obtain the Wethermon Katana
 │       └── Bone Knight — wear the full Tombguard set
 ├── Moonlit Challenge — obtain the Full Moon Chestguard
 │   └── Wolf Bane — obtain the Bilac Crescent Blade
