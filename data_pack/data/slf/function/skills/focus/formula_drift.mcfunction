@@ -1,7 +1,7 @@
 execute if entity @s[tag=slf.skill.formula_drift] run return fail
 execute unless entity @s[tag=slf.skill.slide_step] run tellraw @s {"text":"Requires: Slide Step","color":"red"}
 execute unless entity @s[tag=slf.skill.slide_step] run return fail
-execute if entity @s[scores={slf.focus=24}] run return fail
+execute if score @s slf.focus = 24 run return fail
 scoreboard players set @s slf.focus 24
 scoreboard players set @s slf.focus_stat 2
 scoreboard players set @s slf.sp 0

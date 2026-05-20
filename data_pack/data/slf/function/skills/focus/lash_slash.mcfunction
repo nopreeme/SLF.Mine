@@ -1,7 +1,7 @@
 execute if entity @s[tag=slf.skill.lash_slash] run return fail
 execute unless entity @s[tag=slf.skill.power_slash] run tellraw @s {"text":"Requires: Power Slash","color":"red"}
 execute unless entity @s[tag=slf.skill.power_slash] run return fail
-execute if entity @s[scores={slf.focus=20}] run return fail
+execute if score @s slf.focus = 20 run return fail
 scoreboard players set @s slf.focus 20
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

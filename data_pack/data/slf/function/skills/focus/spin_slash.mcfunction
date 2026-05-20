@@ -1,5 +1,5 @@
 execute if entity @s[tag=slf.skill.spin_slash] run return fail
-execute if entity @s[scores={slf.focus=6}] run return fail
+execute if score @s slf.focus = 6 run return fail
 scoreboard players set @s slf.focus 6
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

@@ -1,5 +1,5 @@
 execute if entity @s[tag=slf.skill.manbufu] run return fail
-execute if entity @s[scores={slf.focus=4}] run return fail
+execute if score @s slf.focus = 4 run return fail
 scoreboard players set @s slf.focus 4
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

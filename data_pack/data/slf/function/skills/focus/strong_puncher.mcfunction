@@ -1,7 +1,7 @@
 execute if entity @s[tag=slf.skill.strong_puncher] run return fail
 execute unless entity @s[tag=slf.skill.knuckle_rush] run tellraw @s {"text":"Requires: Knuckle Rush","color":"red"}
 execute unless entity @s[tag=slf.skill.knuckle_rush] run return fail
-execute if entity @s[scores={slf.focus=22}] run return fail
+execute if score @s slf.focus = 22 run return fail
 scoreboard players set @s slf.focus 22
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

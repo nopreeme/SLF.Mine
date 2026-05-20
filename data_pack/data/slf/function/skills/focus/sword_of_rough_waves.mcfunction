@@ -1,5 +1,5 @@
 execute if entity @s[tag=slf.skill.sword_of_rough_waves] run return fail
-execute if entity @s[scores={slf.focus=5}] run return fail
+execute if score @s slf.focus = 5 run return fail
 scoreboard players set @s slf.focus 5
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

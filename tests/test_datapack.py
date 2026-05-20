@@ -49,7 +49,7 @@ def _tick_class_dispatch() -> dict[int, str]:
     """choose_class trigger value → grant function name."""
     text = _read(TICK_F)
     pattern = re.compile(
-        r"execute as @a\[scores=\{slf\.choose_class=(\d+)\}\]\s+run function slf:class/grant/(\w+)"
+        r"execute as @a if score @s slf\.choose_class = (\d+)\s+run function slf:class/grant/(\w+)"
     )
     return {int(m.group(1)): m.group(2) for m in pattern.finditer(text)}
 
@@ -58,7 +58,7 @@ def _tick_focus_dispatch() -> dict[int, str]:
     """focus_choose trigger value → focus function name."""
     text = _read(TICK_F)
     pattern = re.compile(
-        r"execute as @a\[scores=\{slf\.focus_choose=(\d+)\}\]\s+run function slf:skills/focus/(\w+)"
+        r"execute as @a if score @s slf\.focus_choose = (\d+)\s+run function slf:skills/focus/(\w+)"
     )
     return {int(m.group(1)): m.group(2) for m in pattern.finditer(text)}
 
@@ -237,7 +237,7 @@ class TestT1GrantPattern(unittest.TestCase):
             )
 
     def test_t1_classes_have_class_chosen_guard(self):
-        guard = "execute if entity @s[tag=slf.class_chosen] run return fail"
+        guard = 'execute if entity @s[tag=slf.class_chosen] run return fail'
         for class_name in self.t1_classes:
             text = self._read_grant(class_name)
             self.assertIn(guard, text,
@@ -268,7 +268,7 @@ class TestT1GrantPattern(unittest.TestCase):
                  if ln.strip() and not ln.strip().startswith("#")),
                 ""
             )
-            self.assertIn("unless entity @s[tag=slf.was_", first_cmd,
+            self.assertIn('unless entity @s[tag=slf.was_', first_cmd,
                           f"{f.name}: T2+ class first command must be a was_* prerequisite guard, "
                           f"got: {first_cmd!r}")
 
@@ -284,7 +284,7 @@ class TestPrerequisiteChains(unittest.TestCase):
     def test_all_guard_prerequisites_are_grantable(self):
         for f in GRANT_DIR.glob("*.mcfunction"):
             text = _read(f)
-            for m in re.finditer(r"unless entity @s\[tag=(slf\.was_\w+)\]", text):
+            for m in re.finditer(r'unless entity @s\[tag=(slf\.was_\w+)\]', text):
                 prereq = m.group(1)
                 self.assertIn(prereq, self.was_tags,
                               f"{f.name}: guard requires '{prereq}' but no grant file adds it")
@@ -292,24 +292,24 @@ class TestPrerequisiteChains(unittest.TestCase):
     def test_shadow_tree_chain(self):
         # Bandit(T1) → {Thief, Ninja}(T2) → Assassin/Shinobi(T3)
         thief = _read(GRANT_DIR / "thief.mcfunction")
-        self.assertIn("unless entity @s[tag=slf.was_bandit] run return fail", thief,
+        self.assertIn('unless entity @s[tag=slf.was_bandit] run return fail', thief,
                       "thief.mcfunction must require was_bandit (Bandit → Thief)")
 
         ninja = _read(GRANT_DIR / "ninja.mcfunction")
-        self.assertIn("unless entity @s[tag=slf.was_bandit] run return fail", ninja,
+        self.assertIn('unless entity @s[tag=slf.was_bandit] run return fail', ninja,
                       "ninja.mcfunction must require was_bandit (Bandit → Ninja)")
 
         assassin = _read(GRANT_DIR / "assassin.mcfunction")
-        self.assertIn("unless entity @s[tag=slf.was_thief] run return fail", assassin,
+        self.assertIn('unless entity @s[tag=slf.was_thief] run return fail', assassin,
                       "assassin.mcfunction must require was_thief (Thief → Assassin)")
 
         shinobi = _read(GRANT_DIR / "shinobi.mcfunction")
-        self.assertIn("unless entity @s[tag=slf.was_ninja] run return fail", shinobi,
+        self.assertIn('unless entity @s[tag=slf.was_ninja] run return fail', shinobi,
                       "shinobi.mcfunction must require was_ninja (Ninja → Shinobi)")
 
     def test_veteran_requires_mercenary(self):
         veteran = _read(GRANT_DIR / "veteran.mcfunction")
-        self.assertIn("unless entity @s[tag=slf.was_mercenary] run return fail", veteran,
+        self.assertIn('unless entity @s[tag=slf.was_mercenary] run return fail', veteran,
                       "veteran.mcfunction must require was_mercenary")
 
     def test_thief_sets_class_chosen(self):

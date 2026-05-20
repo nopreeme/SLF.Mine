@@ -1,8 +1,8 @@
 # Altar of Awakening — converts exp_extend into post-99 levels (100-150)
 # Requires: slf.standby=1 AND slf.boss_gate=1
-execute unless entity @s[scores={slf.standby=1}] run return fail
-execute unless entity @s[scores={slf.boss_gate=1}] run tellraw @s {"text":"The altar is dormant. Prove yourself against a worthy foe first.","color":"dark_red"}
-execute unless entity @s[scores={slf.boss_gate=1}] run return fail
+execute unless score @s slf.standby = 1 run return fail
+execute unless score @s slf.boss_gate = 1 run tellraw @s {"text":"The altar is dormant. Prove yourself against a worthy foe first.","color":"dark_red"}
+execute unless score @s slf.boss_gate = 1 run return fail
 
 scoreboard players set @s slf.standby 0
 scoreboard players set @s slf.awakened 1

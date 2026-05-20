@@ -192,7 +192,7 @@ Textures go in `resource_pack/assets/slf/textures/item/` as 16×16 PNGs, named t
 
 ### Tooling
 
-- `build.sh` — zips `data_pack/` and `resource_pack/` into versioned `.zip` releases for distribution.
+- `build.sh` — zips `data_pack/` and `resource_pack/` into versioned `.zip` releases for distribution. Releases are published to GitHub Releases and Modrinth; server updates are currently manual (download zip, re-upload to host).
 - `discord_bot/` — Discord.js bot (`index.js`, `notify.js`, `deploy-commands.js`) that posts commit/branch update embeds. Not required for gameplay development.
 - `tests/test_datapack.py` — static analysis test suite (33 tests). Run with `python3 -m unittest tests/test_datapack.py`. Catches ID collisions, broken prerequisite chains, missing dispatch entries, and menu syntax regressions without a live server.
 - `give/armor_leather_full.mcfunction` — shared helper that gives all four leather armor pieces. Called by T1 classes that grant a full leather starter set.

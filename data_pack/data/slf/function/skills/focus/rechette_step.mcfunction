@@ -1,5 +1,5 @@
 execute if entity @s[tag=slf.skill.rechette_step] run return fail
-execute if entity @s[scores={slf.focus=26}] run return fail
+execute if score @s slf.focus = 26 run return fail
 scoreboard players set @s slf.focus 26
 scoreboard players set @s slf.focus_stat 3
 scoreboard players set @s slf.sp 0

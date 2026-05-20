@@ -1,6 +1,6 @@
 # T4 evolution of Big Tantrum (gated by slf.bt_kills >= 50)
-execute unless entity @s[scores={slf.bt_kills=50..}] run tellraw @s {"text":"Not yet. Prove yourself with Big Tantrum first.","color":"red"}
-execute unless entity @s[scores={slf.bt_kills=50..}] run return fail
+execute unless score @s slf.bt_kills >= 50 run tellraw @s {"text":"Not yet. Prove yourself with Big Tantrum first.","color":"red"}
+execute unless score @s slf.bt_kills >= 50 run return fail
 tag @s remove slf.skill.big_tantrum
 tag @s add slf.skill.grand_tantrum
 scoreboard players set @s slf.focus 0

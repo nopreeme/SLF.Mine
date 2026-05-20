@@ -1,7 +1,7 @@
 execute if entity @s[tag=slf.skill.inexhaustible_beasts] run return fail
 execute unless entity @s[tag=slf.skill.lash_slash] run tellraw @s {"text":"Requires: Lash Slash","color":"red"}
 execute unless entity @s[tag=slf.skill.lash_slash] run return fail
-execute if entity @s[scores={slf.focus=30}] run return fail
+execute if score @s slf.focus = 30 run return fail
 scoreboard players set @s slf.focus 30
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

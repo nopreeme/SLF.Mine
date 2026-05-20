@@ -1,5 +1,5 @@
 execute if entity @s[tag=slf.skill.holy_shield] run return fail
-execute if entity @s[scores={slf.focus=8}] run return fail
+execute if score @s slf.focus = 8 run return fail
 scoreboard players set @s slf.focus 8
 scoreboard players set @s slf.focus_stat 4
 scoreboard players set @s slf.sp 0

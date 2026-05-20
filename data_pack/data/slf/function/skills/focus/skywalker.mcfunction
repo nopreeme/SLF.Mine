@@ -1,7 +1,7 @@
 execute if entity @s[tag=slf.skill.skywalker] run return fail
 execute unless entity @s[tag=slf.skill.skatefoot] run tellraw @s {"text":"Requires: Skatefoot","color":"red"}
 execute unless entity @s[tag=slf.skill.skatefoot] run return fail
-execute if entity @s[scores={slf.focus=33}] run return fail
+execute if score @s slf.focus = 33 run return fail
 scoreboard players set @s slf.focus 33
 scoreboard players set @s slf.focus_stat 3
 scoreboard players set @s slf.sp 0
