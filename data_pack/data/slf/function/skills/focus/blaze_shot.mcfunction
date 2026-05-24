@@ -1,5 +1,7 @@
+execute if entity @s[tag=slf.skill.blaze_shot] run tellraw @s {"text":"You already know this skill!","color":"red"}
 execute if entity @s[tag=slf.skill.blaze_shot] run return fail
-execute if score @s slf.focus = 13 run return fail
+execute if score @s slf.focus matches 13 run tellraw @s {"text":"Already focusing this skill.","color":"yellow"}
+execute if score @s slf.focus matches 13 run return fail
 scoreboard players set @s slf.focus 13
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

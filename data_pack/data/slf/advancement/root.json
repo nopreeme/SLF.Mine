@@ -1,14 +1,29 @@
 {
   "display": {
-    "icon": {"id": "minecraft:netherite_sword", "components": {"minecraft:custom_model_data": {"strings": ["slf.wezaemon_katana"]}}},
-    "title": {"translate": "advancements.slf.root.title"},
-    "description": {"translate": "advancements.slf.root.description"},
+    "icon": {
+      "id": "minecraft:netherite_sword",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.wezaemon_katana"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.root.title"
+    },
+    "description": {
+      "translate": "advancements.slf.root.description"
+    },
     "background": "minecraft:textures/block/black_concrete.png",
     "frame": "challenge",
     "show_toast": false,
     "announce_to_chat": false
   },
   "criteria": {
-    "tick": {"trigger": "minecraft:tick"}
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
   }
 }

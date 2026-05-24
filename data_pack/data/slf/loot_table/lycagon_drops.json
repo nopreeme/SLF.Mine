@@ -11,11 +11,19 @@
             {
               "function": "minecraft:set_components",
               "components": {
-                "minecraft:custom_model_data": {"strings": ["slf.lycagon_fang"]},
+                "minecraft:custom_model_data": {
+                  "strings": [
+                    "slf.lycagon_fang"
+                  ]
+                },
                 "minecraft:item_name": "{\"translate\":\"item.slf.lycagon_fang\",\"color\":\"dark_purple\",\"italic\":false}",
-                "minecraft:enchantments": {"levels": {"minecraft:sharpness": 6}},
+                "minecraft:enchantments": {
+                  "minecraft:sharpness": 6
+                },
                 "minecraft:unbreakable": {},
-                "minecraft:lore": ["{\"text\":\"Torn from Lycagon the Nightslayer. Shadow-infused fang of the black wolf.\",\"color\":\"gray\",\"italic\":true}"]
+                "minecraft:lore": [
+                  "{\"text\":\"Torn from Lycagon the Nightslayer. Shadow-infused fang of the black wolf.\",\"color\":\"gray\",\"italic\":true}"
+                ]
               }
             }
           ]
@@ -23,15 +31,29 @@
       ]
     },
     {
-      "rolls": {"type": "minecraft:uniform", "min": 2, "max": 4},
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 2,
+        "max": 4
+      },
       "entries": [
-        {"type": "minecraft:item", "name": "minecraft:bone"}
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone"
+        }
       ]
     },
     {
-      "rolls": {"type": "minecraft:uniform", "min": 1, "max": 3},
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 3
+      },
       "entries": [
-        {"type": "minecraft:item", "name": "minecraft:obsidian"}
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:obsidian"
+        }
       ]
     }
   ]

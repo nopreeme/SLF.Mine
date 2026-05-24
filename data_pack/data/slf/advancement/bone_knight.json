@@ -1,8 +1,21 @@
 {
   "display": {
-    "icon": {"id": "minecraft:netherite_chestplate", "components": {"minecraft:custom_model_data": {"strings": ["slf.chest_tombguard"]}}},
-    "title": {"translate": "advancements.slf.bone_knight.title"},
-    "description": {"translate": "advancements.slf.bone_knight.description"},
+    "icon": {
+      "id": "minecraft:netherite_chestplate",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.chest_tombguard"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.bone_knight.title"
+    },
+    "description": {
+      "translate": "advancements.slf.bone_knight.description"
+    },
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": false
@@ -13,10 +26,42 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.helm_tombguard"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.chest_tombguard"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.legs_tombguard"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.boots_tombguard"]}}}
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.helm_tombguard"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.chest_tombguard"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.legs_tombguard"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.boots_tombguard"
+                ]
+              }
+            }
+          }
         ]
       }
     }

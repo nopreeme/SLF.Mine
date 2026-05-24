@@ -1,8 +1,21 @@
 {
   "display": {
-    "icon": {"id": "minecraft:iron_sword", "components": {"minecraft:custom_model_data": {"strings": ["slf.vorpal_knife"]}}},
-    "title": {"translate": "advancements.slf.vorpal_hunt.title"},
-    "description": {"translate": "advancements.slf.vorpal_hunt.description"},
+    "icon": {
+      "id": "minecraft:iron_sword",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.vorpal_knife"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.vorpal_hunt.title"
+    },
+    "description": {
+      "translate": "advancements.slf.vorpal_hunt.description"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -11,7 +24,19 @@
   "criteria": {
     "get_vorpal": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.vorpal_knife"]}}}]}
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.vorpal_knife"
+                ]
+              }
+            }
+          }
+        ]
+      }
     }
   }
 }

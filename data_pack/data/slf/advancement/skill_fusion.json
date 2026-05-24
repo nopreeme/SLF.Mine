@@ -1,9 +1,22 @@
 {
   "parent": "slf:rabituza_forged",
   "display": {
-    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_formula_drift"]}}},
-    "title": {"translate": "advancements.slf.skill_fusion.title"},
-    "description": {"translate": "advancements.slf.skill_fusion.description"},
+    "icon": {
+      "id": "minecraft:enchanted_book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.skill_formula_drift"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.skill_fusion.title"
+    },
+    "description": {
+      "translate": "advancements.slf.skill_fusion.description"
+    },
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
@@ -13,9 +26,21 @@
     "has_formula_drift": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_formula_drift"]}}}]
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.skill_formula_drift"
+                ]
+              }
+            }
+          }
+        ]
       }
     }
   },
-  "rewards": {"function": "slf:skills/learn/formula_drift"}
+  "rewards": {
+    "function": "slf:skills/learn/formula_drift"
+  }
 }

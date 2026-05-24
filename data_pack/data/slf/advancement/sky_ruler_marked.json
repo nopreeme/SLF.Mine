@@ -1,8 +1,21 @@
 {
   "display": {
-    "icon": {"id": "minecraft:book", "components": {"minecraft:custom_model_data": {"strings": ["slf.unique_core"]}}},
-    "title": {"translate": "advancements.slf.sky_ruler_marked.title"},
-    "description": {"translate": "advancements.slf.sky_ruler_marked.description"},
+    "icon": {
+      "id": "minecraft:book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.unique_core"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.sky_ruler_marked.title"
+    },
+    "description": {
+      "translate": "advancements.slf.sky_ruler_marked.description"
+    },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
@@ -11,7 +24,19 @@
   "criteria": {
     "get_core": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.unique_core"]}}}]}
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.unique_core"
+                ]
+              }
+            }
+          }
+        ]
+      }
     }
   }
 }

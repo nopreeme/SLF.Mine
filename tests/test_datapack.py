@@ -49,7 +49,7 @@ def _tick_class_dispatch() -> dict[int, str]:
     """choose_class trigger value → grant function name."""
     text = _read(TICK_F)
     pattern = re.compile(
-        r"execute as @a if score @s slf\.choose_class = (\d+)\s+run function slf:class/grant/(\w+)"
+        r"execute as @a if score @s slf\.choose_class matches (\d+)\s+run function slf:class/grant/(\w+)"
     )
     return {int(m.group(1)): m.group(2) for m in pattern.finditer(text)}
 
@@ -58,7 +58,7 @@ def _tick_focus_dispatch() -> dict[int, str]:
     """focus_choose trigger value → focus function name."""
     text = _read(TICK_F)
     pattern = re.compile(
-        r"execute as @a if score @s slf\.focus_choose = (\d+)\s+run function slf:skills/focus/(\w+)"
+        r"execute as @a if score @s slf\.focus_choose matches (\d+)\s+run function slf:skills/focus/(\w+)"
     )
     return {int(m.group(1)): m.group(2) for m in pattern.finditer(text)}
 

@@ -1,9 +1,22 @@
 {
   "parent": "slf:colossus_hunter",
   "display": {
-    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_reflexus"]}}},
-    "title": {"translate": "advancements.slf.ctarnidd_skill.title"},
-    "description": {"translate": "advancements.slf.ctarnidd_skill.description"},
+    "icon": {
+      "id": "minecraft:enchanted_book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.skill_reflexus"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.ctarnidd_skill.title"
+    },
+    "description": {
+      "translate": "advancements.slf.ctarnidd_skill.description"
+    },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
@@ -11,8 +24,22 @@
   "criteria": {
     "has_book": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_reflexus"]}}}]}
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.skill_reflexus"
+                ]
+              }
+            }
+          }
+        ]
+      }
     }
   },
-  "rewards": {"function": "slf:skills/learn/reflexus"}
+  "rewards": {
+    "function": "slf:skills/learn/reflexus"
+  }
 }

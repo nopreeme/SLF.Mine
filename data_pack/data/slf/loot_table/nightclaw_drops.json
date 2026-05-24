@@ -11,9 +11,16 @@
             {
               "function": "minecraft:set_components",
               "components": {
-                "minecraft:custom_model_data": {"strings": ["slf.nightclaw_talon"]},
+                "minecraft:custom_model_data": {
+                  "strings": [
+                    "slf.nightclaw_talon"
+                  ]
+                },
                 "minecraft:item_name": "{\"translate\":\"item.slf.nightclaw_talon\",\"color\":\"dark_red\",\"italic\":false}",
-                "minecraft:enchantments": {"levels": {"minecraft:sharpness": 5, "minecraft:fire_aspect": 2}},
+                "minecraft:enchantments": {
+                  "minecraft:sharpness": 5,
+                  "minecraft:fire_aspect": 2
+                },
                 "minecraft:lore": [
                   "{\"text\":\"A razor talon born of eternal darkness.\",\"color\":\"gray\",\"italic\":true}"
                 ]

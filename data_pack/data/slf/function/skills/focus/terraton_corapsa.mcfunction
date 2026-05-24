@@ -1,7 +1,9 @@
+execute if entity @s[tag=slf.skill.terraton_corapsa] run tellraw @s {"text":"You already know this skill!","color":"red"}
 execute if entity @s[tag=slf.skill.terraton_corapsa] run return fail
 execute unless entity @s[tag=slf.skill.gigaton_swing] run tellraw @s {"text":"Requires: Gigaton Swing","color":"red"}
 execute unless entity @s[tag=slf.skill.gigaton_swing] run return fail
-execute if score @s slf.focus = 31 run return fail
+execute if score @s slf.focus matches 31 run tellraw @s {"text":"Already focusing this skill.","color":"yellow"}
+execute if score @s slf.focus matches 31 run return fail
 scoreboard players set @s slf.focus 31
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0

@@ -1,8 +1,21 @@
 {
   "display": {
-    "icon": {"id": "minecraft:netherite_sword", "components": {"minecraft:custom_model_data": {"strings": ["slf.lycagon_fang"]}}},
-    "title": {"translate": "advancements.slf.nightslayer_found.title"},
-    "description": {"translate": "advancements.slf.nightslayer_found.description"},
+    "icon": {
+      "id": "minecraft:netherite_sword",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.lycagon_fang"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.nightslayer_found.title"
+    },
+    "description": {
+      "translate": "advancements.slf.nightslayer_found.description"
+    },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
@@ -11,7 +24,19 @@
   "criteria": {
     "get_fang": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.lycagon_fang"]}}}]}
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.lycagon_fang"
+                ]
+              }
+            }
+          }
+        ]
+      }
     }
   }
 }

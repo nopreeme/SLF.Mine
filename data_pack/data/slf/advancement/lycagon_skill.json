@@ -1,9 +1,22 @@
 {
   "parent": "slf:colossus_hunter",
   "display": {
-    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_managarm_pride"]}}},
-    "title": {"translate": "advancements.slf.lycagon_skill.title"},
-    "description": {"translate": "advancements.slf.lycagon_skill.description"},
+    "icon": {
+      "id": "minecraft:enchanted_book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.skill_managarm_pride"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.lycagon_skill.title"
+    },
+    "description": {
+      "translate": "advancements.slf.lycagon_skill.description"
+    },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
@@ -11,8 +24,22 @@
   "criteria": {
     "has_book": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_managarm_pride"]}}}]}
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.skill_managarm_pride"
+                ]
+              }
+            }
+          }
+        ]
+      }
     }
   },
-  "rewards": {"function": "slf:skills/learn/managarm_pride"}
+  "rewards": {
+    "function": "slf:skills/learn/managarm_pride"
+  }
 }

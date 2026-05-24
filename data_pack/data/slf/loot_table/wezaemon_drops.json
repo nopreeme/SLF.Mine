@@ -11,7 +11,11 @@
             {
               "function": "minecraft:set_components",
               "components": {
-                "minecraft:custom_model_data": {"strings": ["slf.seiten_skillbook"]},
+                "minecraft:custom_model_data": {
+                  "strings": [
+                    "slf.seiten_skillbook"
+                  ]
+                },
                 "minecraft:item_name": "{\"translate\":\"item.slf.seiten_skillbook\",\"color\":\"blue\",\"italic\":false}",
                 "minecraft:lore": [
                   "{\"text\":\"Contains the techniques of an Age of Divinity master swordsman.\",\"color\":\"gray\",\"italic\":true}",
@@ -24,9 +28,16 @@
       ]
     },
     {
-      "rolls": {"type": "minecraft:uniform", "min": 1, "max": 4},
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 4
+      },
       "entries": [
-        {"type": "minecraft:item", "name": "minecraft:nether_brick"}
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:nether_brick"
+        }
       ]
     }
   ]

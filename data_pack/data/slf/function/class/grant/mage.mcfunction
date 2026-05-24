@@ -2,6 +2,7 @@ execute if entity @s[tag=slf.class_chosen] run return fail
 tag @s add slf.class_chosen
 tag @s add slf.was_mage
 scoreboard players set @s slf.class 6
+scoreboard players set @s slf.level 1
 tag @s add slf.skill.wisdoms_divine_eye
 tag @s add slf.skill.chanting_and_memorizing
 tag @s add slf.skill.tanda_breathing

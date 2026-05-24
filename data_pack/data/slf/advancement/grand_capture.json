@@ -1,8 +1,21 @@
 {
   "display": {
-    "icon": {"id": "minecraft:book", "components": {"minecraft:custom_model_data": {"strings": ["slf.seiten_memory"]}}},
-    "title": {"translate": "advancements.slf.grand_capture.title"},
-    "description": {"translate": "advancements.slf.grand_capture.description"},
+    "icon": {
+      "id": "minecraft:book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.seiten_memory"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.grand_capture.title"
+    },
+    "description": {
+      "translate": "advancements.slf.grand_capture.description"
+    },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
@@ -13,11 +26,51 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.seiten_skillbook"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.lycagon_fang"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.unique_core"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.whalelore_goldsheen"]}}},
-          {"predicates": {"minecraft:custom_model_data": {"strings": ["slf.seiten_memory"]}}}
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.seiten_skillbook"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.lycagon_fang"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.unique_core"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.whalelore_goldsheen"
+                ]
+              }
+            }
+          },
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.seiten_memory"
+                ]
+              }
+            }
+          }
         ]
       }
     }

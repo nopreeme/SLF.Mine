@@ -2,6 +2,7 @@ execute if entity @s[tag=slf.class_chosen] run return fail
 tag @s add slf.class_chosen
 tag @s add slf.was_mercenary
 scoreboard players set @s slf.class 30
+scoreboard players set @s slf.level 1
 tag @s add slf.skill.manbufu
 tag @s add slf.skill.duelism
 tag @s add slf.skill.overheat

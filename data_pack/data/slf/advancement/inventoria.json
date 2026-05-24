@@ -1,8 +1,21 @@
 {
   "display": {
-    "icon": {"id": "minecraft:book", "components": {"minecraft:custom_model_data": {"strings": ["slf.seiten_memory"]}}},
-    "title": {"translate": "advancements.slf.inventoria.title"},
-    "description": {"translate": "advancements.slf.inventoria.description"},
+    "icon": {
+      "id": "minecraft:book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.seiten_memory"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.inventoria.title"
+    },
+    "description": {
+      "translate": "advancements.slf.inventoria.description"
+    },
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
@@ -11,7 +24,19 @@
   "criteria": {
     "get_memory": {
       "trigger": "minecraft:inventory_changed",
-      "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.seiten_memory"]}}}]}
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.seiten_memory"
+                ]
+              }
+            }
+          }
+        ]
+      }
     }
   }
 }

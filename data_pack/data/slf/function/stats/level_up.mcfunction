@@ -5,17 +5,17 @@ scoreboard players set @s slf.exp 0
 scoreboard players add @s slf.sp_points 5
 
 # Milestone bonus: every 10 levels award 2 extra stat points
-execute if score @s slf.level = 10 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 20 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 30 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 40 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 50 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 60 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 70 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 80 run scoreboard players add @s slf.sp_points 2
-execute if score @s slf.level = 90 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 10 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 20 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 30 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 40 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 50 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 60 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 70 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 80 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 90 run scoreboard players add @s slf.sp_points 2
 
-tellraw @s ["",{"text":"Level Up! ","color":"gold","bold":true},{"text":"Now level ","color":"yellow"},{"score":{"name":"@s","objective":"slf.level"},"color":"white"},{"text":". +5 stat points.","color":"yellow"}]
+tellraw @s ["",{"text":"Level Up! ","color":"gold","bold":true},{"text":"Now level ","color":"yellow"},{"score":{"name":"@s","objective":"slf.level"},"color":"white"},{"text":". +5 stat points (+7 at milestone levels).","color":"yellow"}]
 
 # Cap at 99 (standby flag set in exp_tick next cycle)
-execute if score @s slf.level >= 99 run scoreboard players set @s slf.level 99
+execute if score @s slf.level matches 99.. run scoreboard players set @s slf.level 99

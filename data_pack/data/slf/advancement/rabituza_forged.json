@@ -1,9 +1,22 @@
 {
   "parent": "slf:first_technique",
   "display": {
-    "icon": {"id": "minecraft:enchanted_book", "components": {"minecraft:custom_model_data": {"strings": ["slf.skill_skywalker"]}}},
-    "title": {"translate": "advancements.slf.rabituza_forged.title"},
-    "description": {"translate": "advancements.slf.rabituza_forged.description"},
+    "icon": {
+      "id": "minecraft:enchanted_book",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.skill_skywalker"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.rabituza_forged.title"
+    },
+    "description": {
+      "translate": "advancements.slf.rabituza_forged.description"
+    },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
@@ -13,7 +26,17 @@
     "has_skywalker": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.skill_skywalker"]}}}]
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.skill_skywalker"
+                ]
+              }
+            }
+          }
+        ]
       }
     }
   }

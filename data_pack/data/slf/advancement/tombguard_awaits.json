@@ -1,18 +1,98 @@
 {
   "display": {
-    "icon": {"id": "minecraft:netherite_helmet", "components": {"minecraft:custom_model_data": {"strings": ["slf.helm_tombguard"]}}},
-    "title": {"translate": "advancements.slf.tombguard_awaits.title"},
-    "description": {"translate": "advancements.slf.tombguard_awaits.description"},
+    "icon": {
+      "id": "minecraft:netherite_helmet",
+      "components": {
+        "minecraft:custom_model_data": {
+          "strings": [
+            "slf.helm_tombguard"
+          ]
+        }
+      }
+    },
+    "title": {
+      "translate": "advancements.slf.tombguard_awaits.title"
+    },
+    "description": {
+      "translate": "advancements.slf.tombguard_awaits.description"
+    },
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": false
   },
   "parent": "slf:root",
   "criteria": {
-    "get_helm":  {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.helm_tombguard"]}}}]}},
-    "get_chest": {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.chest_tombguard"]}}}]}},
-    "get_legs":  {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.legs_tombguard"]}}}]}},
-    "get_boots": {"trigger": "minecraft:inventory_changed", "conditions": {"items": [{"predicates": {"minecraft:custom_model_data": {"strings": ["slf.boots_tombguard"]}}}]}}
+    "get_helm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.helm_tombguard"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "get_chest": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.chest_tombguard"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "get_legs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.legs_tombguard"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "get_boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_model_data": {
+                "strings": [
+                  "slf.boots_tombguard"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
   },
-  "requirements": [["get_helm", "get_chest", "get_legs", "get_boots"]]
+  "requirements": [
+    [
+      "get_helm",
+      "get_chest",
+      "get_legs",
+      "get_boots"
+    ]
+  ]
 }
