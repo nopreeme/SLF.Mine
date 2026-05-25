@@ -42,6 +42,13 @@ TESTING.md
 TESTING.md.save
 RESOURCES.md
 
+# Claude Code — local only
+.claude/
+CLAUDE.md
+build.sh
+drift-changelog.md
+.github/
+
 # Temporary Models/Textures
 model (4).json
 model (5).json
