@@ -2,7 +2,7 @@
 
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.21.x-brightgreen) ![Pack Format](https://img.shields.io/badge/data_pack-format_61-blue) ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-A Minecraft 1.21.x data pack + resource pack bringing the world of **Shangri-La Frontier** into survival. Includes anime-faithful weapons, armor, and a full RPG system: 8 starting classes, a tiered skill-focus engine, 8 spendable stats, custom leveling, and hidden mask data that shapes the world around you.
+A Minecraft 1.21.x data pack + resource pack bringing the world of **Shangri-La Frontier** into survival. Includes anime-faithful weapons, armor, and a full RPG system: 8 starting classes, a tiered skill-focus engine, 9 spendable stats, custom leveling, and hidden mask data that shapes the world around you.
 
 > Both packs must be active together for full functionality.
 
@@ -55,18 +55,28 @@ Choose one of **8 starting classes** on your first join. Your class determines w
 ### Evolution Tree (overview)
 
 ```
-Swordsman      Warrior        Fighter    Mercenary   Thief       Priest    Monk        Mage
-  ↓      ↓      ↓      ↓        ↓            ↓       ↓    ↓      ↓          ↓           ↓
-Sword  Magic   │    Barbarian──┘          Destroyer  Vet  Ban   Ninja    Bishop   Monk    Sage
-Master Sword   │      ↓                      ↓            ↓      ↓         ↓      Soldier   ↓
-  ↓      ↓   War King                   Crazy Fist  Assassin Shinobi    Saint  Spirit  Omnipotent
-Kansei  Myst   │                                       ↓       ↓                Fist    Wisdom
-        Sword  │                                   Kill   Star Shin
-               └──Knight (NPC quest — Swordsman OR Warrior path)
-                    ↓            ↓
-               Holy Knight   Dark Knight
-                    ↓              ↓
-               King's Knight   Black Death
+Swordsman ─┬─ Sword Master ───── Kansei
+           └─ Magic Swordsman ── Mysterious Sword
+
+Warrior ──────────────────────┐
+                              ├─ Barbarian ── War King
+Fighter ─┬────────────────────┘
+         └─ Destroyer ── Crazy Fist
+
+[Swordsman OR Warrior lineage — NPC quest]
+          └── Knight ─┬─ Holy Knight ── King's Knight
+                      └─ Dark Knight ── Black Death
+
+Mercenary ── Veteran
+
+Bandit ───┬─ Thief ── Assassin ── Killing Joke
+          └─ Ninja ── Shinobi ─── Star Shinobi Sei
+
+Priest ──── Bishop ── Saint
+
+Monk ─────── Monk Soldier ── Spirit Fist
+
+Mage ─────── Sage ── Omnipotent Wisdom
 ```
 
 Class evolution is gated by **quest chains and NPC interactions**, not time. History tags (`slf.was_swordsman`, etc.) accumulate permanently — you never lose access to a path you've walked.
@@ -91,10 +101,10 @@ Skills are **earned through play**, not handed out on class grant. Every skill h
 
 | `focus_stat` | Driven by | Example skills |
 |---|---|---|
-| DMG (1) | Damage dealt | Power Slash, Megaton Swing, Lash Slash |
-| MOVE (2) | Sprint distance | Formula Drift, Skatefoot |
-| EVADE (3) | Jumps | Slide Step, Rechette Step, Skywalker |
-| DEF (4) | Damage taken | Iron Skin, Holy Shield, Flash Counter |
+| DMG (1) | Damage dealt | Power Slash, Ignition, Loop Slash |
+| MOVE (2) | Sprint distance | Formula Drift, Skate Foot, Drift Step |
+| EVADE (3) | Jumps | Slide Step, Skywalker, Best Steps |
+| DEF (4) | Damage taken | Unbreakable, Drain, Flash Counter |
 
 ### Ideal Motion bonus
 
@@ -108,21 +118,38 @@ While **airborne and sprinting**, your SP accumulation is **3× normal** for tha
 | T2 | Anyone, but slow | Aligned class gets ~10× lower threshold |
 | T3 | Only after class evolution | Evolution unlocks the skill in your menu |
 | T4 | Achievement-gated | Class irrelevant; gates are level, kills, Vorpal Soul |
-| T5 | Synthesis | Combine two owned skill tags at the synthesis station |
+| T5 | Pruning | Combine two skills at the Skill Garden — originals are lost |
 
-### Skill lineages
+### Skill processes
 
-Within a lineage, learning a higher skill **replaces** its predecessor:
+Every skill belongs to one of four growth paths:
+
+- **Strengthened** — Skills with Roman numeral notation (I–X) grow stronger as you use them. Level X is max.
+- **Evolution** — Skills without a level notation evolve into a new skill through mastery. Some offer a choice of evolution path.
+- **Pruning** — Two skills can be combined at the Skill Garden to forge a new one. Both originals are permanently lost. Higher-level inputs produce a stronger result — max your skills before pruning for the best outcome.
+- **Connected** — *(to be revealed)*
+
+### Skill evolution chains
 
 ```
-Slash:   Power Slash → Lash Slash → Inexhaustible Beasts
-Heavy:   Megaton Swing → Gigaton Swing → Terraton Corapsa
-Knuckle: Knuckle Rush → Strong Puncher
-Ignition: Ignition → Slash Ignition
-AirStep: Slide Step → Formula Drift → Skatefoot → Skywalker
+Spin Slash → Rush Slash → Boundless Slash → Boundless Massacre
+
+Screw Pierce → Spiral Edge → Drill Pierce → Glowing Pierce
+
+Tap Step → Slide Step → Slide Move → Skate Foot → Drift Step
+
+Best Steps → Moon Jumper → Skywalker → Flit Float → Hermes Boot → Dione's Help
+
+Formula Drift → Limit Over Axel → Limit Break Less
+
+Slash Ignition → Firefly
 ```
 
-Skills from **different lineages stack permanently** and are never removed.
+### Strengthened skills
+
+The following skills level from I to X through continued use:
+
+Accel, Power Slash, Loop Slash, Diastep, Drain, Fighting Spirit, Unbreakable, High Runner, Infight, Hand of Fortune, Assassin Pierce, Offroad, Overheat, Ignition
 
 ---
 
@@ -130,18 +157,19 @@ Skills from **different lineages stack permanently** and are never removed.
 
 Earn EXP from mob kills. Level-ups grant **stat points** to spend via `/function slf:stats/menu`.
 
-### 8 spendable stats
+### 9 spendable stats
 
-| Stat | Effect |
-|---|---|
-| STR | Strength effect — melee damage |
-| DEX | Dexterity — attack speed and crit (future) |
-| VIT | Vitality — increases max HP (via Absorption) |
-| AGI | Agility — movement Speed effect |
-| INT | Intelligence — magic power multiplier (future mana) |
-| TEC | Technique — reduces skill focus thresholds |
-| LCK | Luck — drop rates and crit chance (future) |
-| STM | Stamina — Haste + Saturation |
+| Stat | Full Name | Lore | Minecraft Effect |
+|---|---|---|---|
+| HP | Physical Strength / Health | Your total health. Reaching 0 turns your avatar into a mass of polygons. | Max health *(planned)* |
+| MP | Magic Power | Total mana you can exercise. Higher MP boosts magic performance and makes magic skills easier to acquire. | Mana pool *(planned)* |
+| STR | Muscle Strength | Required to wield weapons effectively. Higher STR lets you handle heavier weapons with ease. | Strength I (10+), Strength II (20+) |
+| DEX | Dexterity | Governs fine and precise weapon handling and inventory operations. | Attack speed +0.4 (5+), +0.8 (10+), +1.2 (20+) |
+| AGI | Agility | Determines your avatar's base movement speed. | Speed I (5+), Speed II (10+), Speed III (20+) |
+| TEC | Technique | Governs your ability to handle complex or unknown weapons at first sight. Assists player skill — trajectory control, projectile and magic manipulation. | Reduces skill focus thresholds |
+| VIT | Endurance | Physical defense against trauma. Low VIT will cause your body to break down regardless of armor. | Absorption I (5+), II (10+), III (20+), IV (30+) |
+| STM | Stamina | Decreases as you move or fight. Too low and your avatar becomes sluggish. Also affects lung capacity. | Saturation I (5+), Haste I (10+) |
+| LCK | Luck | Affects random numbers and makes critical hit angles more forgiving. At LCK ≥ 50, activates **Bite** — survive a fatal blow at exactly 1 HP. | Luck attribute 1/2/3/4 (10/20/40/60+); Bite proc active |
 
 Stats are applied automatically every second via Minecraft status effects.
 
@@ -175,120 +203,108 @@ Two hidden scoreboards shape the world without being shown in any UI.
 
 ### Vorpal Soul
 
-- **Rises** when you kill a mob whose level is 20+ above yours
-- **Falls** (−5) on your death
+*The spirit of knowing fear and still confronting it. Mask data measuring the integrity of the soul — an indomitable resolve untainted by despair.*
+
+- **Rises** when you defeat enemies far beyond your current level
+- **Falls** (−5) on your death — despair leaves a mark
+- High Vorpal Soul is recognized by the **Vorpal Bunny** and certain elite monsters — they only appear before those whose soul is strong enough
 - **Gates** T4 Heroic skills at `vorpal_soul ≥ 50`
 
 ### Karma
 
-- **Rises** (+2) when you kill passive mobs or NPCs
-- **Decays** (−1 every 60 seconds) naturally
-- At `karma ≥ 100` a **Bounty Hunter** spawns near you
-- Caps at 200 — bounty hunters keep coming
+*Mask data that accumulates by succumbing to the temptation of malice.*
+
+- **Rises** from any kill, but especially PK and slaughter driven by greed (farming for loot and items)
+- **Decays** naturally over time; decreases through NPC quests and charitable acts
+- At `karma ≥ 100` a **Bounty Hunter** (prize money hunter) will seek you out
+- Caps at 200
+- High karma affects your **trust value** with NPCs and factions *(planned)*
 
 ---
 
-## Boss Drop Skills
+## Hidden Bosses
 
-Some skills are earned from boss encounters rather than the focus system. Any class can obtain these.
+Seven unique boss monsters are hidden throughout the world. Defeating them is the highest challenge in the game.
 
-| Boss | Drop |
-|---|---|
-| Wezaemon | Seitan skill book — *Clear Sky* (fast aerial slash) |
-| Siegwurm | *Critical Speed - Bradion* (sprint-based Haste buildup) |
-| Ctarnidd | *Reflexus* (briefly copy last enemy attack pattern) |
-| Lycagon | Title: **** (first 10 players) + materials |
-| Vorpal Bunny *(rare enemy)* | *Acrobat* (Resistance I while airborne) |
+| # | Boss | Drops |
+|---|---|---|
+| 1 | Lycagon the Nightslayer | |
+| 2 | Wethermon the Tombguard | |
+| 3 | Ctarnidd of the Abyss | |
+| 4 | Siegwurm the Sky Ruler | |
+| 5 | Goldhuneenay the Inexhaustible | |
+| 6 | Orchestra of the Doom Echo | |
+| 7 | *(unknown)* | |
 
 ---
 
 ## Items
 
-| Display Name | Base Item | Category |
+### Weapons
+
+| Name | Category | Notes |
 |---|---|---|
-| Wethermon Bone Scythe | Netherite Sword | Boss Weapon |
-| Wethermon Rib Dagger | Iron Sword | Boss Weapon |
-| Bilac Crescent Blade | Netherite Sword | Boss Weapon |
-| Bilac Fang Gauntlet | Golden Sword | Boss Weapon |
-| Oriana Scepter | Diamond Sword | Boss Weapon |
-| Oriana Void Staff | Diamond Sword | Boss Weapon |
-| Night Claw Talon | Netherite Sword | Boss Weapon |
-| Sunraku's Right Blade | Iron Sword | Player Weapon |
-| Sunraku's Left Blade | Iron Sword | Player Weapon |
-| Chaos Rod | Golden Sword | Player Weapon |
-| Tombguard Helmet | Netherite Helmet | Armor |
-| Tombguard Chestplate | Netherite Chestplate | Armor |
-| Tombguard Leggings | Netherite Leggings | Armor |
-| Tombguard Boots | Netherite Boots | Armor |
-| Full Moon Chestguard | Diamond Chestplate | Armor |
-| Skill: Slash | Enchanted Book | Skill Book |
-| Skill: Thrust | Enchanted Book | Skill Book |
-| Skill: Blade Rush \[FUSED\] | Enchanted Book | Fused Skill |
-| Skill: Moon Howl \[FUSED\] | Enchanted Book | Fused Skill |
-| Skill: Void Lance \[FUSED\] | Enchanted Book | Fused Skill |
-| Unique Monster Core | Book | Material |
+| Mercenary Twinblades | Starting Weapon | Sunraku's initial dual swords; granted to Mercenary class |
+| Goblin Hand Axe | Drop Weapon | Drops from goblins |
+| Vorpal Chopper | Rare Drop | Rare drop from Vorpal Bunny; critical damage bonus |
+| Togetsu Waning | Ascended Weapon | Ascended from Vorpal Choppers by Vysache |
+| Togetsu Waxing | Ascended Weapon | Ascended from Vorpal Choppers by Vysache |
+| Whalelore Moonblade "Goldsheen" | Ascended Weapon | Ascended from Togetsu by Vysache; requires Golden Scorpion stinger |
+| Whalelore Moonblade "Netherlight" | Ascended Weapon | Ascended from Togetsu by Vysache; requires Atlanticus Lepnorca scale |
+
+### Headgear
+
+| Name | Notes |
+|---|---|
+| Staring Bird Mask | |
+| Battlehorn Helm "4A" | |
+| Lichman King Salmon's Headpiece | |
+| Lacedaemon Helm | |
+
+### Belts
+
+| Name | Notes |
+|---|---|
+| Splitblade Belt | |
+| Lifestide Sash | |
+| Excavated Grindsash "Veteran" | |
+| Lacedaemon Girdle | |
+
+### Armor Sets
+
+| Name | Notes |
+|---|---|
+| Splitblade Leather Equipment Set | |
+| Non-Standard Specialized Armor "Adebane" | |
+| Suit of the Protector | |
+| Non-Standard Specialized Armor "Shoro" | |
+
+### Accessories
+
+| Name | Notes |
+|---|---|
+| Vorpal Soul Collar | |
 
 ---
 
-## Skill Fusion
+## Skill Garden (Pruning)
 
-Combine skills at the **Skill Garden** using a **<item>** as the fusion catalyst:
+Combine two skills at the **Skill Garden** to forge a new one. Both input skills are permanently destroyed. The level of your input skills at the time of pruning affects the base strength of the result — higher is better.
 
-| Fused Skill | Pattern | Reagent |
+| Input A | Input B | Result |
 |---|---|---|
+| Oppression Kick | Loop Slash | Infight I |
+| Strong Puncher | Crossing Slash | Hand of Fortune I |
+| Accel | Fighting Spirit | Climax Boost I |
+| Armor Piercer | Cutwater | Assassin Pierce I |
+| Deerstep | Unbreakable | Offroad I |
+| Starving Impulse | Naked Sense | Hunger Wolf |
 
 
 ---
 
-## Advancements
-
-Open the Advancements screen (`L`) and look for the **Shangri-La Frontier** tab.
-
-```
-Shangri-La Frontier (root)
-├── Rookie Gear — craft Sunraku's right blade
-│   └── Dual Fangs — hold both Sunraku blades
-├── The Tombguard Awaits — obtain any Tombguard armor piece
-│   └── Gravedigger — obtain the Wethermon Katana
-│       └── Bone Knight — wear the full Tombguard set
-├── Moonlit Challenge — obtain the Full Moon Chestguard
-│   └── Wolf Bane — obtain the Bilac Crescent Blade
-├── Uncrowned Crown — craft Oriana's Scepter
-│   └── Elven Mastery — obtain the Oriana Void Staff
-└── First Technique — craft Skill: Slash or Thrust
-    └── Skill Fusion — create any fused skill
-        └── Unique Hunter — own all 3 Unique Monster weapons
-            └── Grand Capture — obtain the Night Claw Talon
-```
-
----
 
 ## Admin / Creative Commands
-
-### Give items
-
-```
-/function slf:give/wethermon_scythe
-/function slf:give/bilac_crescent_blade
-/function slf:give/oriana_scepter
-/function slf:give/sunraku_blade_r
-/function slf:give/sunraku_blade_l
-/function slf:give/rust_saber
-/function slf:give/lycagon_fang
-/function slf:give/vorpal_knife
-/function slf:give/wezaemon_katana
-```
-
-### Loot tables
-
-```
-/loot give @s loot slf:wethermon_drops
-/loot give @s loot slf:bilac_drops
-/loot give @s loot slf:oriana_drops
-/loot give @s loot slf:nightclaw_drops
-```
-
-### Class & progression
 
 ```
 /function slf:class/select          — open the class selection menu
@@ -304,11 +320,9 @@ Shangri-La Frontier (root)
 
 | MC Version | Resource Pack | Data Pack |
 |---|---|---|
-| 1.21.0 – 1.21.1 | 34 | 48 |
-| 1.21.2 – 1.21.3 | 42 | 57 |
-| 1.21.4 | 46 | 61 |
+| 1.21.4+ (target: 1.21.8+) | 46 | 61 |
 
-The data pack declares `supported_formats: [48, 999]` so it loads on all 1.21.x versions.
+Both packs declare a `supported_formats` wildcard range — they load on all 1.21.x versions.
 
 ---
 
