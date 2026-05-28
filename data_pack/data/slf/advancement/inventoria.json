@@ -20,7 +20,7 @@
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "slf:wezaemon_falls",
+  "parent": "slf:wethermon_falls",
   "criteria": {
     "get_memory": {
       "trigger": "minecraft:inventory_changed",

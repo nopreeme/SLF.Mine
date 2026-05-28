@@ -41,6 +41,8 @@ GEMINI.md
 TESTING.md
 TESTING.md.save
 RESOURCES.md
+SKILLS.md
+ITEMS.md
 
 # Claude Code — local only
 .claude/
@@ -48,6 +50,7 @@ CLAUDE.md
 build.sh
 drift-changelog.md
 .github/
+dashboard.py
 
 # Temporary Models/Textures
 model (4).json

@@ -11,10 +11,10 @@
       }
     },
     "title": {
-      "translate": "advancements.slf.wezaemon_falls.title"
+      "translate": "advancements.slf.wethermon_falls.title"
     },
     "description": {
-      "translate": "advancements.slf.wezaemon_falls.description"
+      "translate": "advancements.slf.wethermon_falls.description"
     },
     "frame": "challenge",
     "show_toast": true,

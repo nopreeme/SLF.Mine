@@ -3,7 +3,7 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.wezaemon_katana", "model": {"type": "minecraft:model", "model": "slf:item/wezaemon_katana"}},
+      {"when": "slf.wethermon_katana", "model": {"type": "minecraft:model", "model": "slf:item/wethermon_katana"}},
       {"when": "slf.lycagon_fang",    "model": {"type": "minecraft:model", "model": "slf:item/lycagon_fang"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "minecraft:item/netherite_sword"}

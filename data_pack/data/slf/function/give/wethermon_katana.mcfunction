@@ -1,0 +1,1 @@
+give @s minecraft:netherite_sword[custom_model_data={strings:["slf.wethermon_katana"]},item_name={text:"Wethermon's Blade",color:"dark_blue",italic:false},lore=[{text:"The blade of Wethermon the Tombguard. Forged in samurai steel.",color:"gray",italic:true}]] 1
