@@ -9,7 +9,9 @@ scoreboard objectives add slf.exp dummy
 scoreboard objectives add slf.sp_points dummy
 scoreboard objectives add slf.boss_kills dummy
 
-# --- Stat Attributes (8 spendable) ---
+# --- Stat Attributes (9 spendable) ---
+scoreboard objectives add slf.stat.hp dummy
+scoreboard objectives add slf.stat.mp dummy
 scoreboard objectives add slf.stat.str dummy
 scoreboard objectives add slf.stat.dex dummy
 scoreboard objectives add slf.stat.vit dummy
@@ -19,6 +21,8 @@ scoreboard objectives add slf.stat.lck dummy
 scoreboard objectives add slf.stat.stm dummy
 
 # --- Stat spend triggers (clickable from /function slf:stats/menu) ---
+scoreboard objectives add slf.stat_hp trigger
+scoreboard objectives add slf.stat_mp trigger
 scoreboard objectives add slf.stat_str trigger
 scoreboard objectives add slf.stat_dex trigger
 scoreboard objectives add slf.stat_vit trigger

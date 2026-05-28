@@ -46,6 +46,8 @@ scoreboard players enable @a[tag=slf.class_chosen] slf.focus_choose
 
 # --- Stat spend triggers ---
 # Fail message if trying to spend with 0 points
+execute as @a if score @s slf.stat_hp matches 1.. if score @s slf.sp_points matches ..0 run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
+execute as @a if score @s slf.stat_mp matches 1.. if score @s slf.sp_points matches ..0 run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
 execute as @a if score @s slf.stat_str matches 1.. if score @s slf.sp_points matches ..0 run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
 execute as @a if score @s slf.stat_dex matches 1.. if score @s slf.sp_points matches ..0 run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
 execute as @a if score @s slf.stat_vit matches 1.. if score @s slf.sp_points matches ..0 run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
@@ -55,6 +57,8 @@ execute as @a if score @s slf.stat_lck matches 1.. if score @s slf.sp_points mat
 execute as @a if score @s slf.stat_stm matches 1.. if score @s slf.sp_points matches ..0 run tellraw @s {"text":"You don't have any stat points to spend!","color":"red"}
 
 # Success execution
+execute as @a if score @s slf.stat_hp matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_hp
+execute as @a if score @s slf.stat_mp matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_mp
 execute as @a if score @s slf.stat_str matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_str
 execute as @a if score @s slf.stat_dex matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_dex
 execute as @a if score @s slf.stat_vit matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_vit
@@ -62,6 +66,8 @@ execute as @a if score @s slf.stat_agi matches 1.. if score @s slf.sp_points mat
 execute as @a if score @s slf.stat_tec matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_tec
 execute as @a if score @s slf.stat_lck matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_lck
 execute as @a if score @s slf.stat_stm matches 1.. if score @s slf.sp_points matches 1.. run function slf:stats/spend_stm
+execute as @a if score @s slf.stat_hp matches 1.. run scoreboard players reset @s slf.stat_hp
+execute as @a if score @s slf.stat_mp matches 1.. run scoreboard players reset @s slf.stat_mp
 execute as @a if score @s slf.stat_str matches 1.. run scoreboard players reset @s slf.stat_str
 execute as @a if score @s slf.stat_dex matches 1.. run scoreboard players reset @s slf.stat_dex
 execute as @a if score @s slf.stat_vit matches 1.. run scoreboard players reset @s slf.stat_vit
@@ -69,6 +75,8 @@ execute as @a if score @s slf.stat_agi matches 1.. run scoreboard players reset 
 execute as @a if score @s slf.stat_tec matches 1.. run scoreboard players reset @s slf.stat_tec
 execute as @a if score @s slf.stat_lck matches 1.. run scoreboard players reset @s slf.stat_lck
 execute as @a if score @s slf.stat_stm matches 1.. run scoreboard players reset @s slf.stat_stm
+scoreboard players enable @a[tag=slf.class_chosen] slf.stat_hp
+scoreboard players enable @a[tag=slf.class_chosen] slf.stat_mp
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_str
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_dex
 scoreboard players enable @a[tag=slf.class_chosen] slf.stat_vit
