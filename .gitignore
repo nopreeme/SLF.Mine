@@ -43,6 +43,10 @@ TESTING.md.save
 RESOURCES.md
 SKILLS.md
 ITEMS.md
+CLASSES.md
+
+# Obsidian
+.obsidian/
 
 # Claude Code — local only
 .claude/
