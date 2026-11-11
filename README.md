@@ -320,9 +320,9 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 
 | MC Version | Resource Pack | Data Pack |
 |---|---|---|
-| 1.21.4+ (target: 1.21.8+) | 46 | 61 |
+| 26.2 | 88 | 107 |
 
-Both packs declare a `supported_formats` wildcard range — they load on all 1.21.x versions.
+Both packs declare `min_format`/`max_format` for 26.2 only. 26.2 rejects the old `pack_format` + `supported_formats` declaration, and these packs no longer load on 1.21.x.
 
 ---
 
