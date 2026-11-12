@@ -22,7 +22,7 @@ You need a dedicated server jar for the pack's Minecraft version and a Java runt
    python -m unittest tests.live.test_live -v
    ```
 
-About two and a half minutes. Without `SLF_MC_SERVER_DIR` the module is skipped.
+About four minutes. Without `SLF_MC_SERVER_DIR` the module is skipped.
 
 Running the server means accepting Mojang's EULA; the harness writes `eula=true` into the scratch folder. The server
 listens on 127.0.0.1 only (game port 25599, RCON 25575), runs in offline mode, and its world is deleted afterwards.
@@ -46,4 +46,5 @@ listens on 127.0.0.1 only (game port 25599, RCON 25575), runs in offline mode, a
 
 - Pathfinding, combat against mobs that fight back, and anything that needs a rendered client (models, textures,
   the status line's appearance). `tests/test_resource_pack.py` checks the resource pack's files instead.
-- Two players at once (karma from player kills is wired the same way as the other kill rewards, but is not exercised).
+- More than a handful of players at once. One test connects a second player (for karma from player kills); nothing
+  measures performance on a busy server.

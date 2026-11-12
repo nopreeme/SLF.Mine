@@ -9,7 +9,8 @@ See tests/live/README.md. One server is started for the whole module.
 import os, re, sys, time, unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import LiveServer, REPO
+from harness import LiveServer, REPO, PORT
+from mcbot import Bot
 
 S = None
 
@@ -349,6 +350,16 @@ class Mask(Base):
         S.as_player("damage @e[type=minecraft:villager,tag=slf.test,limit=1] 1000 minecraft:player_attack by @s"); S.wait_ticks(6)
         self.assertEqual(S.score("slf.karma"), 5)
 
+    def test_killing_another_player_raises_karma(self):
+        victim = Bot("Victim", port=PORT).connect()
+        try:
+            self.grant("swordsman"); S.cmd("gamemode survival Victim"); S.cmd(f"tp Victim {S.player}"); S.wait_ticks(6)
+            out = S.as_player("damage Victim 1000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
+            self.assertEqual(victim.deaths, 1); self.assertEqual(S.score("slf.karma"), 25)
+            self.assertEqual(S.score("slf.exp"), 2)   # a player is not a monster: only the base 2 EXP
+        finally:
+            victim.close(); S.wait_ticks(10)
+
     def test_death_costs_vorpal_soul(self):
         self.grant("swordsman"); self.set("slf.vorpal_soul", 12); S.cmd(f"gamemode survival {S.player}"); deaths = S.bot.deaths
         S.cmd(f"kill {S.player}"); S.wait_ticks(20)
@@ -470,7 +481,7 @@ class Altar(Base):
     def test_walking_up_awakens_only_the_worthy(self):
         self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 6000); S.wait_cycle()
         self.assertEqual(S.score("slf.standby"), 1)
-        self.place(); mark = S.bot.mark(); S.wait_cycle(); S.wait_cycle()          # arrives without a boss kill
+        mark = S.bot.mark(); self.place(); S.wait_cycle(); S.wait_cycle()          # arrives without a boss kill
         self.assertEqual(S.score("slf.awakened"), 0); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark))
         self.assertEqual(sum("altar is dormant" in c for c in S.bot.chat_since(mark)), 1, "the altar repeated itself while the player stood there")
         S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.assertNotIn("slf.at_altar", S.tags())
