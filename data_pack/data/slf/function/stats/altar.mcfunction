@@ -1,4 +1,5 @@
 # Altar of Awakening — converts exp_extend into post-99 levels (100-150)
+# Reached by walking up to an altar (altar/enter), or from the menu when the world has no altar in reach (altar/guide).
 # Requires: slf.standby=1 AND slf.boss_gate=1
 execute unless score @s slf.standby matches 1 run return fail
 execute unless score @s slf.boss_gate matches 1 run tellraw @s {"text":"The altar is dormant. Prove yourself against a worthy foe first.","color":"dark_red"}

@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 73540221,
+    "separation": 12,
+    "spacing": 30
+  },
+  "structures": [
+    {
+      "structure": "slf:altar",
+      "weight": 1
+    }
+  ]
+}

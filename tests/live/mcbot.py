@@ -169,6 +169,7 @@ class Bot:
         elif pid == self.P_POSITION:
             tid = r.varint(); self.pos = list(struct.unpack(">ddd", r.take(24)))   # absolute: tests only teleport with absolute coordinates
             self._send(self.PS_TELEPORT, varint(tid))
+            self._move(False)   # a real client reports its position right after a teleport; the server only then loads the area
             if not self.in_game.is_set(): self._send(self.PS_LOADED); self.in_game.set()
         elif pid == self.P_CHUNK_BATCH: self._send(self.PS_CHUNK_BATCH, struct.pack(">f", 20.0))
         elif pid == self.P_CHAT:

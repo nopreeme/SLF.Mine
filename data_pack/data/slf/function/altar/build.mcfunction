@@ -13,10 +13,10 @@ setblock ~2 ~ ~-2 minecraft:polished_blackstone_wall
 setblock ~2 ~1 ~-2 minecraft:soul_lantern
 setblock ~-2 ~ ~-2 minecraft:polished_blackstone_wall
 setblock ~-2 ~1 ~-2 minecraft:soul_lantern
-summon minecraft:marker ~0.5 ~ ~0.5 {Tags:["slf.altar"]}
-summon minecraft:text_display ~0.5 ~3.4 ~0.5 {Tags:["slf.altar_label"],billboard:"center",text:{text:"Altar of Awakening",color:"light_purple",bold:true}}
+summon minecraft:marker ~0.5 ~ ~0.5 {Tags:["slf.altar","slf.altar_placed"]}
+summon minecraft:text_display ~0.5 ~3.4 ~0.5 {Tags:["slf.altar_label","slf.altar_placed"],billboard:"center",text:{text:"Altar of Awakening",color:"light_purple",bold:true}}
 # Remember that an altar exists and where, for the menu
 scoreboard players set #altar_placed slf.timer 1
-execute store result score #altar_x slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar,limit=1,sort=nearest] Pos[0]
-execute store result score #altar_y slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar,limit=1,sort=nearest] Pos[1]
-execute store result score #altar_z slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar,limit=1,sort=nearest] Pos[2]
+execute store result score #altar_x slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar_placed,limit=1,sort=nearest] Pos[0]
+execute store result score #altar_y slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar_placed,limit=1,sort=nearest] Pos[1]
+execute store result score #altar_z slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar_placed,limit=1,sort=nearest] Pos[2]

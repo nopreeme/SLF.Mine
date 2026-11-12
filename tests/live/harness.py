@@ -30,6 +30,7 @@ pause-when-empty-seconds=-1
 max-tick-time=-1
 sync-chunk-writes=false
 gamemode=survival
+level-seed=shangri-la
 difficulty=normal
 """
 

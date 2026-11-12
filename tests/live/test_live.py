@@ -13,6 +13,7 @@ from harness import LiveServer, REPO, PORT
 from mcbot import Bot
 
 S = None
+HOME = None   # where the test player first spawned; every test starts from here
 
 
 def setUpModule():
@@ -22,6 +23,8 @@ def setUpModule():
     S = LiveServer(datapacks={"SLF": os.path.join(REPO, "data_pack"),
                               "SLF_Weapons": os.path.join(REPO, "weapons", "java_out", "SLF_Weapons_Datapack")}).__enter__()
     S.wait_cycle()
+    global HOME
+    HOME = " ".join(str(v) for v in S.bot.pos)
 
 
 def tearDownModule():
@@ -45,6 +48,7 @@ class Base(unittest.TestCase):
     def setUp(self):
         self.assertIsNone(S.bot.error, "test player lost its connection")
         S.cmd(f"gamemode creative {S.player}"); S.cmd(f"effect clear {S.player}")
+        S.cmd(f"tp {S.player} {HOME}"); S.cmd("kill @e[tag=slf.test]")
         S.as_player("function slf:admin/reset_player"); S.wait_ticks(3)
 
     def set(self, objective, value): S.cmd(f"scoreboard players set {S.player} {objective} {value}")
@@ -325,9 +329,9 @@ class Leveling(Base):
     def test_standby_altar_and_awakened_levels(self):
         self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 12000); S.wait_cycle()
         self.assertEqual((S.score("slf.level"), S.score("slf.standby"), S.score("slf.exp_extend")), (99, 1, 12000))
-        mark = S.bot.mark(); S.as_player("trigger slf.menu set 6"); S.wait_ticks(4)
+        mark = S.bot.mark(); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
         self.assertEqual(S.score("slf.standby"), 1); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)))
-        self.set("slf.boss_gate", 1); S.as_player("trigger slf.menu set 6"); S.wait_ticks(4)
+        self.set("slf.boss_gate", 1); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
         self.assertEqual((S.score("slf.standby"), S.score("slf.awakened")), (0, 1))
         S.wait_cycle(); S.wait_cycle(); S.wait_cycle()
         self.assertEqual(S.score("slf.level"), 101); self.assertEqual(S.score("slf.standby"), 0)   # 12000 banked EXP = 2 levels, 2000 left
@@ -489,13 +493,54 @@ class Altar(Base):
         self.assertEqual((S.score("slf.awakened"), S.score("slf.standby")), (1, 0))
         S.wait_cycle(); S.wait_cycle(); self.assertEqual(S.score("slf.level"), 100)
 
+    def nearest_generated(self):
+        out = S.as_player("locate structure slf:altar"); m = re.search(r"\[(-?\d+), ~, (-?\d+)\] \((\d+) blocks", out)
+        self.assertTrue(m, f"no altar could be located: {out!r}")
+        return int(m.group(1)), int(m.group(2)), int(m.group(3))
+
+    def test_altars_generate_in_the_world_and_awaken(self):
+        x, z, _ = self.nearest_generated()
+        S.cmd(f"tp {S.player} {x} 200 {z}")
+        deadline = time.time() + 60; pos = []
+        while time.time() < deadline and not pos:   # terrain around the altar has to generate first
+            time.sleep(1); pos = [float(v) for v in re.findall(r"(-?[\d.]+)d", S.cmd(f"execute at {S.player} run data get entity @e[type=minecraft:marker,tag=slf.altar,limit=1,sort=nearest] Pos"))]
+        self.assertTrue(pos, "the altar's marker never appeared at the located position")
+        bx, by, bz = int(pos[0] // 1), int(pos[1]), int(pos[2] // 1)
+        for dy, block in ((-1, "polished_blackstone_bricks"), (0, "gilded_blackstone"), (1, "crying_obsidian"), (2, "end_rod")):
+            self.assertIn("passed", S.cmd(f"execute if block {bx} {by + dy} {bz} minecraft:{block}"), f"{block} missing in the generated altar")
+        self.assertIn("passed", S.cmd(f"execute positioned {bx} {by} {bz} if entity @e[type=minecraft:text_display,tag=slf.altar_label,distance=..6]"))
+        self.assertNotIn("passed", S.cmd(f"execute if block {bx} {by - 2} {bz} minecraft:air"), "the altar is floating")
+        self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 5000); self.set("slf.boss_gate", 1); S.wait_cycle()
+        self.assertEqual(S.score("slf.awakened"), 0)
+        S.cmd(f"tp {S.player} {bx + 1}.5 {by + 1} {bz + 2}.5"); S.wait_cycle(); S.wait_cycle()
+        self.assertEqual((S.score("slf.awakened"), S.score("slf.standby")), (1, 0))
+
+    MAP = "minecraft:filled_map[minecraft:custom_data~{slf_altar_map:1b}]"
+
+    def maps(self):
+        m = re.search(r"Found (\d+) matching", S.cmd(f"clear {S.player} {self.MAP} 0")); return int(m.group(1)) if m else 0
+
+    def test_menu_gives_distance_and_a_map_to_a_generated_altar(self):
+        S.cmd(f"clear {S.player}"); _, _, dist = self.nearest_generated()
+        self.grant("swordsman"); S.cmd(f"clear {S.player}"); self.set("slf.level", 99); self.set("slf.boss_gate", 1); S.wait_cycle()
+        mark = S.bot.mark(); self.click("[Altar of Awakening]", "trigger slf.menu")
+        deadline = time.time() + 30                                            # drawing an explorer map takes the server a moment
+        while time.time() < deadline and not any("map to it has been placed" in c for c in S.bot.chat_since(mark)): time.sleep(0.5)
+        chat = S.bot.chat_since(mark)
+        self.assertTrue(any(f"about {dist} blocks away" in c for c in chat), chat)
+        self.assertTrue(any("map to it has been placed" in c for c in chat), chat)
+        self.assertEqual(self.maps(), 1)
+        self.assertIn("passed", S.cmd(f"execute if items entity {S.player} container.* minecraft:filled_map[minecraft:map_decorations]"), "the map has no target marked on it")
+        mark = S.bot.mark(); self.click("[Altar of Awakening]", "trigger slf.menu"); S.wait_ticks(40)   # asking again does not hand out a second map
+        self.assertTrue(any("Your map to the altar" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark)); self.assertEqual(self.maps(), 1)
+        self.assertEqual(S.score("slf.awakened"), 0); S.cmd(f"clear {S.player}")
+
     def test_menu_points_to_the_altar_once_placed(self):
         self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle(); self.place()   # no boss kill yet: the altar stays dormant
         S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.set("slf.boss_gate", 1)
-        mark = S.bot.mark(); S.as_player("trigger slf.menu"); S.wait_ticks(4)
-        self.assertTrue(any("Altar of Awakening stands at" in c for c in S.bot.chat_since(mark)))
-        self.assertNotIn("trigger slf.menu set 6", [c for _, c in S.bot.clicks_since(mark)])
-        S.as_player("trigger slf.menu set 6"); S.wait_ticks(4); self.assertEqual(S.score("slf.awakened"), 0)   # no shortcut past the altar
+        chat = self.click("[Altar of Awakening]", "trigger slf.menu")
+        self.assertTrue(any("Altar of Awakening stands at" in c for c in chat), chat)
+        self.assertEqual(S.score("slf.awakened"), 0)   # the menu only gives directions: no shortcut past the altar
 
 
 class WeaponsPack(Base):
