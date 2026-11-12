@@ -150,5 +150,18 @@ scoreboard players set @s slf.knight_trials 0
 scoreboard players set @s slf.standby 0
 scoreboard players set @s slf.exp_extend 0
 scoreboard players set @s slf.awakened 0
+scoreboard players set @s slf.stat.hp 0
+scoreboard players set @s slf.stat.mp 0
+scoreboard players set @s slf.mana 0
+scoreboard players set @s slf.boss_gate 0
+scoreboard players set @s slf.boss_kills 0
+scoreboard players set @s slf.vorpal_soul 0
+scoreboard players set @s slf.bt_kills 0
+scoreboard players set @s slf.knight_quest 0
+scoreboard players reset @s slf.evolve
+scoreboard players reset @s slf.hp_applied
+attribute @s minecraft:max_health modifier remove slf:hp_bonus
+attribute @s minecraft:attack_speed modifier remove slf:dex_speed
+attribute @s minecraft:luck base set 0
 
 tellraw @s {"text":"[SLF] Player state reset.","color":"gray"}

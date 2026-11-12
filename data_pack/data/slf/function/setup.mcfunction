@@ -75,6 +75,20 @@ scoreboard objectives add slf.mob_level dummy
 # --- Ignition detection (separate from def_prev) ---
 scoreboard objectives add slf.ign.prev dummy
 
+# --- Menus and evolution (triggers work without OP) ---
+scoreboard objectives add slf.menu trigger
+scoreboard objectives add slf.evolve trigger
+
+# --- Join / death detection ---
+scoreboard objectives add slf.leave minecraft.custom:minecraft.leave_game
+scoreboard objectives add slf.deaths minecraft.custom:minecraft.deaths
+
+# --- Derived stats: mana pool (MP), max-health bonus (HP), EXP needed for the next level ---
+scoreboard objectives add slf.mana dummy
+scoreboard objectives add slf.mana_max dummy
+scoreboard objectives add slf.hp_applied dummy
+scoreboard objectives add slf.exp_next dummy
+
 # --- Temp scratch ---
 scoreboard objectives add slf.tmp dummy
 scoreboard objectives add slf.lck_save_cd dummy

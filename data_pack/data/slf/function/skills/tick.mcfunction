@@ -1,3 +1,12 @@
+# --- Join / rejoin: greet new players and show the class menu to anyone without a class ---
+execute as @a[tag=!slf.joined] run function slf:player/first_join
+execute as @a[scores={slf.leave=1..}] run function slf:player/rejoin
+execute as @a[scores={slf.deaths=1..}] run function slf:mask/on_death
+
+# --- Menu trigger: /trigger slf.menu (works for players without OP) ---
+execute as @a[scores={slf.menu=1..}] run function slf:menu/dispatch
+scoreboard players enable @a slf.menu
+
 # --- Class selection ---
 # Trigger-based (alignment_choice + admin direct grants)
 execute as @a if score @s slf.choose_class matches 1 run function slf:class/grant/swordsman
@@ -12,6 +21,10 @@ execute as @a if score @s slf.choose_class matches 41 run function slf:class/gra
 execute as @a if score @s slf.choose_class matches 42 run function slf:class/grant/dark_knight
 execute as @a if score @s slf.choose_class matches 1.. run scoreboard players reset @s slf.choose_class
 scoreboard players enable @a[tag=!slf.class_chosen] slf.choose_class
+
+# --- Class evolution: /trigger slf.evolve set <class id> (from the evolution menu) ---
+execute as @a[scores={slf.evolve=1..}] run function slf:class/evolve_apply
+scoreboard players enable @a[tag=slf.class_chosen] slf.evolve
 
 # --- Skill focus selection ---
 execute as @a if score @s slf.focus_choose matches 1 run function slf:skills/focus/power_slash
@@ -95,6 +108,8 @@ execute if score #timer slf.timer matches 20.. run function slf:skills/exp_tick
 execute if score #timer slf.timer matches 20.. run function slf:skills/passives
 execute if score #timer slf.timer matches 20.. run function slf:mask/karma_tick
 execute if score #timer slf.timer matches 20.. run function slf:stats/apply
+execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run function slf:stats/apply_derived
 execute if score #timer slf.timer matches 20.. as @a if score @s slf.stat.lck matches 1.. run function slf:stats/lck_check
 execute if score #timer slf.timer matches 20.. run function slf:class/select_expire
+execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen,tag=!slf.hud_off] run function slf:player/hud
 execute if score #timer slf.timer matches 20.. run scoreboard players set #timer slf.timer 0
