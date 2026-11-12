@@ -111,5 +111,6 @@ execute if score #timer slf.timer matches 20.. run function slf:stats/apply
 execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run function slf:stats/apply_derived
 execute if score #timer slf.timer matches 20.. as @a if score @s slf.stat.lck matches 1.. run function slf:stats/lck_check
 execute if score #timer slf.timer matches 20.. run function slf:class/select_expire
+execute if score #timer slf.timer matches 20.. run function slf:altar/tick
 execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen,tag=!slf.hud_off] run function slf:player/hud
 execute if score #timer slf.timer matches 20.. run scoreboard players set #timer slf.timer 0

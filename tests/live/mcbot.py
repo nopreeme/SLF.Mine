@@ -1,10 +1,11 @@
 """Minimal Minecraft Java client for automated datapack tests.
 
 Logs a player into a local offline-mode server and keeps the connection alive (keep-alives, teleport confirms,
-respawns). It does nothing else: tests drive the game through RCON and read results back from RCON and from the chat
-lines this client records. Packet ids come from the server's own report (`--reports` -> packets.json).
+respawns). Beyond that it can sprint, walk, jump and melee an entity, which is enough to exercise the statistics the
+pack reads (sprint distance, jumps, damage dealt). Tests drive everything else through RCON and read results back from
+RCON and from the chat lines this client records. Packet ids come from the server's own report (`--reports` -> packets.json).
 """
-import socket, struct, threading, uuid, zlib
+import socket, struct, threading, time, uuid, zlib
 
 
 def varint(n):
@@ -88,11 +89,15 @@ class Bot:
     CS_FINISH, CS_KEEPALIVE, CS_PONG, CS_KNOWN_PACKS = 3, 4, 5, 7
     P_CHUNK_BATCH, P_DISCONNECT, P_KEEPALIVE, P_PING, P_POSITION, P_HEALTH, P_START_CONFIG, P_CHAT = 11, 32, 44, 61, 72, 104, 118, 121
     PS_TELEPORT, PS_CHUNK_BATCH, PS_RESPAWN, PS_CONFIG_ACK, PS_KEEPALIVE, PS_LOADED, PS_PONG = 0, 11, 12, 16, 28, 44, 45
+    P_ADD_ENTITY, P_LOGIN = 1, 49
+    PS_ATTACK, PS_MOVE_POS, PS_MOVE_STATUS, PS_PLAYER_COMMAND = 1, 30, 33, 42
+    START_SPRINTING, STOP_SPRINTING = 1, 2
 
     def __init__(self, name="TestBot", host="127.0.0.1", port=25599):
         self.name, self.host, self.port = name, host, port
         self.threshold = -1; self.state = "login"; self.chat = []; self.raw_chat = []; self.error = None
         self.in_game = threading.Event(); self.closed = False; self.lock = threading.Lock(); self.deaths = 0
+        self.entity_id = None; self.pos = None; self.entities = {}   # entities: uuid bytes -> network id
 
     # ---- framing
     def _send(self, pid, payload=b""):
@@ -158,8 +163,12 @@ class Bot:
     def _on_play(self, pid, r):
         if pid == self.P_KEEPALIVE: self._send(self.PS_KEEPALIVE, r.take(8))
         elif pid == self.P_PING: self._send(self.PS_PONG, r.take(4))
+        elif pid == self.P_LOGIN: self.entity_id = struct.unpack(">i", r.take(4))[0]
+        elif pid == self.P_ADD_ENTITY:
+            eid = r.varint(); self.entities[bytes(r.take(16))] = eid
         elif pid == self.P_POSITION:
-            self._send(self.PS_TELEPORT, varint(r.varint()))
+            tid = r.varint(); self.pos = list(struct.unpack(">ddd", r.take(24)))   # absolute: tests only teleport with absolute coordinates
+            self._send(self.PS_TELEPORT, varint(tid))
             if not self.in_game.is_set(): self._send(self.PS_LOADED); self.in_game.set()
         elif pid == self.P_CHUNK_BATCH: self._send(self.PS_CHUNK_BATCH, struct.pack(">f", 20.0))
         elif pid == self.P_CHAT:
@@ -168,6 +177,35 @@ class Bot:
             if struct.unpack(">f", r.take(4))[0] <= 0: self.deaths += 1; self._send(self.PS_RESPAWN, varint(0))
         elif pid == self.P_START_CONFIG: self._send(self.PS_CONFIG_ACK); self.state = "config"
         elif pid == self.P_DISCONNECT: raise ConnectionError("kicked: " + component_text(read_nbt(r)))
+
+    # ---- acting in the world
+    def _move(self, on_ground): self._send(self.PS_MOVE_POS, struct.pack(">dddB", *self.pos, 1 if on_ground else 0))
+
+    def sprint(self, on=True):
+        self._send(self.PS_PLAYER_COMMAND, varint(self.entity_id) + varint(self.START_SPRINTING if on else self.STOP_SPRINTING) + varint(0))
+
+    def walk(self, blocks, step=0.2):
+        """Walk along +x on the ground, one small step per game tick."""
+        for _ in range(round(blocks / step)):
+            self.pos[0] += step; self._move(True); time.sleep(0.05)
+
+    def leave_ground(self, height=0.42):
+        """The first packet of a jump: up, and no longer on the ground. Call land() to come back down."""
+        self.pos[1] += height; self._move(False); self._air = height
+
+    def land(self): self.pos[1] -= self._air; self._move(True)
+
+    def hold_air(self, seconds):
+        """Stay airborne the way a real client does: report 'not on the ground' every tick. Without this the server
+        decides a silent player has landed after about half a second."""
+        end = time.time() + seconds
+        while time.time() < end: self._send(self.PS_MOVE_STATUS, bytes([0])); time.sleep(0.05)
+
+    def jump(self):
+        """One full jump. The server needs a few ticks on the ground between jumps to count each one."""
+        self.leave_ground(); self.hold_air(0.25); self.land(); time.sleep(0.25)
+
+    def attack(self, entity_uuid): self._send(self.PS_ATTACK, varint(self.entities[entity_uuid]))
 
     # ---- helpers for tests
     def mark(self): return len(self.chat)

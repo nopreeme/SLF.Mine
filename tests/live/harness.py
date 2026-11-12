@@ -8,7 +8,7 @@ Needs a dedicated server jar and a Java runtime that can run it:
 Using the server means accepting Mojang's EULA; this writes eula=true into that scratch folder for you.
 The server only listens on 127.0.0.1, in offline mode, and is stopped when the context exits.
 """
-import os, re, shutil, subprocess, sys, time
+import os, re, shutil, struct, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mcbot import Bot, Rcon
@@ -104,6 +104,20 @@ class LiveServer:
         return float(m.group(1)) if m else None
 
     def wait_ticks(self, ticks): time.sleep(ticks / 20 + 0.15)
+
+    def platform(self):
+        """Stand the player on a 17x17 stone platform at y=200 above where it is, with clear space around.
+        Always the same height, so calling it again reuses (and wipes) the same platform."""
+        out = self.cmd(f"data get entity {self.player} Pos"); x, _, z = [int(float(v)) for v in re.findall(r"(-?[\d.]+)d", out)]
+        self.cmd(f"fill {x - 8} 199 {z - 8} {x + 8} 199 {z + 8} minecraft:stone")
+        self.cmd(f"fill {x - 8} 200 {z - 8} {x + 8} 206 {z + 8} minecraft:air")
+        self.cmd(f"kill @e[type=!minecraft:player,x={x - 9},y=198,z={z - 9},dx=18,dy=10,dz=18]")
+        self.cmd(f"tp {self.player} {x}.5 200 {z}.5"); self.wait_ticks(6)
+
+    def entity_uuid(self, selector):
+        """The 16-byte UUID of one entity, as the client sees it in spawn packets."""
+        out = self.cmd(f"data get entity {selector} UUID"); ints = [int(v) for v in re.search(r"\[I;([^\]]+)\]", out).group(1).split(",")]
+        return struct.pack(">iiii", *ints)
 
     def wait_cycle(self):
         """Wait for the pack's once-per-second cycle to have run at least once."""

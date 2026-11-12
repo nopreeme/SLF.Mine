@@ -6,7 +6,7 @@
 
 See tests/live/README.md. One server is started for the whole module.
 """
-import os, sys, time, unittest
+import os, re, sys, time, unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from harness import LiveServer, REPO
@@ -353,6 +353,138 @@ class Mask(Base):
         self.grant("swordsman"); self.set("slf.vorpal_soul", 12); S.cmd(f"gamemode survival {S.player}"); deaths = S.bot.deaths
         S.cmd(f"kill {S.player}"); S.wait_ticks(20)
         self.assertEqual(S.bot.deaths, deaths + 1); self.assertEqual(S.score("slf.vorpal_soul"), 7)
+
+
+class RealMotion(Base):
+    """The test player really sprints, jumps and swings, so the statistics the pack reads are the game's own."""
+    def setUp(self):
+        super().setUp(); self.grant("swordsman"); S.platform(); S.bot.sprint(False); S.wait_ticks(2)
+
+    def focus(self, stat):
+        """Focus a skill by hand so any statistic can be watched (threshold far out of reach)."""
+        self.set("slf.focus", 2); self.set("slf.focus_stat", stat); self.set("slf.threshold", 10000000); self.set("slf.sp", 0); S.wait_cycle()
+
+    def test_sprinting_feeds_move_focus(self):
+        self.focus(2); before = S.score("slf.raw.move") or 0
+        S.bot.sprint(True); S.bot.walk(6); S.bot.sprint(False); S.wait_cycle(); S.wait_cycle()
+        gained = S.score("slf.raw.move") - before
+        self.assertTrue(500 <= gained <= 700, f"sprinted 6 blocks, game counted {gained} cm")
+        self.assertEqual(S.score("slf.sp"), gained)
+
+    def test_walking_is_not_sprinting(self):
+        self.focus(2); before = S.score("slf.raw.move") or 0
+        S.bot.walk(4); S.wait_cycle(); S.wait_cycle()
+        self.assertEqual((S.score("slf.raw.move") or 0) - before, 0); self.assertEqual(S.score("slf.sp"), 0)
+
+    def test_jumps_feed_evade_focus(self):
+        self.focus(3); before = S.score("slf.raw.evade") or 0
+        for _ in range(4): S.bot.jump()
+        S.wait_cycle(); S.wait_cycle()
+        self.assertEqual(S.score("slf.raw.evade") - before, 4); self.assertEqual(S.score("slf.sp"), 4)
+
+    def test_ideal_motion_triples_progress(self):
+        ask = f"execute as {S.player} if predicate slf:ideal_motion"
+        self.assertNotIn("passed", S.cmd(ask))                      # standing still
+        S.bot.sprint(True); S.wait_ticks(2); self.assertNotIn("passed", S.cmd(ask))   # sprinting on the ground
+        self.focus(1); S.bot.leave_ground(); S.bot.hold_air(0.15)
+        self.assertIn("passed", S.cmd(ask))                         # sprinting and airborne
+        S.cmd(f"scoreboard players add {S.player} slf.raw.dmg 100"); S.bot.hold_air(1.5)   # airborne across a whole cycle
+        S.bot.land(); S.bot.sprint(False); S.wait_ticks(4)
+        self.assertEqual(S.score("slf.sp"), 300)
+
+    def test_melee_hits_feed_damage_focus_and_real_kills_give_exp(self):
+        S.cmd(f"gamemode survival {S.player}"); S.cmd(f"clear {S.player}")
+        S.cmd(f"item replace entity {S.player} weapon.mainhand with minecraft:netherite_sword"); self.set("slf.exp", 0)
+        S.as_player('summon minecraft:zombie ~1.5 ~ ~ {NoAI:1b,Tags:["slf.test"],PersistenceRequired:1b}'); S.wait_ticks(6)
+        target = S.entity_uuid("@e[type=minecraft:zombie,tag=slf.test,limit=1]")
+        self.assertIn(target, S.bot.entities, "the client never saw the zombie spawn")
+        self.focus(1); before = S.score("slf.raw.dmg") or 0
+        for _ in range(6):
+            if "passed" not in S.cmd("execute if entity @e[type=minecraft:zombie,tag=slf.test]"): break
+            S.bot.attack(target); time.sleep(0.75)
+        self.assertNotIn("passed", S.cmd("execute if entity @e[type=minecraft:zombie,tag=slf.test]"), "zombie survived six sword hits")
+        S.wait_cycle(); S.wait_cycle()
+        dealt = S.score("slf.raw.dmg") - before
+        # the statistic is in tenths of a health point and is counted after the zombie's armour
+        self.assertTrue(150 <= dealt <= 260, f"killing a 20 HP zombie counted {dealt}")
+        self.assertEqual(S.score("slf.sp"), dealt)
+        self.assertEqual(S.score("slf.exp"), 10)
+
+    def test_damage_taken_feeds_def_focus_and_triggers_ignition(self):
+        S.cmd(f"gamemode survival {S.player}"); S.cmd(f"tag {S.player} add slf.skill.ignition"); S.wait_cycle(); S.cmd(f"effect clear {S.player}")
+        self.focus(4); before = S.score("slf.raw.def") or 0
+        S.cmd(f"damage {S.player} 4 minecraft:generic"); S.wait_cycle(); S.wait_cycle()
+        self.assertEqual(S.score("slf.raw.def") - before, 40); self.assertEqual(S.score("slf.sp"), 40)
+        fx = S.effects(); self.assertIn("strength", fx); self.assertIn("speed", fx)
+
+
+class SkillBonuses(Base):
+    """Every skill in the generated table really changes the player, and stops when the skill is lost."""
+    def modifiers(self):
+        path = os.path.join(REPO, "data_pack", "data", "slf", "function", "skills", "attributes.mcfunction"); found = []
+        for line in open(path, encoding="utf-8").read().splitlines():
+            m = re.match(r"execute as @a\[tag=slf\.skill\.([a-z_]+)\] run attribute @s minecraft:([a-z_]+) modifier add (\S+) (\S+) (\S+)", line)
+            if m: found.append((m.group(1), m.group(2), m.group(3), float(m.group(4))))
+        return found
+
+    def test_every_skill_modifier_applies_and_is_removed(self):
+        mods = self.modifiers(); self.assertGreaterEqual(len(mods), 80)
+        for skill in sorted({m[0] for m in mods}): S.cmd(f"tag {S.player} add slf.skill.{skill}")
+        S.wait_cycle()
+        for skill, attr, mid, amount in mods:
+            with self.subTest(skill=skill, attribute=attr):
+                self.assertAlmostEqual(S.attribute(attr, f"modifier value get {mid}"), amount, places=3)
+        S.as_player("function slf:admin/reset_player"); S.wait_cycle(); S.wait_ticks(5)
+        left = [mid for _, attr, mid, _ in mods if S.attribute(attr, f"modifier value get {mid}") is not None]
+        self.assertEqual(left, [], "modifiers stayed after the skills were removed")
+        self.assertEqual(S.attribute("max_health"), 20.0)
+
+    def test_class_skills_change_real_numbers(self):
+        self.grant("warrior"); S.wait_cycle()   # megaton_swing +1 damage, front_position +2 armour, rigid_strength +20% knockback resistance
+        S.cmd(f"clear {S.player}"); S.wait_ticks(4)   # empty hands and no armour, so only the skills count
+        self.assertEqual(S.attribute("attack_damage"), 2.0); self.assertEqual(S.attribute("armor"), 2.0)
+        self.assertAlmostEqual(S.attribute("knockback_resistance"), 0.2, places=3)
+
+    def test_mana_skills(self):
+        self.grant("mage"); S.wait_cycle()       # chanting_and_memorizing +20 max mana, tanda_breathing +1 regen
+        self.assertEqual(S.score("slf.mana_max"), 40)
+        self.set("slf.mana", 0); S.wait_cycle(); S.wait_cycle(); mana = S.score("slf.mana"); self.assertTrue(2 <= mana <= 8, mana)
+        self.assertIn("night_vision", S.effects())   # wisdoms_divine_eye
+
+
+class Altar(Base):
+    def tearDown(self): S.as_player("function slf:altar/remove")
+
+    def place(self):
+        S.platform(); mark = S.bot.mark(); S.as_player("function slf:altar/place"); S.wait_ticks(4)
+        self.assertTrue(any("Altar of Awakening placed" in c for c in S.bot.chat_since(mark)))
+
+    def test_altar_is_built(self):
+        self.place()
+        for offset, block in (("~ ~ ~4", "gilded_blackstone"), ("~ ~1 ~4", "crying_obsidian"), ("~ ~2 ~4", "end_rod"),
+                              ("~2 ~1 ~6", "soul_lantern"), ("~-2 ~ ~2", "polished_blackstone_wall"), ("~ ~-1 ~4", "polished_blackstone_bricks")):
+            self.assertIn("passed", S.cmd(f"execute at {S.player} if block {offset} minecraft:{block}"), f"{block} missing at {offset}")
+        self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:marker,tag=slf.altar]"))
+        self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:text_display,tag=slf.altar_label]"))
+
+    def test_walking_up_awakens_only_the_worthy(self):
+        self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 6000); S.wait_cycle()
+        self.assertEqual(S.score("slf.standby"), 1)
+        self.place(); mark = S.bot.mark(); S.wait_cycle(); S.wait_cycle()          # arrives without a boss kill
+        self.assertEqual(S.score("slf.awakened"), 0); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark))
+        self.assertEqual(sum("altar is dormant" in c for c in S.bot.chat_since(mark)), 1, "the altar repeated itself while the player stood there")
+        S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.assertNotIn("slf.at_altar", S.tags())
+        self.set("slf.boss_gate", 1); S.as_player("tp @s ~ ~ ~12"); S.wait_cycle(); S.wait_cycle()
+        self.assertEqual((S.score("slf.awakened"), S.score("slf.standby")), (1, 0))
+        S.wait_cycle(); S.wait_cycle(); self.assertEqual(S.score("slf.level"), 100)
+
+    def test_menu_points_to_the_altar_once_placed(self):
+        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle(); self.place()   # no boss kill yet: the altar stays dormant
+        S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.set("slf.boss_gate", 1)
+        mark = S.bot.mark(); S.as_player("trigger slf.menu"); S.wait_ticks(4)
+        self.assertTrue(any("Altar of Awakening stands at" in c for c in S.bot.chat_since(mark)))
+        self.assertNotIn("trigger slf.menu set 6", [c for _, c in S.bot.clicks_since(mark)])
+        S.as_player("trigger slf.menu set 6"); S.wait_ticks(4); self.assertEqual(S.score("slf.awakened"), 0)   # no shortcut past the altar
 
 
 class WeaponsPack(Base):

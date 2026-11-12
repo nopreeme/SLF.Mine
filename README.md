@@ -106,6 +106,8 @@ See [CONTRIBUTING.md](CONTRIBUTING.md#class-id-table) for the full class ID tabl
 
 ## Skill Focus System
 
+Every skill does something once you hold it: a permanent bonus that stacks with your stats and gear. The full list is in [SKILL_EFFECTS.md](SKILL_EFFECTS.md).
+
 Skills are **earned through play**, not handed out on class grant. Every skill has a **focus stat** (DMG / MOVE / EVADE / DEF) and a **threshold** of skill-progress (SP) you must accumulate.
 
 ### How it works
@@ -221,7 +223,9 @@ Every 10 levels grants **2 bonus stat points** on top of the standard 5 per leve
 
 ### Standby & Awakening
 
-At level 99 you enter **Standby** — EXP no longer advances your level but is banked. Defeat a qualifying high-tier boss (sets `slf.boss_gate = 1`), then use **[Altar of Awakening]** in the menu (or `/function slf:stats/altar`) to convert banked EXP into levels 100–150. Killing any boss on the list above sets the gate. The Altar structure itself is not built yet.
+At level 99 you enter **Standby** — EXP no longer advances your level but is banked. Defeat a qualifying high-tier boss (sets `slf.boss_gate = 1`), then walk up to the **Altar of Awakening** to convert banked EXP into levels 100–150. Killing any boss on the list above sets the gate.
+
+An admin places the altar once with `/function slf:altar/place`; it is built four blocks south of where they stand, and `/function slf:altar/remove` retires it. Until a world has an altar, the menu offers the awakening instead.
 
 ---
 
@@ -340,6 +344,9 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 /function slf:stats/menu            — open the stat point allocation menu
 /function slf:stats/altar           — attempt Altar of Awakening (requires boss gate)
 /function slf:setup                 — re-register all scoreboards (safe to run anytime)
+/function slf:altar/place           — build the Altar of Awakening four blocks south of you
+/function slf:altar/remove          — retire the altar (awakening returns to the menu)
+/function slf:admin/reset_player    — wipe your own SLF state (for testing)
 ```
 
 ---
