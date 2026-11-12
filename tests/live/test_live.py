@@ -9,7 +9,7 @@ See tests/live/README.md. One server is started for the whole module.
 import os, sys, time, unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import LiveServer
+from harness import LiveServer, REPO
 
 S = None
 
@@ -18,7 +18,8 @@ def setUpModule():
     global S
     if not os.environ.get("SLF_MC_SERVER_DIR"):
         raise unittest.SkipTest("SLF_MC_SERVER_DIR is not set; live tests need a 26.2 server.jar (see tests/live/README.md)")
-    S = LiveServer().__enter__()
+    S = LiveServer(datapacks={"SLF": os.path.join(REPO, "data_pack"),
+                              "SLF_Weapons": os.path.join(REPO, "weapons", "java_out", "SLF_Weapons_Datapack")}).__enter__()
     S.wait_cycle()
 
 
@@ -352,6 +353,34 @@ class Mask(Base):
         self.grant("swordsman"); self.set("slf.vorpal_soul", 12); S.cmd(f"gamemode survival {S.player}"); deaths = S.bot.deaths
         S.cmd(f"kill {S.player}"); S.wait_ticks(20)
         self.assertEqual(S.bot.deaths, deaths + 1); self.assertEqual(S.score("slf.vorpal_soul"), 7)
+
+
+class WeaponsPack(Base):
+    """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
+    TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"
+
+    def has(self, slot, item): return "passed" in S.cmd(f"execute if items entity {S.player} {slot} {item}")
+
+    def test_give_all_and_models(self):
+        S.cmd(f"clear {S.player}"); S.as_player("function slf:weapons/give_all"); S.wait_ticks(4)
+        for name in ("wood_staff", "iron_hammer", "iron_sword", "iron_dagger", "marsh_dagger", "mercenary_blade", "vorpal_chopper", "fossil_rod", "wood_shield"):
+            self.assertTrue(self.has("container.*", f'*[minecraft:item_model="slf:{name}"]'), name)
+        S.cmd(f"clear {S.player}")
+
+    def test_paired_weapon_twin_follows_main_hand(self):
+        S.cmd(f"clear {S.player}"); S.wait_ticks(3)
+        S.as_player("function slf:weapons/give/marsh_dagger"); S.wait_ticks(4)   # empty inventory: lands in the selected slot
+        self.assertTrue(self.has("weapon.mainhand", '*[minecraft:custom_data~{slf:{pair:"marsh_dagger"}}]'))
+        self.assertTrue(self.has("weapon.offhand", self.TWIN), "no twin appeared in the off hand")
+        S.cmd(f"item replace entity {S.player} weapon.mainhand with minecraft:air"); S.wait_ticks(4)
+        self.assertFalse(self.has("weapon.offhand", self.TWIN), "twin stayed after the weapon left the main hand")
+
+    def test_single_weapon_has_no_twin(self):
+        S.cmd(f"clear {S.player}"); S.wait_ticks(3); S.as_player("function slf:weapons/give/iron_dagger"); S.wait_ticks(4)
+        self.assertFalse(self.has("weapon.offhand", "*")); S.cmd(f"clear {S.player}")
+
+    def test_main_pack_still_ticks_alongside(self):
+        self.grant("swordsman"); self.set("slf.exp", 100); S.wait_cycle(); self.assertEqual(S.score("slf.level"), 2)
 
 
 if __name__ == "__main__":

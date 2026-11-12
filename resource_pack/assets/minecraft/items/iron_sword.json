@@ -3,24 +3,106 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.vorpal_knife",    "model": {"type": "minecraft:model", "model": "slf:item/vorpal_knife"}},
-      {"when": "slf.togetsu_waxing", "model": {
-        "type": "minecraft:select",
-        "property": "minecraft:display_context",
-        "cases": [{"when": "gui", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waxing_icon"}}],
-        "fallback": {"type": "minecraft:model", "model": "slf:item/togetsu_waxing"}
-      }},
-      {"when": "slf.togetsu_waning", "model": {
-        "type": "minecraft:select",
-        "property": "minecraft:display_context",
-        "cases": [{"when": "gui", "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning_icon"}}],
-        "fallback": {"type": "minecraft:model", "model": "slf:item/togetsu_waning"}
-      }},
-      {"when": "slf.rust_saber",               "model": {"type": "minecraft:model", "model": "slf:item/rust_saber"}},
-      {"when": "slf.mercenary_twin_blades_v1", "model": {"type": "minecraft:model", "model": "slf:item/mercenary_twin_blades_v1"}},
-      {"when": "slf.mercenary_twin_blades_v2", "model": {"type": "minecraft:model", "model": "slf:item/mercenary_twin_blades_v2"}},
-      {"when": "slf.togetsu_waning_v2",        "model": {"type": "minecraft:model", "model": "slf:item/togetsu_waning_v2"}}
+      {
+        "when": "slf.vorpal_knife",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/vorpal_knife"
+        }
+      },
+      {
+        "when": "slf.togetsu_waxing",
+        "model": {
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": "gui",
+              "model": {
+                "type": "minecraft:model",
+                "model": "slf:item/togetsu_waxing_icon"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "slf:item/togetsu_waxing"
+          }
+        }
+      },
+      {
+        "when": "slf.togetsu_waning",
+        "model": {
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": "gui",
+              "model": {
+                "type": "minecraft:model",
+                "model": "slf:item/togetsu_waning_icon"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "slf:item/togetsu_waning"
+          }
+        }
+      },
+      {
+        "when": "slf.rust_saber",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/rust_saber"
+        }
+      },
+      {
+        "when": "slf.mercenary_twin_blades_v1",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/mercenary_twin_blades_v1"
+        }
+      },
+      {
+        "when": "slf.mercenary_twin_blades_v2",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/mercenary_twin_blades_v2"
+        }
+      },
+      {
+        "when": "slf.togetsu_waning_v2",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/togetsu_waning_v2"
+        }
+      },
+      {
+        "when": "slf.sunraku_blade_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/sunraku_blade_l"
+        }
+      },
+      {
+        "when": "slf.sunraku_blade_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/sunraku_blade_r"
+        }
+      },
+      {
+        "when": "slf.sunraku_chaos_rod",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/sunraku_chaos_rod"
+        }
+      }
     ],
-    "fallback": {"type": "minecraft:model", "model": "minecraft:item/iron_sword"}
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/iron_sword"
+    }
   }
 }

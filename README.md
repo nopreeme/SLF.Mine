@@ -28,13 +28,17 @@ Nine weapons with 3D held models live in [`weapons/`](weapons/README.md) as thei
 
 ```
 Join world
-  └─ Chat shows class selection UI  (/function slf:class/select to reopen)
+  └─ Chat shows the class selection menu
        └─ Choose a class → you receive your class tag and T1 skills
-            └─ Open skill menu → /function slf:skills/menu
-                 └─ Click a skill to focus it → earn SP by playing
-                      └─ Skill learned when SP ≥ threshold
-                           └─ Spend stat points → /function slf:stats/menu
+            └─ Open the menu any time → /trigger slf.menu
+                 ├─ [Skills]  click a skill to focus it → earn SP by playing → learned when SP ≥ threshold
+                 ├─ [Stats]   spend stat points
+                 ├─ [Evolve]  class evolution, once you meet the level requirement
+                 └─ [Status]  class, level, EXP, stats, mana
 ```
+
+Everything a player needs is behind `/trigger slf.menu`, which works **without OP**. A status line above the hotbar
+shows level, EXP, mana, focus progress and unspent points (toggle it from the menu).
 
 Kill mobs to earn EXP and level up. Each level grants **5 stat points** (bonus at milestones). Reaching level 99 enters **Standby** — defeat a worthy boss and visit the **Altar of Awakening** to unlock levels 100–150.
 
@@ -82,7 +86,19 @@ Monk ─────── Monk Soldier ── Spirit Fist
 Mage ─────── Sage ── Omnipotent Wisdom
 ```
 
-Class evolution is gated by **quest chains and NPC interactions**, not time. History tags (`slf.was_swordsman`, etc.) accumulate permanently — you never lose access to a path you've walked.
+Evolve from the menu (`/trigger slf.menu` → **[Evolve]**). An evolution appears once your lineage allows it and unlocks at a level:
+
+| Evolution | Level |
+|---|---|
+| Tier 2 (Sword Master, Magic Swordsman, Barbarian, Destroyer, Thief, Ninja, Bishop, Monk Soldier, Sage) | 20 |
+| Knight (from Sword Master, Magic Swordsman or Barbarian) | 30 |
+| Tier 3 (Kansei, Mysterious Sword, War King, Crazy Fist, Assassin, Shinobi, Saint, Spirit Fist, Omnipotent Wisdom) and Veteran | 50 |
+| King's Knight, Black Death | 70 |
+| Killing Joke, Star Shinobi Sei | 80 |
+
+Knights choose Holy or Dark after three **Knight Trials**; each elite monster defeated as a Knight counts as one.
+Level requirements live in one file, `class/evolve_apply.mcfunction`. Quest chains and NPCs are planned to replace
+the level gates. History tags (`slf.was_swordsman`, etc.) accumulate permanently — you never lose access to a path you've walked.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md#class-id-table) for the full class ID table.
 
@@ -158,18 +174,27 @@ Accel, Power Slash, Loop Slash, Diastep, Drain, Fighting Spirit, Unbreakable, Hi
 
 ## Stats & Leveling
 
-Earn EXP from mob kills. Level-ups grant **stat points** to spend via `/function slf:stats/menu`.
+Earn EXP from mob kills. Level-ups grant **stat points** to spend from the menu (`/trigger slf.menu` → **[Stats]**).
+
+| Kill | EXP |
+|---|---|
+| Any mob | 2 |
+| Common monsters (zombie, skeleton, creeper, spider, …) | 10 |
+| Elite monsters (enderman, witch, blaze, wither skeleton, …) | 40 |
+| Bosses (Ender Dragon, Wither, Warden, Elder Guardian) | 2,500 |
+
+The lists are entity tags in `data/slf/tags/entity_type/`. EXP beyond what a level needs carries over.
 
 ### 9 spendable stats
 
 | Stat | Full Name | Lore | Minecraft Effect |
 |---|---|---|---|
-| HP | Physical Strength / Health | Your total health. Reaching 0 turns your avatar into a mass of polygons. | Max health *(planned)* |
-| MP | Magic Power | Total mana you can exercise. Higher MP boosts magic performance and makes magic skills easier to acquire. | Mana pool *(planned)* |
+| HP | Physical Strength / Health | Your total health. Reaching 0 turns your avatar into a mass of polygons. | +½ heart of max health per 2 points (up to +20 hearts) |
+| MP | Magic Power | Total mana you can exercise. Higher MP boosts magic performance and makes magic skills easier to acquire. | Mana pool of 20 + 2 per point, regenerating 1 + MP/10 per second. Spent by Big / Grand Tantrum |
 | STR | Muscle Strength | Required to wield weapons effectively. Higher STR lets you handle heavier weapons with ease. | Strength I (10+), Strength II (20+) |
 | DEX | Dexterity | Governs fine and precise weapon handling and inventory operations. | Attack speed +0.4 (5+), +0.8 (10+), +1.2 (20+) |
 | AGI | Agility | Determines your avatar's base movement speed. | Speed I (5+), Speed II (10+), Speed III (20+) |
-| TEC | Technique | Governs your ability to handle complex or unknown weapons at first sight. Assists player skill — trajectory control, projectile and magic manipulation. | Reduces skill focus thresholds |
+| TEC | Technique | Governs your ability to handle complex or unknown weapons at first sight. Assists player skill — trajectory control, projectile and magic manipulation. | −1% skill focus threshold per point (up to −50%) |
 | VIT | Endurance | Physical defense against trauma. Low VIT will cause your body to break down regardless of armor. | Absorption I (5+), II (10+), III (20+), IV (30+) |
 | STM | Stamina | Decreases as you move or fight. Too low and your avatar becomes sluggish. Also affects lung capacity. | Saturation I (5+), Haste I (10+) |
 | LCK | Luck | Affects random numbers and makes critical hit angles more forgiving. At LCK ≥ 50, activates **Bite** — survive a fatal blow at exactly 1 HP. | Luck attribute 1/2/3/4 (10/20/40/60+); Bite proc active |
@@ -196,7 +221,7 @@ Every 10 levels grants **2 bonus stat points** on top of the standard 5 per leve
 
 ### Standby & Awakening
 
-At level 99 you enter **Standby** — EXP no longer advances your level but is banked. Defeat a qualifying high-tier boss (sets `slf.boss_gate = 1`), then run `/function slf:stats/altar` at the **Altar of Awakening** structure to convert banked EXP into levels 100–150.
+At level 99 you enter **Standby** — EXP no longer advances your level but is banked. Defeat a qualifying high-tier boss (sets `slf.boss_gate = 1`), then use **[Altar of Awakening]** in the menu (or `/function slf:stats/altar`) to convert banked EXP into levels 100–150. Killing any boss on the list above sets the gate. The Altar structure itself is not built yet.
 
 ---
 
@@ -331,7 +356,15 @@ Both packs declare `min_format`/`max_format` for 26.2 only. 26.2 rejects the old
 
 ## Textures
 
-Current textures are **placeholder solid-colour PNGs**. Proper 16×16 pixel art is the single highest-impact contribution you can make. Files to replace are in `resource_pack/assets/slf/textures/item/`.
+Every item has a 16×16 texture. The flat ones are drawn by `tools/gen_item_textures.py` from pixel templates and per-item palettes, so they are consistent placeholders rather than final art. Hand-made pixel art is still the single highest-impact contribution you can make: replace a PNG in `resource_pack/assets/slf/textures/item/` and remove its line from the generator.
+
+## Tests
+
+```
+python -m unittest tests/test_datapack.py tests/test_resource_pack.py
+```
+
+Both read files only. `tests/live/` runs the pack on a real server with a real player; see [tests/live/README.md](tests/live/README.md).
 
 ## Contributing
 

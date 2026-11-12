@@ -3,13 +3,115 @@
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
     "cases": [
-      {"when": "slf.skill_ignition",     "model": {"type": "minecraft:model", "model": "slf:item/skill_ignition"}},
-      {"when": "slf.skill_skywalker",    "model": {"type": "minecraft:model", "model": "slf:item/skill_skywalker"}},
-      {"when": "slf.skill_formula_drift","model": {"type": "minecraft:model", "model": "slf:item/skill_formula_drift"}},
-      {"when": "slf.skill_flash_counter","model": {"type": "minecraft:model", "model": "slf:item/skill_flash_counter"}},
-      {"when": "slf.skill_meteor_fall",  "model": {"type": "minecraft:model", "model": "slf:item/skill_meteor_fall"}},
-      {"when": "slf.seiten_skillbook",   "model": {"type": "minecraft:model", "model": "slf:item/seiten_skillbook"}}
+      {
+        "when": "slf.skill_ignition",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_ignition"
+        }
+      },
+      {
+        "when": "slf.skill_skywalker",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_skywalker"
+        }
+      },
+      {
+        "when": "slf.skill_formula_drift",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_formula_drift"
+        }
+      },
+      {
+        "when": "slf.skill_flash_counter",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_flash_counter"
+        }
+      },
+      {
+        "when": "slf.skill_meteor_fall",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_meteor_fall"
+        }
+      },
+      {
+        "when": "slf.seiten_skillbook",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/seiten_skillbook"
+        }
+      },
+      {
+        "when": "slf.skill_acrobat",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_acrobat"
+        }
+      },
+      {
+        "when": "slf.skill_gravity_zero",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_gravity_zero"
+        }
+      },
+      {
+        "when": "slf.skill_managarm_pride",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_managarm_pride"
+        }
+      },
+      {
+        "when": "slf.skill_reflexus",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_reflexus"
+        }
+      },
+      {
+        "when": "slf.skill_book_blade_rush",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_book_blade_rush"
+        }
+      },
+      {
+        "when": "slf.skill_book_moonhowl",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_book_moonhowl"
+        }
+      },
+      {
+        "when": "slf.skill_book_slash",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_book_slash"
+        }
+      },
+      {
+        "when": "slf.skill_book_thrust",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_book_thrust"
+        }
+      },
+      {
+        "when": "slf.skill_book_void_lance",
+        "model": {
+          "type": "minecraft:model",
+          "model": "slf:item/skill_book_void_lance"
+        }
+      }
     ],
-    "fallback": {"type": "minecraft:model", "model": "minecraft:item/enchanted_book"}
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/enchanted_book"
+    }
   }
 }
