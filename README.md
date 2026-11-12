@@ -19,6 +19,9 @@ A Minecraft 1.21.x data pack + resource pack bringing the world of **Shangri-La 
 2. Copy the `data_pack/` folder into `<world>/datapacks/`
 3. Run `/reload` in-game
 
+### 3D Weapons (optional, separate packs)
+Nine weapons with 3D held models live in [`weapons/`](weapons/README.md) as their own resource pack + data pack. They load alongside the main packs; see that README for install and give commands.
+
 ---
 
 ## Getting Started
