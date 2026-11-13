@@ -18,6 +18,8 @@ DP = ROOT / "data_pack" / "data"
 ITEM_DEFS = RP / "minecraft" / "items"
 MODELS = RP / "slf" / "models" / "item"
 TEXTURES = RP / "slf" / "textures" / "item"
+WEAPONS_MODELS = ROOT / "weapons" / "java_out" / "SLF_Weapons_ResourcePack" / "assets" / "slf" / "models" / "item"
+MODEL_DIRS = [MODELS, WEAPONS_MODELS]   # both resource packs in this repo
 
 
 def load(path): return json.loads(path.read_text(encoding="utf-8"))
@@ -89,6 +91,26 @@ class TestModels(unittest.TestCase):
                 self.assertRegex(tex, r"^[a-z0-9_.-]+:[a-z0-9_./-]+$", f"{f.name}: texture '{tex}' is not a namespaced resource location")
                 if tex.startswith("slf:item/"):
                     self.assertTrue((TEXTURES / (tex[9:] + ".png")).exists(), f"{f.name}: texture {tex} does not exist")
+
+    def test_every_face_uses_a_defined_texture_variable(self):
+        """A face that names an undefined variable (Blockbench writes "#missing" for untextured faces) falls back to
+        the missing texture, which lives in the block atlas. In 26.2 a cuboid model that mixes atlases fails to bake,
+        and that takes down the whole item definition it belongs to — every iron sword, not just the one model."""
+        for models in MODEL_DIRS:
+            for f in sorted(models.glob("*.json")):
+                d = load(f); defined = {"#" + k for k in d.get("textures", {})}
+                if "parent" in d and "elements" not in d: continue
+                used = {face.get("texture") for e in d.get("elements", []) for face in e.get("faces", {}).values()}
+                self.assertEqual(sorted(used - defined), [], f"{f.name}: faces use texture variables the model does not define")
+
+    def test_cuboid_models_use_one_atlas(self):
+        """Same client rule from the other side: textures/item/ and textures/block/ are different atlases in 26.2."""
+        for models in MODEL_DIRS:
+            for f in sorted(models.glob("*.json")):
+                d = load(f)
+                if "elements" not in d: continue
+                kinds = {t.split(":", 1)[-1].split("/", 1)[0] for t in d.get("textures", {}).values() if not t.startswith("#")}
+                self.assertEqual(len(kinds), 1, f"{f.name}: textures come from more than one atlas folder: {sorted(kinds)}")
 
     def test_every_model_is_reachable(self):
         """A model nothing points at can never be seen in game. Known leftovers are listed explicitly."""

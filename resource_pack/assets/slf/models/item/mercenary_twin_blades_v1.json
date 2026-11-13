@@ -4,6 +4,7 @@
   "texture_size": [32, 32],
   "textures": {
     "0": "slf:item/mercenary_twin_blades_v1",
+    "missing": "slf:item/mercenary_twin_blades_v1",
     "particle": "slf:item/mercenary_twin_blades_v1"
   },
   "elements": [
