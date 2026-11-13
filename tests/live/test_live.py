@@ -710,6 +710,92 @@ class Mobs(Base):
         self.assertIn("failed", S.cmd("execute if entity @e[tag=pet,tag=slf.vorpal_bunny]"))                           # a named rabbit stays a pet
 
 
+class Bosses(Base):
+    """The five SLF bosses: stats from level, boss bars, the boss kill reward, natural encounters, night bosses leaving at dawn."""
+    # id: (body, level, full name, size)
+    BOSSES = {"nightclaw": ("spider", 40, "Nightclaw", 2.5), "bilac": ("phantom", 60, "Bilac the Full Moon Fangs", 3.0),
+              "oriana": ("evoker", 75, "Oriana the Uncrowned", 1.3), "lycagon": ("wolf", 90, "Lycagon the Nightslayer", 3.0),
+              "wethermon": ("wither_skeleton", 100, "Wethermon the Tombguard", 1.6)}
+
+    def tearDown(self):
+        S.cmd("kill @e[tag=slf.mob]"); S.cmd("time set 1000"); S.cmd(f"gamemode creative {S.player}")
+
+    def boss(self, bid): return f"@e[tag=slf.boss_{bid},limit=1]"
+
+    def test_each_boss_has_its_stats_name_and_bar(self):
+        for bid, (body, lv, name, scale) in self.BOSSES.items():
+            with self.subTest(bid):
+                S.cmd("kill @e[tag=slf.mob]"); S.as_player(f"function slf:test/mob/boss_{bid}"); S.wait_ticks(3)
+                self.assertIn("passed", S.cmd(f"execute if entity @e[type=minecraft:{body},tag=slf.boss_{bid}]"))
+                self.assertIn(f"{name} Lv.{lv}", S.cmd(f"data get entity {self.boss(bid)} CustomName"))
+                self.assertIn(f"is {lv * 4}.0", S.cmd(f"attribute {self.boss(bid)} minecraft:max_health get"))
+                self.assertIn(f"is {scale}", S.cmd(f"attribute {self.boss(bid)} minecraft:scale base get"))
+                self.assertIn(f"{lv * 4}.0f", S.cmd(f"data get entity {self.boss(bid)} Health"))
+                self.assertIn(f"has a value of {lv * 4}", S.cmd(f"bossbar get slf:{bid} value"))
+                self.assertIn("shown", S.cmd(f"bossbar get slf:{bid} visible"))
+        S.cmd("kill @e[tag=slf.mob]"); S.wait_cycle()
+        for bid in self.BOSSES: self.assertIn("hidden", S.cmd(f"bossbar get slf:{bid} visible"), bid)
+
+    def test_wethermon_carries_its_scythe_and_does_not_drop_its_gear(self):
+        S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3)
+        self.assertIn("slf.wethermon_scythe", S.cmd(f"data get entity {self.boss('wethermon')} equipment.mainhand"))
+        self.assertIn("mainhand: 0.0f", S.cmd(f"data get entity {self.boss('wethermon')} drop_chances"))
+
+    def test_boss_kill_gives_exp_soul_and_opens_the_gate(self):
+        self.grant("swordsman"); self.set("slf.exp", 0); self.set("slf.vorpal_soul", 0); self.set("slf.boss_gate", 0); self.set("slf.boss_kills", 0)
+        self.set("slf.level", 10)   # next level needs 5000 EXP, so the reward can't be spent on a level-up before it is read
+        S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
+        out = S.as_player(f"damage {self.boss('wethermon')} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(6)
+        self.assertEqual(S.score("slf.exp"), 100 + 2 + 2400)   # its level + every kill's 2 + the boss reward; not also an elite (wither skeleton) kill
+        self.assertEqual((S.score("slf.boss_gate"), S.score("slf.boss_kills"), S.score("slf.vorpal_soul")), (1, 1, 1))
+
+    def test_lycagon_keeps_its_health(self):
+        S.cmd("time set 1000"); S.as_player("function slf:test/mob/boss_lycagon"); S.wait_cycle(); S.wait_cycle()
+        self.assertIn("is 360.0", S.cmd(f"attribute {self.boss('lycagon')} minecraft:max_health get"))
+        health = float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {self.boss('lycagon')} Health")).group(1))
+        self.assertGreater(health, 300)   # not clamped to a plain wolf's 8 (a scrape from the terrain is fine)
+
+    def test_lycagon_hunts_players(self):
+        S.platform(); S.cmd("time set 18000"); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10"); S.wait_ticks(4)
+        S.as_player("execute positioned ~4 ~ ~ run function slf:mob/boss/lycagon/spawn"); S.cmd("tag @e[tag=slf.boss_new] remove slf.boss_new")
+        deaths = S.bot.deaths; hurt = False
+        for _ in range(20):
+            S.wait_ticks(10)
+            m = re.search(r"([\d.]+)f", S.cmd(f"data get entity {S.player} Health"))
+            if S.bot.deaths > deaths or (m and float(m.group(1)) < 20): hurt = True; break
+        S.cmd(f"gamemode creative {S.player}")
+        self.assertTrue(hurt, "Lycagon never attacked: " + S.cmd(f"data get entity {self.boss('lycagon')} angry_at"))
+
+    def test_night_encounter_and_dawn_departure(self):
+        self.grant("swordsman"); self.set("slf.level", 60); S.cmd("time set 18000"); S.wait_ticks(2)   # on the ground: Lycagon lands within 24 blocks
+        self.assertIn("passed", S.cmd("execute if predicate slf:night"))
+        self.assertIn("passed", S.cmd("execute if predicate slf:full_moon_night"))
+        mark = S.bot.mark()
+        S.as_player('function slf:mob/boss/encounter {id:"lycagon",place:"surface"}'); S.wait_ticks(4)
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_lycagon]"))
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_new]"))
+        self.assertTrue(any("has appeared" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark))
+        S.wait_cycle(); S.cmd("kill @e[type=minecraft:item]"); S.cmd("time set 1000"); S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_lycagon]"), "Lycagon stayed after dawn")
+        self.assertIn("failed", S.cmd('execute if entity @e[type=minecraft:item,distance=..64]'), "Lycagon dropped loot when it left")
+        self.assertTrue(any("vanishes with the dawn" in c for c in S.bot.chat_since(mark)))
+
+    def test_night_boss_spawned_by_day_stays_until_after_a_night(self):
+        S.cmd("time set 1000"); S.as_player("function slf:test/mob/boss_lycagon"); S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_lycagon]"))
+
+    def test_roll_respects_place_and_level(self):
+        """A level 5 player on the surface at night: nothing qualifies, even if every chance came up."""
+        S.platform(); self.grant("swordsman"); self.set("slf.level", 5); S.cmd("time set 18000")
+        for _ in range(30): S.as_player("function slf:mob/boss/roll")
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss]"))
+        self.set("slf.level", 99)   # now Bilac (full moon, open sky, 10%) and Lycagon (night, 1.7%) both qualify
+        for _ in range(60): S.as_player("function slf:mob/boss/roll")
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_bilac]"))   # 60 rolls at 10%: misses 0.2% of the time
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_nightclaw]"))   # caves only
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_wethermon]"))   # Nether only
+
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

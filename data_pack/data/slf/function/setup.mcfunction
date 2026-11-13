@@ -73,6 +73,22 @@ scoreboard objectives add slf.knight_trials dummy
 scoreboard objectives add slf.mob_level dummy
 # Level of the SLF mob a player just killed (mob/lv_bit/*, read by mob/kill_process)
 scoreboard objectives add slf.kill_lv dummy
+# Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
+bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
+bossbar set slf:nightclaw color white
+bossbar set slf:nightclaw style notched_10
+bossbar add slf:bilac {text:"Bilac the Full Moon Fangs",color:"gold"}
+bossbar set slf:bilac color yellow
+bossbar set slf:bilac style notched_10
+bossbar add slf:oriana {text:"Oriana the Uncrowned",color:"dark_aqua"}
+bossbar set slf:oriana color blue
+bossbar set slf:oriana style notched_10
+bossbar add slf:lycagon {text:"Lycagon the Nightslayer",color:"dark_purple"}
+bossbar set slf:lycagon color purple
+bossbar set slf:lycagon style notched_10
+bossbar add slf:wethermon {text:"Wethermon the Tombguard",color:"dark_red"}
+bossbar set slf:wethermon color red
+bossbar set slf:wethermon style notched_10
 
 # --- Ignition detection (separate from def_prev) ---
 scoreboard objectives add slf.ign.prev dummy

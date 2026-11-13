@@ -1,0 +1,3 @@
+# Runs as the freshly summoned wither_skeleton: makes it Wethermon the Tombguard, level 100.
+data merge entity @s {equipment:{mainhand:{id:"minecraft:netherite_sword",count:1,components:{"minecraft:custom_model_data":{strings:["slf.wethermon_scythe"]}}},head:{id:"minecraft:netherite_helmet",count:1},chest:{id:"minecraft:netherite_chestplate",count:1},legs:{id:"minecraft:netherite_leggings",count:1},feet:{id:"minecraft:netherite_boots",count:1}},drop_chances:{mainhand:0.0f,head:0.0f,chest:0.0f,legs:0.0f,feet:0.0f}}
+function slf:mob/boss/init {id:"wethermon",name:"Wethermon the Tombguard",color:"dark_red",lv:100,scale:1.6,loot:"slf:boss/wethermon"}

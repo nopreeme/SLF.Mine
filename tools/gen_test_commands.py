@@ -41,6 +41,12 @@ def T(text, color=None, **kw):
     if color: d["color"] = color
     d.update(kw); return d
 def run(label, color, command, hover): return T(label, color, click_event={"action": "run_command", "command": command}, hover_event={"action": "show_text", "value": hover})
+# SLF bosses (data_pack/data/slf/function/mob/boss/<id>): id, button label, full name, colour, level
+BOSSES = [("nightclaw", "Nightclaw", "Nightclaw", "dark_gray", 40), ("bilac", "Bilac", "Bilac the Full Moon Fangs", "gold", 60),
+          ("oriana", "Oriana", "Oriana the Uncrowned", "dark_aqua", 75), ("lycagon", "Lycagon", "Lycagon the Nightslayer", "dark_purple", 90),
+          ("wethermon", "Wethermon", "Wethermon the Tombguard", "dark_red", 100)]
+
+
 def write(rel, lines):
     p = os.path.join(FN, rel); os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, "w", encoding="utf-8", newline="\n") as f: f.write("\n".join(lines).rstrip("\n") + "\n")
@@ -181,6 +187,9 @@ def main():
     menu.append(row("Mobs", [run("[Vorpal Bunny]", "red", "/function slf:test/mob/vorpal_bunny", "A Vorpal Bunny (random level 8-30) three blocks ahead"),
                              run("[Vorpal Bunny Lv.30]", "dark_red", "/function slf:test/mob/vorpal_bunny_30", "A level 30 Vorpal Bunny: a Vorpal Soul for any player at level 10 or below"),
                              run("[Clear mobs]", "dark_gray", "/function slf:test/mob/clear", "Removes SLF mobs within 32 blocks")]))
+    menu.append(row("Bosses", [run(f"[{name}]", color, f"/function slf:test/mob/boss_{bid}", f"{full}, level {lv}, six blocks ahead") for bid, name, full, color, lv in BOSSES] +
+                       [run("[Night]", "dark_blue", "/function slf:test/time_night", "Midnight of a full moon (Lycagon and Bilac come out at night)"),
+                        run("[Day]", "yellow", "/function slf:test/time_day", "Morning: night bosses leave")]))
     menu.append(row("Me", [run("[Status]", "white", "/trigger slf.menu set 7", "Your class, level and stats"),
                            run("[Player menu]", "white", "/trigger slf.menu", "The menu players see"),
                            run("[Reset me]", "red", "/function slf:admin/reset_player", "Wipe all your SLF progress")]))
@@ -213,6 +222,11 @@ def main():
           "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("A Vorpal Bunny appears.", "yellow")])])
     write("test/mob/vorpal_bunny_30.mcfunction", [GENERATED, "scoreboard players set #spawn_lv slf.mob_level 30", "execute positioned ^ ^ ^3 run function slf:mob/vorpal_bunny/spawn",
           "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("A level 30 Vorpal Bunny appears.", "yellow")])])
+    for bid, name, full, color, lv in BOSSES:
+        write(f"test/mob/boss_{bid}.mcfunction", [GENERATED, f"execute positioned ^ ^ ^6 run function slf:mob/boss/{bid}/spawn", "tag @e[tag=slf.boss_new] remove slf.boss_new",
+              "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"{full} appears.", "yellow")])])
+    write("test/time_night.mcfunction", [GENERATED, "time set 18000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Midnight, full moon.", "yellow")])])
+    write("test/time_day.mcfunction", [GENERATED, "time set 1000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Morning.", "yellow")])])
     write("test/mob/clear.mcfunction", [GENERATED, "execute store result score #n slf.tmp run kill @e[tag=slf.mob,distance=..32]",
           "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("SLF mobs removed: ", "yellow"), {"score": {"name": "#n", "objective": "slf.tmp"}, "color": "yellow"}])])
     write("test/karma.mcfunction", [GENERATED, "scoreboard players set @s slf.karma 100", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Karma 100. A Bounty Hunter is on the way.", "yellow")])])

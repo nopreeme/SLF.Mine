@@ -1,0 +1,8 @@
+# Runs once a minute (mob/tick) as each survival/adventure player, at the player. Each boss has a place, a
+# minimum player level and a chance; at most one boss of each kind exists at a time, and one roll spawns at most one.
+# See the Monsters section of README.md.
+execute if dimension minecraft:overworld if entity @s[y=-64,dy=64] if score @s slf.level matches 10.. unless entity @e[tag=slf.boss_nightclaw] if predicate {condition:"minecraft:random_chance",chance:0.025} run return run function slf:mob/boss/encounter {id:"nightclaw",place:"under"}
+execute if dimension minecraft:overworld if predicate slf:full_moon_night if predicate slf:sky if score @s slf.level matches 30.. unless entity @e[tag=slf.boss_bilac] if predicate {condition:"minecraft:random_chance",chance:0.1} run return run function slf:mob/boss/encounter {id:"bilac",place:"sky"}
+execute if dimension minecraft:the_end if score @s slf.level matches 45.. unless entity @e[tag=slf.boss_oriana] if predicate {condition:"minecraft:random_chance",chance:0.05} run return run function slf:mob/boss/encounter {id:"oriana",place:"under"}
+execute if dimension minecraft:overworld if predicate slf:night if predicate slf:sky if score @s slf.level matches 50.. unless entity @e[tag=slf.boss_lycagon] if predicate {condition:"minecraft:random_chance",chance:0.017} run return run function slf:mob/boss/encounter {id:"lycagon",place:"surface"}
+execute if dimension minecraft:the_nether if score @s slf.level matches 60.. unless entity @e[tag=slf.boss_wethermon] if predicate {condition:"minecraft:random_chance",chance:0.033} run return run function slf:mob/boss/encounter {id:"wethermon",place:"under"}

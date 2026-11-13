@@ -268,6 +268,27 @@ every kill gives) and a **Vorpal Soul** if it was at least 20 levels above you.
 
 Admins: `/function slf:mob/vorpal_bunny/spawn` (set `#spawn_lv slf.mob_level` first to pick the level).
 
+### Bosses
+
+Bosses appear near players by chance, rolled once a minute per player in survival, when the place, time and the
+player's level fit. Only one of each exists at a time. A boss shows a boss bar to everyone within 64 blocks.
+Killing one gives its level in EXP plus **2400**, counts as a boss kill for the Altar of Awakening, and is a Knight Trial.
+Health is 4 × level, attack 4 + level/10.
+
+| Boss | Appears | Player level | Level | Body | Drops |
+|---|---|---|---|---|---|
+| **Nightclaw** | Overworld caves below y=0 (2.5% a minute) | 10+ | 40 | Spider, ×2.5 size | Nightclaw Talon |
+| **Bilac the Full Moon Fangs** | Under the open sky on a full-moon night (10%) | 30+ | 60 | Phantom, ×3 size | Bilac's Crescent Blade, phantom membrane, iron |
+| **Oriana the Uncrowned** | The End (5%) | 45+ | 75 | Evoker, ×1.3 size | Oriana's Void Staff, ender pearls, diamonds |
+| **Lycagon the Nightslayer** | Under the open sky at night (1.7%) | 50+ | 90 | Black wolf, ×3 size, always hunting | Lycagon's Fang, bones, obsidian; Managarm Pride book 25% |
+| **Wethermon the Tombguard** | The Nether (3.3%) | 60+ | 100 | Wither skeleton in netherite with its scythe, ×1.6 size | Wethermon's Scythe, the Seiten Skillbook, bones, scrap; a Tombguard armour piece 50% |
+
+Night bosses (Bilac, Lycagon) leave at dawn without dropping anything. The vanilla bosses (Ender Dragon, Wither,
+Warden, Elder Guardian) still count as boss kills too.
+
+Admins: `/function slf:mob/boss/<id>/spawn` (`nightclaw`, `bilac`, `oriana`, `lycagon`, `wethermon`), or the
+Bosses row of the test menu.
+
 ---
 
 ## Hidden Bosses
@@ -367,6 +388,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
 | Mobs | A Vorpal Bunny (random level, or level 30), remove SLF mobs nearby |
+| Bosses | Each of the five bosses, six blocks ahead; midnight (full moon) or morning |
 | Me | Status sheet, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.
