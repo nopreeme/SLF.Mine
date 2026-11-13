@@ -42,6 +42,7 @@ listens on 127.0.0.1 only (game port 25599, RCON 25575), runs in offline mode, a
 - A real client reports its position right after being teleported, and the server only then loads the terrain around
   the new position. The test player does the same; without it only a single chunk stays loaded.
 - The server uses a fixed seed (`level-seed` in `harness.py`), so terrain-dependent tests see the same world every run.
+- Each test resets the pack's world-wide timers that could fire mid-test (an altar still being raised, karma decay).
 - A real client reports "not on the ground" every tick while airborne. The test player does the same (`hold_air`);
   a silent player is treated as landed after about half a second.
 

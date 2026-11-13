@@ -137,6 +137,23 @@ class TestDatapackLinks(unittest.TestCase):
         self.assertGreater(len(datapack_model_strings()), 20, "scanner found too few items; its patterns are probably out of date")
 
 
+class TestTranslations(unittest.TestCase):
+    def test_every_translation_key_the_datapack_uses_exists(self):
+        """A missing key shows up in game as the raw key, e.g. advancements.slf.siegwurm_skill.title."""
+        lang = load(RP / "slf" / "lang" / "en_us.json"); used = {}
+        def walk(node, f):
+            if isinstance(node, dict):
+                if isinstance(node.get("translate"), str): used.setdefault(node["translate"], f.name)
+                for v in node.values(): walk(v, f)
+            elif isinstance(node, list):
+                for v in node: walk(v, f)
+        for f in DP.rglob("*.json"): walk(load(f), f)
+        for f in DP.rglob("*.mcfunction"):
+            for k in re.findall(r'"translate"\s*:\s*"([^"]+)"', f.read_text(encoding="utf-8")): used.setdefault(k, f.name)
+        missing = sorted(f"{k} (used in {f})" for k, f in used.items() if k.startswith("advancements.slf.") or k.startswith("item.slf.") if k not in lang)
+        self.assertEqual(missing, [])
+
+
 class TestPackMetadata(unittest.TestCase):
     def test_both_packs_use_min_max_format(self):
         for pack, fmt in (("resource_pack", 88), ("data_pack", 107)):

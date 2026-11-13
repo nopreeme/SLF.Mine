@@ -103,6 +103,7 @@ execute as @a[tag=slf.was_knight,tag=!slf.was_holy_knight,tag=!slf.was_dark_knig
 
 # --- 20t cycle ---
 scoreboard players add #timer slf.timer 1
+execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run function slf:player/init_scores
 execute if score #timer slf.timer matches 20.. run function slf:skills/sp_tick
 execute if score #timer slf.timer matches 20.. run function slf:skills/exp_tick
 execute if score #timer slf.timer matches 20.. run function slf:skills/passives

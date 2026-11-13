@@ -20,3 +20,8 @@ scoreboard players set #altar_placed slf.timer 1
 execute store result score #altar_x slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar_placed,limit=1,sort=nearest] Pos[0]
 execute store result score #altar_y slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar_placed,limit=1,sort=nearest] Pos[1]
 execute store result score #altar_z slf.timer run data get entity @e[type=minecraft:marker,tag=slf.altar_placed,limit=1,sort=nearest] Pos[2]
+execute store result storage slf:altar ax int 1 run scoreboard players get #altar_x slf.timer
+execute store result storage slf:altar ay int 1 run scoreboard players get #altar_y slf.timer
+execute store result storage slf:altar az int 1 run scoreboard players get #altar_z slf.timer
+# A placed or raised altar replaces any altar that was still being raised
+scoreboard players set #altar_pending slf.timer 0

@@ -1,6 +1,6 @@
 # Admin: /function slf:altar/place — builds the Altar of Awakening four blocks south of where you stand.
-# Altars also generate naturally in new terrain; this is for worlds whose nearby terrain already exists.
-# One placed altar per world: placing a new one retires the old placed marker (its blocks are left alone).
+# The pack raises an altar by itself when the first player reaches level 99 (altar/create); use this to choose
+# the spot instead. One altar per world: placing a new one retires the old marker (its blocks are left alone).
 kill @e[type=minecraft:marker,tag=slf.altar_placed]
 kill @e[type=minecraft:text_display,tag=slf.altar_placed]
 execute align xyz positioned ~ ~ ~4 run function slf:altar/build

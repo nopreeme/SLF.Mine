@@ -122,6 +122,7 @@ tag @s remove slf.skill.limit_break_rees
 tag @s remove slf.skill.ablaze_advanced_ale
 tag @s remove slf.tantrum_active
 tag @s remove slf.at_altar
+tag @s remove slf.altar_told
 
 # Title tags
 tag @s remove slf.title.apex_crazy_fist

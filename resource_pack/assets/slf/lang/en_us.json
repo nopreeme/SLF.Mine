@@ -65,5 +65,13 @@
   "advancements.slf.colossus_hunter.title": "Colossus Hunter",
   "advancements.slf.colossus_hunter.description": "Own three weapons dropped by the Seven Colossi.",
   "advancements.slf.grand_capture.title": "Grand Capture",
-  "advancements.slf.grand_capture.description": "Collect all known drops from the Seven Colossi."
+  "advancements.slf.grand_capture.description": "Collect all known drops from the Seven Colossi.",
+  "advancements.slf.vorpal_skill.title": "Vorpal Leap",
+  "advancements.slf.vorpal_skill.description": "Obtain the Acrobat skill book from the Vorpal Bunny.",
+  "advancements.slf.siegwurm_skill.title": "Weightless Sky",
+  "advancements.slf.siegwurm_skill.description": "Obtain the Gravity Zero skill book from Siegwurm.",
+  "advancements.slf.lycagon_skill.title": "Wolf-God's Pride",
+  "advancements.slf.lycagon_skill.description": "Obtain the Managarm Pride skill book from Lycagon.",
+  "advancements.slf.ctarnidd_skill.title": "Stolen Patterns",
+  "advancements.slf.ctarnidd_skill.description": "Obtain the Reflexus skill book from Ctarnidd."
 }

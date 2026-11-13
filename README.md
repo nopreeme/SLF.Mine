@@ -225,9 +225,9 @@ Every 10 levels grants **2 bonus stat points** on top of the standard 5 per leve
 
 At level 99 you enter **Standby** — EXP no longer advances your level but is banked. Defeat a qualifying high-tier boss (sets `slf.boss_gate = 1`), then walk up to the **Altar of Awakening** to convert banked EXP into levels 100–150. Killing any boss on the list above sets the gate.
 
-Altars generate naturally on the surface of newly explored Overworld terrain, roughly one every 480 blocks. In Standby, **[Altar of Awakening]** in the menu tells you how far away the nearest one is and gives you an explorer map to it. `/locate structure slf:altar` gives exact coordinates to operators.
+Each world has one Altar of Awakening. When the first player reaches level 99, the pack raises it on the surface about 320 blocks away in a random direction. Every player in Standby is told its coordinates and gets an **Altar Compass** that points to it; **[Altar of Awakening]** in the menu repeats the directions.
 
-Terrain that already existed before the pack was installed has no altars. For that, an admin can build one with `/function slf:altar/place` (four blocks south of where they stand); the menu then shows its coordinates. `/function slf:altar/remove` retires it.
+To choose the spot yourself, an admin can build it with `/function slf:altar/place` (four blocks south of where they stand) at any time, before or after one has risen; `/function slf:altar/remove` retires it, and the next player who needs an altar gets a new one raised. The altar is built by functions, not world generation, so worlds using the pack open without Minecraft's "experimental settings" warning.
 
 ---
 
@@ -347,7 +347,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 /function slf:stats/altar           — attempt Altar of Awakening (requires boss gate)
 /function slf:setup                 — re-register all scoreboards (safe to run anytime)
 /function slf:altar/place           — build the Altar of Awakening four blocks south of you
-/function slf:altar/remove          — retire the placed altar (generated altars are unaffected)
+/function slf:altar/remove          — retire the altar (a new one rises when someone needs it)
 /function slf:admin/reset_player    — wipe your own SLF state (for testing)
 ```
 

@@ -1,5 +1,6 @@
 # Status sheet. Runs as the player.
 execute unless entity @s[tag=slf.class_chosen] run return run function slf:class/select
+function slf:player/init_scores
 tellraw @s ["",{"text":"━━━ ","color":"dark_gray"},{"text":"Status","color":"gold","bold":true},{"text":" ━━━","color":"dark_gray"}]
 execute if score @s slf.class matches 1 run tellraw @s ["",{"text":" Class: ","color":"gray"},{"text":"Swordsman","color":"aqua","bold":true}]
 execute if score @s slf.class matches 2 run tellraw @s ["",{"text":" Class: ","color":"gray"},{"text":"Warrior","color":"red","bold":true}]
