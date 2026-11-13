@@ -225,7 +225,7 @@ Every 10 levels grants **2 bonus stat points** on top of the standard 5 per leve
 
 At level 99 you enter **Standby** — EXP no longer advances your level but is banked. Defeat a qualifying high-tier boss (sets `slf.boss_gate = 1`), then walk up to the **Altar of Awakening** to convert banked EXP into levels 100–150. Killing any boss on the list above sets the gate.
 
-Each world has one Altar of Awakening. When the first player reaches level 99, the pack raises it on the surface about 320 blocks away in a random direction. Every player in Standby is told its coordinates and gets an **Altar Compass** that points to it; **[Altar of Awakening]** in the menu repeats the directions.
+Each world has one Altar of Awakening. When the first player reaches level 99, the pack raises it on dry ground about 320 blocks away in a random direction (480 if nothing within 320 is dry ground: water, lava and forest canopy are skipped), with a foundation so it never overhangs a slope. Every player in Standby is told its coordinates and gets an **Altar Compass** that points to it; **[Altar of Awakening]** in the menu repeats the directions.
 
 To choose the spot yourself, an admin can build it with `/function slf:altar/place` (four blocks south of where they stand) at any time, before or after one has risen; `/function slf:altar/remove` retires it, and the next player who needs an altar gets a new one raised. The altar is built by functions, not world generation, so worlds using the pack open without Minecraft's "experimental settings" warning.
 

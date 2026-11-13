@@ -522,14 +522,18 @@ class Altar(Base):
         self.assertIn("Standby.", chat); self.assertIn("is rising", chat); self.assertIn("has risen", chat)
         ax, ay, az = (S.score("slf.timer", f"#altar_{k}") for k in "xyz")
         self.assertIn(f"stands at {ax} {ay} {az}", chat)
-        self.assertTrue(300 <= ((ax - px) ** 2 + (az - pz) ** 2) ** 0.5 <= 340, f"altar at {ax},{az}, player was at {px},{pz}")
+        d = ((ax - px) ** 2 + (az - pz) ** 2) ** 0.5   # 320 away, or 480 if no spot on the inner ring was dry ground
+        ring = 320 if S.score("slf.timer", "#altar_moves") < 8 else 480
+        self.assertTrue(ring - 20 <= d <= ring + 20, f"altar at {ax},{az} is {d:.0f} from the player at {px},{pz}, expected about {ring}")
         self.assertEqual(self.compasses(), 1, "no altar compass was given")
         target = S.cmd(f'data get entity {S.player} Inventory[{{components:{{"minecraft:custom_data":{{slf_altar_compass:1b}}}}}}].components."minecraft:lodestone_tracker".target.pos')
         self.assertIn(f"[I; {ax}, {ay}, {az}]", target, target)
         S.cmd(f"tp {S.player} {ax} {ay + 10} {az}"); S.wait_ticks(60)      # let the area load before looking at blocks
         for dy, block in ((-1, "polished_blackstone_bricks"), (0, "gilded_blackstone"), (1, "crying_obsidian"), (2, "end_rod")):
             self.assertIn("passed", S.cmd(f"execute if block {ax} {ay + dy} {az} minecraft:{block}"), f"{block} missing in the raised altar")
-        self.assertNotIn("passed", S.cmd(f"execute if block {ax} {ay - 2} {az} minecraft:air"), "the altar is floating")
+        for dx, dz in ((0, 0), (-2, -2), (2, 2), (-2, 2), (2, -2)):             # under the centre and the four corners of the base
+            for bad in ("minecraft:air", "minecraft:water", "minecraft:lava", "#minecraft:leaves"):
+                self.assertNotIn("passed", S.cmd(f"execute if block {ax + dx} {ay - 2} {az + dz} {bad}"), f"the altar stands on {bad} at offset {dx},{dz}")
         self.assertIn("passed", S.cmd(f"execute positioned {ax} {ay} {az} if entity @e[type=minecraft:text_display,tag=slf.altar_label,distance=..6]"))
         mark = S.bot.mark(); self.click("[Altar of Awakening]", "trigger slf.menu"); S.wait_ticks(4)
         self.assertTrue(any("compass points the way" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark))
@@ -537,6 +541,34 @@ class Altar(Base):
         S.cmd(f"tp {S.player} {ax + 1}.5 {ay + 1} {az + 2}.5"); S.wait_cycle(); S.wait_cycle()
         self.assertEqual((S.score("slf.awakened"), S.score("slf.standby")), (1, 0))
         S.cmd(f"clear {S.player}")
+
+    def test_raised_altar_avoids_water(self):
+        """Regression: a real-client check found an altar raised on the open ocean (surface y=63)."""
+        S.cmd(f"tp {S.player} {HOME}"); px, _, pz = [int(float(v)) for v in re.findall(r"(-?[\d.]+)d", S.cmd(f"data get entity {S.player} Pos"))]
+        found = None                                                            # find ocean somewhere near, then aim the altar at it
+        for r in range(150, 1500, 150):
+            for dx, dz in ((r, 0), (0, r), (-r, 0), (0, -r)):
+                out = S.cmd(f"execute positioned {px + dx} 64 {pz + dz} run locate biome #minecraft:is_ocean")
+                m = re.search(r"\[(-?\d+), (?:-?\d+|~), (-?\d+)\]", out)
+                if m: found = (int(m.group(1)), int(m.group(2))); break
+            if found: break
+        self.assertTrue(found, "no ocean near the test spawn")
+        ox, oz = found
+        # raise as if a player stood 320 blocks north of the ocean point: direction 0 (south, +z) makes it the first candidate
+        S.cmd("scoreboard players set #altar_pending slf.timer 1"); S.cmd("scoreboard players set #altar_moves slf.timer 0"); S.cmd("scoreboard players set #altar_dir slf.timer 0")
+        S.cmd(f"data modify storage slf:altar px set value {ox}"); S.cmd(f"data modify storage slf:altar pz set value {oz - 320}")
+        S.cmd("function slf:altar/create_pick")
+        deadline = time.time() + 150
+        while time.time() < deadline and S.score("slf.timer", "#altar_placed") != 1 and S.score("slf.timer", "#altar_pending") == 1: time.sleep(1)
+        self.assertEqual(S.score("slf.timer", "#altar_placed"), 1, f"no altar rose (moves tried: {S.score('slf.timer', '#altar_moves')})")
+        ax, ay, az = (S.score("slf.timer", f"#altar_{k}") for k in "xyz")
+        S.cmd(f"tp {S.player} {ax} {ay + 10} {az}"); S.wait_ticks(60)
+        self.assertIn("passed", S.cmd(f"execute if block {ax} {ay} {az} minecraft:gilded_blackstone"))
+        for dx, dz in ((0, 0), (-2, -2), (2, 2), (-2, 2), (2, -2)):
+            for bad in ("minecraft:air", "minecraft:water", "minecraft:lava", "#minecraft:leaves"):
+                self.assertNotIn("passed", S.cmd(f"execute if block {ax + dx} {ay - 2} {az + dz} {bad}"), f"the altar stands on {bad}")
+        self.assertGreaterEqual(S.score("slf.timer", "#altar_moves"), 1, "the ocean spot was not skipped")
+        self.assertTrue(300 <= ((ax - ox) ** 2 + (az - oz + 320) ** 2) ** 0.5 <= 500, "the moved altar left the rings around the player")
 
     def test_only_one_altar_rises(self):
         self.grant("swordsman"); self.set("slf.level", 99)

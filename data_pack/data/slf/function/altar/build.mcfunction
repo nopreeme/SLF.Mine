@@ -1,6 +1,9 @@
 # Runs at the altar's centre block (block-aligned). 5x5 footprint, 4 tall.
 fill ~-2 ~ ~-2 ~2 ~3 ~2 minecraft:air
 fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:polished_blackstone_bricks
+# Foundation: on a slope or over a hollow, fill the gap under the base so no corner hangs in the air
+fill ~-2 ~-6 ~-2 ~2 ~-2 ~2 minecraft:polished_blackstone_bricks replace #minecraft:replaceable
+fill ~-2 ~-6 ~-2 ~2 ~-2 ~2 minecraft:polished_blackstone_bricks replace #minecraft:leaves
 fill ~-1 ~ ~-1 ~1 ~ ~1 minecraft:polished_blackstone_brick_slab
 setblock ~ ~ ~ minecraft:gilded_blackstone
 setblock ~ ~1 ~ minecraft:crying_obsidian
