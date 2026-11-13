@@ -3,9 +3,10 @@
 execute store result score @s slf.mob_level run random value 3..10
 execute if score #spawn_lv slf.mob_level matches 1.. run scoreboard players operation @s slf.mob_level = #spawn_lv slf.mob_level
 scoreboard players set #spawn_lv slf.mob_level 0
-data merge entity @s {IsBaby:0b,CanBreakDoors:0b,DeathLootTable:"slf:goblin_drops",CustomNameVisible:1b,equipment:{head:{id:"minecraft:paper",count:1,components:{"minecraft:item_model":"slf:goblin_head"}},chest:{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:dyed_color":8280650}},legs:{id:"minecraft:leather_leggings",count:1,components:{"minecraft:dyed_color":7228992}},feet:{id:"minecraft:leather_boots",count:1,components:{"minecraft:dyed_color":13617332}},mainhand:{id:"minecraft:stone_axe",count:1,components:{"minecraft:item_model":"slf:goblin_axe"}}},drop_chances:{head:0.0f,chest:0.0f,legs:0.0f,feet:0.0f,mainhand:0.0f}}
+data merge entity @s {IsBaby:0b,CanBreakDoors:0b,DeathLootTable:"slf:goblin_drops",CustomNameVisible:1b,equipment:{head:{id:"minecraft:paper",count:1,components:{"minecraft:item_model":"slf:goblin_head"}},chest:{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:dyed_color":8280650}},legs:{id:"minecraft:leather_leggings",count:1,components:{"minecraft:dyed_color":7228992}},feet:{id:"minecraft:leather_boots",count:1,components:{"minecraft:dyed_color":13617332}},mainhand:{id:"minecraft:stone_axe",count:1,components:{"minecraft:item_model":"slf:goblin_axe","minecraft:item_name":"Goblin Hand Axe"}}},drop_chances:{head:0.0f,chest:0.0f,legs:0.0f,feet:0.0f,mainhand:0.0f}}
 tag @s add slf.mob
 tag @s add slf.goblin
+tag @s add slf.forest_mob
 tag @s add slf.seen
 attribute @s minecraft:scale base set 0.6
 attribute @s minecraft:movement_speed base set 0.26

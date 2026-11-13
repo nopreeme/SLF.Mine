@@ -241,7 +241,6 @@ Two hidden scoreboards shape the world without being shown in any UI.
 
 - **Rises** when you defeat enemies far beyond your current level
 - **Falls** (−5) on your death — despair leaves a mark
-- High Vorpal Soul is recognized by the **Vorpal Bunny** and certain elite monsters — they only appear before those whose soul is strong enough
 - **Gates** T4 Heroic skills at `vorpal_soul ≥ 50`
 
 ### Karma
@@ -264,11 +263,13 @@ every kill gives) and a **Vorpal Soul** if it was at least 20 levels above you.
 
 | Monster | Where | Level | Stats | Drops |
 |---|---|---|---|---|
-| **Vorpal Bunny** | One in three wild rabbits near a player turns into one (named rabbits and babies never do) | 8–30 | Health 6 + level, attack 2 + level/6, armour 8, hostile (vanilla's Killer Bunny) | 2–4 bones; Vorpal Knife 5%; Acrobat skill book 3% (player kills only) |
-| **Goblin** | Half of the wild zombies in forests and taiga above y=55 (not in caves) | 3–10 | Health 8 + level, attack 1 + level/3, small (0.6 size), quick; 3D goblin head with big ears and red eyes, brown tunic, bandaged feet, stone axe | 0–2 leather, 0–2 gold nuggets; emerald 5% |
-| **Red Hat Goblin** | One in five of those goblins | 12–20 | Health 10 + level, attack 2 + level/3, faster, iron axe, red hat | 1–3 leather, 1–4 gold nuggets, 0–1 iron; emerald 25%; its Red Hat 10% |
+| **Vorpal Bunny** | Rare, in forests and taiga (the Rampant Forest): one in three wild rabbits there, and one in twenty forest zombies is replaced by one | 8–30 | Health 6 + level, attack 2 + level/6, armour 8, faster than a rabbit, hostile (vanilla's Killer Bunny) | 2–4 bones; Vorpal Knife 5%; **Vorpal Choppers 4%** (the weapons pack's item: install it to see the model); Acrobat skill book 3% (player kills only) |
+| **Goblin** | Two in five wild zombies in forests and taiga above y=55 (not in caves) | 3–10 | Health 8 + level, attack 1 + level/3, small (0.6 size), quick; 3D goblin head with big ears and red eyes, brown tunic, bandaged feet, stone axe | **Goblin Hand Axe** 25%; 0–2 leather, 0–2 gold nuggets; emerald 5% |
+| **Redcap Goblin** | **Night only**, half of the wild zombies in swamps and mangrove swamps (the Diremarsh); leave at dawn | 14–22 | Health 10 + level, attack 2 + level/3, faster, forged iron axe, deep red hood. **Calls two more Redcaps when hit** (at most five nearby) | **Redcap Iron Axe** 20%, **Red Hood** 5%, 1–4 gold nuggets (stand-in for Mahni), 0–2 leather |
 
-Admins: `/function slf:mob/vorpal_bunny/spawn`, `slf:mob/goblin/spawn`, `slf:mob/red_hat_goblin/spawn` (set `#spawn_lv slf.mob_level` first to pick the level).
+Forest monsters (Goblin, Vorpal Bunny) give a quarter of their EXP once you reach level 12: time to cross the bridge (design doc V9).
+
+Admins: `/function slf:mob/vorpal_bunny/spawn`, `slf:mob/goblin/spawn`, `slf:mob/red_hat_goblin/spawn` (the Redcap Goblin), `slf:give/goblin_hand_axe` (set `#spawn_lv slf.mob_level` first to pick the level).
 
 ### Bosses
 
@@ -391,7 +392,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Stats | +10 stat points, every stat to 20 or 0, fill mana |
 | Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
-| Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Red Hat Goblin, remove SLF mobs nearby |
+| Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Redcap Goblin, remove SLF mobs nearby |
 | Bosses | Each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
 | Me | Status sheet, the player menu, reset yourself |
 

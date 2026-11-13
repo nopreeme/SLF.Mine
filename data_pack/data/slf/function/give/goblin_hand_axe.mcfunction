@@ -1,0 +1,1 @@
+give @s minecraft:stone_axe[minecraft:item_model="slf:goblin_axe",minecraft:item_name={text:"Goblin Hand Axe",color:"white",italic:false},minecraft:lore=[{text:"A crude stone axe lashed to a stick. Every goblin carries one.",color:"gray",italic:true}]] 1

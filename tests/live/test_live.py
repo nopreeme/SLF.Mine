@@ -669,6 +669,7 @@ class Mobs(Base):
         self.assertIn("is 7.0", S.cmd(f"attribute {self.BUNNY} minecraft:attack_damage base get"))  # 2 + level/6
         self.assertIn("36.0f", S.cmd(f"data get entity {self.BUNNY} Health"))
         self.assertIn("slf:vorpal_bunny_drops", S.cmd(f"data get entity {self.BUNNY} DeathLootTable"))
+        self.assertIn("is 0.38", S.cmd(f"attribute {self.BUNNY} minecraft:movement_speed base get"))   # faster than a rabbit
         tags = S.cmd(f"data get entity {self.BUNNY} Tags")                                 # 30 = 0b11110
         for b in range(8): self.assertEqual(f'"slf.lvb{b}"' in tags, b in (1, 2, 3, 4), (b, tags))
 
@@ -687,7 +688,8 @@ class Mobs(Base):
     def test_no_vorpal_soul_when_the_bunny_is_not_20_levels_higher(self):
         self.grant("swordsman"); self.set("slf.level", 20); self.set("slf.exp", 0); self.set("slf.vorpal_soul", 0)
         self.spawn(30); self.kill_bunny()
-        self.assertEqual(S.score("slf.exp"), 32); self.assertEqual(S.score("slf.vorpal_soul"), 0)
+        self.assertEqual(S.score("slf.exp"), 30 // 4 + 2)   # a forest monster: a quarter of its level from player level 12
+        self.assertEqual(S.score("slf.vorpal_soul"), 0)
 
     def test_bunny_attacks_players(self):
         S.platform(); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10"); S.wait_ticks(4)
@@ -700,7 +702,11 @@ class Mobs(Base):
         self.assertLess(health, 20, "the Vorpal Bunny never hurt the player")
 
     def test_wild_rabbits_near_players_become_vorpal_bunnies(self):
-        S.platform()
+        S.platform(); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:desert")
+        for i in range(10): S.as_player(f'summon minecraft:rabbit ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"]}}')
+        S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.vorpal_bunny]"), "desert rabbits became Vorpal Bunnies")
+        S.cmd("kill @e[tag=slf.test]"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:forest")
         for i in range(15): S.as_player(f'summon minecraft:rabbit ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"]}}')
         S.as_player('summon minecraft:rabbit ~ ~ ~-3 {Tags:["slf.test","pet"],CustomName:"Thumper"}')
         S.wait_cycle(); S.wait_ticks(5)
@@ -806,8 +812,9 @@ class Bosses(Base):
 
 
 class Goblins(Base):
-    """Goblin and Red Hat Goblin: small zombie bodies in dyed caps, forest spawns, level-based stats and EXP."""
-    KINDS = {"goblin": ("Goblin", 3, 10, 8, 1, 3825419), "red_hat_goblin": ("Red Hat Goblin", 12, 20, 10, 2, 11546150)}  # name, min/max level, base hp, base atk, cap colour
+    """Goblin and Redcap Goblin (design doc V9): small zombie bodies with 3D goblin heads, where and when they appear,
+    level-based stats and EXP, the forest EXP falloff at level 12, Redcaps calling for help and leaving at dawn."""
+    KINDS = {"goblin": ("Goblin", 3, 10, 8, 1, 3825419), "red_hat_goblin": ("Redcap Goblin", 14, 22, 10, 2, 11546150)}  # name, min/max level, base hp, base atk, cap colour
 
     def test_stats_look_and_level(self):
         for gid, (name, lo, hi, hp, atk, cap) in self.KINDS.items():
@@ -841,15 +848,54 @@ class Goblins(Base):
         S.wait_cycle(); S.wait_ticks(5)
         goblins = S.cmd("execute if entity @e[tag=slf.test,tag=slf.goblin]"); red = S.cmd("execute if entity @e[tag=slf.test,tag=slf.red_hat_goblin]")
         self.assertIn("passed", goblins)   # 20 zombies at 40% each: none at all is ~0.004%
+        self.assertIn("failed", red, "Redcaps appeared in a forest")
         self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:zombie,tag=slf.test,tag=!slf.mob]"))
         self.assertIn("failed", S.cmd("execute if entity @e[type=minecraft:zombie,tag=slf.test,tag=!slf.seen]"))
         self.assertIn("failed", S.cmd("execute if entity @e[tag=named,tag=slf.mob]"))
-        S.cmd("kill @e[tag=slf.test]"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:desert")
+        S.cmd("kill @e[tag=slf.test]"); S.cmd("kill @e[tag=slf.mob]"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:desert")
         for i in range(10): S.as_player(f'summon minecraft:zombie ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"],IsBaby:0b}}')
         S.wait_cycle(); S.wait_ticks(5)
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.mob]"), "zombies outside forests became goblins")
         S.cmd("time set 1000")
 
+    def summon_zombies(self, n):
+        for i in range(n): S.as_player(f'summon minecraft:zombie ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"],IsBaby:0b}}')
+
+    def test_redcaps_only_in_swamps_at_night(self):
+        S.platform(); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:swamp")
+        S.cmd("time set 6000"); self.summon_zombies(15); S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.mob]"), "swamp zombies converted by day")
+        S.cmd("kill @e[tag=slf.test]"); S.cmd("time set 18000"); self.summon_zombies(15); S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.red_hat_goblin]"))   # 15 at 50%: none is 0.003%
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.goblin]"), "forest goblins in a swamp")
+        S.cmd("kill @e[tag=slf.test]"); S.cmd("time set 1000")
+
+    def test_redcap_calls_for_help_once(self):
+        S.platform(); S.cmd("time set 18000"); S.cmd("scoreboard players set #spawn_lv slf.mob_level 20")
+        S.as_player("function slf:test/mob/red_hat_goblin"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
+        S.as_player("damage @e[tag=slf.red_hat_goblin,limit=1,sort=nearest] 1 minecraft:player_attack by @s"); S.wait_ticks(4)
+        count = int(re.search(r"Count: (\d+)", S.cmd("execute if entity @e[tag=slf.red_hat_goblin]")).group(1))
+        self.assertEqual(count, 3)   # the one that was hit, plus the two it called
+        S.cmd("execute as @e[tag=slf.red_hat_goblin] run data merge entity @s {HurtTime:0s}")
+        S.as_player("damage @e[tag=slf.red_hat_goblin,tag=slf.called,limit=1] 1 minecraft:player_attack by @s"); S.wait_ticks(4)
+        self.assertIn("Count: 3", S.cmd("execute if entity @e[tag=slf.red_hat_goblin]"))   # a Redcap only calls once
+        S.cmd(f"gamemode creative {S.player}"); S.cmd("time set 1000")
+
+    def test_redcaps_leave_at_dawn_without_loot(self):
+        S.platform(); S.cmd("time set 18000"); S.as_player("function slf:test/mob/red_hat_goblin"); S.wait_cycle()
+        S.cmd("kill @e[type=minecraft:item]"); S.cmd("time set 1000"); S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.red_hat_goblin]"), "Redcap stayed after dawn")
+        self.assertIn("failed", S.cmd("execute if entity @e[type=minecraft:item]"), "Redcap dropped loot when it left")   # items were cleared just before dawn
+
+    def test_forest_exp_falls_off_at_level_12(self):
+        self.grant("swordsman")
+        for level, expected in ((5, 8 + 2), (12, 8 // 4 + 2)):
+            with self.subTest(level=level):
+                self.set("slf.level", level); self.set("slf.exp", 0); S.cmd("scoreboard players set #spawn_lv slf.mob_level 8")
+                S.as_player("function slf:test/mob/goblin"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
+                S.as_player("damage @e[tag=slf.goblin,limit=1,sort=nearest] 1000 minecraft:player_attack by @s"); S.wait_ticks(6)
+                self.assertEqual(S.score("slf.exp"), expected)
+        S.cmd(f"gamemode creative {S.player}")
 
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""

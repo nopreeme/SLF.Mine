@@ -2,15 +2,77 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 1,
-        "max": 3
-      },
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.2
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:leather"
+          "name": "minecraft:iron_axe",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_name": {
+                  "text": "Redcap Iron Axe",
+                  "color": "red",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "Forged iron. Someone is teaching them.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.05
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:dyed_color": 11546150,
+                "minecraft:item_name": {
+                  "text": "Red Hood",
+                  "color": "red",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "Taken from a Redcap Goblin.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -31,68 +93,12 @@
       "rolls": {
         "type": "minecraft:uniform",
         "min": 0,
-        "max": 1
+        "max": 2
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:iron_ingot"
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:emerald"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance",
-          "chance": 0.25
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance",
-          "chance": 0.1
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:leather_helmet",
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:dyed_color": 11546150,
-                "minecraft:item_name": {
-                  "text": "Red Hat",
-                  "color": "red",
-                  "italic": false
-                },
-                "minecraft:lore": [
-                  {
-                    "text": "Taken from a Red Hat Goblin. Still warm.",
-                    "color": "gray",
-                    "italic": true
-                  }
-                ]
-              }
-            }
-          ]
+          "name": "minecraft:leather"
         }
       ]
     }

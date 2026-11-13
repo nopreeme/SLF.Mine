@@ -1,5 +1,5 @@
 """
-Mob look models for the resource pack: the Goblin / Red Hat Goblin head and the goblin's stone axe.
+Mob look models for the resource pack: the Goblin / Redcap Goblin head and the goblin's stone axe.
 
 SLF mobs are vanilla creatures (a data pack can't add creature types). A goblin is a small zombie whose head slot holds
 an item with item_model slf:goblin_head: the client draws that 3D model over the zombie's head (any item in the head
@@ -28,7 +28,7 @@ WOOD, WOOD_D, STONE, STONE_D, STONE_L, ROPE, ROPE_D = (110, 76, 46), (82, 56, 34
 
 
 def head_texture():
-    """32x32: four 16x16 tiles. (0,0) face, (16,0) skin, (0,16) ear, (16,16) red hat."""
+    """32x32: four 16x16 tiles. (0,0) face, (16,0) skin, (0,16) ear, (16,16) red hood cloth."""
     im = Image.new("RGBA", (32, 32), SKIN + (255,)); px = im.load()
     def put(x, y, c): px[x, y] = c + (255,)
     # skin tile: mottled
@@ -110,10 +110,16 @@ def ear(side):
 def head_model(red_hat):
     els = [{"from": [1, 1, 1], "to": [15, 15, 15], "faces": faces(SKIN_UV, {"north": FACE})}] + ear(1) + ear(-1)
     if red_hat:
-        els += [{"from": [0.5, 14.5, 0.5], "to": [15.5, 16, 15.5], "faces": faces(HAT_UV)},
-                {"from": [2, 16, 2], "to": [14, 19, 14], "faces": faces(HAT_UV)},
-                {"from": [4, 19, 4], "to": [12, 21, 12], "faces": faces(HAT_UV)},
-                {"from": [8, 20.5, 6], "to": [13, 22.5, 10], "rotation": {"angle": -22.5, "axis": "z", "origin": [8, 21, 8]}, "faces": faces(HAT_UV)}]
+        # Redcap Goblin (design doc V9): "a deep red hood pulled over its head". The hood covers the top, back and sides of
+        # the head, overhangs the brow, drapes over the neck and ends in a drooping point; the ears poke through its sides.
+        els += [{"from": [0.5, 14.5, 0.5], "to": [15.5, 16, 15.5], "faces": faces(HAT_UV)},           # crown
+                {"from": [0.5, 1, 14.5], "to": [15.5, 16, 15.5], "faces": faces(HAT_UV)},             # back
+                {"from": [0.5, 2, 1], "to": [1.5, 16, 15.5], "faces": faces(HAT_UV)},                 # west side
+                {"from": [14.5, 2, 1], "to": [15.5, 16, 15.5], "faces": faces(HAT_UV)},               # east side
+                {"from": [0.5, 13, 0], "to": [15.5, 16, 1.5], "faces": faces(HAT_UV)},                # brow overhang
+                {"from": [1.5, -1.5, 13], "to": [14.5, 1, 15.5], "faces": faces(HAT_UV)},             # drape over the neck
+                {"from": [5, 15.5, 12], "to": [11, 17.5, 16], "faces": faces(HAT_UV)},                # hood point...
+                {"from": [6.5, 16, 15], "to": [9.5, 17.5, 19.5], "rotation": {"angle": -22.5, "axis": "x", "origin": [8, 16.5, 15]}, "faces": faces(HAT_UV)}]  # ...drooping back
     return {"textures": {"0": "slf:item/goblin_head", "particle": "slf:item/goblin_head"}, "elements": els,
             "display": {"head": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}}}
 
