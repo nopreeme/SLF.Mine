@@ -897,6 +897,50 @@ class Goblins(Base):
                 self.assertEqual(S.score("slf.exp"), expected)
         S.cmd(f"gamemode creative {S.player}")
 
+class OrcsAndFrogs(Base):
+    """Orc (leads goblins) and Mud Frog (passive, mud-coated, hits back) from design document V9."""
+
+    def health(self, sel):
+        return float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {sel} Health")).group(1))
+
+    def test_orc_arrives_with_two_goblins(self):
+        S.platform(); S.cmd("scoreboard players set #spawn_lv slf.mob_level 12"); S.as_player("function slf:test/mob/orc"); S.wait_ticks(3)
+        orc = "@e[tag=slf.orc,limit=1]"
+        self.assertIn("Orc Lv.12", S.cmd(f"data get entity {orc} CustomName"))
+        self.assertIn("is 32.0", S.cmd(f"attribute {orc} minecraft:max_health base get"))     # 20 + level
+        self.assertIn("is 7.0", S.cmd(f"attribute {orc} minecraft:attack_damage base get"))    # 3 + level/3
+        self.assertIn("is 1.25", S.cmd(f"attribute {orc} minecraft:scale base get"))
+        self.assertIn('"slf:orc_head"', S.cmd(f"data get entity {orc} equipment.head"))
+        self.assertIn("Count: 2", S.cmd("execute at @e[tag=slf.orc,limit=1] if entity @e[tag=slf.goblin,distance=..6]"))   # its scouting party
+
+    def test_mud_frog_shrugs_off_swords_and_hits_back(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10"); S.cmd(f"effect clear {S.player} slowness")
+        S.cmd("scoreboard players set #spawn_lv slf.mob_level 16"); S.as_player("execute positioned ^ ^ ^2 run function slf:mob/mud_frog/spawn"); S.wait_ticks(3)
+        frog = "@e[tag=slf.mud_frog,limit=1]"
+        self.assertIn("is 22.0", S.cmd(f"attribute {frog} minecraft:max_health base get"))   # 6 + level
+        self.assertIn("is 1.6", S.cmd(f"attribute {frog} minecraft:scale base get"))
+        S.cmd(f"item replace entity {S.player} weapon.mainhand with minecraft:iron_sword"); S.wait_ticks(2)
+        S.as_player(f"damage {frog} 6 minecraft:player_attack by @s"); S.wait_ticks(4)
+        self.assertAlmostEqual(self.health(frog), 22 - 6 + 4, delta=0.01)                     # the mud soaks up most of a sword hit
+        self.assertIn("slowness", S.effects())                                                # and it splashed the player
+        self.assertLess(float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {S.player} Health")).group(1)), 20)
+        S.cmd(f"item replace entity {S.player} weapon.mainhand with minecraft:mace"); S.cmd(f"data merge entity {frog} {{HurtTime:0s}}"); S.wait_ticks(12)
+        before = self.health(frog); S.as_player(f"damage {frog} 6 minecraft:player_attack by @s"); S.wait_ticks(4)
+        self.assertAlmostEqual(self.health(frog), before - 6, delta=0.01)                    # blunt weapons do full damage
+        S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10")
+
+    def test_swamp_frogs_become_mud_frogs(self):
+        S.platform(); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:swamp")
+        for i in range(4): S.as_player(f'summon minecraft:frog ~{i - 2} ~ ~3 {{Tags:["slf.test"]}}')
+        S.as_player('summon minecraft:frog ~ ~ ~-3 {Tags:["slf.test","named"],CustomName:"Kermit"}')
+        S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("Count: 4", S.cmd("execute if entity @e[tag=slf.test,tag=slf.mud_frog]"))
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=named,tag=slf.mud_frog]"))
+        S.cmd("kill @e[tag=slf.test]"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:plains")
+        for i in range(4): S.as_player(f'summon minecraft:frog ~{i - 2} ~ ~3 {{Tags:["slf.test"]}}')
+        S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.mud_frog]"), "frogs outside swamps became Mud Frogs")
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

@@ -1,5 +1,7 @@
 # Every 20 ticks (skills/tick). Wild rabbits near players get their one chance to become Vorpal Bunnies.
 execute as @a at @s as @e[type=minecraft:rabbit,tag=!slf.seen,distance=..64] at @s run function slf:mob/rabbit_seen
+# Wild swamp frogs near players are Mud Frogs (mob/frog_seen).
+execute as @a at @s as @e[type=minecraft:frog,tag=!slf.seen,distance=..64] at @s run function slf:mob/frog_seen
 # Wild surface zombies near players: goblins and Vorpal Bunnies in forests, Redcaps in swamps at night (mob/zombie_seen).
 execute as @a at @s as @e[type=minecraft:zombie,tag=!slf.seen,distance=..64] at @s run function slf:mob/zombie_seen
 # Bosses: upkeep every second, encounter rolls once a minute (mob/boss/roll)

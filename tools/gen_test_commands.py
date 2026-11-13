@@ -189,6 +189,8 @@ def main():
                              run("[Vorpal Bunny Lv.30]", "dark_red", "/function slf:test/mob/vorpal_bunny_30", "A level 30 Vorpal Bunny: a Vorpal Soul for any player at level 10 or below"),
                              run("[Goblin]", "green", "/function slf:test/mob/goblin", "A Goblin (random level 3-10) three blocks ahead"),
                              run("[Redcap Goblin]", "red", "/function slf:test/mob/red_hat_goblin", "A Redcap Goblin (random level 14-22) three blocks ahead; hit it and it calls for help"),
+                             run("[Orc]", "dark_green", "/function slf:test/mob/orc", "An Orc (random level 10-14) with its two-goblin scouting party"),
+                             run("[Mud Frog]", "dark_aqua", "/function slf:test/mob/mud_frog", "A Mud Frog (random level 14-18): swords barely hurt it"),
                              run("[Clear mobs]", "dark_gray", "/function slf:test/mob/clear", "Removes SLF mobs within 32 blocks")]))
     menu.append(row("Bosses", [run(f"[{name}]", color, f"/function slf:test/mob/boss_{bid}", f"{full}, level {lv}, six blocks ahead") for bid, name, full, color, lv in BOSSES] +
                        [run("[Night]", "dark_blue", "/function slf:test/time_night", "Midnight of a full moon (Lycagon and Bilac come out at night)"),
@@ -230,7 +232,7 @@ def main():
               "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"{full} appears.", "yellow")])])
     write("test/time_night.mcfunction", [GENERATED, "time set 18000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Midnight, full moon.", "yellow")])])
     write("test/time_day.mcfunction", [GENERATED, "time set 1000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Morning.", "yellow")])])
-    for gid, name in (("goblin", "Goblin"), ("red_hat_goblin", "Redcap Goblin")):
+    for gid, name in (("goblin", "Goblin"), ("red_hat_goblin", "Redcap Goblin"), ("orc", "Orc"), ("mud_frog", "Mud Frog")):
         write(f"test/mob/{gid}.mcfunction", [GENERATED, f"execute positioned ^ ^ ^3 run function slf:mob/{gid}/spawn",
               "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"A {name} appears.", "yellow")])])
     write("test/mob/clear.mcfunction", [GENERATED, "execute store result score #n slf.tmp run kill @e[tag=slf.mob,distance=..32]",

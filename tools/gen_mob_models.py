@@ -142,11 +142,52 @@ def axe_model():
                         "ground": {"rotation": [0, 0, 0], "translation": [0, 2, 0], "scale": [0.5, 0.5, 0.5]}}}
 
 
+ORC, ORC_D, ORC_DD, TUSK, ORC_EYE = (78, 102, 58), (60, 80, 44), (42, 58, 30), (232, 222, 196), (226, 178, 40)
+
+
+def orc_texture():
+    """32x32 like the goblin's: (0,0) face, (16,0) skin, (0,16) ear, (16,16) tusk ivory."""
+    im = Image.new("RGBA", (32, 32), ORC + (255,)); px = im.load()
+    def put(x, y, c): px[x, y] = c + (255,)
+    for x in range(32):
+        for y in range(16):
+            if (x * 7 + y * 13) % 11 == 0: put(x, y, ORC_D)
+    for x in range(1, 15): put(x, 4, ORC_DD); put(x, 5, ORC_D)                               # one heavy brow
+    for ex in (3, 9):                                                                         # small mean yellow eyes
+        for x in range(ex, ex + 4): put(x, 6, ORC_DD)
+        put(ex + 1, 7, ORC_EYE); put(ex + 2, 7, ORC_EYE); put(ex + 1, 7, (30, 20, 10))
+    for x in (6, 9): put(x, 9, ORC_DD)                                                        # flat nose
+    put(7, 9, ORC_D); put(8, 9, ORC_D)
+    for x in range(3, 13): put(x, 12, ORC_DD); put(x, 13, ORC_D)                              # wide jaw, underbite
+    for x in range(0, 16):
+        for y in range(16, 32):
+            if 3 <= x <= 12 and 19 <= y <= 28: put(x, y, ORC_D)
+    for x in range(16, 32):
+        for y in range(16, 32): put(x, y, TUSK if (x + y) % 6 else (200, 190, 160))
+    return im
+
+
+def orc_head_model():
+    """Bigger, squarer head than a goblin's, short ears, two tusks jutting up from the jaw."""
+    TUSK_UV = (8, 8, 16, 16)
+    els = [{"from": [0.5, 0.5, 0.5], "to": [15.5, 15, 15.5], "faces": faces(SKIN_UV, {"north": FACE})},
+           {"from": [3, 0, -0.5], "to": [13, 4, 1], "faces": faces(SKIN_UV)},                                     # jutting jaw
+           {"from": [3.5, 3, -1.5], "to": [5, 7, 0], "faces": faces(TUSK_UV)},                                    # tusks
+           {"from": [11, 3, -1.5], "to": [12.5, 7, 0], "faces": faces(TUSK_UV)}]
+    for side in (1, -1):
+        x0, x1 = (15.5, 19.5) if side > 0 else (-3.5, 0.5)
+        els.append({"from": [x0, 8, 7.5], "to": [x1, 12, 8.5], "rotation": {"angle": 22.5 * side, "axis": "z", "origin": [15.5 if side > 0 else 0.5, 10, 8]},
+                    "faces": faces(SKIN_UV, {"north": EAR_UV, "south": EAR_UV})})
+    return {"textures": {"0": "slf:item/orc_head", "particle": "slf:item/orc_head"}, "elements": els,
+            "display": {"head": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}}}
+
+
 def main():
     (RP / "textures" / "item").mkdir(parents=True, exist_ok=True)
     head_texture().save(RP / "textures" / "item" / "goblin_head.png")
     axe_texture().save(RP / "textures" / "item" / "goblin_axe.png")
-    models = {"goblin_head": head_model(False), "red_hat_goblin_head": head_model(True), "goblin_axe": axe_model()}
+    orc_texture().save(RP / "textures" / "item" / "orc_head.png")
+    models = {"goblin_head": head_model(False), "red_hat_goblin_head": head_model(True), "goblin_axe": axe_model(), "orc_head": orc_head_model()}
     (RP / "items").mkdir(parents=True, exist_ok=True)
     for name, m in models.items():
         (RP / "models" / "item" / f"{name}.json").write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")
