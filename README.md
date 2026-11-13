@@ -340,6 +340,26 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 
 ## Admin / Creative Commands
 
+### Test menu
+
+`/function slf:test/menu` opens a clickable menu with every test tool (operators only, since it runs `/function`):
+
+| Row | What it does |
+|---|---|
+| Items | One kit per group: weapons (22), armor (16), skill books (15), materials & tomes (5), plus the 3D weapons pack and clear inventory |
+| Class | One button per class (34): resets you, then grants the whole lineage up to that class at the level it needs |
+| Level | Set level 1/10/20/30/50/70/80, jump to 99 (Standby, the altar rises), +1000 EXP, record a boss kill |
+| Stats | +10 stat points, every stat to 20 or 0, fill mana |
+| Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
+| World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
+| Me | Status sheet, the player menu, reset yourself |
+
+Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.
+
+`tools/gen_test_commands.py` writes the give commands, kits, class setups and menu; run it after adding an item or a class (a test fails until you do).
+
+### Commands
+
 ```
 /function slf:class/select          — open the class selection menu
 /function slf:skills/menu           — open the skill focus menu
@@ -370,7 +390,7 @@ Every item has a 16×16 texture. The flat ones are drawn by `tools/gen_item_text
 ## Tests
 
 ```
-python -m unittest tests/test_datapack.py tests/test_resource_pack.py
+python -m unittest tests/test_datapack.py tests/test_resource_pack.py tests/test_test_suite.py
 ```
 
 Both read files only. `tests/live/` runs the pack on a real server with a real player; see [tests/live/README.md](tests/live/README.md).

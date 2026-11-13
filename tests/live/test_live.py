@@ -592,6 +592,64 @@ class Altar(Base):
         self.assertEqual(S.score("slf.awakened"), 0)   # the menu only gives directions: no shortcut past the altar
 
 
+class TestSuite(Base):
+    """The operator test tools (/function slf:test/menu) work in game."""
+    def count_slf_items(self):
+        out = S.cmd(f"execute if items entity {S.player} container.* *[minecraft:custom_model_data]")
+        m = re.search(r"Count: (\d+)", out); return int(m.group(1)) if m else 0
+
+    def item_names(self):
+        """Each slot read separately: one reply over RCON is cut off at about 4 KB."""
+        return [S.cmd(f'data get entity {S.player} Inventory[{{Slot:{n}b}}].components."minecraft:item_name"') for n in range(36)]
+
+    def test_every_kit_gives_every_item_with_a_real_name(self):
+        for kit in ("weapons", "armor", "skill_books", "materials"):
+            with self.subTest(kit):
+                text = open(os.path.join(REPO, "data_pack", "data", "slf", "function", "test", "kit", f"{kit}.mcfunction"), encoding="utf-8").read()
+                expected = len(re.findall(r"function slf:give/", text))
+                learn = os.path.join(REPO, "data_pack", "data", "slf", "function", "skills", "learn")
+                consumed = {f[:-11]: n for n in re.findall(r"function slf:give/([a-z0-9_]+)", text) for f in os.listdir(learn)
+                            if f'"slf.{n}"' in open(os.path.join(learn, f), encoding="utf-8").read()}   # books that teach on first pickup
+                S.cmd(f"clear {S.player}"); S.as_player(f"function slf:test/kit/{kit}"); S.wait_ticks(6)
+                self.assertEqual(self.count_slf_items(), expected - len(consumed))
+                for skill in consumed: self.assertIn(f"slf.skill.{skill}", S.tags(), f"picking up its book did not teach {skill}")
+                if consumed:   # once learned, a second kit keeps every book
+                    S.cmd(f"clear {S.player}"); S.as_player(f"function slf:test/kit/{kit}"); S.wait_ticks(6)
+                    self.assertEqual(self.count_slf_items(), expected)
+                bad = [n for n in self.item_names() if "'{" in n or "'\"" in n]
+                self.assertEqual(bad, [], "an item name is a quoted JSON string, which shows as raw text")
+        S.cmd(f"clear {S.player}")
+
+    def test_boss_drops_have_real_names(self):
+        """Regression: loot tables stored names as JSON strings, shown in game as {"translate":...}."""
+        for table in ("bilac_drops", "nightclaw_drops", "oriana_drops", "wethermon_drops", "wezaemon_drops", "lycagon_drops"):
+            with self.subTest(table):
+                for _ in range(8):   # drops are random: roll until the unique item comes
+                    S.cmd(f"clear {S.player}"); S.cmd(f"loot give {S.player} loot slf:{table}")
+                    out = S.cmd(f'data get entity {S.player} Inventory[{{components:{{"minecraft:custom_model_data":{{}}}}}}].components."minecraft:item_name"')
+                    if "translate" in out: break
+                self.assertIn("translate:", out, f"no unique item dropped from {table} in 8 rolls: {out}")
+                self.assertNotIn("'{", out)
+        S.cmd(f"clear {S.player}")
+
+    def test_every_class_setup(self):
+        grant = os.path.join(REPO, "data_pack", "data", "slf", "function", "class", "grant")
+        for f in sorted(os.listdir(grant)):
+            k = f[:-11]; cid = int(re.search(r"slf\.class (\d+)", open(os.path.join(grant, f), encoding="utf-8").read()).group(1))
+            with self.subTest(k):
+                S.as_player(f"function slf:test/class/{k}"); S.wait_ticks(2)
+                self.assertEqual(S.score("slf.class"), cid); self.assertIn("slf.class_chosen", S.tags())
+
+    def test_every_menu_button(self):
+        mark = S.bot.mark(); S.as_player("function slf:test/menu"); S.wait_ticks(4)
+        buttons = S.bot.clicks_since(mark); self.assertGreater(len(buttons), 50)
+        for label, command in buttons:
+            with self.subTest(label):
+                out = S.as_player(command.lstrip("/"))
+                self.assertFalse(re.search(r"Unknown|Incorrect|Expected|Invalid", out), f"{label} -> {command}: {out}")
+        S.as_player("function slf:altar/remove"); S.cmd(f"clear {S.player}"); S.cmd("kill @e[type=minecraft:pillager]")
+
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

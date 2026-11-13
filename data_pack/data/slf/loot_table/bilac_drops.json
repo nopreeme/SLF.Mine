@@ -16,13 +16,21 @@
                     "slf.bilac_crescent_blade"
                   ]
                 },
-                "minecraft:item_name": "{\"translate\":\"item.slf.bilac_crescent_blade\",\"color\":\"aqua\",\"italic\":false}",
+                "minecraft:item_name": {
+                  "translate": "item.slf.bilac_crescent_blade",
+                  "color": "aqua",
+                  "italic": false
+                },
                 "minecraft:enchantments": {
                   "minecraft:sharpness": 4,
                   "minecraft:looting": 2
                 },
                 "minecraft:lore": [
-                  "{\"text\":\"Unique Drop \u2014 Bilac the Full Moon Fangs\",\"color\":\"dark_purple\",\"italic\":true}"
+                  {
+                    "text": "Unique Drop — Bilac the Full Moon Fangs",
+                    "color": "dark_purple",
+                    "italic": true
+                  }
                 ]
               }
             }

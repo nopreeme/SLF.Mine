@@ -60,22 +60,61 @@
       {
         "when": "slf.mercenary_twin_blades_v1",
         "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/mercenary_twin_blades_v1"
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": "gui",
+              "model": {
+                "type": "minecraft:model",
+                "model": "slf:item/mercenary_twin_blades_icon"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "slf:item/mercenary_twin_blades_v1"
+          }
         }
       },
       {
         "when": "slf.mercenary_twin_blades_v2",
         "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/mercenary_twin_blades_v2"
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": "gui",
+              "model": {
+                "type": "minecraft:model",
+                "model": "slf:item/mercenary_twin_blades_icon"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "slf:item/mercenary_twin_blades_v2"
+          }
         }
       },
       {
         "when": "slf.togetsu_waning_v2",
         "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/togetsu_waning_v2"
+          "type": "minecraft:select",
+          "property": "minecraft:display_context",
+          "cases": [
+            {
+              "when": "gui",
+              "model": {
+                "type": "minecraft:model",
+                "model": "slf:item/togetsu_waning_icon"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "slf:item/togetsu_waning_v2"
+          }
         }
       },
       {

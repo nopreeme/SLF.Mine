@@ -77,6 +77,26 @@ class TestItemDefinitions(unittest.TestCase):
         for f in sorted(ITEM_DEFS.glob("*.json")):
             self.assertIn("fallback", load(f)["model"], f"{f.name}: without a fallback the plain vanilla item has no model")
 
+    def test_3d_items_have_an_inventory_icon(self):
+        """A Blockbench model seen in the inventory is often edge-on (a thin line). Like Togetsu, every 3D item model
+        sits behind a display_context switch whose "gui" case is a flat icon."""
+        def unguarded(node, guarded, out):
+            if isinstance(node, dict):
+                if node.get("type") == "minecraft:select" and node.get("property") == "minecraft:display_context":
+                    has_gui = any(("gui" in (c["when"] if isinstance(c["when"], list) else [c["when"]])) for c in node.get("cases", []))
+                    for c in node.get("cases", []): unguarded(c["model"], guarded or has_gui, out)
+                    if "fallback" in node: unguarded(node["fallback"], guarded or has_gui, out)
+                    return out
+                if node.get("type") == "minecraft:model" and node.get("model", "").startswith("slf:item/") and not guarded:
+                    m = MODELS / (node["model"][9:] + ".json")
+                    if m.exists() and "elements" in load(m): out.append(node["model"])
+                for v in node.values(): unguarded(v, guarded, out)
+            elif isinstance(node, list):
+                for v in node: unguarded(v, guarded, out)
+            return out
+        for f in sorted(ITEM_DEFS.glob("*.json")):
+            self.assertEqual(unguarded(load(f), False, []), [], f"{f.name}: 3D models with no inventory icon")
+
     def test_no_duplicate_cases(self):
         for f in sorted(ITEM_DEFS.glob("*.json")):
             whens = [w for c in load(f)["model"].get("cases", []) for w in (c["when"] if isinstance(c["when"], list) else [c["when"]])]

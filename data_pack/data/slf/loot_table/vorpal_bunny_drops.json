@@ -22,13 +22,21 @@
                     "slf.vorpal_knife"
                   ]
                 },
-                "minecraft:item_name": "{\"translate\":\"item.slf.vorpal_knife\",\"color\":\"white\",\"italic\":false}",
+                "minecraft:item_name": {
+                  "translate": "item.slf.vorpal_knife",
+                  "color": "white",
+                  "italic": false
+                },
                 "minecraft:enchantments": {
                   "minecraft:sharpness": 3
                 },
                 "minecraft:unbreakable": {},
                 "minecraft:lore": [
-                  "{\"text\":\"A claw from the Vorpal Bunny, honed by countless battles.\",\"color\":\"gray\",\"italic\":true}"
+                  {
+                    "text": "A claw from the Vorpal Bunny, honed by countless battles.",
+                    "color": "gray",
+                    "italic": true
+                  }
                 ]
               }
             }
