@@ -256,6 +256,20 @@ Two hidden scoreboards shape the world without being shown in any UI.
 
 ---
 
+## Monsters
+
+SLF monsters are vanilla creatures the pack gives a level, stats, a name and its own drops (a data pack can't add new
+creature types). Every SLF monster shows its level in its name. Killing one gives EXP equal to its level (plus the 2
+every kill gives) and a **Vorpal Soul** if it was at least 20 levels above you.
+
+| Monster | Where | Level | Stats | Drops |
+|---|---|---|---|---|
+| **Vorpal Bunny** | One in three wild rabbits near a player turns into one (named rabbits and babies never do) | 8–30 | Health 6 + level, attack 2 + level/6, armour 8, hostile (vanilla's Killer Bunny) | 2–4 bones; Vorpal Knife 5%; Acrobat skill book 3% (player kills only) |
+
+Admins: `/function slf:mob/vorpal_bunny/spawn` (set `#spawn_lv slf.mob_level` first to pick the level).
+
+---
+
 ## Hidden Bosses
 
 Seven unique boss monsters are hidden throughout the world. Defeating them is the highest challenge in the game.
@@ -352,6 +366,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Stats | +10 stat points, every stat to 20 or 0, fill mana |
 | Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
+| Mobs | A Vorpal Bunny (random level, or level 30), remove SLF mobs nearby |
 | Me | Status sheet, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.

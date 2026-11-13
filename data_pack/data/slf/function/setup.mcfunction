@@ -71,6 +71,8 @@ scoreboard objectives add slf.knight_trials dummy
 
 # --- Mob Level (set on mob entities at spawn) ---
 scoreboard objectives add slf.mob_level dummy
+# Level of the SLF mob a player just killed (mob/lv_bit/*, read by mob/kill_process)
+scoreboard objectives add slf.kill_lv dummy
 
 # --- Ignition detection (separate from def_prev) ---
 scoreboard objectives add slf.ign.prev dummy

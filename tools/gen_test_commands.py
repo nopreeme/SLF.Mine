@@ -178,6 +178,9 @@ def main():
                               run("[Place altar]", "light_purple", "/function slf:altar/place", "Altar of Awakening four blocks south of you"),
                               run("[Altar compass]", "light_purple", "/function slf:test/altar_compass", "A compass to the current altar"),
                               run("[Remove altar]", "dark_gray", "/function slf:altar/remove", "Retire the altar (run near it)")]))
+    menu.append(row("Mobs", [run("[Vorpal Bunny]", "red", "/function slf:test/mob/vorpal_bunny", "A Vorpal Bunny (random level 8-30) three blocks ahead"),
+                             run("[Vorpal Bunny Lv.30]", "dark_red", "/function slf:test/mob/vorpal_bunny_30", "A level 30 Vorpal Bunny: a Vorpal Soul for any player at level 10 or below"),
+                             run("[Clear mobs]", "dark_gray", "/function slf:test/mob/clear", "Removes SLF mobs within 32 blocks")]))
     menu.append(row("Me", [run("[Status]", "white", "/trigger slf.menu set 7", "Your class, level and stats"),
                            run("[Player menu]", "white", "/trigger slf.menu", "The menu players see"),
                            run("[Reset me]", "red", "/function slf:admin/reset_player", "Wipe all your SLF progress")]))
@@ -206,6 +209,12 @@ def main():
           ["tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"Learned all {len(skills)} skills.", "yellow")])])
     write("test/finish_focus.mcfunction", [GENERATED, "execute unless score @s slf.focus matches 1.. run return run tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("You are not focusing a skill. Pick one in the skill menu first.", "red")]),
           "scoreboard players operation @s slf.sp = @s slf.threshold", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Focus complete: the skill is learned within a second.", "yellow")])])
+    write("test/mob/vorpal_bunny.mcfunction", [GENERATED, "execute positioned ^ ^ ^3 run function slf:mob/vorpal_bunny/spawn",
+          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("A Vorpal Bunny appears.", "yellow")])])
+    write("test/mob/vorpal_bunny_30.mcfunction", [GENERATED, "scoreboard players set #spawn_lv slf.mob_level 30", "execute positioned ^ ^ ^3 run function slf:mob/vorpal_bunny/spawn",
+          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("A level 30 Vorpal Bunny appears.", "yellow")])])
+    write("test/mob/clear.mcfunction", [GENERATED, "execute store result score #n slf.tmp run kill @e[tag=slf.mob,distance=..32]",
+          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("SLF mobs removed: ", "yellow"), {"score": {"name": "#n", "objective": "slf.tmp"}, "color": "yellow"}])])
     write("test/karma.mcfunction", [GENERATED, "scoreboard players set @s slf.karma 100", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Karma 100. A Bounty Hunter is on the way.", "yellow")])])
     write("test/altar_compass.mcfunction", [GENERATED, "execute unless score #altar_placed slf.timer matches 1 run return run tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("No altar exists yet. Place one, or reach level 99 to raise one.", "red")]),
           "function slf:altar/give_compass with storage slf:altar"])

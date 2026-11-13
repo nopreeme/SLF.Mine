@@ -7,6 +7,9 @@ execute as @a[scores={slf.deaths=1..}] run function slf:mask/on_death
 execute as @a[scores={slf.menu=1..}] run function slf:menu/dispatch
 scoreboard players enable @a slf.menu
 
+# --- SLF mob kills from last tick (EXP by mob level, Vorpal Soul) ---
+execute as @a[tag=slf.mob_kill] run function slf:mob/kill_process
+
 # --- Class selection ---
 # Trigger-based (alignment_choice + admin direct grants)
 execute as @a if score @s slf.choose_class matches 1 run function slf:class/grant/swordsman
@@ -113,5 +116,6 @@ execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run f
 execute if score #timer slf.timer matches 20.. as @a if score @s slf.stat.lck matches 1.. run function slf:stats/lck_check
 execute if score #timer slf.timer matches 20.. run function slf:class/select_expire
 execute if score #timer slf.timer matches 20.. run function slf:altar/tick
+execute if score #timer slf.timer matches 20.. run function slf:mob/tick
 execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen,tag=!slf.hud_off] run function slf:player/hud
 execute if score #timer slf.timer matches 20.. run scoreboard players set #timer slf.timer 0

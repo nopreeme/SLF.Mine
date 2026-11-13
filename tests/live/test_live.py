@@ -48,7 +48,7 @@ class Base(unittest.TestCase):
     def setUp(self):
         self.assertIsNone(S.bot.error, "test player lost its connection")
         S.cmd(f"gamemode creative {S.player}"); S.cmd(f"effect clear {S.player}")
-        S.cmd(f"tp {S.player} {HOME}"); S.cmd("kill @e[tag=slf.test]")
+        S.cmd(f"tp {S.player} {HOME}"); S.cmd("kill @e[tag=slf.test]"); S.cmd("kill @e[tag=slf.mob]")
         # no altar carried over from an earlier test (an altar still being raised gives up at its next try)
         for k in ("pending", "placed"): S.cmd(f"scoreboard players set #altar_{k} slf.timer 0")
         S.cmd("scoreboard players set #karma_timer slf.karma_timer 0")   # karma decays once a minute: keep that out of the tests
@@ -648,6 +648,66 @@ class TestSuite(Base):
                 out = S.as_player(command.lstrip("/"))
                 self.assertFalse(re.search(r"Unknown|Incorrect|Expected|Invalid", out), f"{label} -> {command}: {out}")
         S.as_player("function slf:altar/remove"); S.cmd(f"clear {S.player}"); S.cmd("kill @e[type=minecraft:pillager]")
+
+
+class Mobs(Base):
+    """SLF mobs: the Vorpal Bunny. Its level sets its stats, the EXP it gives, and whether killing it earns a Vorpal Soul."""
+    BUNNY = "@e[tag=slf.vorpal_bunny,limit=1,sort=nearest]"
+
+    def spawn(self, level=None):
+        S.as_player("function slf:test/mob/vorpal_bunny_30" if level == 30 else "function slf:test/mob/vorpal_bunny"); S.wait_ticks(3)
+
+    def kill_bunny(self):
+        S.cmd(f"gamemode survival {S.player}")
+        out = S.as_player(f"damage {self.BUNNY} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(6)
+
+    def test_bunny_stats_follow_its_level(self):
+        self.spawn(30)
+        self.assertIn("99", S.cmd(f"data get entity {self.BUNNY} RabbitType"))           # vanilla's Killer Bunny: hostile
+        self.assertIn("Vorpal Bunny Lv.30", S.cmd(f"data get entity {self.BUNNY} CustomName"))
+        self.assertIn("is 36.0", S.cmd(f"attribute {self.BUNNY} minecraft:max_health base get"))   # 6 + level
+        self.assertIn("is 7.0", S.cmd(f"attribute {self.BUNNY} minecraft:attack_damage base get"))  # 2 + level/6
+        self.assertIn("36.0f", S.cmd(f"data get entity {self.BUNNY} Health"))
+        self.assertIn("slf:vorpal_bunny_drops", S.cmd(f"data get entity {self.BUNNY} DeathLootTable"))
+        tags = S.cmd(f"data get entity {self.BUNNY} Tags")                                 # 30 = 0b11110
+        for b in range(8): self.assertEqual(f'"slf.lvb{b}"' in tags, b in (1, 2, 3, 4), (b, tags))
+
+    def test_random_level_is_8_to_30(self):
+        for _ in range(5): self.spawn()
+        levels = [int(m) for m in re.findall(r'"Vorpal Bunny Lv\.(\d+)"', S.cmd("execute as @e[tag=slf.vorpal_bunny] run data get entity @s CustomName"))]
+        self.assertEqual(len(levels), 5, levels); self.assertTrue(all(8 <= v <= 30 for v in levels), levels)
+
+    def test_low_level_player_gets_exp_by_level_and_a_vorpal_soul(self):
+        self.grant("swordsman"); self.set("slf.exp", 0); self.set("slf.vorpal_soul", 0)
+        self.spawn(30); self.kill_bunny()
+        self.assertEqual(S.score("slf.exp"), 32)            # its level + the 2 every kill gives
+        self.assertEqual(S.score("slf.vorpal_soul"), 1)     # level 30 >= player level 1 + 20
+        self.assertEqual(S.score("slf.kill_lv"), 0)
+
+    def test_no_vorpal_soul_when_the_bunny_is_not_20_levels_higher(self):
+        self.grant("swordsman"); self.set("slf.level", 20); self.set("slf.exp", 0); self.set("slf.vorpal_soul", 0)
+        self.spawn(30); self.kill_bunny()
+        self.assertEqual(S.score("slf.exp"), 32); self.assertEqual(S.score("slf.vorpal_soul"), 0)
+
+    def test_bunny_attacks_players(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10"); S.wait_ticks(4)
+        S.as_player("scoreboard players set #spawn_lv slf.mob_level 12"); S.as_player("execute positioned ~2 ~ ~ run function slf:mob/vorpal_bunny/spawn")
+        health = None
+        for _ in range(20):
+            S.wait_ticks(10); health = float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {S.player} Health")).group(1))
+            if health < 20: break
+        S.cmd(f"gamemode creative {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10")
+        self.assertLess(health, 20, "the Vorpal Bunny never hurt the player")
+
+    def test_wild_rabbits_near_players_become_vorpal_bunnies(self):
+        S.platform()
+        for i in range(15): S.as_player(f'summon minecraft:rabbit ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"]}}')
+        S.as_player('summon minecraft:rabbit ~ ~ ~-3 {Tags:["slf.test","pet"],CustomName:"Thumper"}')
+        S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:rabbit,tag=slf.test,tag=slf.vorpal_bunny]"))   # 1 in 3 each: 15 all staying normal is ~0.2%
+        self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:rabbit,tag=slf.test,tag=!slf.vorpal_bunny]"))  # and not all of them
+        self.assertIn("failed", S.cmd("execute if entity @e[type=minecraft:rabbit,tag=slf.test,tag=!slf.seen]"))         # every one got its single roll
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=pet,tag=slf.vorpal_bunny]"))                           # a named rabbit stays a pet
 
 
 class WeaponsPack(Base):
