@@ -265,8 +265,8 @@ every kill gives) and a **Vorpal Soul** if it was at least 20 levels above you.
 | Monster | Where | Level | Stats | Drops |
 |---|---|---|---|---|
 | **Vorpal Bunny** | One in three wild rabbits near a player turns into one (named rabbits and babies never do) | 8–30 | Health 6 + level, attack 2 + level/6, armour 8, hostile (vanilla's Killer Bunny) | 2–4 bones; Vorpal Knife 5%; Acrobat skill book 3% (player kills only) |
-| **Goblin** | Half of the wild zombies in forests and taiga above y=55 (not in caves) | 3–10 | Health 8 + level, attack 1 + level/3, small (0.6 size), quick, mossy cap so it doesn't burn by day | 0–2 leather, 0–2 gold nuggets; emerald 5% |
-| **Red Hat Goblin** | One in five of those goblins | 12–20 | Health 10 + level, attack 2 + level/3, faster, iron sword, red cap | 1–3 leather, 1–4 gold nuggets, 0–1 iron; emerald 25%; its Red Hat 10% |
+| **Goblin** | Half of the wild zombies in forests and taiga above y=55 (not in caves) | 3–10 | Health 8 + level, attack 1 + level/3, small (0.6 size), quick; 3D goblin head with big ears and red eyes, brown tunic, bandaged feet, stone axe | 0–2 leather, 0–2 gold nuggets; emerald 5% |
+| **Red Hat Goblin** | One in five of those goblins | 12–20 | Health 10 + level, attack 2 + level/3, faster, iron axe, red hat | 1–3 leather, 1–4 gold nuggets, 0–1 iron; emerald 25%; its Red Hat 10% |
 
 Admins: `/function slf:mob/vorpal_bunny/spawn`, `slf:mob/goblin/spawn`, `slf:mob/red_hat_goblin/spawn` (set `#spawn_lv slf.mob_level` first to pick the level).
 

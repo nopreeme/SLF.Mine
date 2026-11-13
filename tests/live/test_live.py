@@ -819,7 +819,7 @@ class Goblins(Base):
                 self.assertIn(f"is {hp + lv}.0", S.cmd(f"attribute {sel} minecraft:max_health base get"))
                 self.assertIn(f"is {atk + lv // 3}.0", S.cmd(f"attribute {sel} minecraft:attack_damage base get"))
                 self.assertIn("is 0.6", S.cmd(f"attribute {sel} minecraft:scale base get"))
-                self.assertIn(str(cap), S.cmd(f"data get entity {sel} equipment.head"))
+                self.assertIn(f'"slf:{gid}_head"', S.cmd(f"data get entity {sel} equipment.head"))   # the 3D head model
                 self.assertIn(f"slf:{gid}_drops", S.cmd(f"data get entity {sel} DeathLootTable"))
 
     def test_kill_gives_level_exp_not_zombie_exp(self):

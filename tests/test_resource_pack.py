@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RP = ROOT / "resource_pack" / "assets"
 DP = ROOT / "data_pack" / "data"
 ITEM_DEFS = RP / "minecraft" / "items"
+SLF_ITEM_DEFS = RP / "slf" / "items"          # item_model definitions (mob gear: goblin head, goblin axe)
 MODELS = RP / "slf" / "models" / "item"
 TEXTURES = RP / "slf" / "textures" / "item"
 WEAPONS_MODELS = ROOT / "weapons" / "java_out" / "SLF_Weapons_ResourcePack" / "assets" / "slf" / "models" / "item"
@@ -72,6 +73,21 @@ class TestItemDefinitions(unittest.TestCase):
             for ref in sorted(model_refs(load(f), set())):
                 if ref.startswith("slf:item/"):
                     self.assertTrue((MODELS / (ref[9:] + ".json")).exists(), f"{f.name}: model {ref} does not exist")
+
+    def test_slf_item_definitions_point_at_real_models(self):
+        for f in sorted(SLF_ITEM_DEFS.glob("*.json")):
+            for ref in sorted(model_refs(load(f), set())):
+                self.assertTrue(ref.startswith("slf:item/") and (MODELS / (ref[9:] + ".json")).exists(), f"{f.name}: model {ref} does not exist")
+
+    def test_every_item_model_the_datapack_uses_exists(self):
+        """item_model "slf:x" needs assets/slf/items/x.json in one of the resource packs, or the item shows as missing."""
+        weapons_defs = ROOT / "weapons" / "java_out" / "SLF_Weapons_ResourcePack" / "assets" / "slf" / "items"
+        missing = []
+        for f in DP.rglob("*.mcfunction"):
+            for name in re.findall(r'item_model"?\s*[:=]\s*"slf:([a-z0-9_/]+)"', f.read_text(encoding="utf-8")):
+                if not (SLF_ITEM_DEFS / f"{name}.json").exists() and not (weapons_defs / f"{name}.json").exists():
+                    missing.append(f"slf:{name} ({f.relative_to(DP).as_posix()})")
+        self.assertEqual(sorted(set(missing)), [])
 
     def test_definitions_keep_a_fallback(self):
         for f in sorted(ITEM_DEFS.glob("*.json")):
@@ -136,7 +152,7 @@ class TestModels(unittest.TestCase):
         """A model nothing points at can never be seen in game. Known leftovers are listed explicitly."""
         leftovers = {"chestplate_tombguard", "helmet_tombguard", "leggings_tombguard"}   # older duplicates of chest_/helm_/legs_tombguard
         used = set()
-        for f in ITEM_DEFS.glob("*.json"): used |= {r[9:] for r in model_refs(load(f), set()) if r.startswith("slf:item/")}
+        for f in list(ITEM_DEFS.glob("*.json")) + list(SLF_ITEM_DEFS.glob("*.json")): used |= {r[9:] for r in model_refs(load(f), set()) if r.startswith("slf:item/")}
         unreachable = {f.stem for f in MODELS.glob("*.json")} - used - leftovers
         self.assertEqual(unreachable, set())
 

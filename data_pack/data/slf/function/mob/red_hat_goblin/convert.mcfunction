@@ -1,9 +1,9 @@
-# Runs as a zombie: turns it into a Red Hat Goblin, a goblin chief in a blood-red cap: tougher, faster, better armed. Called by spawn and mob/zombie_seen.
-# Body: a zombie at 0.6 size (goblin height) in a dyed leather cap, which also keeps it from burning by day.
+# Runs as a zombie: turns it into a Red Hat Goblin, a goblin chief in a blood-red hat: tougher, faster, with an iron axe. Called by spawn and mob/zombie_seen.
+# Body: a zombie at 0.6 size (goblin height). Its head slot holds an item drawn as the 3D goblin head (resource pack model slf:item/red_hat_goblin_head, tools/gen_mob_models.py), which also keeps it from burning by day; dyed leather makes the tunic and bandaged feet.
 execute store result score @s slf.mob_level run random value 12..20
 execute if score #spawn_lv slf.mob_level matches 1.. run scoreboard players operation @s slf.mob_level = #spawn_lv slf.mob_level
 scoreboard players set #spawn_lv slf.mob_level 0
-data merge entity @s {IsBaby:0b,CanBreakDoors:0b,DeathLootTable:"slf:red_hat_goblin_drops",CustomNameVisible:1b,equipment:{head:{id:"minecraft:leather_helmet",count:1,components:{"minecraft:dyed_color":11546150}},mainhand:{id:"minecraft:iron_sword",count:1}},drop_chances:{head:0.0f,mainhand:0.0f}}
+data merge entity @s {IsBaby:0b,CanBreakDoors:0b,DeathLootTable:"slf:red_hat_goblin_drops",CustomNameVisible:1b,equipment:{head:{id:"minecraft:paper",count:1,components:{"minecraft:item_model":"slf:red_hat_goblin_head"}},chest:{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:dyed_color":8280650}},legs:{id:"minecraft:leather_leggings",count:1,components:{"minecraft:dyed_color":7228992}},feet:{id:"minecraft:leather_boots",count:1,components:{"minecraft:dyed_color":13617332}},mainhand:{id:"minecraft:iron_axe",count:1}},drop_chances:{head:0.0f,chest:0.0f,legs:0.0f,feet:0.0f,mainhand:0.0f}}
 tag @s add slf.mob
 tag @s add slf.red_hat_goblin
 tag @s add slf.seen
