@@ -805,6 +805,52 @@ class Bosses(Base):
         self.assertIn("passed", S.as_player('execute if items entity @e[type=minecraft:item,distance=..32] contents *[minecraft:custom_model_data={strings:["slf.unique_core"]}]'))
 
 
+class Goblins(Base):
+    """Goblin and Red Hat Goblin: small zombie bodies in dyed caps, forest spawns, level-based stats and EXP."""
+    KINDS = {"goblin": ("Goblin", 3, 10, 8, 1, 3825419), "red_hat_goblin": ("Red Hat Goblin", 12, 20, 10, 2, 11546150)}  # name, min/max level, base hp, base atk, cap colour
+
+    def test_stats_look_and_level(self):
+        for gid, (name, lo, hi, hp, atk, cap) in self.KINDS.items():
+            with self.subTest(gid):
+                S.cmd("kill @e[tag=slf.mob]"); S.as_player(f"function slf:test/mob/{gid}"); S.wait_ticks(3)
+                sel = f"@e[tag=slf.{gid},limit=1]"
+                m = re.search(rf'"{name} Lv\.(\d+)"', S.cmd(f"data get entity {sel} CustomName")); self.assertTrue(m, gid)
+                lv = int(m.group(1)); self.assertTrue(lo <= lv <= hi, lv)
+                self.assertIn(f"is {hp + lv}.0", S.cmd(f"attribute {sel} minecraft:max_health base get"))
+                self.assertIn(f"is {atk + lv // 3}.0", S.cmd(f"attribute {sel} minecraft:attack_damage base get"))
+                self.assertIn("is 0.6", S.cmd(f"attribute {sel} minecraft:scale base get"))
+                self.assertIn(str(cap), S.cmd(f"data get entity {sel} equipment.head"))
+                self.assertIn(f"slf:{gid}_drops", S.cmd(f"data get entity {sel} DeathLootTable"))
+
+    def test_kill_gives_level_exp_not_zombie_exp(self):
+        self.grant("swordsman"); self.set("slf.exp", 0); S.cmd("scoreboard players set #spawn_lv slf.mob_level 15")
+        S.as_player("function slf:test/mob/red_hat_goblin"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
+        out = S.as_player("damage @e[tag=slf.red_hat_goblin,limit=1] 1000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(6)
+        self.assertEqual(S.score("slf.exp"), 17)   # level 15 + every kill's 2; not also a common (zombie) kill
+
+    def test_goblins_do_not_burn_by_day(self):
+        S.platform(); S.cmd("time set 6000"); S.as_player("function slf:test/mob/goblin"); S.wait_cycle(); S.wait_cycle()
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.goblin]"))
+        self.assertIn("Fire: 0s", S.cmd("data get entity @e[tag=slf.goblin,limit=1]").replace("Fire: -1s", "Fire: 0s"))
+
+    def test_forest_zombies_become_goblins_and_others_do_not(self):
+        S.platform(); S.cmd("time set 18000")
+        S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:forest")
+        for i in range(20): S.as_player(f'summon minecraft:zombie ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"],IsBaby:0b}}')
+        S.as_player('summon minecraft:zombie ~ ~ ~-3 {Tags:["slf.test","named"],CustomName:"Bob",IsBaby:0b}')
+        S.wait_cycle(); S.wait_ticks(5)
+        goblins = S.cmd("execute if entity @e[tag=slf.test,tag=slf.goblin]"); red = S.cmd("execute if entity @e[tag=slf.test,tag=slf.red_hat_goblin]")
+        self.assertIn("passed", goblins)   # 20 zombies at 40% each: none at all is ~0.004%
+        self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:zombie,tag=slf.test,tag=!slf.mob]"))
+        self.assertIn("failed", S.cmd("execute if entity @e[type=minecraft:zombie,tag=slf.test,tag=!slf.seen]"))
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=named,tag=slf.mob]"))
+        S.cmd("kill @e[tag=slf.test]"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:desert")
+        for i in range(10): S.as_player(f'summon minecraft:zombie ~{i % 5 - 2} ~ ~{i // 5 + 2} {{Tags:["slf.test"],IsBaby:0b}}')
+        S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.mob]"), "zombies outside forests became goblins")
+        S.cmd("time set 1000")
+
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"
