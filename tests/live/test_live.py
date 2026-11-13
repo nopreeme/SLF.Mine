@@ -715,6 +715,7 @@ class Bosses(Base):
     # id: (body, level, full name, size)
     BOSSES = {"nightclaw": ("spider", 40, "Nightclaw", 2.5), "bilac": ("phantom", 60, "Bilac the Full Moon Fangs", 3.0),
               "oriana": ("evoker", 75, "Oriana the Uncrowned", 1.3), "lycagon": ("wolf", 90, "Lycagon the Nightslayer", 3.0),
+              "ctarnidd": ("elder_guardian", 85, "Ctarnidd of the Abyss", 2.0), "siegwurm": ("ghast", 95, "Siegwurm the Sky Ruler", 1.5),
               "wethermon": ("wither_skeleton", 100, "Wethermon the Tombguard", 1.6)}
 
     def tearDown(self):
@@ -730,8 +731,10 @@ class Bosses(Base):
                 self.assertIn(f"{name} Lv.{lv}", S.cmd(f"data get entity {self.boss(bid)} CustomName"))
                 self.assertIn(f"is {lv * 4}.0", S.cmd(f"attribute {self.boss(bid)} minecraft:max_health get"))
                 self.assertIn(f"is {scale}", S.cmd(f"attribute {self.boss(bid)} minecraft:scale base get"))
-                self.assertIn(f"{lv * 4}.0f", S.cmd(f"data get entity {self.boss(bid)} Health"))
-                self.assertIn(f"has a value of {lv * 4}", S.cmd(f"bossbar get slf:{bid} value"))
+                health = float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {self.boss(bid)} Health")).group(1))
+                self.assertGreater(health, lv * 4 - 10)   # full health, give or take a scrape from the terrain it spawned in
+                bar = int(re.search(r"value of (\d+)", S.cmd(f"bossbar get slf:{bid} value")).group(1))
+                self.assertGreater(bar, lv * 4 - 10)
                 self.assertIn("shown", S.cmd(f"bossbar get slf:{bid} visible"))
         S.cmd("kill @e[tag=slf.mob]"); S.wait_cycle()
         for bid in self.BOSSES: self.assertIn("hidden", S.cmd(f"bossbar get slf:{bid} visible"), bid)
@@ -794,6 +797,12 @@ class Bosses(Base):
         self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_bilac]"))   # 60 rolls at 10%: misses 0.2% of the time
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_nightclaw]"))   # caves only
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_wethermon]"))   # Nether only
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_ctarnidd]"))    # deep ocean, in the water only
+
+    def test_siegwurm_always_drops_a_unique_core(self):
+        S.platform(); S.as_player("function slf:test/mob/boss_siegwurm"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
+        out = S.as_player("damage @e[tag=slf.boss_siegwurm,limit=1] 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
+        self.assertIn("passed", S.as_player('execute if items entity @e[type=minecraft:item,distance=..32] contents *[minecraft:custom_model_data={strings:["slf.unique_core"]}]'))
 
 
 class WeaponsPack(Base):

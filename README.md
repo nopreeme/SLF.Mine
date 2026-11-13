@@ -281,12 +281,14 @@ Health is 4 × level, attack 4 + level/10.
 | **Bilac the Full Moon Fangs** | Under the open sky on a full-moon night (10%) | 30+ | 60 | Phantom, ×3 size | Bilac's Crescent Blade, phantom membrane, iron |
 | **Oriana the Uncrowned** | The End (5%) | 45+ | 75 | Evoker, ×1.3 size | Oriana's Void Staff, ender pearls, diamonds |
 | **Lycagon the Nightslayer** | Under the open sky at night (1.7%) | 50+ | 90 | Black wolf, ×3 size, always hunting | Lycagon's Fang, bones, obsidian; Managarm Pride book 25% |
+| **Ctarnidd of the Abyss** | Swimming in a deep ocean (5%) | 40+ | 85 | Elder guardian, ×2 size | Reflexus book 30%, prismarine crystals, nautilus shells |
+| **Siegwurm the Sky Ruler** | Under the open sky above y=150 (4%) | 55+ | 95 | Ghast, ×1.5 size | Unique Monster Core, Gravity Zero book 30%, ghast tears, phantom membrane |
 | **Wethermon the Tombguard** | The Nether (3.3%) | 60+ | 100 | Wither skeleton in netherite with its scythe, ×1.6 size | Wethermon's Scythe, the Seiten Skillbook, bones, scrap; a Tombguard armour piece 50% |
 
 Night bosses (Bilac, Lycagon) leave at dawn without dropping anything. The vanilla bosses (Ender Dragon, Wither,
 Warden, Elder Guardian) still count as boss kills too.
 
-Admins: `/function slf:mob/boss/<id>/spawn` (`nightclaw`, `bilac`, `oriana`, `lycagon`, `wethermon`), or the
+Admins: `/function slf:mob/boss/<id>/spawn` (`nightclaw`, `bilac`, `oriana`, `lycagon`, `ctarnidd`, `siegwurm`, `wethermon`), or the
 Bosses row of the test menu.
 
 ---
@@ -388,7 +390,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
 | Mobs | A Vorpal Bunny (random level, or level 30), remove SLF mobs nearby |
-| Bosses | Each of the five bosses, six blocks ahead; midnight (full moon) or morning |
+| Bosses | Each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
 | Me | Status sheet, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.

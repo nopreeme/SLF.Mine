@@ -4,3 +4,5 @@ execute as @e[tag=slf.boss_bilac,limit=1] at @s run function slf:mob/boss/bar {i
 execute as @e[tag=slf.boss_oriana,limit=1] at @s run function slf:mob/boss/bar {id:"oriana"}
 execute as @e[tag=slf.boss_lycagon,limit=1] at @s run function slf:mob/boss/bar {id:"lycagon"}
 execute as @e[tag=slf.boss_wethermon,limit=1] at @s run function slf:mob/boss/bar {id:"wethermon"}
+execute as @e[tag=slf.boss_ctarnidd,limit=1] at @s run function slf:mob/boss/bar {id:"ctarnidd"}
+execute as @e[tag=slf.boss_siegwurm,limit=1] at @s run function slf:mob/boss/bar {id:"siegwurm"}

@@ -89,6 +89,12 @@ bossbar set slf:lycagon style notched_10
 bossbar add slf:wethermon {text:"Wethermon the Tombguard",color:"dark_red"}
 bossbar set slf:wethermon color red
 bossbar set slf:wethermon style notched_10
+bossbar add slf:ctarnidd {text:"Ctarnidd of the Abyss",color:"dark_blue"}
+bossbar set slf:ctarnidd color blue
+bossbar set slf:ctarnidd style notched_10
+bossbar add slf:siegwurm {text:"Siegwurm the Sky Ruler",color:"aqua"}
+bossbar set slf:siegwurm color white
+bossbar set slf:siegwurm style notched_10
 
 # --- Ignition detection (separate from def_prev) ---
 scoreboard objectives add slf.ign.prev dummy

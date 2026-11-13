@@ -11,3 +11,5 @@ execute unless entity @e[tag=slf.boss_bilac] run bossbar set slf:bilac visible f
 execute unless entity @e[tag=slf.boss_oriana] run bossbar set slf:oriana visible false
 execute unless entity @e[tag=slf.boss_lycagon] run bossbar set slf:lycagon visible false
 execute unless entity @e[tag=slf.boss_wethermon] run bossbar set slf:wethermon visible false
+execute unless entity @e[tag=slf.boss_ctarnidd] run bossbar set slf:ctarnidd visible false
+execute unless entity @e[tag=slf.boss_siegwurm] run bossbar set slf:siegwurm visible false

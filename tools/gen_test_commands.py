@@ -44,6 +44,7 @@ def run(label, color, command, hover): return T(label, color, click_event={"acti
 # SLF bosses (data_pack/data/slf/function/mob/boss/<id>): id, button label, full name, colour, level
 BOSSES = [("nightclaw", "Nightclaw", "Nightclaw", "dark_gray", 40), ("bilac", "Bilac", "Bilac the Full Moon Fangs", "gold", 60),
           ("oriana", "Oriana", "Oriana the Uncrowned", "dark_aqua", 75), ("lycagon", "Lycagon", "Lycagon the Nightslayer", "dark_purple", 90),
+          ("ctarnidd", "Ctarnidd", "Ctarnidd of the Abyss", "dark_blue", 85), ("siegwurm", "Siegwurm", "Siegwurm the Sky Ruler", "aqua", 95),
           ("wethermon", "Wethermon", "Wethermon the Tombguard", "dark_red", 100)]
 
 
