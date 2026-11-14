@@ -1,0 +1,19 @@
+{
+  "criteria": {
+    "purse": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:item_model": "slf:mahni_purse"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "slf:mahni/pickup"
+  }
+}

@@ -1043,6 +1043,33 @@ class MudDigger(Base):
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.digger_part]"))
         S.cmd(f"tag {S.player} remove slf.title.solo_killer"); S.cmd(f"clear {S.player}")
 
+class Mahni(Base):
+    """Mahni currency: purses turn into Mahni on pickup; the balance shows on the status sheet."""
+
+    def test_purses_turn_into_mahni(self):
+        self.grant("swordsman"); self.set("slf.mahni", 0); S.cmd(f"clear {S.player}")
+        for _ in range(3): S.as_player("function slf:give/mahni_purse")
+        S.wait_ticks(4)
+        self.assertEqual(S.score("slf.mahni"), 30)
+        self.assertIn("failed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:mahni_purse"]'))
+        S.as_player("function slf:give/mahni_purse"); S.wait_ticks(4)
+        self.assertEqual(S.score("slf.mahni"), 40)                                # the pickup fires every time, not just once
+
+    def test_status_sheet_and_reset(self):
+        self.grant("swordsman"); self.set("slf.mahni", 123)
+        mark = S.bot.mark(); S.as_player("trigger slf.menu set 7"); S.wait_ticks(4)
+        self.assertTrue(any("Mahni 123" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark)[-5:])
+        S.as_player("function slf:admin/reset_player"); self.assertEqual(S.score("slf.mahni"), 0)
+
+    def test_monsters_drop_purses(self):
+        S.platform(); self.grant("swordsman"); self.set("slf.mahni", 0); S.cmd(f"clear {S.player}"); S.cmd(f"gamemode survival {S.player}")   # room to pick up
+        S.as_player("execute positioned ^ ^ ^2 run function slf:mob/red_hat_goblin/spawn"); S.wait_ticks(3)
+        S.as_player("damage @e[tag=slf.red_hat_goblin,limit=1,sort=nearest] 1000 minecraft:player_attack by @s"); S.wait_ticks(4)
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:mahni_purse"]'), "no purse dropped")
+        S.as_player("tp @e[type=minecraft:item,distance=..16] @s"); S.wait_ticks(20)    # walk over the drops
+        self.assertGreaterEqual(S.score("slf.mahni"), 10)
+        S.cmd(f"gamemode creative {S.player}"); S.cmd("kill @e[tag=slf.mob]"); S.cmd(f"clear {S.player}")
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

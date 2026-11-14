@@ -264,9 +264,9 @@ every kill gives) and a **Vorpal Soul** if it was at least 20 levels above you.
 | Monster | Where | Level | Stats | Drops |
 |---|---|---|---|---|
 | **Vorpal Bunny** | Rare, in forests and taiga (the Rampant Forest): one in three wild rabbits there, and one in twenty forest zombies is replaced by one | 8–30 | Health 6 + level, attack 2 + level/6, armour 8, faster than a rabbit, hostile (vanilla's Killer Bunny) | 2–4 bones; Vorpal Knife 5%; **Vorpal Choppers 4%** (the weapons pack's item: install it to see the model); Acrobat skill book 3% (player kills only) |
-| **Goblin** | Two in five wild zombies in forests and taiga above y=55 (not in caves) | 3–10 | Health 8 + level, attack 1 + level/3, small (0.6 size), quick; 3D goblin head with big ears and red eyes, brown tunic, bandaged feet, stone axe | **Goblin Hand Axe** 25%; 0–2 leather, 0–2 gold nuggets; emerald 5% |
-| **Redcap Goblin** | **Night only**, half of the wild zombies in swamps and mangrove swamps (the Diremarsh); leave at dawn | 14–22 | Health 10 + level, attack 2 + level/3, faster, forged iron axe, deep red hood. **Calls two more Redcaps when hit** (at most five nearby) | **Redcap Iron Axe** 20%, **Red Hood** 5%, 1–4 gold nuggets (stand-in for Mahni), 0–2 leather |
-| **Orc** | One in twenty forest zombies; always arrives leading two goblins | 10–14 | Health 20 + level, attack 3 + level/3, big (1.25 size), slow, 3D orc head with tusks, club | 1–3 leather, iron nuggets, gold nuggets |
+| **Goblin** | Two in five wild zombies in forests and taiga above y=55 (not in caves) | 3–10 | Health 8 + level, attack 1 + level/3, small (0.6 size), quick; 3D goblin head with big ears and red eyes, brown tunic, bandaged feet, stone axe | **Goblin Hand Axe** 25%; 0–2 leather; a Mahni Purse 30%; emerald 5% |
+| **Redcap Goblin** | **Night only**, half of the wild zombies in swamps and mangrove swamps (the Diremarsh); leave at dawn | 14–22 | Health 10 + level, attack 2 + level/3, faster, forged iron axe, deep red hood. **Calls two more Redcaps when hit** (at most five nearby) | **Redcap Iron Axe** 20%, **Red Hood** 5%, 1–2 Mahni Purses, 0–2 leather |
+| **Orc** | One in twenty forest zombies; always arrives leading two goblins | 10–14 | Health 20 + level, attack 3 + level/3, big (1.25 size), slow, 3D orc head with tusks, club | 1–3 leather, iron nuggets, 1–2 Mahni Purses |
 | **Mud Frog** | Every frog in a swamp or mangrove swamp (the Diremarsh) | 14–18 | Health 6 + level, 1.6 size. Passive; hits back with a mud splash (2 damage, Slowness) when attacked. **Swords barely hurt it** (it heals 4 per sword hit); blunt, piercing and fire weapons do full damage | **Mud Frog Skin** 50% (for the Splitblade set), slime balls |
 
 Forest monsters (Goblin, Orc, Vorpal Bunny) give a quarter of their EXP once you reach level 12: time to cross the bridge (design doc V9).
@@ -325,6 +325,23 @@ Warden, Elder Guardian) still count as boss kills too.
 
 Admins: `/function slf:mob/boss/<id>/spawn` (`nightclaw`, `bilac`, `oriana`, `lycagon`, `ctarnidd`, `siegwurm`, `wethermon`), or the
 Bosses row of the test menu.
+
+---
+
+## Mahni
+
+Mahni is the currency (design doc V9). Your balance shows on the status sheet and at the end of the status line above the hotbar.
+Monsters drop **Mahni Purses** worth 10 Mahni each; a purse turns into Mahni the moment it reaches your inventory.
+
+| Source | Purses |
+|---|---|
+| Goblin | 1 (30%) |
+| Orc, Redcap Goblin | 1–2 |
+| Ravenous Snake | 5–8 |
+| Mud Digger | 10–15 |
+
+Nothing sells for Mahni yet: the shops and quest rewards that use it come with the town NPCs. Admins: `/function slf:give/mahni_purse`,
+`/scoreboard players add <player> slf.mahni <n>`.
 
 ---
 
@@ -426,7 +443,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
 | Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Redcap Goblin, an Orc with its goblins, a Mud Frog, remove SLF mobs nearby |
 | Bosses | The two area bosses and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
-| Me | Status sheet, the player menu, reset yourself |
+| Me | Status sheet, +100 Mahni, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.
 

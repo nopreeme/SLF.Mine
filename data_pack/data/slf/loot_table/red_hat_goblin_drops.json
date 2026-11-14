@@ -79,19 +79,6 @@
     {
       "rolls": {
         "type": "minecraft:uniform",
-        "min": 1,
-        "max": 4
-      },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:gold_nugget"
-        }
-      ]
-    },
-    {
-      "rolls": {
-        "type": "minecraft:uniform",
         "min": 0,
         "max": 2
       },
@@ -99,6 +86,44 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:leather"
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1,
+        "max": 2
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:paper",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "slf:mahni_purse",
+                "minecraft:item_name": {
+                  "text": "Mahni Purse",
+                  "color": "gold",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "10 Mahni. Added to your purse when you pick it up.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
         }
       ]
     }

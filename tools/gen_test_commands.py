@@ -196,6 +196,7 @@ def main():
                        [run("[Night]", "dark_blue", "/function slf:test/time_night", "Midnight of a full moon (Lycagon and Bilac come out at night)"),
                         run("[Day]", "yellow", "/function slf:test/time_day", "Morning: night bosses leave")]))
     menu.append(row("Me", [run("[Status]", "white", "/trigger slf.menu set 7", "Your class, level and stats"),
+                           run("[+100 Mahni]", "gold", "/function slf:test/mahni", "Adds 100 Mahni"),
                            run("[Player menu]", "white", "/trigger slf.menu", "The menu players see"),
                            run("[Reset me]", "red", "/function slf:admin/reset_player", "Wipe all your SLF progress")]))
     menu.append("tellraw @s " + J(rule))
@@ -207,6 +208,7 @@ def main():
               "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"Level set to {lv}.", "yellow")])])
     write("test/level/99.mcfunction", [GENERATED, "scoreboard players set @s slf.awakened 0", "scoreboard players set @s slf.level 99", "scoreboard players add @s slf.exp 5000",
           "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Level 99 with 5000 banked EXP. Standby starts within a second.", "yellow")])])
+    write("test/mahni.mcfunction", [GENERATED, "scoreboard players add @s slf.mahni 100", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+100 Mahni.", "yellow")])])
     write("test/exp.mcfunction", [GENERATED, "scoreboard players add @s slf.exp 1000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+1000 EXP.", "yellow")])])
     write("test/boss_gate.mcfunction", [GENERATED, "scoreboard players set @s slf.boss_gate 1", "scoreboard players add @s slf.boss_kills 1",
           "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Boss kill recorded: the Altar of Awakening will answer you at level 99.", "yellow")])])

@@ -73,6 +73,8 @@ scoreboard objectives add slf.knight_trials dummy
 scoreboard objectives add slf.mob_level dummy
 # Level of the SLF mob a player just killed (mob/lv_bit/*, read by mob/kill_process)
 scoreboard objectives add slf.kill_lv dummy
+# Mahni, the currency (design doc V9). Purses picked up turn into Mahni (mahni/pickup)
+scoreboard objectives add slf.mahni dummy
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
 bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
 bossbar set slf:nightclaw color white
