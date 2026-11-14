@@ -1,0 +1,1 @@
+give @s minecraft:potion[minecraft:potion_contents={custom_color:13145344,custom_effects:[{id:"minecraft:strength",duration:1200,amplifier:0},{id:"minecraft:nausea",duration:160,amplifier:0}]},minecraft:item_name={text:"Strong Ale",color:"gold",italic:false}] 1

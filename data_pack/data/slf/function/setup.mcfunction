@@ -91,6 +91,13 @@ scoreboard objectives add slf.q.snake dummy
 scoreboard objectives add slf.q.delivery dummy
 # A number per player (player/assign_pid). Quest scenes carry their player's number, so each player has their own camp.
 scoreboard objectives add slf.pid dummy
+scoreboard objectives add slf.q.bed dummy
+scoreboard objectives add slf.q.antidote dummy
+scoreboard objectives add slf.q.watch dummy
+scoreboard objectives add slf.q.watch_t dummy
+scoreboard objectives add slf.q.bar dummy
+# Shop buy buttons (shop/buy)
+scoreboard objectives add slf.shop trigger
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
 bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
 bossbar set slf:nightclaw color white

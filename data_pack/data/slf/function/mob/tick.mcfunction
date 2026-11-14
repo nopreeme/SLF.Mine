@@ -16,3 +16,4 @@ execute if predicate slf:night run tag @e[tag=slf.night_mob] add slf.saw_night
 execute unless predicate slf:night as @e[tag=slf.night_mob,tag=slf.saw_night] at @s run function slf:mob/vanish
 # Quest scenes: The Missing Herd's cows
 execute as @a[scores={slf.q.herd=1}] run function slf:quest/herd/check
+execute as @a[scores={slf.q.watch=1}] at @s run function slf:quest/watch/tick

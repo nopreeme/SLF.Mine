@@ -1,0 +1,7 @@
+# Innkeeper Marrow: A Soft Bed at Last (register your respawn here), and the end of Lysa's Antidote Run.
+execute if score @s slf.q.antidote matches 1 if items entity @s container.* minecraft:paper[minecraft:item_model="slf:antidote_bundle"] run return run function slf:quest/turn_in/antidote
+execute if score @s slf.q.bed matches 1 run return run tellraw @s ["",{"text":"[Innkeeper Marrow] ","color":"gold"},{"text":"Your room's upstairs. Lie down in the bed - that's what registers you here, love.","color":"white"}]
+execute if score @s slf.q.bed matches 2 run return run tellraw @s ["",{"text":"[Innkeeper Marrow] ","color":"gold"},{"text":"Back again? Good. Every pioneer who stumbles through those doors poisoned makes me glad of the ones who register first.","color":"white"}]
+tellraw @s ["",{"text":"[Innkeeper Marrow] ","color":"gold"},{"text":"Another pioneer! You look half-dead. Before anything else: rent a room, and lie in the bed so Secondil remembers you.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Quest: ","color":"gray"},{"text":"A Soft Bed at Last","color":"gold","bold":true},{"text":"  Rent a room and lie in a bed to register your respawn point.  ","color":"gray"},{"text":"Reward: 75 EXP, Secondil respawn point, a meal voucher (Secondil Stew)  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 8"},"hover_event":{"action":"show_text","value":"Accept \"A Soft Bed at Last\""}}]

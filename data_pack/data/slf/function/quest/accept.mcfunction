@@ -12,3 +12,9 @@ execute if score #q slf.tmp matches 4 if score @s slf.q.herd matches 0 run retur
 execute if score #q slf.tmp matches 5 if score @s slf.q.herd matches 2 if score @s slf.q.serpent matches 0 run return run function slf:quest/start/serpent
 execute if score #q slf.tmp matches 6 if score @s slf.q.serpent matches 2 if score @s slf.q.guardian matches 0 run return run function slf:quest/start/guardian
 execute if score #q slf.tmp matches 7 if score @s slf.q.guardian matches 2 if score @s slf.q.delivery matches 0 run return run function slf:quest/start/delivery
+execute if score #q slf.tmp matches 8 if score @s slf.q.bed matches 0 run return run function slf:quest/start/bed
+execute if score #q slf.tmp matches 9 if score @s slf.q.antidote matches 0 run return run function slf:quest/start/antidote
+execute if score #q slf.tmp matches 10 if score @s slf.q.watch matches 0 run return run function slf:quest/start/watch
+execute if score #q slf.tmp matches 11 if score @s slf.q.bar matches 0 run return run function slf:quest/start/bar
+execute if score #q slf.tmp matches 12 if score @s slf.q.bar matches 4 run return run function slf:quest/turn_in/bar
+execute if score #q slf.tmp matches 13 if score @s slf.q.bar matches 4 run return run tellraw @s ["",{"text":"[Bartender] ","color":"yellow"},{"text":"Nonsense? Funny - a miner told me the same thing last week. Think again.","color":"white"}]

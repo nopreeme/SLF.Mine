@@ -348,12 +348,24 @@ Firstia's side quests from the design document (V9, section 2). Talk to an NPC b
 | The Rampant Forest Guardian | Guard Captain | Defeat the Ravenous Snake (summoned 50 blocks away when you accept, unless one is already about) | 300 EXP, Devourer's Scale, Python White Hair, 100 Mahni |
 | Secondil Supply Delivery + Brother's Beef | Distressed Farmer, ends at Garren | Carry the Sealed Beef Package to Garren in Secondil | 250 EXP, Basic Armor Piece, 50 Mahni; Garren becomes your armorer |
 
+**Secondil** (section 4): Innkeeper Marrow, Lysa the florist, Guard Halvor, Old Borric and the Bartender.
+
+| Quest | From | Objective | Reward |
+|---|---|---|---|
+| A Soft Bed at Last | Innkeeper Marrow | Rent a room (first night free) and lie in a bed: that registers your respawn point | 75 EXP, Secondil respawn, Secondil Stew |
+| Antidote Run | Lysa | Carry 3 Antidote Bundles to Marrow | 100 EXP, 2 Antidotes, 30 Mahni |
+| The Night Watch | Guard Halvor | At night, stand watch within 24 blocks of Halvor for 45 seconds; two Redcaps appear at the tree line 30 blocks west. **Don't engage**: hitting one starts the watch over | 125 EXP, Guard Issue Cloak, 40 Mahni, unlocks Garren's first quest |
+| Bar Talk | Old Borric | Hear three of his stories, then tell the Bartender whether the marsh humming is true (it is) | 60 EXP, Strong Ale, 20 Mahni |
+
+**Shops** (Mahni): Lysa sells Antidotes (15, cures poison) and Basic Health Potions (20); the Bartender sells Strong Ale (10:
+Strength for a minute, a little Nausea) and Secondil Stew (5). Talk to them and click an item.
+
 NPCs are villagers that stand still, can't be hurt, never despawn and have no trades. Your world's towns aren't built yet, so an admin
-places them: `/function slf:npc/place/elder`, `.../alchemist`, `.../guard_captain`, `.../farmer`, `.../garren` (facing the nearest player), and
+places them: `/function slf:npc/place/elder`, `.../alchemist`, `.../guard_captain`, `.../farmer`, `.../garren`, `.../marrow`, `.../lysa`, `.../halvor`, `.../borric`, `.../bartender` (facing the nearest player), and
 `/function slf:npc/remove` removes NPCs within 8 blocks. The Starter Iron Dagger is the weapons pack's Iron Dagger model.
 
-Not built yet: the rest of Secondil (inn, florist, bar, guard Halvor) and its side quests, Garren's questline from The Iron Pickaxe on,
-shops that sell for Mahni, and the Wanderer origin.
+Not built yet: Garren's questline from The Iron Pickaxe on (it unlocks after The Night Watch), the Diremarsh walking-state terrain,
+and the Wanderer origin.
 
 ---
 
@@ -369,7 +381,7 @@ Monsters drop **Mahni Purses** worth 10 Mahni each; a purse turns into Mahni the
 | Ravenous Snake | 5–8 |
 | Mud Digger | 10–15 |
 
-Nothing sells for Mahni yet: the shops and quest rewards that use it come with the town NPCs. Admins: `/function slf:give/mahni_purse`,
+Spend it at the Secondil shops (Lysa, the Bartender); quests pay Mahni too. Admins: `/function slf:give/mahni_purse`,
 `/scoreboard players add <player> slf.mahni <n>`.
 
 ---
@@ -473,6 +485,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Redcap Goblin, an Orc with its goblins, a Mud Frog, remove SLF mobs nearby |
 | Bosses | The two area bosses and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
 | NPCs | Place the Town Elder, Local Alchemist, Guard Captain, Distressed Farmer or Garren; 5 Wild Herbs; quest log; remove NPCs |
+| Secondil | Place Innkeeper Marrow, Lysa, Guard Halvor, Old Borric or the Bartender |
 | Me | Status sheet, +100 Mahni, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.

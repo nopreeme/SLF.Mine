@@ -1228,6 +1228,77 @@ class MainQuests(Base):
         S.as_player("function slf:player/init_scores")
         self.assertGreaterEqual(S.score("slf.pid"), 1)
 
+class Secondil(Base):
+    """Secondil's NPCs, side quests and Mahni shops."""
+
+    def setUp(self):
+        super().setUp(); S.platform(); self.grant("swordsman"); S.cmd(f"clear {S.player}"); self.set("slf.level", 10); self.set("slf.exp", 0); self.set("slf.mahni", 0)
+
+    def tearDown(self):
+        for tag in ("slf.npc", "slf.sighting"): S.cmd(f"kill @e[tag={tag}]")
+        S.cmd("time set 1000"); S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}")
+
+    def place(self, npc, dx=0):
+        S.as_player(f"execute positioned ~{dx} ~ ~2 run function slf:npc/place/{npc}"); S.wait_ticks(2)
+
+    def talk(self, npc):
+        mark = S.bot.mark(); S.as_player(f"execute positioned as @e[tag=slf.npc.{npc},limit=1] run function slf:npc/talk_nearest"); S.wait_ticks(4)
+        return S.bot.chat_since(mark)
+
+    def trig(self, obj, n): S.as_player(f"trigger {obj} set {n}"); S.wait_ticks(3)
+    def has(self, item): return "passed" in S.cmd(f"execute if items entity {S.player} container.* {item}")
+
+    def test_a_soft_bed_at_last(self):
+        self.place("marrow"); self.talk("marrow"); self.trig("slf.quest", 8); self.assertEqual(S.score("slf.q.bed"), 1)
+        S.cmd(f"advancement grant {S.player} only slf:quest/slept"); S.wait_ticks(3)     # what lying in a bed does
+        self.assertEqual((S.score("slf.q.bed"), S.score("slf.exp")), (2, 75))
+        self.assertIn("slf.secondil_spawn", S.tags()); self.assertTrue(self.has("minecraft:mushroom_stew"))
+        S.cmd(f"advancement grant {S.player} only slf:quest/slept"); S.wait_ticks(3)
+        self.assertEqual(S.score("slf.exp"), 75)                                         # sleeping again pays nothing
+
+    def test_antidote_run(self):
+        self.place("lysa", -2); self.place("marrow", 2)
+        chat = self.talk("lysa"); self.assertTrue(any("Antidote Run" in c for c in chat), chat[-3:])
+        self.trig("slf.quest", 9); self.assertEqual(S.score("slf.q.antidote"), 1)
+        self.assertIn("Count: 3", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:antidote_bundle"]'))
+        self.talk("marrow")
+        self.assertEqual((S.score("slf.q.antidote"), S.score("slf.exp"), S.score("slf.mahni")), (2, 100, 30))
+        self.assertIn("Count: 2", S.cmd(f"execute if items entity {S.player} container.* minecraft:honey_bottle"))
+
+    def test_shops_take_mahni(self):
+        self.place("lysa"); self.talk("lysa")
+        self.trig("slf.shop", 1); self.assertFalse(self.has("minecraft:honey_bottle"))       # can't afford it
+        self.set("slf.mahni", 40); self.trig("slf.shop", 1)
+        self.assertEqual(S.score("slf.mahni"), 25); self.assertTrue(self.has("minecraft:honey_bottle"))
+        self.trig("slf.shop", 2); self.assertEqual(S.score("slf.mahni"), 5); self.assertTrue(self.has("minecraft:potion"))
+        self.trig("slf.shop", 4); self.assertEqual(S.score("slf.mahni"), 0); self.assertTrue(self.has("minecraft:mushroom_stew"))
+
+    def test_the_night_watch(self):
+        self.place("halvor"); self.talk("halvor"); self.trig("slf.quest", 10); self.assertEqual(S.score("slf.q.watch"), 1)
+        S.cmd("time set 1000"); S.wait_cycle(); S.wait_cycle(); self.assertEqual(S.score("slf.q.watch_t"), 0)   # daytime: no watch
+        S.cmd("time set 18000"); self.set("slf.q.watch_t", 9); S.wait_cycle(); S.wait_ticks(5)
+        self.assertIn("Count: 2", S.cmd("execute if entity @e[tag=slf.sighting]"))                       # the red hoods appear
+        # hitting one spoils the watch
+        S.cmd(f"gamemode survival {S.player}")
+        S.as_player("damage @e[tag=slf.sighting,limit=1,sort=nearest] 1 minecraft:player_attack by @s"); S.wait_ticks(4)
+        self.assertEqual(S.score("slf.q.watch"), 1); self.assertLessEqual(S.score("slf.q.watch_t"), 2)   # the watch started over
+        S.cmd(f"gamemode creative {S.player}"); S.cmd("kill @e[tag=slf.red_hat_goblin]")
+        self.set("slf.q.watch_t", 44); S.wait_cycle(); S.wait_ticks(5); self.assertEqual(S.score("slf.q.watch"), 2)
+        self.set("slf.exp", 0); self.talk("halvor")
+        self.assertEqual((S.score("slf.q.watch"), S.score("slf.exp"), S.score("slf.mahni")), (3, 125, 40))
+        self.assertIn("slf.garren_quest_unlocked", S.tags()); self.assertTrue(self.has("minecraft:leather_chestplate"))
+
+    def test_bar_talk(self):
+        self.place("borric", -2); self.place("bartender", 2)
+        self.talk("borric"); self.trig("slf.quest", 11)
+        stories = [c for _ in range(3) for c in self.talk("borric")]
+        self.assertTrue(any("humming" in c for c in stories), stories)
+        self.assertEqual(S.score("slf.q.bar"), 4)
+        self.talk("bartender"); self.trig("slf.quest", 13); self.assertEqual(S.score("slf.q.bar"), 4)   # the wrong answer
+        self.talk("bartender"); self.trig("slf.quest", 12)
+        self.assertEqual((S.score("slf.q.bar"), S.score("slf.exp"), S.score("slf.mahni")), (5, 60, 20))
+        self.assertTrue(self.has("minecraft:potion"))
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

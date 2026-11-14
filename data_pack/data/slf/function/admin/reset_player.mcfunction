@@ -148,6 +148,14 @@ scoreboard players set @s slf.q.serpent 0
 scoreboard players set @s slf.q.guardian 0
 scoreboard players set @s slf.q.snake 0
 scoreboard players set @s slf.q.delivery 0
+scoreboard players set @s slf.q.bed 0
+scoreboard players set @s slf.q.antidote 0
+scoreboard players set @s slf.q.watch 0
+scoreboard players set @s slf.q.watch_t 0
+scoreboard players set @s slf.q.bar 0
+tag @s remove slf.secondil_spawn
+tag @s remove slf.garren_quest_unlocked
+tag @s remove slf.watch_sighted
 scoreboard players set @s slf.sp_points 0
 scoreboard players set @s slf.focus 0
 scoreboard players set @s slf.focus_stat 0

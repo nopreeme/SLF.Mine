@@ -203,6 +203,11 @@ def main():
                              run("[+5 Wild Herbs]", "green", "/function slf:test/herbs", "Five Wild Herbs (they also drop from grass and ferns)"),
                              run("[Quest log]", "gold", "/trigger slf.menu set 10", "Your quests"),
                              run("[Remove NPCs]", "dark_gray", "/function slf:npc/remove", "Removes SLF NPCs within 8 blocks")]))
+    menu.append(row("Secondil", [run("[Innkeeper Marrow]", "gold", "/function slf:npc/place/marrow", "A Soft Bed at Last; takes Lysa's antidote bundles"),
+                                 run("[Lysa]", "light_purple", "/function slf:npc/place/lysa", "The florist: Antidote Run, sells antidotes and potions"),
+                                 run("[Guard Halvor]", "aqua", "/function slf:npc/place/halvor", "The Night Watch (stand watch near him at night)"),
+                                 run("[Old Borric]", "gray", "/function slf:npc/place/borric", "Bar Talk: three stories"),
+                                 run("[Bartender]", "yellow", "/function slf:npc/place/bartender", "Ends Bar Talk; sells ale and stew")]))
     menu.append(row("Me", [run("[Status]", "white", "/trigger slf.menu set 7", "Your class, level and stats"),
                            run("[+100 Mahni]", "gold", "/function slf:test/mahni", "Adds 100 Mahni"),
                            run("[Player menu]", "white", "/trigger slf.menu", "The menu players see"),
