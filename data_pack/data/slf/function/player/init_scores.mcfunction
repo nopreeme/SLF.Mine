@@ -15,6 +15,14 @@ scoreboard players add @s slf.q.outskirts 0
 scoreboard players add @s slf.q.goblins 0
 scoreboard players add @s slf.q.brute 0
 scoreboard players add @s slf.q.orcs 0
+scoreboard players add @s slf.q.herd 0
+scoreboard players add @s slf.q.daughter 0
+scoreboard players add @s slf.q.cows 0
+scoreboard players add @s slf.q.serpent 0
+scoreboard players add @s slf.q.guardian 0
+scoreboard players add @s slf.q.snake 0
+scoreboard players add @s slf.q.delivery 0
+execute unless score @s slf.pid matches 1.. run function slf:player/assign_pid
 scoreboard players add @s slf.vorpal_soul 0
 scoreboard players add @s slf.boss_kills 0
 scoreboard players add @s slf.bt_kills 0

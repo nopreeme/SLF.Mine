@@ -82,6 +82,15 @@ scoreboard objectives add slf.q.outskirts dummy
 scoreboard objectives add slf.q.goblins dummy
 scoreboard objectives add slf.q.brute dummy
 scoreboard objectives add slf.q.orcs dummy
+scoreboard objectives add slf.q.herd dummy
+scoreboard objectives add slf.q.daughter dummy
+scoreboard objectives add slf.q.cows dummy
+scoreboard objectives add slf.q.serpent dummy
+scoreboard objectives add slf.q.guardian dummy
+scoreboard objectives add slf.q.snake dummy
+scoreboard objectives add slf.q.delivery dummy
+# A number per player (player/assign_pid). Quest scenes carry their player's number, so each player has their own camp.
+scoreboard objectives add slf.pid dummy
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
 bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
 bossbar set slf:nightclaw color white

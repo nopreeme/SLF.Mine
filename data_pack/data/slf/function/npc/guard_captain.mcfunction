@@ -1,4 +1,9 @@
-# The Guard Captain: gives Clearing the Outskirts (5 Goblins), then The Brute Threat (2 Orcs).
+# The Guard Captain: gives Clearing the Outskirts (5 Goblins), then The Brute Threat (2 Orcs). Main quests come first:
+# The Serpent's Shadow ends here, and he gives The Rampant Forest Guardian.
+execute if score @s slf.q.serpent matches 1 run return run function slf:quest/turn_in/serpent
+execute if score @s slf.q.guardian matches 1 if score @s slf.q.snake matches 1 run return run function slf:quest/turn_in/guardian
+execute if score @s slf.q.guardian matches 1 run return run tellraw @s ["",{"text":"[Guard Captain] ","color":"aqua"},{"text":"The Ravenous Snake still holds the bridge. Be careful of the tail.","color":"white"}]
+execute if score @s slf.q.serpent matches 2 if score @s slf.q.guardian matches 0 run function slf:quest/turn_in/serpent_reoffer
 execute if score @s slf.q.outskirts matches 1 if score @s slf.q.goblins matches 5.. run return run function slf:quest/turn_in/outskirts
 execute if score @s slf.q.outskirts matches 1 run return run tellraw @s ["",{"text":"[Guard Captain] ","color":"aqua"},{"text":"Goblins down: ","color":"white"},{"score":{"name":"@s","objective":"slf.q.goblins"},"color":"yellow"},{"text":"/5. Keep at it.","color":"white"}]
 execute if score @s slf.q.brute matches 1 if score @s slf.q.orcs matches 2.. run return run function slf:quest/turn_in/brute

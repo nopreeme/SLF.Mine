@@ -1,7 +1,16 @@
 # The quest log (/trigger slf.menu set 10): every quest the player has started.
 function slf:player/init_scores
 tellraw @s ["",{"text":"━━━ ","color":"dark_gray"},{"text":"Quests","color":"gold","bold":true},{"text":" ━━━","color":"dark_gray"}]
-execute if score @s slf.q.awaken matches 0 if score @s slf.q.outskirts matches 0 run tellraw @s {"text":" No quests yet. Talk to the people of Firstia: the Town Elder and the Guard Captain.","color":"gray"}
+execute if score @s slf.q.awaken matches 0 if score @s slf.q.outskirts matches 0 if score @s slf.q.herd matches 0 run tellraw @s {"text":" No quests yet. Talk to the people of Firstia: the Town Elder, the Guard Captain and the Distressed Farmer.","color":"gray"}
+execute if score @s slf.q.herd matches 1 run tellraw @s ["",{"text":" The Missing Herd: ","color":"gold"},{"text":"daughter ","color":"yellow"},{"text":"(talk to her at the camp)","color":"gray"},{"text":", cows home ","color":"yellow"},{"score":{"name":"@s","objective":"slf.q.cows"},"color":"white"},{"text":"/3","color":"yellow"}]
+execute if score @s slf.q.herd matches 2 run tellraw @s ["",{"text":" The Missing Herd: ","color":"gold"},{"text":"complete","color":"green"}]
+execute if score @s slf.q.serpent matches 1 run tellraw @s ["",{"text":" The Serpent's Shadow: ","color":"gold"},{"text":"speak with the Guard Captain","color":"yellow"}]
+execute if score @s slf.q.serpent matches 2 run tellraw @s ["",{"text":" The Serpent's Shadow: ","color":"gold"},{"text":"complete","color":"green"}]
+execute if score @s slf.q.guardian matches 1 if score @s slf.q.snake matches 0 run tellraw @s ["",{"text":" The Rampant Forest Guardian: ","color":"gold"},{"text":"defeat the Ravenous Snake","color":"yellow"}]
+execute if score @s slf.q.guardian matches 1 if score @s slf.q.snake matches 1 run tellraw @s ["",{"text":" The Rampant Forest Guardian: ","color":"gold"},{"text":"report to the Guard Captain","color":"yellow"}]
+execute if score @s slf.q.guardian matches 2 run tellraw @s ["",{"text":" The Rampant Forest Guardian: ","color":"gold"},{"text":"complete","color":"green"}]
+execute if score @s slf.q.delivery matches 1 run tellraw @s ["",{"text":" Secondil Supply Delivery: ","color":"gold"},{"text":"deliver the beef to Garren in Secondil","color":"yellow"}]
+execute if score @s slf.q.delivery matches 2 run tellraw @s ["",{"text":" Secondil Supply Delivery: ","color":"gold"},{"text":"complete","color":"green"}]
 execute if score @s slf.q.awaken matches 1 run tellraw @s ["",{"text":" A Pioneer's Awakening: ","color":"gold"},{"text":"speak with the Local Alchemist","color":"yellow"}]
 execute if score @s slf.q.awaken matches 2 run tellraw @s ["",{"text":" A Pioneer's Awakening: ","color":"gold"},{"text":"bring 5 Wild Herbs to the Town Elder","color":"yellow"}]
 execute if score @s slf.q.awaken matches 3 run tellraw @s ["",{"text":" A Pioneer's Awakening: ","color":"gold"},{"text":"complete","color":"green"}]

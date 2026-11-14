@@ -141,6 +141,13 @@ scoreboard players set @s slf.q.outskirts 0
 scoreboard players set @s slf.q.goblins 0
 scoreboard players set @s slf.q.brute 0
 scoreboard players set @s slf.q.orcs 0
+scoreboard players set @s slf.q.herd 0
+scoreboard players set @s slf.q.daughter 0
+scoreboard players set @s slf.q.cows 0
+scoreboard players set @s slf.q.serpent 0
+scoreboard players set @s slf.q.guardian 0
+scoreboard players set @s slf.q.snake 0
+scoreboard players set @s slf.q.delivery 0
 scoreboard players set @s slf.sp_points 0
 scoreboard players set @s slf.focus 0
 scoreboard players set @s slf.focus_stat 0

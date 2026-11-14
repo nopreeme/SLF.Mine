@@ -1152,6 +1152,82 @@ class Quests(Base):
         S.wait_ticks(3)
         self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:wild_herb"]'))
 
+class MainQuests(Base):
+    """Firstia's main questline end to end: The Missing Herd (a per-player camp), The Serpent's Shadow, the Ravenous Snake
+    quest and the Secondil delivery to Garren."""
+
+    def setUp(self):
+        super().setUp(); S.platform(); self.grant("swordsman"); S.cmd(f"clear {S.player}"); self.set("slf.level", 10)
+
+    def tearDown(self):
+        for tag in ("slf.npc", "slf.herd", "slf.raider", "slf.snake"): S.cmd(f"kill @e[tag={tag}]")
+        S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}")
+
+    def place(self, npc, offset):
+        S.as_player(f"execute positioned ~{offset} ~ ~2 run function slf:npc/place/{npc}"); S.wait_ticks(2)
+
+    def talk(self, selector):
+        mark = S.bot.mark(); S.as_player(f"execute positioned as {selector} run function slf:npc/talk_nearest"); S.wait_ticks(4)
+        return S.bot.chat_since(mark)
+
+    def accept(self, n): S.as_player(f"trigger slf.quest set {n}"); S.wait_ticks(3)
+
+    def test_the_whole_main_questline(self):
+        FARMER, CAPT = "@e[tag=slf.npc.farmer,limit=1]", "@e[tag=slf.npc.guard_captain,limit=1]"
+        self.place("farmer", -3); self.place("guard_captain", 3)
+        chat = self.talk(FARMER); self.assertTrue(any("The Missing Herd" in c for c in chat), chat[-3:])
+        self.accept(4); self.assertEqual(S.score("slf.q.herd"), 1); S.wait_ticks(5)
+        # the camp is this player's own: daughter, three cows, three raiders
+        pid = S.score("slf.pid"); self.assertGreaterEqual(pid, 1)
+        self.assertIn(f"has {pid} ", S.cmd("scoreboard players get @e[tag=slf.npc.daughter,limit=1] slf.pid"))
+        self.assertIn("Count: 3", S.cmd("execute if entity @e[tag=slf.herd]")); self.assertIn("Count: 3", S.cmd("execute if entity @e[tag=slf.raider]"))
+        # she won't leave while her captors are about
+        self.talk("@e[tag=slf.npc.daughter,limit=1]"); self.assertEqual(S.score("slf.q.daughter"), 0)
+        S.cmd("kill @e[tag=slf.raider]"); S.wait_ticks(2)
+        self.talk("@e[tag=slf.npc.daughter,limit=1]"); self.assertEqual(S.score("slf.q.daughter"), 1)
+        self.assertIn("passed", S.cmd(f"execute at {FARMER} if entity @e[tag=slf.npc.daughter,distance=..3]"))   # she ran home
+        # herd the cows home (teleported, standing in for leading them)
+        chat = self.talk(FARMER); self.assertEqual(S.score("slf.q.herd"), 1)                              # cows still out there
+        S.cmd(f"execute at {FARMER} run tp @e[tag=slf.herd] ~2 ~ ~"); S.wait_cycle(); S.wait_ticks(5)
+        self.assertEqual(S.score("slf.q.cows"), 3)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0)
+        chat = self.talk(FARMER)
+        self.assertEqual((S.score("slf.q.herd"), S.score("slf.exp"), S.score("slf.mahni")), (2, 120, 30))
+        self.assertIn("passed", S.cmd(f"execute if items entity {S.player} container.* minecraft:milk_bucket"))
+        self.assertTrue(any("The Serpent's Shadow" in c for c in chat), chat[-3:])
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.npc.daughter]"))                       # scene cleaned up
+        # The Serpent's Shadow -> the Guard Captain
+        self.accept(5); self.assertEqual(S.score("slf.q.serpent"), 1)
+        self.set("slf.exp", 0); chat = self.talk(CAPT)
+        self.assertEqual((S.score("slf.q.serpent"), S.score("slf.exp")), (2, 50))
+        self.assertTrue(any("Rampant Forest Guardian" in c for c in chat), chat[-3:])
+        # The Rampant Forest Guardian: the snake appears, the player kills it, reports back
+        self.accept(6); self.assertEqual(S.score("slf.q.guardian"), 1); S.wait_ticks(4)
+        self.assertIn("Count: 1", S.cmd("execute if entity @e[tag=slf.snake]"))
+        S.cmd(f"gamemode survival {S.player}")
+        S.as_player("damage @e[tag=slf.snake,limit=1] 100000 minecraft:player_attack by @s"); S.wait_ticks(8)
+        self.assertEqual(S.score("slf.q.snake"), 1)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0); self.talk(CAPT)
+        self.assertEqual((S.score("slf.q.guardian"), S.score("slf.exp"), S.score("slf.mahni")), (2, 300, 100))
+        self.assertIn("passed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:devourers_scale"]'))
+        # Secondil Supply Delivery: the farmer's package to Garren
+        chat = self.talk(FARMER); self.assertTrue(any("Secondil Supply Delivery" in c for c in chat), chat[-3:])
+        self.accept(7); self.assertEqual(S.score("slf.q.delivery"), 1)
+        self.assertIn("passed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:beef_package"]'))
+        self.place("garren", 0)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0); self.talk("@e[tag=slf.npc.garren,limit=1]")
+        self.assertEqual((S.score("slf.q.delivery"), S.score("slf.exp"), S.score("slf.mahni")), (2, 250, 50))
+        self.assertIn("failed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:beef_package"]'))
+        self.assertIn("passed", S.cmd(f"execute if items entity {S.player} container.* minecraft:chainmail_chestplate"))
+
+    def test_quests_out_of_order_are_refused(self):
+        for n in (5, 6, 7): self.accept(n)
+        self.assertEqual((S.score("slf.q.serpent"), S.score("slf.q.guardian"), S.score("slf.q.delivery")), (0, 0, 0))
+
+    def test_each_player_gets_a_number(self):
+        S.as_player("function slf:player/init_scores")
+        self.assertGreaterEqual(S.score("slf.pid"), 1)
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

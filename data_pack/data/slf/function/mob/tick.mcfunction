@@ -14,3 +14,5 @@ execute if score #boss_timer slf.timer matches 60.. run scoreboard players set #
 # Night-only mobs (Redcap Goblins) leave at dawn, once they have seen a night.
 execute if predicate slf:night run tag @e[tag=slf.night_mob] add slf.saw_night
 execute unless predicate slf:night as @e[tag=slf.night_mob,tag=slf.saw_night] at @s run function slf:mob/vanish
+# Quest scenes: The Missing Herd's cows
+execute as @a[scores={slf.q.herd=1}] run function slf:quest/herd/check

@@ -198,6 +198,8 @@ def main():
     menu.append(row("NPCs", [run("[Town Elder]", "gold", "/function slf:npc/place/elder", "Place the Town Elder here (quest: A Pioneer's Awakening)"),
                              run("[Local Alchemist]", "light_purple", "/function slf:npc/place/alchemist", "Place the Local Alchemist here"),
                              run("[Guard Captain]", "aqua", "/function slf:npc/place/guard_captain", "Place the Guard Captain here (quests: Clearing the Outskirts, The Brute Threat)"),
+                             run("[Distressed Farmer]", "yellow", "/function slf:npc/place/farmer", "Place the Distressed Farmer here (main quests: The Missing Herd onwards)"),
+                             run("[Garren]", "gold", "/function slf:npc/place/garren", "Place Garren, Secondil's armorer (Secondil Supply Delivery)"),
                              run("[+5 Wild Herbs]", "green", "/function slf:test/herbs", "Five Wild Herbs (they also drop from grass and ferns)"),
                              run("[Quest log]", "gold", "/trigger slf.menu set 10", "Your quests"),
                              run("[Remove NPCs]", "dark_gray", "/function slf:npc/remove", "Removes SLF NPCs within 8 blocks")]))
