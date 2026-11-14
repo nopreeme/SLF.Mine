@@ -183,70 +183,104 @@ def orc_head_model():
 
 
 # ---------------------------------------------------------------- the Ravenous Snake (design doc V9, Rampant Forest area boss)
-# "Tan-green hardened scales, a light white belly, diamond-shaped crystal-frame yellow eyes, a white flow of hair tied with
-# red beads on both sides of its face, and a long lock on its tail which opens like a flower to release a purple ooze."
-SN, SN_D, SN_L, BELLY, BELLY_D = (150, 150, 92), (112, 116, 66), (178, 176, 116), (232, 228, 210), (204, 198, 176)
-HAIR, HAIR_D, BEAD, POISON, POISON_D, EYE, EYE_D, MOUTH_C = (244, 242, 236), (214, 210, 200), (190, 30, 30), (150, 60, 180), (100, 30, 130), (242, 214, 40), (40, 30, 10), (70, 30, 30)
-# texture tiles (uv units; the texture is 32x32, so 1 uv unit = 2 px)
-SC_UV, BE_UV, HA_UV, PO_UV, EY_UV, BD_UV, MO_UV = (0, 0, 8, 8), (8, 0, 16, 8), (0, 8, 8, 16), (8, 8, 12, 12), (12, 8, 16, 12), (8, 12, 12, 16), (12, 12, 16, 16)
+# Matched to the anime reference shots: a near-black, crocodile-like head plated with olive-green scutes, yellow diamond eyes,
+# fangs and a forked brown tongue; a wild spiky white mane with two side locks tied by red-brown beads; an olive scaled back
+# over a black side stripe and a pale cream segmented belly; the tail ends in a white plume (its poison is purple).
+SN, SN_D, SN_L = (96, 108, 46), (52, 60, 24), (132, 146, 64)                    # olive scales
+HEAD, HEAD_P = (34, 38, 20), (88, 100, 40)                                      # near-black head, olive plates
+BELLY, BELLY_D, STRIPE = (214, 206, 168), (166, 158, 122), (26, 28, 16)
+HAIR, HAIR_D = (238, 236, 242), (184, 180, 196)
+BEAD, BEAD_L = (128, 44, 32), (196, 108, 92)
+EYE, EYE_D, MOUTH_C, TOOTH, TONGUE = (238, 206, 60), (30, 22, 8), (70, 20, 20), (240, 238, 230), (130, 82, 60)
+POISON, POISON_D = (150, 60, 180), (100, 30, 130)
+
+
+def _t(c, r): return (4 * c, 4 * r, 4 * c + 4, 4 * r + 4)    # texture is 64x64: a 4x4 grid of 16 px tiles, 4 uv units each
+TOP_UV, SIDE_UV, BELLY_UV, HEAD_UV = _t(0, 0), _t(1, 0), _t(2, 0), _t(3, 0)
+HA_UV, EY_UV, BD_UV, MO_UV = _t(0, 1), _t(1, 1), _t(2, 1), _t(3, 1)
+TEETH_UV, TONGUE_UV, HAIR2_UV, PO_UV = _t(0, 2), _t(1, 2), _t(2, 2), _t(3, 2)
 
 
 def snake_texture():
-    im = Image.new("RGBA", (32, 32), SN + (255,)); px = im.load()
-    def put(x, y, c): px[x, y] = c + (255,)
-    for x in range(16):                                                       # scales: offset diamond rows
-        for y in range(16):
-            put(x, y, SN_D if (x + 2 * (y // 2 % 2)) % 4 == 0 or y % 2 == 0 and x % 4 == 2 else SN_L if (x + y) % 7 == 0 else SN)
-    for x in range(16, 32):                                                   # belly plates
-        for y in range(16): put(x, y, BELLY_D if y % 4 == 0 else BELLY)
-    for x in range(16):                                                       # hair: white strands
-        for y in range(16, 32): put(x, y, HAIR_D if x % 3 == 0 else HAIR)
-    for x in range(16, 24):
-        for y in range(16, 24): put(x, y, POISON_D if (x + y) % 3 == 0 else POISON)
-    for x in range(24, 32):                                                   # eye: yellow diamond, dark slit
-        for y in range(16, 24): put(x, y, EYE if abs(x - 27.5) + abs(y - 19.5) <= 4 else SN_D)
-    for y in range(17, 23): put(27, y, EYE_D); put(28, y, EYE_D)
-    for x in range(16, 24):
-        for y in range(24, 32): put(x, y, BEAD)
-    for x in range(24, 32):
-        for y in range(24, 32): put(x, y, MOUTH_C)
+    im = Image.new("RGBA", (64, 64), SN + (255,)); px = im.load()
+    def tile(c, r, fn):
+        for x in range(16):
+            for y in range(16): px[16 * c + x, 16 * r + y] = fn(x, y) + (255,)
+    def scales(x, y):                                                           # overlapping olive scales
+        row = y // 3; xx = (x + 2 * (row % 2)) % 4
+        return SN_D if y % 3 == 0 or xx == 0 else SN_L if xx == 1 and y % 3 == 1 else SN
+    tile(0, 0, scales)
+    tile(1, 0, lambda x, y: scales(x, y) if y < 8 else STRIPE if y < 12 else (BELLY_D if y == 12 else BELLY))   # back, black stripe, belly
+    tile(2, 0, lambda x, y: BELLY_D if y % 4 == 0 else BELLY)                   # ventral plates
+    def scutes(x, y):                                                           # dark head, irregular olive scutes
+        row = y // 5; xx = (x + 3 * (row % 2)) % 7
+        return HEAD_P if (1 <= xx <= 4 and 1 <= y % 5 <= 3) else HEAD
+    tile(3, 0, scutes)
+    tile(0, 1, lambda x, y: HAIR_D if (x + y // 3) % 4 == 0 else HAIR)           # white strands
+    tile(1, 1, lambda x, y: (EYE_D if 7 <= x <= 8 else EYE) if abs(x - 7.5) + abs(y - 7.5) <= 6 else HEAD)   # yellow diamond, slit
+    tile(2, 1, lambda x, y: BEAD_L if (x - 5) ** 2 + (y - 5) ** 2 < 6 else BEAD)
+    tile(3, 1, lambda x, y: MOUTH_C)
+    tile(0, 2, lambda x, y: TOOTH)
+    tile(1, 2, lambda x, y: TONGUE if x % 5 else (100, 60, 44))
+    tile(2, 2, lambda x, y: HAIR_D if x % 3 else HAIR)
+    tile(3, 2, lambda x, y: POISON_D if (x + y) % 3 == 0 else POISON)
     return im
 
 
-def snake_faces(top=SC_UV, bottom=BE_UV):
-    f = faces(top); f["down"] = {"uv": list(bottom), "texture": "#0"}; return f
+def snake_faces(top=TOP_UV, side=SIDE_UV, bottom=BELLY_UV):
+    f = {d: {"uv": list(side), "texture": "#0"} for d in ("north", "east", "south", "west")}
+    f["up"] = {"uv": list(top), "texture": "#0"}; f["down"] = {"uv": list(bottom), "texture": "#0"}
+    return f
+
+
+def _rx(a, o): return {"angle": a, "axis": "x", "origin": o}
 
 
 def snake_head_model():
-    """Snout along +z. (An item display shows a model turned 180 degrees, so body.mcfunction turns each part back.)
-    Long head, snout, yellow diamond eyes, white hair tied with red beads."""
-    els = [{"from": [3, 2, 1], "to": [13, 9, 13], "faces": snake_faces()},                       # skull
-           {"from": [4, 2, 13], "to": [12, 7, 18], "faces": snake_faces()},                      # snout
-           {"from": [4.5, 1.5, 13], "to": [11.5, 2.5, 17.5], "faces": faces(MO_UV)},            # jaw line
-           {"from": [2.5, 6, 9], "to": [3, 8.5, 12], "faces": faces(EY_UV)},                     # eyes
-           {"from": [13, 6, 9], "to": [13.5, 8.5, 12], "faces": faces(EY_UV)}]
-    for side in (-1, 1):                                                                         # hair flowing back
-        x0, x1 = (0.5, 3) if side < 0 else (13, 15.5)
-        els += [{"from": [x0, 3, -3], "to": [x1, 8, 8], "faces": faces(HA_UV)},
-                {"from": [x0 - 0.3, 4.5, -2.5], "to": [x1 + 0.3, 6.5, -1], "faces": faces(BD_UV)},       # red beads tying the hair
-                {"from": [x0 - 0.3, 4.5, 3], "to": [x1 + 0.3, 6.5, 4.5], "faces": faces(BD_UV)}]
+    """Snout along +z. (An item display shows a model turned 180 degrees, so body.mcfunction turns each part back.)"""
+    H = snake_faces(HEAD_UV, HEAD_UV, BELLY_UV)
+    els = [{"from": [3, 1, 0], "to": [13, 9, 10], "faces": H},                                       # skull
+           {"from": [4, 1, 10], "to": [12, 6.5, 19], "faces": H},                                    # long, crocodile-like snout
+           {"from": [3.5, 8.5, 6], "to": [6.5, 9.5, 11], "faces": faces(HEAD_UV)},                   # brow ridges
+           {"from": [9.5, 8.5, 6], "to": [12.5, 9.5, 11], "faces": faces(HEAD_UV)},
+           {"from": [2.7, 6.2, 7], "to": [3.1, 8.6, 10], "faces": faces(EY_UV)},                     # yellow diamond eyes
+           {"from": [12.9, 6.2, 7], "to": [13.3, 8.6, 10], "faces": faces(EY_UV)},
+           {"from": [3.9, 2.6, 10], "to": [12.1, 3.1, 19.1], "faces": faces(MO_UV)},                 # jaw line
+           {"from": [4.6, 1.2, 16.5], "to": [5.6, 2.8, 17.5], "faces": faces(TEETH_UV)},             # fangs
+           {"from": [10.4, 1.2, 16.5], "to": [11.4, 2.8, 17.5], "faces": faces(TEETH_UV)},
+           {"from": [7.5, 2, 19], "to": [8.5, 2.6, 23.5], "faces": faces(TONGUE_UV)},                # forked tongue
+           {"from": [6.4, 2, 23], "to": [7.6, 2.6, 25.5], "faces": faces(TONGUE_UV)},
+           {"from": [8.4, 2, 23], "to": [9.6, 2.6, 25.5], "faces": faces(TONGUE_UV)},
+           # the mane: a wild white crest swept back over the neck, with spikes
+           {"from": [2, 8.5, -4], "to": [14, 12, 8], "faces": faces(HA_UV)},
+           {"from": [3, 6, -9], "to": [13, 11, -3], "faces": faces(HAIR2_UV)},
+           {"from": [3.5, 11, 1], "to": [6, 17, 4], "rotation": _rx(-22.5, [5, 11, 2]), "faces": faces(HA_UV)},
+           {"from": [6.8, 11, 2], "to": [9.2, 19, 5], "rotation": _rx(-22.5, [8, 11, 3]), "faces": faces(HA_UV)},
+           {"from": [10, 11, 1], "to": [12.5, 17, 4], "rotation": _rx(-22.5, [11, 11, 2]), "faces": faces(HA_UV)},
+           {"from": [5, 10, -6], "to": [11, 15, -2], "rotation": _rx(22.5, [8, 10, -4]), "faces": faces(HA_UV)}]
+    for x0, x1 in ((0.2, 2.7), (13.3, 15.8)):                                                       # side locks tied with beads
+        els += [{"from": [x0, 2, 3], "to": [x1, 9, 6.5], "faces": faces(HA_UV)},
+                {"from": [x0 - 0.4, 1, 3.5], "to": [x1 + 0.4, 2.8, 6], "faces": faces(BD_UV)},
+                {"from": [x0 + 0.4, -1.5, 3.8], "to": [x1 - 0.4, 1, 5.7], "faces": faces(HA_UV)}]                # short tip below the bead
     return {"textures": {"0": "slf:item/ravenous_snake", "particle": "slf:item/ravenous_snake"}, "elements": els}
 
 
 def snake_body_model():
     return {"textures": {"0": "slf:item/ravenous_snake", "particle": "slf:item/ravenous_snake"},
-            "elements": [{"from": [3, 2, 2], "to": [13, 10, 14], "faces": snake_faces()},
-                         {"from": [7, 10, 4], "to": [9, 11, 12], "faces": faces(SC_UV)}]}            # dorsal ridge
+            "elements": [{"from": [3, 1, 1], "to": [13, 9.5, 15], "faces": snake_faces()}]}
 
 
 def snake_tail_model():
-    """Tapering tail ending in the lock that opens like a flower (purple), pointing along -z."""
+    """Tapering tail ending in a white plume (the lock that opens like a flower), pointing along -z."""
     return {"textures": {"0": "slf:item/ravenous_snake", "particle": "slf:item/ravenous_snake"},
-            "elements": [{"from": [4, 3, 4], "to": [12, 9, 16], "faces": snake_faces()},
-                         {"from": [5.5, 4, -2], "to": [10.5, 8, 4], "faces": snake_faces()},
-                         {"from": [6.5, 4.5, -6], "to": [9.5, 7.5, -2], "faces": faces(HA_UV)},
-                         {"from": [3.5, 3, -8], "to": [12.5, 9.5, -6], "faces": faces(PO_UV)},      # the flower, open
-                         {"from": [5, 1.5, -8.5], "to": [11, 11, -7.5], "faces": faces(PO_UV)}]}
+            "elements": [{"from": [4, 2, 4], "to": [12, 8.5, 16], "faces": snake_faces()},
+                         {"from": [5.5, 3, -2], "to": [10.5, 7.5, 4], "faces": snake_faces()},
+                         {"from": [6.5, 3.5, -6], "to": [9.5, 6.5, -2], "faces": snake_faces()},
+                         {"from": [5, 2.5, -12], "to": [11, 8.5, -6], "faces": faces(HA_UV)},           # the white plume
+                         {"from": [4, 6, -15], "to": [6.5, 12, -9], "rotation": _rx(22.5, [5, 7, -10]), "faces": faces(HA_UV)},
+                         {"from": [9.5, 6, -15], "to": [12, 12, -9], "rotation": _rx(22.5, [11, 7, -10]), "faces": faces(HA_UV)},
+                         {"from": [6.8, 7, -16], "to": [9.2, 13, -10], "rotation": _rx(22.5, [8, 8, -11]), "faces": faces(HAIR2_UV)},
+                         {"from": [6.5, 0.5, -15], "to": [9.5, 3.5, -10], "rotation": _rx(-22.5, [8, 3, -11]), "faces": faces(HA_UV)}]}
 
 
 def item_icon(name, draw):
