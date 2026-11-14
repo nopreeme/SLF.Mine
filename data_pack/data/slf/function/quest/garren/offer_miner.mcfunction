@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"[Garren] ","color":"gold"},{"text":"(quietly) Tomic's mined the marsh for me two years. He didn't come back from his last run. That was three days ago.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Garren's quest: ","color":"gray"},{"text":"The Missing Miner","color":"gold","bold":true},{"text":"  Search the marsh's eastern reach for Tomic. Bring back whatever you find.  ","color":"gray"},{"text":"Reward: 300 EXP, Iron Pickaxe (Reinforced), 100 Mahni  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 16"},"hover_event":{"action":"show_text","value":"Accept \"The Missing Miner\""}}]

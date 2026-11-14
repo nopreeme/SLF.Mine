@@ -1,4 +1,9 @@
-# City Guard Halvor: The Night Watch (the player's first sight of the Redcap Goblins).
+# City Guard Halvor: The Night Watch (the player's first sight of the Redcap Goblins); Red Hoods in the Reeds.
+execute if score @s slf.q.reeds matches 1 if items entity @s container.* minecraft:written_book[minecraft:item_model="slf:tomic_journal"] run return run function slf:quest/reeds/show_halvor
+execute if score @s slf.q.reeds matches 1 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Garren says you found something. Bring it here.","color":"white"}]
+execute if score @s slf.q.reeds matches 2 run return run function slf:quest/reeds/patrol
+execute if score @s slf.q.reeds matches 3 if items entity @s container.* minecraft:black_banner run return run function slf:quest/turn_in/reeds
+execute if score @s slf.q.reeds matches 3 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Clear the camp and bring me whatever they were flying.","color":"white"}]
 execute if score @s slf.q.watch matches 2 run return run function slf:quest/turn_in/watch
 execute if score @s slf.q.watch matches 1 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Night only. Stand the watch near me at the western gate, and tell me what you see. Don't engage.","color":"white"}]
 execute if score @s slf.q.watch matches 3 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Red hoods and forged iron... Garren at the armor shop needs to hear about this. Tell him I sent you.","color":"white"}]

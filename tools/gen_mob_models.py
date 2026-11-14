@@ -375,6 +375,24 @@ def draw_antidote_bundle(px):
     for x in range(3, 13): px[x, 10] = (200, 170, 110, 255)
 
 
+def draw_journal(px):
+    """Tomic's Journal: a battered, mud-stained brown book."""
+    for x in range(3, 13):
+        for y in range(2, 14):
+            px[x, y] = ((96, 64, 40) if x > 3 else (60, 40, 26)) + (255,)
+    for y in range(3, 13): px[12, y] = (220, 210, 180, 255)                      # page edges
+    for x, y in ((5, 9), (6, 10), (9, 4), (10, 5), (7, 12)): px[x, y] = (70, 60, 40, 255)   # mud
+    for x in range(6, 10): px[x, 6] = (200, 170, 90, 255)                         # title band
+
+
+def draw_vambraces(px):
+    """Garren's Plated Vambraces: two iron forearm plates with gold rivets."""
+    for vx in (3, 9):
+        for x in range(vx, vx + 4):
+            for y in range(3, 14): px[x, y] = ((180, 184, 190) if (y % 4) else (130, 134, 140)) + (255,)
+        px[vx + 1, 5] = px[vx + 2, 11] = (220, 180, 60, 255)
+
+
 def main():
     (RP / "textures" / "item").mkdir(parents=True, exist_ok=True)
     head_texture().save(RP / "textures" / "item" / "goblin_head.png")
@@ -386,7 +404,7 @@ def main():
               "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
               "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair),
               "mud_digger": digger_model(), "mud_digger_tooth": item_icon("mud_digger_tooth", draw_tooth), "digger_hide": item_icon("digger_hide", draw_hide),
-              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle)}
+              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle), "tomic_journal": item_icon("tomic_journal", draw_journal), "plated_vambraces": item_icon("plated_vambraces", draw_vambraces)}
     (RP / "items").mkdir(parents=True, exist_ok=True)
     for name, m in models.items():
         (RP / "models" / "item" / f"{name}.json").write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")

@@ -153,6 +153,12 @@ scoreboard players set @s slf.q.antidote 0
 scoreboard players set @s slf.q.watch 0
 scoreboard players set @s slf.q.watch_t 0
 scoreboard players set @s slf.q.bar 0
+scoreboard players set @s slf.q.pickaxe 0
+scoreboard players set @s slf.q.splitblade 0
+scoreboard players set @s slf.q.miner 0
+scoreboard players set @s slf.q.reeds 0
+scoreboard players set @s slf.q.wave 0
+scoreboard players set @s slf.q.thirdrema 0
 tag @s remove slf.secondil_spawn
 tag @s remove slf.garren_quest_unlocked
 tag @s remove slf.watch_sighted

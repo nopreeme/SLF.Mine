@@ -96,6 +96,12 @@ scoreboard objectives add slf.q.antidote dummy
 scoreboard objectives add slf.q.watch dummy
 scoreboard objectives add slf.q.watch_t dummy
 scoreboard objectives add slf.q.bar dummy
+scoreboard objectives add slf.q.pickaxe dummy
+scoreboard objectives add slf.q.splitblade dummy
+scoreboard objectives add slf.q.miner dummy
+scoreboard objectives add slf.q.reeds dummy
+scoreboard objectives add slf.q.wave dummy
+scoreboard objectives add slf.q.thirdrema dummy
 # Shop buy buttons (shop/buy)
 scoreboard objectives add slf.shop trigger
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload

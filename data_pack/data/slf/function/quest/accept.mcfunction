@@ -18,3 +18,8 @@ execute if score #q slf.tmp matches 10 if score @s slf.q.watch matches 0 run ret
 execute if score #q slf.tmp matches 11 if score @s slf.q.bar matches 0 run return run function slf:quest/start/bar
 execute if score #q slf.tmp matches 12 if score @s slf.q.bar matches 4 run return run function slf:quest/turn_in/bar
 execute if score #q slf.tmp matches 13 if score @s slf.q.bar matches 4 run return run tellraw @s ["",{"text":"[Bartender] ","color":"yellow"},{"text":"Nonsense? Funny - a miner told me the same thing last week. Think again.","color":"white"}]
+execute if score #q slf.tmp matches 14 if score @s slf.q.pickaxe matches 0 run return run function slf:quest/start/pickaxe
+execute if score #q slf.tmp matches 15 if score @s slf.q.pickaxe matches 2 if score @s slf.q.splitblade matches 0 run return run function slf:quest/start/splitblade
+execute if score #q slf.tmp matches 16 if score @s slf.q.splitblade matches 2 if score @s slf.q.miner matches 0 run return run function slf:quest/start/miner
+execute if score #q slf.tmp matches 17 if score @s slf.q.miner matches 3 if score @s slf.q.reeds matches 0 run return run function slf:quest/start/reeds
+execute if score #q slf.tmp matches 18 if score @s slf.q.reeds matches 4 if score @s slf.q.thirdrema matches 0 run return run function slf:quest/start/thirdrema

@@ -27,6 +27,12 @@ scoreboard players add @s slf.q.antidote 0
 scoreboard players add @s slf.q.watch 0
 scoreboard players add @s slf.q.watch_t 0
 scoreboard players add @s slf.q.bar 0
+scoreboard players add @s slf.q.pickaxe 0
+scoreboard players add @s slf.q.splitblade 0
+scoreboard players add @s slf.q.miner 0
+scoreboard players add @s slf.q.reeds 0
+scoreboard players add @s slf.q.wave 0
+scoreboard players add @s slf.q.thirdrema 0
 execute unless score @s slf.pid matches 1.. run function slf:player/assign_pid
 scoreboard players add @s slf.vorpal_soul 0
 scoreboard players add @s slf.boss_kills 0

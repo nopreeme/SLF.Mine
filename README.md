@@ -357,6 +357,16 @@ Firstia's side quests from the design document (V9, section 2). Talk to an NPC b
 | The Night Watch | Guard Halvor | At night, stand watch within 24 blocks of Halvor for 45 seconds; two Redcaps appear at the tree line 30 blocks west. **Don't engage**: hitting one starts the watch over | 125 EXP, Guard Issue Cloak, 40 Mahni, unlocks Garren's first quest |
 | Bar Talk | Old Borric | Hear three of his stories, then tell the Bartender whether the marsh humming is true (it is) | 60 EXP, Strong Ale, 20 Mahni |
 
+**Garren's questline** (unlocked by delivering his brother's beef, or by The Night Watch):
+
+| Quest | Objective | Reward |
+|---|---|---|
+| The Iron Pickaxe | Take Garren's pickaxe to the Diremarsh and bring back 5 raw iron | 200 EXP, Basic Iron Chestplate, 75 Mahni |
+| Splitblade Set | Bring 4 Mud Frog Skins | 250 EXP, Splitblade Leather Set (body, pants, mask), 50 Mahni |
+| The Missing Miner | Your own search site 60 blocks out (coordinates in chat): a torn bag, a broken pickaxe and **Tomic's Journal**, a readable book whose last page mentions the humming and the red hoods. Pick up the journal, bring it to Garren | 300 EXP, Iron Pickaxe (Reinforced), 100 Mahni |
+| Red Hoods in the Reeds | Show the journal to Halvor; at night he sends you with two Secondil Guards (iron golems) to your own Redcap camp 50 blocks out. Two waves (3, then 4 Redcaps); then take their **Unknown Sigil Banner** to Halvor | 400 EXP, Redcap Iron Axe, 125 Mahni (keep the banner) |
+| Path to Thirdrema | Defeat the Mud Digger (summoned 60 blocks out when you accept) | 500 EXP, Garren's Plated Vambraces (off hand: +4 armour, +10% knockback resistance), 200 Mahni |
+
 **Shops** (Mahni): Lysa sells Antidotes (15, cures poison) and Basic Health Potions (20); the Bartender sells Strong Ale (10:
 Strength for a minute, a little Nausea) and Secondil Stew (5). Talk to them and click an item.
 
@@ -364,8 +374,7 @@ NPCs are villagers that stand still, can't be hurt, never despawn and have no tr
 places them: `/function slf:npc/place/elder`, `.../alchemist`, `.../guard_captain`, `.../farmer`, `.../garren`, `.../marrow`, `.../lysa`, `.../halvor`, `.../borric`, `.../bartender` (facing the nearest player), and
 `/function slf:npc/remove` removes NPCs within 8 blocks. The Starter Iron Dagger is the weapons pack's Iron Dagger model.
 
-Not built yet: Garren's questline from The Iron Pickaxe on (it unlocks after The Night Watch), the Diremarsh walking-state terrain,
-and the Wanderer origin.
+Not built yet: the Diremarsh walking-state terrain, the Splitblade set's slash resistance, Thirdrema itself, and the Wanderer origin.
 
 ---
 

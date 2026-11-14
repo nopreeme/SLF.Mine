@@ -1299,6 +1299,80 @@ class Secondil(Base):
         self.assertEqual((S.score("slf.q.bar"), S.score("slf.exp"), S.score("slf.mahni")), (5, 60, 20))
         self.assertTrue(self.has("minecraft:potion"))
 
+class GarrensQuests(Base):
+    """Garren's questline: The Iron Pickaxe, Splitblade Set, The Missing Miner, Red Hoods in the Reeds, Path to Thirdrema."""
+
+    def setUp(self):
+        super().setUp(); S.platform(); self.grant("swordsman"); S.cmd(f"clear {S.player}"); self.set("slf.level", 30)
+        S.as_player("execute positioned ~-2 ~ ~2 run function slf:npc/place/garren"); S.as_player("execute positioned ~2 ~ ~2 run function slf:npc/place/halvor"); S.wait_ticks(2)
+
+    def tearDown(self):
+        for tag in ("slf.npc", "slf.camp_redcap", "slf.patrol", "slf.reeds_camp", "slf.miner_site", "slf.mud_digger"): S.cmd(f"kill @e[tag={tag}]")
+        S.cmd("kill @e[type=minecraft:item]"); S.cmd("time set 1000"); S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}")
+
+    def talk(self, npc):
+        mark = S.bot.mark(); S.as_player(f"execute positioned as @e[tag=slf.npc.{npc},limit=1] run function slf:npc/talk_nearest"); S.wait_ticks(4)
+        return S.bot.chat_since(mark)
+
+    def accept(self, n): S.as_player(f"trigger slf.quest set {n}"); S.wait_ticks(3)
+    def has(self, item): return "passed" in S.cmd(f"execute if items entity {S.player} container.* {item}")
+    def money(self): self.set("slf.exp", 0); self.set("slf.mahni", 0)
+
+    def test_iron_pickaxe_and_splitblade(self):
+        self.set("slf.q.delivery", 2)
+        chat = self.talk("garren"); self.assertTrue(any("The Iron Pickaxe" in c for c in chat), chat[-3:])
+        self.accept(14); self.assertEqual(S.score("slf.q.pickaxe"), 1); self.assertTrue(self.has("minecraft:iron_pickaxe"))
+        S.cmd(f"give {S.player} minecraft:raw_iron 3"); self.talk("garren"); self.assertEqual(S.score("slf.q.pickaxe"), 1)
+        S.cmd(f"give {S.player} minecraft:raw_iron 2"); self.money(); self.talk("garren")
+        self.assertEqual((S.score("slf.q.pickaxe"), S.score("slf.exp"), S.score("slf.mahni")), (2, 200, 75))
+        self.assertTrue(self.has("minecraft:iron_chestplate")); self.assertFalse(self.has("minecraft:raw_iron"))
+        self.talk("garren"); self.accept(15); self.assertEqual(S.score("slf.q.splitblade"), 1)
+        for _ in range(4): S.as_player("function slf:give/mud_frog_skin")
+        self.money(); self.talk("garren")
+        self.assertEqual((S.score("slf.q.splitblade"), S.score("slf.exp"), S.score("slf.mahni")), (2, 250, 50))
+        for piece in ("chest", "pants", "mask"):
+            self.assertTrue(self.has(f'*[minecraft:custom_model_data={{strings:["slf.{piece}_splitblade"]}}]'), piece)
+
+    def test_missing_miner(self):
+        self.set("slf.q.pickaxe", 2); self.set("slf.q.splitblade", 2)
+        self.talk("garren"); self.accept(16); self.assertEqual(S.score("slf.q.miner"), 1)
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.miner_site]"))
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:tomic_journal"]'))
+        S.as_player("function slf:give/tomic_journal"); S.wait_ticks(3)                   # picking it up
+        self.assertEqual(S.score("slf.q.miner"), 2)
+        self.money(); chat = self.talk("garren")
+        self.assertEqual((S.score("slf.q.miner"), S.score("slf.exp"), S.score("slf.mahni")), (3, 300, 100))
+        self.assertTrue(any("Red Hoods in the Reeds" in c for c in chat), chat[-3:])
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.miner_site]"))
+
+    def test_red_hoods_in_the_reeds(self):
+        self.set("slf.q.miner", 3); self.accept(17); self.assertEqual(S.score("slf.q.reeds"), 1)
+        self.talk("halvor"); self.assertEqual(S.score("slf.q.reeds"), 1)                 # no journal on them
+        S.as_player("function slf:give/tomic_journal"); S.wait_ticks(2); self.talk("halvor"); self.assertEqual(S.score("slf.q.reeds"), 2)
+        S.cmd("time set 1000"); self.talk("halvor"); self.assertEqual(S.score("slf.q.reeds"), 2)   # not by day
+        S.cmd("time set 18000"); self.talk("halvor")
+        self.assertEqual((S.score("slf.q.reeds"), S.score("slf.q.wave")), (3, 1))
+        self.assertIn("Count: 3", S.cmd("execute if entity @e[tag=slf.camp_redcap]")); self.assertIn("Count: 2", S.cmd("execute if entity @e[tag=slf.patrol]"))
+        S.cmd("kill @e[tag=slf.camp_redcap]"); S.wait_cycle(); S.wait_ticks(5)
+        self.assertEqual(S.score("slf.q.wave"), 2); self.assertIn("Count: 4", S.cmd("execute if entity @e[tag=slf.camp_redcap]"))
+        S.cmd("kill @e[tag=slf.camp_redcap]"); S.wait_cycle(); S.wait_ticks(5)
+        self.assertEqual(S.score("slf.q.wave"), 3)
+        self.assertIn("passed", S.cmd("execute if items entity @e[type=minecraft:item] contents minecraft:black_banner"))
+        S.cmd(f"execute as {S.player} run loot give @s loot slf:quest/sigil_banner"); self.money(); self.talk("halvor")
+        self.assertEqual((S.score("slf.q.reeds"), S.score("slf.exp"), S.score("slf.mahni")), (4, 400, 125))
+        self.assertTrue(self.has("minecraft:iron_axe")); self.assertTrue(self.has("minecraft:black_banner"))
+
+    def test_path_to_thirdrema(self):
+        self.set("slf.q.reeds", 4)
+        chat = self.talk("garren"); self.assertTrue(any("Path to Thirdrema" in c for c in chat), chat[-3:])
+        self.accept(18); self.assertEqual(S.score("slf.q.thirdrema"), 1)
+        self.assertIn("Count: 1", S.cmd("execute if entity @e[tag=slf.mud_digger]"))
+        S.cmd(f"gamemode survival {S.player}"); S.as_player("damage @e[tag=slf.mud_digger,limit=1] 100000 minecraft:player_attack by @s"); S.wait_ticks(8)
+        self.assertEqual(S.score("slf.q.thirdrema"), 2)
+        self.money(); self.talk("garren")
+        self.assertEqual((S.score("slf.q.thirdrema"), S.score("slf.exp"), S.score("slf.mahni")), (3, 500, 200))
+        self.assertTrue(self.has('*[minecraft:item_model="slf:plated_vambraces"]')); self.assertIn("slf.thirdrema_unlocked", S.tags())
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"
