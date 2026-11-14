@@ -210,3 +210,4 @@ attribute @s minecraft:attack_speed modifier remove slf:dex_speed
 attribute @s minecraft:luck base set 0
 
 tellraw @s {"text":"[SLF] Player state reset.","color":"gray"}
+function slf:marsh/free

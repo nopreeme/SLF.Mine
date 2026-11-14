@@ -112,6 +112,11 @@ scoreboard players enable @a[tag=slf.class_chosen] slf.stat_stm
 # --- Knight alignment: only after 3 trials ---
 execute as @a[tag=slf.was_knight,tag=!slf.was_holy_knight,tag=!slf.was_dark_knight] if score @s slf.knight_trials matches 3.. run function slf:class/alignment_choice
 
+# --- The Diremarsh walking state, every 4 ticks ---
+scoreboard players add #marsh slf.timer 1
+execute if score #marsh slf.timer matches 4.. run function slf:marsh/tick
+execute if score #marsh slf.timer matches 4.. run scoreboard players set #marsh slf.timer 0
+
 # --- 20t cycle ---
 scoreboard players add #timer slf.timer 1
 execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run function slf:player/init_scores

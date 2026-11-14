@@ -374,7 +374,17 @@ NPCs are villagers that stand still, can't be hurt, never despawn and have no tr
 places them: `/function slf:npc/place/elder`, `.../alchemist`, `.../guard_captain`, `.../farmer`, `.../garren`, `.../marrow`, `.../lysa`, `.../halvor`, `.../borric`, `.../bartender` (facing the nearest player), and
 `/function slf:npc/remove` removes NPCs within 8 blocks. The Starter Iron Dagger is the weapons pack's Iron Dagger model.
 
-Not built yet: the Diremarsh walking-state terrain, the Splitblade set's slash resistance, and Thirdrema itself.
+Not built yet: Thirdrema (the design document only names it).
+
+---
+
+## The Diremarsh
+
+- **Walking state**: in a swamp or mangrove swamp, a player standing on marsh ground (anything but rock, logs or planks)
+  has one leg stuck in the mud: −40% movement speed and −40% jump. Step onto higher ground - a rock outcrop, a stump, a
+  boardwalk - and you're free. It applies in the Mud Digger fight too, so positioning matters
+- **Splitblade leather turns a blade**: when something holding a sword or an axe hits you, the full Splitblade set
+  (body, pants, mask) gives back 4 health; one or two pieces give back about 1-2
 
 ---
 

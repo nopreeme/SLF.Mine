@@ -1,0 +1,41 @@
+{
+  "criteria": {
+    "sword": {
+      "trigger": "minecraft:entity_hurt_player",
+      "conditions": {
+        "damage": {
+          "source_entity": {
+            "equipment": {
+              "mainhand": {
+                "items": "#minecraft:swords"
+              }
+            }
+          }
+        }
+      }
+    },
+    "axe": {
+      "trigger": "minecraft:entity_hurt_player",
+      "conditions": {
+        "damage": {
+          "source_entity": {
+            "equipment": {
+              "mainhand": {
+                "items": "#minecraft:axes"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sword",
+      "axe"
+    ]
+  ],
+  "rewards": {
+    "function": "slf:marsh/slashed"
+  }
+}

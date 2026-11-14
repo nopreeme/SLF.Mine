@@ -1448,6 +1448,50 @@ class Wanderer(Base):
         self.assertIn("slf.trusted_of_garren", S.tags()); self.assertIn("passed", S.cmd(f"execute if items entity {S.player} container.* minecraft:bread"))
         S.as_player("function slf:admin/reset_player")
 
+class Diremarsh(Base):
+    """The marsh's walking state and the Splitblade set's slash resistance."""
+
+    def tearDown(self):
+        S.as_player("function slf:marsh/free"); S.cmd("kill @e[tag=slf.mob]"); S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}")
+
+    def health(self): return float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {S.player} Health")).group(1))
+
+    def test_walking_state_in_the_marsh_and_solid_ground(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:swamp")
+        S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:mud"); S.wait_ticks(10)
+        self.assertIn("slf.in_marsh", S.tags())
+        self.assertIn("-0.4", S.cmd(f"attribute {S.player} minecraft:movement_speed modifier value get slf:marsh_walk"))
+        self.assertIn("-0.4", S.cmd(f"attribute {S.player} minecraft:jump_strength modifier value get slf:marsh_jump"))
+        S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:stone"); S.wait_ticks(10)                  # a rock outcrop
+        self.assertNotIn("slf.in_marsh", S.tags())
+        self.assertNotIn("-0.4", S.cmd(f"attribute {S.player} minecraft:movement_speed modifier value get slf:marsh_walk"))
+        S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:mud"); S.wait_ticks(10); self.assertIn("slf.in_marsh", S.tags())
+        S.cmd(f"gamemode creative {S.player}"); S.wait_ticks(10); self.assertNotIn("slf.in_marsh", S.tags())   # not in creative
+        S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:plains")
+
+    def test_outside_the_marsh_mud_is_just_mud(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}"); S.as_player("fillbiome ~-8 190 ~-8 ~8 210 ~8 minecraft:plains")
+        S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:mud"); S.wait_ticks(10)
+        self.assertNotIn("slf.in_marsh", S.tags())
+
+    def test_splitblade_turns_a_blade(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}")
+        S.as_player("execute positioned ^ ^ ^3 run function slf:mob/red_hat_goblin/spawn"); S.wait_ticks(2)
+        S.cmd("execute as @e[tag=slf.red_hat_goblin] run data merge entity @s {NoAI:1b}")
+        def hit():
+            S.cmd(f"effect give {S.player} instant_health 1 10 true"); S.wait_ticks(4)
+            S.cmd(f"damage {S.player} 8 minecraft:mob_attack by @e[tag=slf.red_hat_goblin,limit=1]"); S.wait_ticks(6)
+            return self.health()
+        bare = hit()
+        S.cmd(f"clear {S.player}")
+        S.cmd(f'item replace entity {S.player} armor.chest with minecraft:leather_chestplate[minecraft:custom_model_data={{strings:["slf.chest_splitblade"]}}]')
+        S.cmd(f'item replace entity {S.player} armor.legs with minecraft:leather_leggings[minecraft:custom_model_data={{strings:["slf.pants_splitblade"]}}]')
+        S.cmd(f'item replace entity {S.player} armor.head with minecraft:leather_helmet[minecraft:custom_model_data={{strings:["slf.mask_splitblade"]}}]')
+        full = hit()
+        S.cmd(f"clear {S.player}"); S.cmd(f"item replace entity {S.player} armor.chest with minecraft:leather_chestplate"); S.cmd(f"item replace entity {S.player} armor.legs with minecraft:leather_leggings"); S.cmd(f"item replace entity {S.player} armor.head with minecraft:leather_helmet")
+        plain = hit()
+        self.assertGreaterEqual(full - plain, 3, (bare, full, plain))                               # the full set gives back ~4 health against a blade
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"
