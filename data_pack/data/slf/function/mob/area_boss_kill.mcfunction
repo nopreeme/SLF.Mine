@@ -7,3 +7,5 @@ tellraw @a[distance=..64] ["",{"selector":"@s","color":"gold"},{"text":" has sla
 # The Rampant Forest Guardian quest
 execute if score @s slf.q.guardian matches 1 run scoreboard players set @s slf.q.snake 1
 execute if score @s slf.q.guardian matches 1 run tellraw @s {"text":" Quest objective done: report to the Guard Captain.","color":"yellow"}
+# The Wanderer's required boss (design doc V9, 6.4)
+execute if entity @s[tag=slf.wandering] run tag @s add slf.slew_snake

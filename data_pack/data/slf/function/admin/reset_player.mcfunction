@@ -159,6 +159,22 @@ scoreboard players set @s slf.q.miner 0
 scoreboard players set @s slf.q.reeds 0
 scoreboard players set @s slf.q.wave 0
 scoreboard players set @s slf.q.thirdrema 0
+scoreboard players set @s slf.q.letter 0
+tag @s remove slf.wanderer
+tag @s remove slf.wandering
+tag @s remove slf.dreamt
+tag @s remove slf.first_survivor
+tag @s remove slf.fellow_survivor
+tag @s remove slf.trusted_of_garren
+tag @s remove slf.origin_chosen
+tag @s remove slf.slew_snake
+tag @s remove slf.citizen
+tag @s remove slf.greeted_guard_captain
+tag @s remove slf.greeted_elder
+tag @s remove slf.greeted_alchemist
+tag @s remove slf.greeted_farmer
+attribute @s minecraft:luck modifier remove slf:wanderer_luck
+attribute @s minecraft:armor modifier remove slf:wanderer_defense
 tag @s remove slf.secondil_spawn
 tag @s remove slf.garren_quest_unlocked
 tag @s remove slf.watch_sighted

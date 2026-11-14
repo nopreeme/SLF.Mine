@@ -8,3 +8,5 @@ give @s minecraft:mushroom_stew[minecraft:item_name={text:"Secondil Stew",color:
 tellraw @s {"text":" Respawn point registered: Secondil.","color":"green"}
 tellraw @s ["",{"text":"✔ Quest complete: ","color":"green"},{"text":"A Soft Bed at Last","color":"gold","bold":true},{"text":"  +75 EXP, Secondil respawn point, Secondil Stew","color":"yellow"}]
 playsound minecraft:entity.player.levelup player @s ~ ~ ~ 0.6 1.4
+# A Wanderer who registers at Secondil's inn is free of the Dream Penalty; with the Ravenous Snake dead, they are a First Survivor
+execute if entity @s[tag=slf.wandering] run function slf:wanderer/registered

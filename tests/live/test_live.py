@@ -1373,6 +1373,81 @@ class GarrensQuests(Base):
         self.assertEqual((S.score("slf.q.thirdrema"), S.score("slf.exp"), S.score("slf.mahni")), (3, 500, 200))
         self.assertTrue(self.has('*[minecraft:item_model="slf:plated_vambraces"]')); self.assertIn("slf.thirdrema_unlocked", S.tags())
 
+class Wanderer(Base):
+    """The Wanderer's Path: origin choice, traits, the Dream Penalty, Firstia's closed gates, First Survivor, Fellow Survivor
+    and A Brother's Letter."""
+
+    def setUp(self):
+        super().setUp(); S.platform(); S.cmd(f"clear {S.player}")
+        S.cmd("data remove storage slf:world forest"); S.cmd("data remove storage slf:world firstia")
+
+    def tearDown(self):
+        S.cmd("kill @e[tag=slf.npc]"); S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}")
+
+    def talk(self, npc):
+        mark = S.bot.mark(); S.as_player(f"execute positioned as @e[tag=slf.npc.{npc},limit=1] run function slf:npc/talk_nearest"); S.wait_ticks(4)
+        return S.bot.chat_since(mark)
+
+    def place(self, npc, dx=0): S.as_player(f"execute positioned ~{dx} ~ ~2 run function slf:npc/place/{npc}"); S.wait_ticks(2)
+    def origin(self, n): S.as_player(f"trigger slf.origin set {n}"); S.wait_ticks(3)
+
+    def test_choosing_wanderer_needs_the_warning_and_gives_the_traits(self):
+        S.as_player("function slf:wanderer/origin_menu"); S.wait_ticks(2)
+        mark = S.bot.mark(); self.origin(2)
+        self.assertTrue(any("DREAM PENALTY" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark)[-2:])
+        self.assertNotIn("slf.wanderer", S.tags())                                              # the warning alone changes nothing
+        self.origin(3)
+        tags = S.tags(); self.assertIn("slf.wanderer", tags); self.assertIn("slf.wandering", tags)
+        self.assertIn("is 2", S.cmd(f"attribute {S.player} minecraft:luck modifier value get slf:wanderer_luck"))
+        self.assertIn("-0.1", S.cmd(f"attribute {S.player} minecraft:armor modifier value get slf:wanderer_defense"))
+        self.origin(1); self.assertNotIn("slf.citizen", S.tags())                              # no changing your mind
+        S.as_player("function slf:admin/reset_player")
+
+    def test_citizen(self):
+        S.as_player("function slf:wanderer/origin_menu"); self.origin(1)
+        self.assertIn("slf.citizen", S.tags()); self.assertNotIn("slf.wanderer", S.tags())
+
+    def test_the_dream_penalty(self):
+        self.grant("swordsman"); S.as_player("function slf:wanderer/become_wanderer"); S.wait_ticks(3)
+        for obj, v in (("slf.level", 20), ("slf.exp", 900), ("slf.mahni", 300), ("slf.sp_points", 7), ("slf.stat.str", 10)): self.set(obj, v)
+        S.cmd(f"gamemode survival {S.player}"); mark = S.bot.mark()
+        S.cmd(f"kill {S.player}"); S.wait_ticks(20)
+        self.assertEqual([S.score(o) for o in ("slf.level", "slf.exp", "slf.mahni", "slf.sp_points", "slf.stat.str")], [1, 0, 0, 0, 0])
+        tags = S.tags(); self.assertIn("slf.dreamt", tags); self.assertNotIn("slf.wandering", tags); self.assertIn("slf.was_swordsman", tags)
+        self.assertTrue(any("only a dream" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark)[-3:])
+        # a second death is an ordinary death
+        self.set("slf.level", 5); S.cmd(f"kill {S.player}"); S.wait_ticks(20); self.assertEqual(S.score("slf.level"), 5)
+        S.as_player("function slf:admin/reset_player")
+
+    def test_citizens_do_not_dream(self):
+        self.grant("swordsman"); self.set("slf.level", 20); S.cmd(f"gamemode survival {S.player}")
+        S.cmd(f"kill {S.player}"); S.wait_ticks(20); self.assertEqual(S.score("slf.level"), 20)
+
+    def test_firstia_turns_wanderers_away(self):
+        self.grant("swordsman"); S.as_player("function slf:wanderer/become_wanderer"); S.wait_ticks(2)
+        S.cmd(f"tp {S.player} {HOME}"); S.platform(); self.place("guard_captain")
+        chat = self.talk("guard_captain")
+        self.assertTrue(any("Halt" in c for c in chat), chat); self.assertFalse(any("Clearing the Outskirts" in c for c in chat))
+        S.as_player("function slf:admin/reset_player")
+
+    def test_first_survivor_fellow_survivor_and_the_letter(self):
+        self.grant("swordsman"); self.set("slf.level", 10)   # next level needs 5000 EXP: rewards are read before any level-up
+        S.as_player("function slf:wanderer/become_wanderer"); S.wait_ticks(2)
+        S.cmd(f"tp {S.player} {HOME}"); S.platform()
+        S.as_player("function slf:mob/area_boss_kill"); self.assertIn("slf.slew_snake", S.tags())   # what killing the snake does
+        self.set("slf.q.bed", 1); S.cmd(f"advancement grant {S.player} only slf:quest/slept"); S.wait_ticks(3)
+        tags = S.tags(); self.assertIn("slf.first_survivor", tags); self.assertNotIn("slf.wandering", tags)
+        self.place("garren", -2); self.place("farmer", 2)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0); chat = self.talk("garren")
+        self.assertEqual((S.score("slf.q.delivery"), S.score("slf.exp"), S.score("slf.mahni")), (2, 150, 75))
+        self.assertIn("slf.fellow_survivor", S.tags())
+        chat = self.talk("farmer"); self.assertTrue(any("met my brother" in c for c in chat), chat[-3:])
+        S.as_player("trigger slf.quest set 19"); S.wait_ticks(3); self.assertEqual(S.score("slf.q.letter"), 1)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0); self.talk("garren")
+        self.assertEqual((S.score("slf.q.letter"), S.score("slf.exp"), S.score("slf.mahni")), (2, 250, 100))
+        self.assertIn("slf.trusted_of_garren", S.tags()); self.assertIn("passed", S.cmd(f"execute if items entity {S.player} container.* minecraft:bread"))
+        S.as_player("function slf:admin/reset_player")
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

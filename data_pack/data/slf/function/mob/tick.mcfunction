@@ -18,3 +18,5 @@ execute unless predicate slf:night as @e[tag=slf.night_mob,tag=slf.saw_night] at
 execute as @a[scores={slf.q.herd=1}] run function slf:quest/herd/check
 execute as @a[scores={slf.q.watch=1}] at @s run function slf:quest/watch/tick
 execute as @a[scores={slf.q.reeds=3}] run function slf:quest/reeds/tick
+# Wanderers keep their traits
+execute as @a[tag=slf.wanderer] run function slf:wanderer/traits

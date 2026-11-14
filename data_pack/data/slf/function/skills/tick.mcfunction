@@ -10,6 +10,7 @@ scoreboard players enable @a slf.menu
 # --- Quest accept buttons: /trigger slf.quest set <quest> (enabled when an NPC offers one) ---
 execute as @a[scores={slf.quest=1..}] run function slf:quest/accept
 execute as @a[scores={slf.shop=1..}] run function slf:shop/buy
+execute as @a[scores={slf.origin=1..}] run function slf:wanderer/origin
 
 # --- SLF mob kills from last tick (EXP by mob level, Vorpal Soul) ---
 execute as @a[tag=slf.mob_kill] run function slf:mob/kill_process

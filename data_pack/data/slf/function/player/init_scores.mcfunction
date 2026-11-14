@@ -33,6 +33,7 @@ scoreboard players add @s slf.q.miner 0
 scoreboard players add @s slf.q.reeds 0
 scoreboard players add @s slf.q.wave 0
 scoreboard players add @s slf.q.thirdrema 0
+scoreboard players add @s slf.q.letter 0
 execute unless score @s slf.pid matches 1.. run function slf:player/assign_pid
 scoreboard players add @s slf.vorpal_soul 0
 scoreboard players add @s slf.boss_kills 0

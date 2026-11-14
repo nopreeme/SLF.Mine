@@ -2,6 +2,8 @@
 # The Iron Pickaxe -> Splitblade Set -> The Missing Miner -> Red Hoods in the Reeds (with Halvor) -> Path to Thirdrema.
 execute if score @s slf.q.delivery matches 1 if items entity @s container.* minecraft:paper[minecraft:item_model="slf:beef_package"] run return run function slf:quest/turn_in/delivery
 execute if score @s slf.q.delivery matches 1 run return run tellraw @s ["",{"text":"[Garren] ","color":"gold"},{"text":"My brother sent something? Then where is it, pioneer?","color":"white"}]
+execute if score @s slf.q.letter matches 1 if items entity @s container.* minecraft:paper[minecraft:item_model="slf:sealed_letter"] run return run function slf:wanderer/letter_turn_in
+execute if entity @s[tag=slf.first_survivor,tag=!slf.fellow_survivor] if score @s slf.q.delivery matches 0 run return run function slf:wanderer/fellow_survivor
 execute if score @s slf.q.pickaxe matches 1 run return run function slf:quest/garren/pickaxe_check
 execute if score @s slf.q.splitblade matches 1 run return run function slf:quest/garren/splitblade_check
 execute if score @s slf.q.miner matches 2 run return run function slf:quest/turn_in/miner

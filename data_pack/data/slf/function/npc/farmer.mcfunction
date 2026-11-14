@@ -1,4 +1,7 @@
 # The Distressed Farmer (design doc V9): The Missing Herd, The Serpent's Shadow, Secondil Supply Delivery.
+execute if entity @s[tag=slf.wanderer,tag=!slf.dreamt,tag=!slf.first_survivor] run return run function slf:wanderer/refuse/farmer
+execute if entity @s[tag=slf.first_survivor,tag=!slf.greeted_farmer] run function slf:wanderer/greet/farmer
+execute if entity @s[tag=slf.fellow_survivor] if score @s slf.q.letter matches 0 run return run function slf:wanderer/letter_offer
 execute if score @s slf.q.herd matches 1 run return run function slf:quest/herd/farmer
 execute if score @s slf.q.herd matches 2 if score @s slf.q.serpent matches 0 run return run function slf:npc/farmer_serpent
 execute if score @s slf.q.serpent matches 1 run return run tellraw @s ["",{"text":"[Distressed Farmer] ","color":"yellow"},{"text":"Please - talk to the Guard Captain at the gates before you go anywhere near that bridge.","color":"white"}]

@@ -374,7 +374,26 @@ NPCs are villagers that stand still, can't be hurt, never despawn and have no tr
 places them: `/function slf:npc/place/elder`, `.../alchemist`, `.../guard_captain`, `.../farmer`, `.../garren`, `.../marrow`, `.../lysa`, `.../halvor`, `.../borric`, `.../bartender` (facing the nearest player), and
 `/function slf:npc/remove` removes NPCs within 8 blocks. The Starter Iron Dagger is the weapons pack's Iron Dagger model.
 
-Not built yet: the Diremarsh walking-state terrain, the Splitblade set's slash resistance, Thirdrema itself, and the Wanderer origin.
+Not built yet: the Diremarsh walking-state terrain, the Splitblade set's slash resistance, and Thirdrema itself.
+
+---
+
+## The Wanderer's Path
+
+The hard-mode origin from the design document (V9, section 6). New players choose an origin before their class:
+**Citizen** (start with Firstia's people and quests) or **Wanderer** (a warning screen first; there is no going back).
+
+- **Traits**, permanent: +2 Luck (better drops and rolls) and −10% armour (you take more damage from every hit)
+- **Start**: a random spot in a forest or taiga, within 64 blocks of the Rampant Forest's centre if an admin set it
+  (`/function slf:wanderer/set_forest`), otherwise within 200 blocks of where you joined
+- **Firstia is closed**: its Guard Captain, Elder, Alchemist and Farmer turn away strangers from the wilds
+- **The Dream Penalty**: die before you complete *A Soft Bed at Last* at Secondil's inn, and you wake at Firstia's inn
+  (`/function slf:wanderer/set_firstia_inn`) with your level, EXP, Mahni, stat points, skill progress and everything you
+  dropped gone - "only a dream". You keep your class, skills and the Wanderer traits, and Firstia's gates are open from then on
+- **First Survivor**: kill the Ravenous Snake while still under the Dream Penalty, then register at Secondil's inn. Garren then
+  greets you with **Fellow Survivor** (150 EXP, 75 Mahni, Garren's Full Meal) instead of the beef delivery, and his questline opens
+- **The Long Way Back**: Firstia's people greet a First Survivor differently, and the farmer leaves **A Brother's Letter** on
+  the table; carry it back to Garren (250 EXP, 100 Mahni, Fresh-Baked Bread, *Trusted of Garren*)
 
 ---
 
@@ -495,6 +514,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Bosses | The two area bosses and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
 | NPCs | Place the Town Elder, Local Alchemist, Guard Captain, Distressed Farmer or Garren; 5 Wild Herbs; quest log; remove NPCs |
 | Secondil | Place Innkeeper Marrow, Lysa, Guard Halvor, Old Borric or the Bartender |
+| Origin | The origin choice, become a Wanderer, set Firstia's inn and the Rampant Forest's centre |
 | Me | Status sheet, +100 Mahni, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.

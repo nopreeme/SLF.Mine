@@ -23,3 +23,4 @@ execute if score #q slf.tmp matches 15 if score @s slf.q.pickaxe matches 2 if sc
 execute if score #q slf.tmp matches 16 if score @s slf.q.splitblade matches 2 if score @s slf.q.miner matches 0 run return run function slf:quest/start/miner
 execute if score #q slf.tmp matches 17 if score @s slf.q.miner matches 3 if score @s slf.q.reeds matches 0 run return run function slf:quest/start/reeds
 execute if score #q slf.tmp matches 18 if score @s slf.q.reeds matches 4 if score @s slf.q.thirdrema matches 0 run return run function slf:quest/start/thirdrema
+execute if score #q slf.tmp matches 19 if entity @s[tag=slf.fellow_survivor] if score @s slf.q.letter matches 0 run return run function slf:wanderer/letter_start

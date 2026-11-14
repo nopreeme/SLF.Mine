@@ -1,5 +1,7 @@
 # The Guard Captain: gives Clearing the Outskirts (5 Goblins), then The Brute Threat (2 Orcs). Main quests come first:
 # The Serpent's Shadow ends here, and he gives The Rampant Forest Guardian.
+execute if entity @s[tag=slf.wanderer,tag=!slf.dreamt,tag=!slf.first_survivor] run return run function slf:wanderer/refuse/guard_captain
+execute if entity @s[tag=slf.first_survivor,tag=!slf.greeted_guard_captain] run function slf:wanderer/greet/guard_captain
 execute if score @s slf.q.serpent matches 1 run return run function slf:quest/turn_in/serpent
 execute if score @s slf.q.guardian matches 1 if score @s slf.q.snake matches 1 run return run function slf:quest/turn_in/guardian
 execute if score @s slf.q.guardian matches 1 run return run tellraw @s ["",{"text":"[Guard Captain] ","color":"aqua"},{"text":"The Ravenous Snake still holds the bridge. Be careful of the tail.","color":"white"}]
