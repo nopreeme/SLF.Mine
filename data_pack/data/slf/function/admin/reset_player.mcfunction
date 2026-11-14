@@ -136,6 +136,11 @@ scoreboard players set @s slf.class 0
 scoreboard players set @s slf.level 1
 scoreboard players set @s slf.exp 0
 scoreboard players set @s slf.mahni 0
+scoreboard players set @s slf.q.awaken 0
+scoreboard players set @s slf.q.outskirts 0
+scoreboard players set @s slf.q.goblins 0
+scoreboard players set @s slf.q.brute 0
+scoreboard players set @s slf.q.orcs 0
 scoreboard players set @s slf.sp_points 0
 scoreboard players set @s slf.focus 0
 scoreboard players set @s slf.focus_stat 0

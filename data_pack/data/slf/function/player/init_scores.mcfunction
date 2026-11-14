@@ -10,6 +10,11 @@ scoreboard players add @s slf.mana 0
 scoreboard players add @s slf.mana_max 0
 scoreboard players add @s slf.karma 0
 scoreboard players add @s slf.mahni 0
+scoreboard players add @s slf.q.awaken 0
+scoreboard players add @s slf.q.outskirts 0
+scoreboard players add @s slf.q.goblins 0
+scoreboard players add @s slf.q.brute 0
+scoreboard players add @s slf.q.orcs 0
 scoreboard players add @s slf.vorpal_soul 0
 scoreboard players add @s slf.boss_kills 0
 scoreboard players add @s slf.bt_kills 0

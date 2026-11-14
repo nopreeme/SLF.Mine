@@ -328,6 +328,26 @@ Bosses row of the test menu.
 
 ---
 
+## Quests
+
+Firstia's side quests from the design document (V9, section 2). Talk to an NPC by right-clicking it; quest offers come with an
+**[Accept]** button, and `/trigger slf.menu set 10` (or **[Quests]** in the main menu) shows your quest log.
+
+| Quest | From | Objective | Reward |
+|---|---|---|---|
+| A Pioneer's Awakening | Town Elder | Speak with the Local Alchemist, then gather 5 **Wild Herbs** (8% from cutting grass and ferns) | 50 EXP, 3 Basic Health Potions |
+| Clearing the Outskirts | Guard Captain | Defeat 5 Goblins | 100 EXP, Starter Iron Dagger, 20 Mahni |
+| The Brute Threat | Guard Captain (after Clearing the Outskirts) | Defeat 2 Orcs | 150 EXP, Beginner Leather Chestplate, 40 Mahni |
+
+NPCs are villagers that stand still, can't be hurt, never despawn and have no trades. Your world's towns aren't built yet, so an admin
+places them: `/function slf:npc/place/elder`, `.../alchemist`, `.../guard_captain` (facing the nearest player), and
+`/function slf:npc/remove` removes NPCs within 8 blocks. The Starter Iron Dagger is the weapons pack's Iron Dagger model.
+
+Not built yet: Firstia's main quests (The Missing Herd, The Serpent's Shadow, the Ravenous Snake quest, the Secondil delivery),
+Secondil and Garren's questline, and the Wanderer origin.
+
+---
+
 ## Mahni
 
 Mahni is the currency (design doc V9). Your balance shows on the status sheet and at the end of the status line above the hotbar.
@@ -443,6 +463,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
 | Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Redcap Goblin, an Orc with its goblins, a Mud Frog, remove SLF mobs nearby |
 | Bosses | The two area bosses and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
+| NPCs | Place the Town Elder, Local Alchemist or Guard Captain; 5 Wild Herbs; quest log; remove NPCs |
 | Me | Status sheet, +100 Mahni, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.

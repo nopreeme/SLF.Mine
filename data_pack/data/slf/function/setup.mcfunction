@@ -75,6 +75,13 @@ scoreboard objectives add slf.mob_level dummy
 scoreboard objectives add slf.kill_lv dummy
 # Mahni, the currency (design doc V9). Purses picked up turn into Mahni (mahni/pickup)
 scoreboard objectives add slf.mahni dummy
+# Quests (quest/*): the accept trigger, and one score per quest (see quest/log)
+scoreboard objectives add slf.quest trigger
+scoreboard objectives add slf.q.awaken dummy
+scoreboard objectives add slf.q.outskirts dummy
+scoreboard objectives add slf.q.goblins dummy
+scoreboard objectives add slf.q.brute dummy
+scoreboard objectives add slf.q.orcs dummy
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
 bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
 bossbar set slf:nightclaw color white

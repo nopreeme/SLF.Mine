@@ -347,6 +347,16 @@ def draw_purse(px):
             if (x - 8.5) ** 2 + (y - 2.5) ** 2 <= 3: px[x, y] = ((240, 200, 70) if x < 10 else (200, 160, 40)) + (255,)
 
 
+def draw_herb(px):
+    """Wild Herb: a small green sprig with three leaves."""
+    G, GD = (90, 160, 60), (56, 112, 40)
+    for y in range(5, 15): px[8, y] = GD + (255,)
+    for cx, cy in ((5, 6), (11, 7), (7, 3), (10, 11), (5, 11)):
+        for x in range(cx - 2, cx + 2):
+            for y in range(cy - 1, cy + 2):
+                if 0 <= x < 16 and 0 <= y < 16: px[x, y] = (G if (x + y) % 3 else GD) + (255,)
+
+
 def main():
     (RP / "textures" / "item").mkdir(parents=True, exist_ok=True)
     head_texture().save(RP / "textures" / "item" / "goblin_head.png")
@@ -358,7 +368,7 @@ def main():
               "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
               "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair),
               "mud_digger": digger_model(), "mud_digger_tooth": item_icon("mud_digger_tooth", draw_tooth), "digger_hide": item_icon("digger_hide", draw_hide),
-              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse)}
+              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb)}
     (RP / "items").mkdir(parents=True, exist_ok=True)
     for name, m in models.items():
         (RP / "models" / "item" / f"{name}.json").write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")

@@ -98,7 +98,7 @@ class Menus(Base):
         self.grant("swordsman")
         mark = S.bot.mark(); S.as_player("trigger slf.menu"); S.wait_ticks(4)
         cmds = [c for _, c in S.bot.clicks_since(mark)]
-        for n in (7, 4, 3, 5, 9): self.assertIn(f"trigger slf.menu set {n}", cmds)
+        for n in (7, 4, 3, 5, 9, 10): self.assertIn(f"trigger slf.menu set {n}", cmds)
 
     def test_menu_trigger_is_reenabled_after_use(self):
         for _ in range(3):
@@ -1069,6 +1069,88 @@ class Mahni(Base):
         S.as_player("tp @e[type=minecraft:item,distance=..16] @s"); S.wait_ticks(20)    # walk over the drops
         self.assertGreaterEqual(S.score("slf.mahni"), 10)
         S.cmd(f"gamemode creative {S.player}"); S.cmd("kill @e[tag=slf.mob]"); S.cmd(f"clear {S.player}")
+
+class Quests(Base):
+    """Firstia NPCs and side quests: offers, accepting through the trigger, progress, hand-ins and rewards."""
+
+    def setUp(self):
+        super().setUp(); S.platform(); self.grant("swordsman"); S.cmd(f"clear {S.player}"); self.set("slf.level", 10)
+
+    def tearDown(self):
+        S.cmd("kill @e[tag=slf.npc]"); S.cmd(f"clear {S.player}"); S.cmd(f"gamemode creative {S.player}")
+
+    def talk(self, npc):
+        S.cmd(f"kill @e[tag=slf.npc]"); S.as_player(f"execute positioned ^ ^ ^2 run function slf:npc/place/{npc}"); S.wait_ticks(2)
+        mark = S.bot.mark(); S.as_player("function slf:npc/talk_nearest"); S.wait_ticks(4)
+        return S.bot.chat_since(mark)
+
+    def accept(self, n):
+        S.as_player(f"trigger slf.quest set {n}"); S.wait_ticks(3)
+
+    def has(self, item):
+        return "passed" in S.cmd(f"execute if items entity {S.player} container.* {item}")
+
+    def test_npc_is_a_safe_quiet_villager(self):
+        S.as_player("execute positioned ^ ^ ^2 run function slf:npc/place/elder"); S.wait_ticks(2)
+        data = S.cmd("data get entity @e[tag=slf.npc.elder,limit=1]")
+        for part in ("NoAI: 1b", "Invulnerable: 1b", "PersistenceRequired: 1b", "Town Elder", 'profession: "minecraft:librarian"'):
+            self.assertIn(part, data)
+
+    def test_a_pioneers_awakening(self):
+        chat = self.talk("elder")
+        self.assertTrue(any("A Pioneer's Awakening" in c for c in chat), chat[-4:])
+        self.assertTrue(any(cmd == "/trigger slf.quest set 1" for _, cmd in S.bot.clicks_since(0)), "no [Accept] button")
+        self.accept(1); self.assertEqual(S.score("slf.q.awaken"), 1)
+        self.talk("alchemist"); self.assertEqual(S.score("slf.q.awaken"), 2)
+        for _ in range(4): S.as_player("function slf:give/wild_herb")
+        chat = self.talk("elder")
+        self.assertTrue(any("You have 4" in c for c in chat), chat[-3:]); self.assertEqual(S.score("slf.q.awaken"), 2)   # not enough herbs
+        S.as_player("function slf:give/wild_herb"); self.set("slf.exp", 0)
+        chat = self.talk("elder")
+        self.assertEqual(S.score("slf.q.awaken"), 3); self.assertEqual(S.score("slf.exp"), 50)
+        self.assertFalse(self.has('*[minecraft:item_model="slf:wild_herb"]'))
+        self.assertIn("Count: 3", S.cmd(f'execute if items entity {S.player} container.* minecraft:potion'))
+        self.accept(1); self.assertEqual(S.score("slf.q.awaken"), 3)                       # a finished quest can't be taken again
+
+    def test_clearing_the_outskirts_then_the_brute_threat(self):
+        self.talk("guard_captain"); self.accept(3); self.assertEqual(S.score("slf.q.brute"), 0)   # brute needs the outskirts first
+        self.accept(2); self.assertEqual(S.score("slf.q.outskirts"), 1)
+        S.cmd(f"gamemode survival {S.player}")
+        for i in range(5):
+            S.cmd("scoreboard players set #spawn_lv slf.mob_level 3"); S.as_player("execute positioned ^ ^ ^3 run function slf:mob/goblin/spawn"); S.wait_ticks(2)
+            S.as_player("damage @e[tag=slf.goblin,limit=1,sort=nearest] 1000 minecraft:player_attack by @s"); S.wait_ticks(3)
+        self.assertEqual(S.score("slf.q.goblins"), 5)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0); self.talk("guard_captain")
+        self.assertEqual((S.score("slf.q.outskirts"), S.score("slf.exp"), S.score("slf.mahni")), (2, 100, 20))
+        self.assertTrue(self.has('*[minecraft:item_model="slf:iron_dagger"]'))
+        chat = self.talk("guard_captain"); self.assertTrue(any("The Brute Threat" in c for c in chat), chat[-3:])
+        self.accept(3); self.assertEqual(S.score("slf.q.brute"), 1)
+        for i in range(2):
+            S.cmd("scoreboard players set #spawn_lv slf.mob_level 10"); S.as_player("execute positioned ^ ^ ^3 run function slf:mob/orc/spawn"); S.wait_ticks(2)
+            S.as_player("damage @e[tag=slf.orc,limit=1,sort=nearest] 1000 minecraft:player_attack by @s"); S.wait_ticks(3)
+            S.cmd("kill @e[tag=slf.goblin]")
+        self.assertEqual(S.score("slf.q.orcs"), 2)
+        self.set("slf.exp", 0); self.set("slf.mahni", 0); self.talk("guard_captain")
+        self.assertEqual((S.score("slf.q.brute"), S.score("slf.exp"), S.score("slf.mahni")), (2, 150, 40))
+        self.assertTrue(self.has("minecraft:leather_chestplate"))
+
+    def test_kills_before_accepting_do_not_count(self):
+        S.cmd(f"gamemode survival {S.player}"); S.as_player("execute positioned ^ ^ ^3 run function slf:mob/goblin/spawn"); S.wait_ticks(2)
+        S.as_player("damage @e[tag=slf.goblin,limit=1,sort=nearest] 1000 minecraft:player_attack by @s"); S.wait_ticks(3)
+        self.assertEqual(S.score("slf.q.goblins"), 0)
+
+    def test_quest_log_and_herbs_from_grass(self):
+        mark = S.bot.mark(); S.as_player("trigger slf.menu set 10"); S.wait_ticks(3)
+        self.assertTrue(any("No quests yet" in c for c in S.bot.chat_since(mark)))
+        self.set("slf.q.outskirts", 1); self.set("slf.q.goblins", 3)
+        mark = S.bot.mark(); S.as_player("trigger slf.menu set 10"); S.wait_ticks(3)
+        self.assertTrue(any("Clearing the Outskirts" in c and "3/5" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark)[-3:])
+        S.cmd("kill @e[type=minecraft:item]")
+        for i in range(60):                                    # 8% each: 60 grass blocks give none ~0.7% of the time
+            S.as_player(f"setblock ~{i % 8 - 4} ~ ~{i // 8 + 2} minecraft:short_grass")
+            S.as_player(f"setblock ~{i % 8 - 4} ~ ~{i // 8 + 2} minecraft:air destroy")
+        S.wait_ticks(3)
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:wild_herb"]'))
 
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""

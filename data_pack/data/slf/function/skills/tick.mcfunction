@@ -7,6 +7,9 @@ execute as @a[scores={slf.deaths=1..}] run function slf:mask/on_death
 execute as @a[scores={slf.menu=1..}] run function slf:menu/dispatch
 scoreboard players enable @a slf.menu
 
+# --- Quest accept buttons: /trigger slf.quest set <quest> (enabled when an NPC offers one) ---
+execute as @a[scores={slf.quest=1..}] run function slf:quest/accept
+
 # --- SLF mob kills from last tick (EXP by mob level, Vorpal Soul) ---
 execute as @a[tag=slf.mob_kill] run function slf:mob/kill_process
 execute if entity @e[tag=slf.boss,limit=1] run function slf:mob/boss/bars

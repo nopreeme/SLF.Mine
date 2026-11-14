@@ -195,6 +195,12 @@ def main():
     menu.append(row("Bosses", [run(f"[{name}]", color, f"/function slf:test/mob/boss_{bid}", f"{full}, level {lv}, six blocks ahead") for bid, name, full, color, lv in BOSSES] +
                        [run("[Night]", "dark_blue", "/function slf:test/time_night", "Midnight of a full moon (Lycagon and Bilac come out at night)"),
                         run("[Day]", "yellow", "/function slf:test/time_day", "Morning: night bosses leave")]))
+    menu.append(row("NPCs", [run("[Town Elder]", "gold", "/function slf:npc/place/elder", "Place the Town Elder here (quest: A Pioneer's Awakening)"),
+                             run("[Local Alchemist]", "light_purple", "/function slf:npc/place/alchemist", "Place the Local Alchemist here"),
+                             run("[Guard Captain]", "aqua", "/function slf:npc/place/guard_captain", "Place the Guard Captain here (quests: Clearing the Outskirts, The Brute Threat)"),
+                             run("[+5 Wild Herbs]", "green", "/function slf:test/herbs", "Five Wild Herbs (they also drop from grass and ferns)"),
+                             run("[Quest log]", "gold", "/trigger slf.menu set 10", "Your quests"),
+                             run("[Remove NPCs]", "dark_gray", "/function slf:npc/remove", "Removes SLF NPCs within 8 blocks")]))
     menu.append(row("Me", [run("[Status]", "white", "/trigger slf.menu set 7", "Your class, level and stats"),
                            run("[+100 Mahni]", "gold", "/function slf:test/mahni", "Adds 100 Mahni"),
                            run("[Player menu]", "white", "/trigger slf.menu", "The menu players see"),
@@ -208,6 +214,7 @@ def main():
               "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"Level set to {lv}.", "yellow")])])
     write("test/level/99.mcfunction", [GENERATED, "scoreboard players set @s slf.awakened 0", "scoreboard players set @s slf.level 99", "scoreboard players add @s slf.exp 5000",
           "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Level 99 with 5000 banked EXP. Standby starts within a second.", "yellow")])])
+    write("test/herbs.mcfunction", [GENERATED] + ["function slf:give/wild_herb"] * 5)
     write("test/mahni.mcfunction", [GENERATED, "scoreboard players add @s slf.mahni 100", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+100 Mahni.", "yellow")])])
     write("test/exp.mcfunction", [GENERATED, "scoreboard players add @s slf.exp 1000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+1000 EXP.", "yellow")])])
     write("test/boss_gate.mcfunction", [GENERATED, "scoreboard players set @s slf.boss_gate 1", "scoreboard players add @s slf.boss_kills 1",

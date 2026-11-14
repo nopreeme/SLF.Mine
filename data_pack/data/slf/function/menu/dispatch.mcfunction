@@ -10,4 +10,5 @@ execute if score #id slf.tmp matches 6 run return run function slf:altar/guide
 execute if score #id slf.tmp matches 7 run return run function slf:menu/status
 execute if score #id slf.tmp matches 8 run return run function slf:skills/tantrum_toggle
 execute if score #id slf.tmp matches 9 run return run function slf:menu/toggle_hud
+execute if score #id slf.tmp matches 10 run return run function slf:quest/log
 function slf:menu/main
