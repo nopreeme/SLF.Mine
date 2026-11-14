@@ -287,6 +287,22 @@ slither after it) around an invisible hitbox.
 
 Admins: `/function slf:mob/boss/ravenous_snake/spawn`, `slf:give/devourers_scale`, `slf:give/python_white_hair`.
 
+### Area boss: the Mud Digger, "Solo Killer"
+
+The Diremarsh's area boss (design doc V9): a chimera with a shark's head, fins and tail, a mole's body on long webbed legs and
+catfish whiskers, dark green with light splotches and cold blue eyes. One 3D model around an invisible hitbox.
+
+- Level 25, 400 health, bite 9. A party of 3–4 is strongly recommended
+- **Dives and bursts:** 8 seconds up, then it dives underground (it can't be hurt there) and 3 seconds later bursts out beside its
+  target, ramming everyone within 3 blocks (6 damage) and throwing them. Fought solo, it always goes for that one player
+- **Phase 2** (below 20% health): every dive starts with a quake that paralyses anyone standing in mud or water for 3 seconds (stand
+  on solid ground to stay mobile), and every burst comes up right beneath a player and launches them high enough for the fall to kill
+- Appears in swamps near players level 14–30 (2% a minute), one at a time, with a boss bar
+- Killing it: its level in EXP + **800**. Not an Altar boss. Drops **Mud Digger Tooth** (1–3) and **Digger Hide** (1–2); killing it with
+  nobody else within 32 blocks also gives the **Solo Killer's Trophy** and the title tag `slf.title.solo_killer`
+
+Admins: `/function slf:mob/boss/mud_digger/spawn`, `slf:give/mud_digger_tooth`, `slf:give/digger_hide`, `slf:give/solo_killers_trophy`.
+
 ### Bosses
 
 Bosses appear near players by chance, rolled once a minute per player in survival, when the place, time and the
@@ -409,7 +425,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
 | Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Redcap Goblin, an Orc with its goblins, a Mud Frog, remove SLF mobs nearby |
-| Bosses | The Ravenous Snake and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
+| Bosses | The two area bosses and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
 | Me | Status sheet, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.

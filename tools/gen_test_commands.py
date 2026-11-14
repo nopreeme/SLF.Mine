@@ -42,7 +42,7 @@ def T(text, color=None, **kw):
     d.update(kw); return d
 def run(label, color, command, hover): return T(label, color, click_event={"action": "run_command", "command": command}, hover_event={"action": "show_text", "value": hover})
 # SLF bosses (data_pack/data/slf/function/mob/boss/<id>): id, button label, full name, colour, level
-BOSSES = [("ravenous_snake", "Ravenous Snake", "the Ravenous Snake (area boss)", "gold", 15), ("nightclaw", "Nightclaw", "Nightclaw", "dark_gray", 40), ("bilac", "Bilac", "Bilac the Full Moon Fangs", "gold", 60),
+BOSSES = [("ravenous_snake", "Ravenous Snake", "the Ravenous Snake (area boss)", "gold", 15), ("mud_digger", "Mud Digger", "the Mud Digger (area boss)", "dark_green", 25), ("nightclaw", "Nightclaw", "Nightclaw", "dark_gray", 40), ("bilac", "Bilac", "Bilac the Full Moon Fangs", "gold", 60),
           ("oriana", "Oriana", "Oriana the Uncrowned", "dark_aqua", 75), ("lycagon", "Lycagon", "Lycagon the Nightslayer", "dark_purple", 90),
           ("ctarnidd", "Ctarnidd", "Ctarnidd of the Abyss", "dark_blue", 85), ("siegwurm", "Siegwurm", "Siegwurm the Sky Ruler", "aqua", 95),
           ("wethermon", "Wethermon", "Wethermon the Tombguard", "dark_red", 100)]

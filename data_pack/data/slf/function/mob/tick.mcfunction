@@ -7,6 +7,7 @@ execute as @a at @s as @e[type=minecraft:zombie,tag=!slf.seen,distance=..64] at 
 # Bosses: upkeep every second, encounter rolls once a minute (mob/boss/roll)
 function slf:mob/boss/tick
 execute as @e[tag=slf.snake] at @s run function slf:mob/boss/ravenous_snake/second
+execute as @e[tag=slf.mud_digger] at @s run function slf:mob/boss/mud_digger/second
 scoreboard players add #boss_timer slf.timer 1
 execute if score #boss_timer slf.timer matches 60.. as @a[gamemode=!creative,gamemode=!spectator] at @s run function slf:mob/boss/roll
 execute if score #boss_timer slf.timer matches 60.. run scoreboard players set #boss_timer slf.timer 0

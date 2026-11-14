@@ -268,15 +268,86 @@ def draw_hair(px):
         for y in (5, 6): px[x, y] = BEAD + (255,)
 
 
+# ---------------------------------------------------------------- the Mud Digger (design doc V9, Diremarsh area boss)
+# "A large chimera with the head, tail, and dorsal fins of a great white shark, the body and limbs of a mole with abnormally
+# long legs and webbed feet, and a catfish's whiskers. Dark green with splotches of light green; clear cold blue eyes."
+MD, MD_D, MD_L, MD_BELLY, MD_EYE, MD_TOOTH, MD_WHISK = (46, 78, 46), (32, 56, 32), (104, 150, 80), (150, 170, 130), (120, 200, 240), (236, 236, 228), (24, 30, 24)
+MD_SKIN, MD_BELLY_UV, MD_EYE_UV, MD_TEETH_UV, MD_WHISK_UV = (0, 0, 8, 8), (8, 0, 16, 8), (0, 8, 4, 12), (8, 8, 12, 12), (12, 8, 16, 12)
+
+
+def digger_texture():
+    im = Image.new("RGBA", (32, 32), MD + (255,)); px = im.load()
+    def put(x, y, c): px[x, y] = c + (255,)
+    for x in range(16):
+        for y in range(16):
+            if (x * 5 + y * 3) % 13 < 3 or (x - 9) ** 2 + (y - 5) ** 2 < 5: put(x, y, MD_L)          # light green splotches
+            elif (x + y * 7) % 11 == 0: put(x, y, MD_D)
+    for x in range(16, 32):
+        for y in range(16): put(x, y, MD_BELLY)
+    for x in range(8):
+        for y in range(16, 24): put(x, y, MD_EYE if 2 <= x <= 5 and 18 <= y <= 21 else MD_D)
+    for x in range(16, 24):
+        for y in range(16, 24): put(x, y, MD_TOOTH if (x + (y > 19)) % 2 else (90, 30, 30))
+    for x in range(24, 32):
+        for y in range(16, 24): put(x, y, MD_WHISK)
+    return im
+
+
+def digger_model():
+    """Snout along +z (turned 180 degrees by the item display, like the snake). About 16 x 15 x 30 units before scaling."""
+    S, B = MD_SKIN, MD_BELLY_UV
+    def box(f, t, uv=S, rot=None, down=None):
+        e = {"from": f, "to": t, "faces": faces(uv)}
+        if down: e["faces"]["down"] = {"uv": list(down), "texture": "#0"}
+        if rot: e["rotation"] = rot
+        return e
+    els = [box([3, 6, 1], [13, 12, 13], down=B),                                      # mole body
+           box([3.5, 6.5, 13], [12.5, 12, 20], down=B),                               # shark head
+           box([5, 6.5, 20], [11, 10.5, 24], down=B),                                 # snout
+           box([5.2, 6, 19.5], [10.8, 7, 23.5], MD_TEETH_UV),                         # jaw full of teeth
+           box([3.2, 9.5, 16.5], [3.5, 11, 18.5], MD_EYE_UV), box([12.5, 9.5, 16.5], [12.8, 11, 18.5], MD_EYE_UV),   # cold blue eyes
+           box([4.5, 7.5, 22], [5, 8, 29], MD_WHISK_UV), box([11, 7.5, 22], [11.5, 8, 29], MD_WHISK_UV),             # catfish whiskers
+           box([7.5, 12, 4], [8.5, 17, 10], rot={"angle": -22.5, "axis": "x", "origin": [8, 12, 7]}),               # dorsal fin
+           box([6, 7, -5], [10, 11, 1]),                                               # tail
+           box([7.5, 5, -10], [8.5, 15, -4], rot={"angle": 22.5, "axis": "x", "origin": [8, 10, -5]})]              # shark tail fin
+    for lx in (3, 11):                                                                # long mole legs on webbed feet
+        for lz in (2.5, 9.5):
+            els += [box([lx, 0.5, lz], [lx + 2, 6.5, lz + 2]), box([lx - 0.75, 0, lz - 1.25], [lx + 2.75, 0.5, lz + 3], MD_BELLY_UV)]
+    return {"textures": {"0": "slf:item/mud_digger", "particle": "slf:item/mud_digger"}, "elements": els}
+
+
+def draw_tooth(px):
+    for y in range(2, 14):
+        w_ = max(1, (14 - y) // 3)
+        for x in range(8 - w_, 8 + w_): px[x, y] = (MD_TOOTH if x > 6 else (200, 200, 190)) + (255,)
+
+
+def draw_hide(px):
+    for x in range(2, 14):
+        for y in range(3, 13):
+            px[x, y] = (MD_L if (x * 5 + y * 3) % 13 < 3 else MD_D if x in (2, 13) or y in (3, 12) else MD) + (255,)
+
+
+def draw_trophy(px):
+    for x in range(4, 12):
+        for y in range(2, 8): px[x, y] = ((236, 196, 60) if (x + y) % 5 else (255, 230, 120)) + (255,)      # gold cup
+    for y in range(8, 11): px[7, y] = px[8, y] = (200, 160, 40, 255)
+    for x in range(5, 11): px[x, 11] = px[x, 12] = (120, 90, 30, 255)
+    for x, y in ((6, 4), (7, 3), (8, 3), (9, 4), (7, 5), (8, 5)): px[x, y] = MD_TOOTH + (255,)                  # a tooth set in it
+
+
 def main():
     (RP / "textures" / "item").mkdir(parents=True, exist_ok=True)
     head_texture().save(RP / "textures" / "item" / "goblin_head.png")
     axe_texture().save(RP / "textures" / "item" / "goblin_axe.png")
     orc_texture().save(RP / "textures" / "item" / "orc_head.png")
     snake_texture().save(RP / "textures" / "item" / "ravenous_snake.png")
+    digger_texture().save(RP / "textures" / "item" / "mud_digger.png")
     models = {"goblin_head": head_model(False), "red_hat_goblin_head": head_model(True), "goblin_axe": axe_model(), "orc_head": orc_head_model(),
               "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
-              "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair)}
+              "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair),
+              "mud_digger": digger_model(), "mud_digger_tooth": item_icon("mud_digger_tooth", draw_tooth), "digger_hide": item_icon("digger_hide", draw_hide),
+              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy)}
     (RP / "items").mkdir(parents=True, exist_ok=True)
     for name, m in models.items():
         (RP / "models" / "item" / f"{name}.json").write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")

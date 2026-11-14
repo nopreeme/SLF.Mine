@@ -92,6 +92,9 @@ bossbar set slf:wethermon style notched_10
 bossbar add slf:ravenous_snake {text:"Ravenous Snake",color:"gold"}
 bossbar set slf:ravenous_snake color yellow
 bossbar set slf:ravenous_snake style notched_10
+bossbar add slf:mud_digger {text:"Mud Digger",color:"dark_green"}
+bossbar set slf:mud_digger color green
+bossbar set slf:mud_digger style notched_10
 bossbar add slf:ctarnidd {text:"Ctarnidd of the Abyss",color:"dark_blue"}
 bossbar set slf:ctarnidd color blue
 bossbar set slf:ctarnidd style notched_10

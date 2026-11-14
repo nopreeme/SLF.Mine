@@ -986,6 +986,63 @@ class RavenousSnake(Base):
         self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:devourers_scale"]'))
         S.wait_cycle(); self.assertIn("hidden", S.cmd("bossbar get slf:ravenous_snake visible"))
 
+class MudDigger(Base):
+    """The Diremarsh area boss: dives and bursts out at its target, Phase 2 quake and launch, solo trophy."""
+    DIG = "@e[tag=slf.mud_digger,limit=1]"
+
+    def tearDown(self):
+        S.cmd("kill @e[tag=slf.mud_digger]"); S.wait_ticks(2); S.cmd(f"gamemode creative {S.player}"); S.cmd(f"effect clear {S.player}")
+
+    def spawn_near(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} resistance 60 4 true")
+        S.as_player("execute positioned ^ ^ ^6 run function slf:mob/boss/mud_digger/spawn"); S.cmd("tag @e[tag=slf.boss_new] remove slf.boss_new"); S.wait_ticks(3)
+
+    def wait_for(self, check, seconds):
+        for _ in range(seconds * 4):
+            if check(): return True
+            S.wait_ticks(5)
+        return False
+
+    def test_stats_model_and_one_at_a_time(self):
+        S.platform(); S.as_player("function slf:test/mob/boss_mud_digger"); S.wait_ticks(4)
+        self.assertIn("Mud Digger Lv.25", S.cmd(f"data get entity {self.DIG} CustomName"))
+        self.assertIn("is 400.0", S.cmd(f"attribute {self.DIG} minecraft:max_health base get"))
+        self.assertIn("Count: 1", S.cmd("execute if entity @e[tag=slf.digger_part]"))
+        S.as_player("function slf:mob/boss/mud_digger/spawn"); S.wait_ticks(2)
+        self.assertIn("Count: 1", S.cmd("execute if entity @e[tag=slf.mud_digger]"))
+
+    def test_dives_then_bursts_out_at_its_target(self):
+        self.spawn_near()
+        self.assertTrue(self.wait_for(lambda: "passed" in S.cmd("execute if entity @e[tag=slf.mud_digger,tag=slf.dug]"), 10), "never dived")
+        self.assertIn("1b", S.cmd(f"data get entity {self.DIG} Invulnerable"))                 # can't be hurt underground
+        self.assertTrue(self.wait_for(lambda: "failed" in S.cmd("execute if entity @e[tag=slf.mud_digger,tag=slf.dug]"), 5), "never came back up")
+        # where it comes up: send it under again, move the player away, and make it burst out now; it must come up beside
+        # its (solo) target. Measured straight away and horizontally: the burst throws the player and its bite knocks them back.
+        S.cmd(f"execute as {self.DIG} at @s run function slf:mob/boss/mud_digger/dive"); S.as_player("tp @s ~10 ~ ~"); S.wait_ticks(3)
+        S.cmd(f"execute as {self.DIG} at @s run function slf:mob/boss/mud_digger/emerge")
+        self.assertIn("passed", S.cmd(f"execute at {S.player} positioned ~-4 ~-12 ~-4 if entity @e[tag=slf.mud_digger,dx=8,dy=24,dz=8]"))
+
+    def test_phase2_quake_paralyses_in_mud_and_launches(self):
+        self.spawn_near(); S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:mud")
+        S.cmd(f"data merge entity {self.DIG} {{Health:70f}}")
+        self.assertTrue(self.wait_for(lambda: "slowness" in S.effects(), 5), "no quake paralysis while standing in mud")
+        self.assertIn(S.effects().get("slowness"), (255, -1))   # amplifier 255 is saved as the signed byte -1
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.mud_digger,tag=slf.phase2]"))
+        self.assertTrue(self.wait_for(lambda: "levitation" in S.effects(), 6), "the Phase 2 burst never launched the player")
+        self.assertGreaterEqual(S.effects().get("levitation", 0), 24)
+
+    def test_solo_kill_reward_and_trophy(self):
+        self.grant("swordsman"); self.set("slf.level", 30); self.set("slf.exp", 0); self.set("slf.boss_gate", 0); S.cmd(f"clear {S.player}")
+        self.spawn_near()
+        out = S.as_player(f"damage {self.DIG} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
+        self.assertEqual(S.score("slf.exp"), 25 + 2 + 800)
+        self.assertEqual(S.score("slf.boss_gate"), 0)
+        self.assertIn("slf.title.solo_killer", S.tags())
+        self.assertIn("passed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:solo_killers_trophy"]'))
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:mud_digger_tooth"]'))
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.digger_part]"))
+        S.cmd(f"tag {S.player} remove slf.title.solo_killer"); S.cmd(f"clear {S.player}")
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

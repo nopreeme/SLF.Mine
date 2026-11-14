@@ -11,6 +11,7 @@ scoreboard players enable @a slf.menu
 execute as @a[tag=slf.mob_kill] run function slf:mob/kill_process
 execute if entity @e[tag=slf.boss,limit=1] run function slf:mob/boss/bars
 execute if entity @e[tag=slf.snake_part,limit=1] run function slf:mob/boss/ravenous_snake/tick
+execute if entity @e[tag=slf.digger_part,limit=1] run function slf:mob/boss/mud_digger/tick
 
 # --- Class selection ---
 # Trigger-based (alignment_choice + admin direct grants)
