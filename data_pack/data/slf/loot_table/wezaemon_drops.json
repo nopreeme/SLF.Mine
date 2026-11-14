@@ -16,10 +16,22 @@
                     "slf.seiten_skillbook"
                   ]
                 },
-                "minecraft:item_name": "{\"translate\":\"item.slf.seiten_skillbook\",\"color\":\"blue\",\"italic\":false}",
+                "minecraft:item_name": {
+                  "translate": "item.slf.seiten_skillbook",
+                  "color": "blue",
+                  "italic": false
+                },
                 "minecraft:lore": [
-                  "{\"text\":\"Contains the techniques of an Age of Divinity master swordsman.\",\"color\":\"gray\",\"italic\":true}",
-                  "{\"text\":\"Recovered from the Grave of Setsuna Amatsuki.\",\"color\":\"dark_blue\",\"italic\":true}"
+                  {
+                    "text": "Contains the techniques of an Age of Divinity master swordsman.",
+                    "color": "gray",
+                    "italic": true
+                  },
+                  {
+                    "text": "Recovered from the Grave of Setsuna Amatsuki.",
+                    "color": "dark_blue",
+                    "italic": true
+                  }
                 ]
               }
             }

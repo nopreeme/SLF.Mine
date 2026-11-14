@@ -121,6 +121,8 @@ tag @s remove slf.skill.serial_killer
 tag @s remove slf.skill.limit_break_rees
 tag @s remove slf.skill.ablaze_advanced_ale
 tag @s remove slf.tantrum_active
+tag @s remove slf.at_altar
+tag @s remove slf.altar_told
 
 # Title tags
 tag @s remove slf.title.apex_crazy_fist
@@ -133,6 +135,49 @@ tag @s remove slf.title.tombguard_destroyer
 scoreboard players set @s slf.class 0
 scoreboard players set @s slf.level 1
 scoreboard players set @s slf.exp 0
+scoreboard players set @s slf.mahni 0
+scoreboard players set @s slf.q.awaken 0
+scoreboard players set @s slf.q.outskirts 0
+scoreboard players set @s slf.q.goblins 0
+scoreboard players set @s slf.q.brute 0
+scoreboard players set @s slf.q.orcs 0
+scoreboard players set @s slf.q.herd 0
+scoreboard players set @s slf.q.daughter 0
+scoreboard players set @s slf.q.cows 0
+scoreboard players set @s slf.q.serpent 0
+scoreboard players set @s slf.q.guardian 0
+scoreboard players set @s slf.q.snake 0
+scoreboard players set @s slf.q.delivery 0
+scoreboard players set @s slf.q.bed 0
+scoreboard players set @s slf.q.antidote 0
+scoreboard players set @s slf.q.watch 0
+scoreboard players set @s slf.q.watch_t 0
+scoreboard players set @s slf.q.bar 0
+scoreboard players set @s slf.q.pickaxe 0
+scoreboard players set @s slf.q.splitblade 0
+scoreboard players set @s slf.q.miner 0
+scoreboard players set @s slf.q.reeds 0
+scoreboard players set @s slf.q.wave 0
+scoreboard players set @s slf.q.thirdrema 0
+scoreboard players set @s slf.q.letter 0
+tag @s remove slf.wanderer
+tag @s remove slf.wandering
+tag @s remove slf.dreamt
+tag @s remove slf.first_survivor
+tag @s remove slf.fellow_survivor
+tag @s remove slf.trusted_of_garren
+tag @s remove slf.origin_chosen
+tag @s remove slf.slew_snake
+tag @s remove slf.citizen
+tag @s remove slf.greeted_guard_captain
+tag @s remove slf.greeted_elder
+tag @s remove slf.greeted_alchemist
+tag @s remove slf.greeted_farmer
+attribute @s minecraft:luck modifier remove slf:wanderer_luck
+attribute @s minecraft:armor modifier remove slf:wanderer_defense
+tag @s remove slf.secondil_spawn
+tag @s remove slf.garren_quest_unlocked
+tag @s remove slf.watch_sighted
 scoreboard players set @s slf.sp_points 0
 scoreboard players set @s slf.focus 0
 scoreboard players set @s slf.focus_stat 0
@@ -150,5 +195,19 @@ scoreboard players set @s slf.knight_trials 0
 scoreboard players set @s slf.standby 0
 scoreboard players set @s slf.exp_extend 0
 scoreboard players set @s slf.awakened 0
+scoreboard players set @s slf.stat.hp 0
+scoreboard players set @s slf.stat.mp 0
+scoreboard players set @s slf.mana 0
+scoreboard players set @s slf.boss_gate 0
+scoreboard players set @s slf.boss_kills 0
+scoreboard players set @s slf.vorpal_soul 0
+scoreboard players set @s slf.bt_kills 0
+scoreboard players set @s slf.knight_quest 0
+scoreboard players reset @s slf.evolve
+scoreboard players reset @s slf.hp_applied
+attribute @s minecraft:max_health modifier remove slf:hp_bonus
+attribute @s minecraft:attack_speed modifier remove slf:dex_speed
+attribute @s minecraft:luck base set 0
 
 tellraw @s {"text":"[SLF] Player state reset.","color":"gray"}
+function slf:marsh/free

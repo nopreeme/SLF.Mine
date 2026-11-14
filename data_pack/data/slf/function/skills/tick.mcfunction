@@ -1,3 +1,23 @@
+# --- Join / rejoin: greet new players and show the class menu to anyone without a class ---
+execute as @a[tag=!slf.joined] run function slf:player/first_join
+execute as @a[scores={slf.leave=1..}] run function slf:player/rejoin
+execute as @a[scores={slf.deaths=1..}] run function slf:mask/on_death
+
+# --- Menu trigger: /trigger slf.menu (works for players without OP) ---
+execute as @a[scores={slf.menu=1..}] run function slf:menu/dispatch
+scoreboard players enable @a slf.menu
+
+# --- Quest accept buttons: /trigger slf.quest set <quest> (enabled when an NPC offers one) ---
+execute as @a[scores={slf.quest=1..}] run function slf:quest/accept
+execute as @a[scores={slf.shop=1..}] run function slf:shop/buy
+execute as @a[scores={slf.origin=1..}] run function slf:wanderer/origin
+
+# --- SLF mob kills from last tick (EXP by mob level, Vorpal Soul) ---
+execute as @a[tag=slf.mob_kill] run function slf:mob/kill_process
+execute if entity @e[tag=slf.boss,limit=1] run function slf:mob/boss/bars
+execute if entity @e[tag=slf.snake_part,limit=1] run function slf:mob/boss/ravenous_snake/tick
+execute if entity @e[tag=slf.digger_part,limit=1] run function slf:mob/boss/mud_digger/tick
+
 # --- Class selection ---
 # Trigger-based (alignment_choice + admin direct grants)
 execute as @a if score @s slf.choose_class matches 1 run function slf:class/grant/swordsman
@@ -12,6 +32,10 @@ execute as @a if score @s slf.choose_class matches 41 run function slf:class/gra
 execute as @a if score @s slf.choose_class matches 42 run function slf:class/grant/dark_knight
 execute as @a if score @s slf.choose_class matches 1.. run scoreboard players reset @s slf.choose_class
 scoreboard players enable @a[tag=!slf.class_chosen] slf.choose_class
+
+# --- Class evolution: /trigger slf.evolve set <class id> (from the evolution menu) ---
+execute as @a[scores={slf.evolve=1..}] run function slf:class/evolve_apply
+scoreboard players enable @a[tag=slf.class_chosen] slf.evolve
 
 # --- Skill focus selection ---
 execute as @a if score @s slf.focus_choose matches 1 run function slf:skills/focus/power_slash
@@ -88,13 +112,23 @@ scoreboard players enable @a[tag=slf.class_chosen] slf.stat_stm
 # --- Knight alignment: only after 3 trials ---
 execute as @a[tag=slf.was_knight,tag=!slf.was_holy_knight,tag=!slf.was_dark_knight] if score @s slf.knight_trials matches 3.. run function slf:class/alignment_choice
 
+# --- The Diremarsh walking state, every 4 ticks ---
+scoreboard players add #marsh slf.timer 1
+execute if score #marsh slf.timer matches 4.. run function slf:marsh/tick
+execute if score #marsh slf.timer matches 4.. run scoreboard players set #marsh slf.timer 0
+
 # --- 20t cycle ---
 scoreboard players add #timer slf.timer 1
+execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run function slf:player/init_scores
 execute if score #timer slf.timer matches 20.. run function slf:skills/sp_tick
 execute if score #timer slf.timer matches 20.. run function slf:skills/exp_tick
 execute if score #timer slf.timer matches 20.. run function slf:skills/passives
 execute if score #timer slf.timer matches 20.. run function slf:mask/karma_tick
 execute if score #timer slf.timer matches 20.. run function slf:stats/apply
+execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen] run function slf:stats/apply_derived
 execute if score #timer slf.timer matches 20.. as @a if score @s slf.stat.lck matches 1.. run function slf:stats/lck_check
 execute if score #timer slf.timer matches 20.. run function slf:class/select_expire
+execute if score #timer slf.timer matches 20.. run function slf:altar/tick
+execute if score #timer slf.timer matches 20.. run function slf:mob/tick
+execute if score #timer slf.timer matches 20.. as @a[tag=slf.class_chosen,tag=!slf.hud_off] run function slf:player/hud
 execute if score #timer slf.timer matches 20.. run scoreboard players set #timer slf.timer 0

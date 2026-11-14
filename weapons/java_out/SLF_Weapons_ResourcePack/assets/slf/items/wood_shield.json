@@ -1,0 +1,27 @@
+{
+ "model": {
+  "type": "minecraft:select",
+  "property": "minecraft:display_context",
+  "cases": [
+   {
+    "when": "gui",
+    "model": {
+     "type": "minecraft:model",
+     "model": "slf:item/wood_shield_icon"
+    }
+   }
+  ],
+  "fallback": {
+   "type": "minecraft:condition",
+   "property": "minecraft:using_item",
+   "on_true": {
+    "type": "minecraft:model",
+    "model": "slf:item/wood_shield_blocking"
+   },
+   "on_false": {
+    "type": "minecraft:model",
+    "model": "slf:item/wood_shield"
+   }
+  }
+ }
+}

@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"[Bartender] ","color":"yellow"},{"text":"So, you sat through Borric. The marsh story - the humming at the deep pools. Truth, or drink talking?","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" ","color":"gray"},{"text":"[It's true]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 12"},"hover_event":{"action":"show_text","value":"The humming is real"}},{"text":"  "},{"text":"[It's nonsense]","color":"red","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 13"},"hover_event":{"action":"show_text","value":"Just Borric's drinking"}}]

@@ -1,0 +1,12 @@
+# City Guard Halvor: The Night Watch (the player's first sight of the Redcap Goblins); Red Hoods in the Reeds.
+execute if score @s slf.q.reeds matches 1 if items entity @s container.* minecraft:written_book[minecraft:item_model="slf:tomic_journal"] run return run function slf:quest/reeds/show_halvor
+execute if score @s slf.q.reeds matches 1 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Garren says you found something. Bring it here.","color":"white"}]
+execute if score @s slf.q.reeds matches 2 run return run function slf:quest/reeds/patrol
+execute if score @s slf.q.reeds matches 3 if items entity @s container.* minecraft:black_banner run return run function slf:quest/turn_in/reeds
+execute if score @s slf.q.reeds matches 3 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Clear the camp and bring me whatever they were flying.","color":"white"}]
+execute if score @s slf.q.watch matches 2 run return run function slf:quest/turn_in/watch
+execute if score @s slf.q.watch matches 1 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Night only. Stand the watch near me at the western gate, and tell me what you see. Don't engage.","color":"white"}]
+execute if score @s slf.q.watch matches 3 run return run tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"Red hoods and forged iron... Garren at the armor shop needs to hear about this. Tell him I sent you.","color":"white"}]
+tellraw @s ["",{"text":"[Guard Halvor] ","color":"aqua"},{"text":"(quietly) Red-hooded goblins have been seen at the tree line by the marsh. Armed with iron, not wood. I can't spare men - I need eyes, not soldiers.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Quest: ","color":"gray"},{"text":"The Night Watch","color":"gold","bold":true},{"text":"  Stand watch at night near Guard Halvor, report what you see - and do not engage.  ","color":"gray"},{"text":"Reward: 125 EXP, Guard Issue Cloak, 40 Mahni, Garren's first quest  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 10"},"hover_event":{"action":"show_text","value":"Accept \"The Night Watch\""}}]

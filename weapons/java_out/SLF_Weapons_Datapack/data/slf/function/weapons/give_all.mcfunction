@@ -1,0 +1,9 @@
+function slf:weapons/give/wood_staff
+function slf:weapons/give/iron_hammer
+function slf:weapons/give/iron_sword
+function slf:weapons/give/iron_dagger
+function slf:weapons/give/marsh_dagger
+function slf:weapons/give/mercenary_blade
+function slf:weapons/give/vorpal_chopper
+function slf:weapons/give/fossil_rod
+function slf:weapons/give/wood_shield

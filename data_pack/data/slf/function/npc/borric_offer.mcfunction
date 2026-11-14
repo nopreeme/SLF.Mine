@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"[Old Borric] ","color":"gray"},{"text":"Sit, sit! You want a story? I've got a hundred. The bartender pays anyone who can tell which ones are true.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Quest: ","color":"gray"},{"text":"Bar Talk","color":"gold","bold":true},{"text":"  Listen to three of Old Borric's stories, then confirm or deny the marsh rumor to the Bartender.  ","color":"gray"},{"text":"Reward: 60 EXP, Strong Ale, 20 Mahni  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 11"},"hover_event":{"action":"show_text","value":"Accept \"Bar Talk\""}}]

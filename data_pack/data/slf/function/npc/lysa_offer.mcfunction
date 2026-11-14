@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"[Lysa] ","color":"light_purple"},{"text":"I'm swamped. Every day more of them stagger in from the forest, poisoned. Could you run these to the inn?","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Quest: ","color":"gray"},{"text":"Antidote Run","color":"gold","bold":true},{"text":"  Deliver 3 Antidote Bundles to Innkeeper Marrow at the inn.  ","color":"gray"},{"text":"Reward: 100 EXP, 2 Antidotes, 30 Mahni  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 9"},"hover_event":{"action":"show_text","value":"Accept \"Antidote Run\""}}]

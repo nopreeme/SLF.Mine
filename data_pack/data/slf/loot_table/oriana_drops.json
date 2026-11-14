@@ -16,14 +16,26 @@
                     "slf.oriana_void_staff"
                   ]
                 },
-                "minecraft:item_name": "{\"translate\":\"item.slf.oriana_void_staff\",\"color\":\"dark_purple\",\"italic\":false}",
+                "minecraft:item_name": {
+                  "translate": "item.slf.oriana_void_staff",
+                  "color": "dark_purple",
+                  "italic": false
+                },
                 "minecraft:enchantments": {
                   "minecraft:smite": 5,
                   "minecraft:knockback": 3
                 },
                 "minecraft:lore": [
-                  "{\"text\":\"Unique Drop \u2014 Oriana the Uncrowned\",\"color\":\"dark_purple\",\"italic\":true}",
-                  "{\"text\":\"Channels void energy through its twisted frame.\",\"color\":\"gray\",\"italic\":true}"
+                  {
+                    "text": "Unique Drop — Oriana the Uncrowned",
+                    "color": "dark_purple",
+                    "italic": true
+                  },
+                  {
+                    "text": "Channels void energy through its twisted frame.",
+                    "color": "gray",
+                    "italic": true
+                  }
                 ]
               }
             }

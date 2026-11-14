@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:sealed_letter",minecraft:item_name={text:"A Sealed Letter",color:"yellow",italic:false},minecraft:lore=[{text:"From the farmer in Firstia, for his brother Garren.",color:"gray",italic:true}]] 1

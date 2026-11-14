@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:wild_herb",minecraft:item_name={text:"Wild Herb",color:"green",italic:false},minecraft:lore=[{text:"A medicinal herb from the grass outside Firstia.",color:"gray",italic:true}]] 1
