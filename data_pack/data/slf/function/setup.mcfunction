@@ -89,6 +89,9 @@ bossbar set slf:lycagon style notched_10
 bossbar add slf:wethermon {text:"Wethermon the Tombguard",color:"dark_red"}
 bossbar set slf:wethermon color red
 bossbar set slf:wethermon style notched_10
+bossbar add slf:ravenous_snake {text:"Ravenous Snake",color:"gold"}
+bossbar set slf:ravenous_snake color yellow
+bossbar set slf:ravenous_snake style notched_10
 bossbar add slf:ctarnidd {text:"Ctarnidd of the Abyss",color:"dark_blue"}
 bossbar set slf:ctarnidd color blue
 bossbar set slf:ctarnidd style notched_10

@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:python_white_hair",minecraft:item_name={text:"Python White Hair",color:"gold",italic:false},minecraft:lore=[{text:"A lock of white hair from the Ravenous Snake's mane.",color:"gray",italic:true}]] 1

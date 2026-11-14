@@ -182,12 +182,101 @@ def orc_head_model():
             "display": {"head": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}}}
 
 
+# ---------------------------------------------------------------- the Ravenous Snake (design doc V9, Rampant Forest area boss)
+# "Tan-green hardened scales, a light white belly, diamond-shaped crystal-frame yellow eyes, a white flow of hair tied with
+# red beads on both sides of its face, and a long lock on its tail which opens like a flower to release a purple ooze."
+SN, SN_D, SN_L, BELLY, BELLY_D = (150, 150, 92), (112, 116, 66), (178, 176, 116), (232, 228, 210), (204, 198, 176)
+HAIR, HAIR_D, BEAD, POISON, POISON_D, EYE, EYE_D, MOUTH_C = (244, 242, 236), (214, 210, 200), (190, 30, 30), (150, 60, 180), (100, 30, 130), (242, 214, 40), (40, 30, 10), (70, 30, 30)
+# texture tiles (uv units; the texture is 32x32, so 1 uv unit = 2 px)
+SC_UV, BE_UV, HA_UV, PO_UV, EY_UV, BD_UV, MO_UV = (0, 0, 8, 8), (8, 0, 16, 8), (0, 8, 8, 16), (8, 8, 12, 12), (12, 8, 16, 12), (8, 12, 12, 16), (12, 12, 16, 16)
+
+
+def snake_texture():
+    im = Image.new("RGBA", (32, 32), SN + (255,)); px = im.load()
+    def put(x, y, c): px[x, y] = c + (255,)
+    for x in range(16):                                                       # scales: offset diamond rows
+        for y in range(16):
+            put(x, y, SN_D if (x + 2 * (y // 2 % 2)) % 4 == 0 or y % 2 == 0 and x % 4 == 2 else SN_L if (x + y) % 7 == 0 else SN)
+    for x in range(16, 32):                                                   # belly plates
+        for y in range(16): put(x, y, BELLY_D if y % 4 == 0 else BELLY)
+    for x in range(16):                                                       # hair: white strands
+        for y in range(16, 32): put(x, y, HAIR_D if x % 3 == 0 else HAIR)
+    for x in range(16, 24):
+        for y in range(16, 24): put(x, y, POISON_D if (x + y) % 3 == 0 else POISON)
+    for x in range(24, 32):                                                   # eye: yellow diamond, dark slit
+        for y in range(16, 24): put(x, y, EYE if abs(x - 27.5) + abs(y - 19.5) <= 4 else SN_D)
+    for y in range(17, 23): put(27, y, EYE_D); put(28, y, EYE_D)
+    for x in range(16, 24):
+        for y in range(24, 32): put(x, y, BEAD)
+    for x in range(24, 32):
+        for y in range(24, 32): put(x, y, MOUTH_C)
+    return im
+
+
+def snake_faces(top=SC_UV, bottom=BE_UV):
+    f = faces(top); f["down"] = {"uv": list(bottom), "texture": "#0"}; return f
+
+
+def snake_head_model():
+    """Snout along +z. (An item display shows a model turned 180 degrees, so body.mcfunction turns each part back.)
+    Long head, snout, yellow diamond eyes, white hair tied with red beads."""
+    els = [{"from": [3, 2, 1], "to": [13, 9, 13], "faces": snake_faces()},                       # skull
+           {"from": [4, 2, 13], "to": [12, 7, 18], "faces": snake_faces()},                      # snout
+           {"from": [4.5, 1.5, 13], "to": [11.5, 2.5, 17.5], "faces": faces(MO_UV)},            # jaw line
+           {"from": [2.5, 6, 9], "to": [3, 8.5, 12], "faces": faces(EY_UV)},                     # eyes
+           {"from": [13, 6, 9], "to": [13.5, 8.5, 12], "faces": faces(EY_UV)}]
+    for side in (-1, 1):                                                                         # hair flowing back
+        x0, x1 = (0.5, 3) if side < 0 else (13, 15.5)
+        els += [{"from": [x0, 3, -3], "to": [x1, 8, 8], "faces": faces(HA_UV)},
+                {"from": [x0 - 0.3, 4.5, -2.5], "to": [x1 + 0.3, 6.5, -1], "faces": faces(BD_UV)},       # red beads tying the hair
+                {"from": [x0 - 0.3, 4.5, 3], "to": [x1 + 0.3, 6.5, 4.5], "faces": faces(BD_UV)}]
+    return {"textures": {"0": "slf:item/ravenous_snake", "particle": "slf:item/ravenous_snake"}, "elements": els}
+
+
+def snake_body_model():
+    return {"textures": {"0": "slf:item/ravenous_snake", "particle": "slf:item/ravenous_snake"},
+            "elements": [{"from": [3, 2, 2], "to": [13, 10, 14], "faces": snake_faces()},
+                         {"from": [7, 10, 4], "to": [9, 11, 12], "faces": faces(SC_UV)}]}            # dorsal ridge
+
+
+def snake_tail_model():
+    """Tapering tail ending in the lock that opens like a flower (purple), pointing along -z."""
+    return {"textures": {"0": "slf:item/ravenous_snake", "particle": "slf:item/ravenous_snake"},
+            "elements": [{"from": [4, 3, 4], "to": [12, 9, 16], "faces": snake_faces()},
+                         {"from": [5.5, 4, -2], "to": [10.5, 8, 4], "faces": snake_faces()},
+                         {"from": [6.5, 4.5, -6], "to": [9.5, 7.5, -2], "faces": faces(HA_UV)},
+                         {"from": [3.5, 3, -8], "to": [12.5, 9.5, -6], "faces": faces(PO_UV)},      # the flower, open
+                         {"from": [5, 1.5, -8.5], "to": [11, 11, -7.5], "faces": faces(PO_UV)}]}
+
+
+def item_icon(name, draw):
+    im = Image.new("RGBA", (16, 16), (0, 0, 0, 0)); draw(im.load()); im.save(RP / "textures" / "item" / f"{name}.png")
+    return {"parent": "minecraft:item/generated", "textures": {"layer0": f"slf:item/{name}"}}
+
+
+def draw_scale(px):
+    for x in range(3, 13):
+        for y in range(3, 13):
+            px[x, y] = (SN_D if x in (3, 12) or y in (3, 12) else SN_L if x + y < 12 else SN) + (255,)
+
+
+def draw_hair(px):
+    for y in range(1, 15):
+        for x in range(6 + (y > 8), 10 - (y > 11)):
+            px[x + (y // 5) - 1, y] = (HAIR_D if (x + y) % 3 == 0 else HAIR) + (255,)
+    for x in range(6, 10):
+        for y in (5, 6): px[x, y] = BEAD + (255,)
+
+
 def main():
     (RP / "textures" / "item").mkdir(parents=True, exist_ok=True)
     head_texture().save(RP / "textures" / "item" / "goblin_head.png")
     axe_texture().save(RP / "textures" / "item" / "goblin_axe.png")
     orc_texture().save(RP / "textures" / "item" / "orc_head.png")
-    models = {"goblin_head": head_model(False), "red_hat_goblin_head": head_model(True), "goblin_axe": axe_model(), "orc_head": orc_head_model()}
+    snake_texture().save(RP / "textures" / "item" / "ravenous_snake.png")
+    models = {"goblin_head": head_model(False), "red_hat_goblin_head": head_model(True), "goblin_axe": axe_model(), "orc_head": orc_head_model(),
+              "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
+              "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair)}
     (RP / "items").mkdir(parents=True, exist_ok=True)
     for name, m in models.items():
         (RP / "models" / "item" / f"{name}.json").write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")

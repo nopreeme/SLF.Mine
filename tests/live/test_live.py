@@ -941,6 +941,51 @@ class OrcsAndFrogs(Base):
         S.wait_cycle(); S.wait_ticks(5)
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.test,tag=slf.mud_frog]"), "frogs outside swamps became Mud Frogs")
 
+class RavenousSnake(Base):
+    """The Rampant Forest area boss: an invisible ravager hitbox with a 3D head and a body chain that follows it."""
+    SNAKE = "@e[tag=slf.snake,limit=1]"
+
+    def tearDown(self):
+        S.cmd("kill @e[tag=slf.snake]"); S.wait_ticks(2); S.cmd(f"gamemode creative {S.player}"); S.cmd(f"effect clear {S.player}")
+
+    def test_stats_body_and_one_at_a_time(self):
+        S.platform(); S.as_player("function slf:test/mob/boss_ravenous_snake"); S.wait_ticks(4)
+        self.assertIn("Ravenous Snake Lv.15", S.cmd(f"data get entity {self.SNAKE} CustomName"))
+        self.assertIn("is 150.0", S.cmd(f"attribute {self.SNAKE} minecraft:max_health base get"))
+        self.assertIn("minecraft:invisibility", S.cmd(f"data get entity {self.SNAKE} active_effects"))
+        self.assertIn("Count: 9", S.cmd("execute if entity @e[tag=slf.snake_part]"))         # head, 7 body segments, tail
+        self.assertIn("shown", S.cmd("bossbar get slf:ravenous_snake visible"))
+        S.as_player("function slf:mob/boss/ravenous_snake/spawn"); S.wait_ticks(2)
+        self.assertIn("Count: 1", S.cmd("execute if entity @e[tag=slf.snake]"))               # an area boss is unique
+
+    def test_body_follows_the_head(self):
+        S.platform(); S.as_player("function slf:test/mob/boss_ravenous_snake"); S.wait_ticks(4)
+        S.cmd(f"execute as {self.SNAKE} at @s run tp @s ~6 ~ ~"); S.wait_ticks(4)
+        self.assertIn("passed", S.cmd(f"execute at {self.SNAKE} if entity @e[tag=slf.seg0,distance=..0.5]"))
+        self.assertIn("passed", S.cmd("execute at @e[tag=slf.seg0,limit=1] if entity @e[tag=slf.seg1,distance=1.3..1.7]"))
+        self.assertIn("passed", S.cmd("execute at @e[tag=slf.seg7,limit=1] if entity @e[tag=slf.seg8,distance=1.3..1.7]"))
+
+    def test_tail_leaves_poison(self):
+        S.platform(); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} resistance 30 4 true")
+        S.as_player("execute positioned ^ ^ ^5 run function slf:mob/boss/ravenous_snake/spawn"); S.cmd("tag @e[tag=slf.boss_new] remove slf.boss_new")
+        S.cmd(f"execute as {self.SNAKE} run data merge entity @s {{NoAI:1b}}")
+        for _ in range(8):
+            S.wait_cycle()
+            if "passed" in S.cmd("execute if entity @e[tag=slf.snake_poison]"): break
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.snake_poison]"), "no poison pool after 8 seconds")
+        S.cmd(f"tp {S.player} @e[tag=slf.snake_poison,limit=1]"); S.wait_ticks(30)
+        self.assertIn("poison", S.effects())
+
+    def test_kill_reward_drops_and_cleanup(self):
+        S.platform(); self.grant("swordsman"); self.set("slf.level", 10); self.set("slf.exp", 0); self.set("slf.boss_gate", 0)
+        S.as_player("execute positioned ^ ^ ^3 run function slf:mob/boss/ravenous_snake/spawn"); S.wait_ticks(4); S.cmd(f"gamemode survival {S.player}")
+        out = S.as_player(f"damage {self.SNAKE} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
+        self.assertEqual(S.score("slf.exp"), 15 + 2 + 300)
+        self.assertEqual(S.score("slf.boss_gate"), 0)                                          # not an Altar boss
+        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.snake_part]"), "body parts outlived the snake")
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:devourers_scale"]'))
+        S.wait_cycle(); self.assertIn("hidden", S.cmd("bossbar get slf:ravenous_snake visible"))
+
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""
     TWIN = "*[minecraft:custom_data~{slf:{is_twin:1b}}]"

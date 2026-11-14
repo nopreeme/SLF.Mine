@@ -273,6 +273,20 @@ Forest monsters (Goblin, Orc, Vorpal Bunny) give a quarter of their EXP once you
 
 Admins: `/function slf:mob/vorpal_bunny/spawn`, `slf:mob/goblin/spawn`, `slf:mob/red_hat_goblin/spawn` (the Redcap Goblin), `slf:mob/orc/spawn`, `slf:mob/mud_frog/spawn`, `slf:give/goblin_hand_axe` (set `#spawn_lv slf.mob_level` first to pick the level).
 
+### Area boss: the Ravenous Snake
+
+The Rampant Forest's area boss (design doc V9): a giant snake with tan-green scales, a white belly, yellow diamond eyes, white hair
+tied with red beads, and a tail lock that opens like a flower. It is built from 3D models (a head and a chain of body segments that
+slither after it) around an invisible hitbox.
+
+- Level 15, 150 health, bite 6. Recommended: level 10, a party of three
+- Every 5 seconds its tail leaves a pool of **poison** (30 seconds, so it is still on you after the fight)
+- Appears in forests near players level 8–25 (2% a minute), one at a time, with a boss bar
+- Killing it: its level in EXP + **300**. It does not count as a boss for the Altar of Awakening
+- Drops **Devourer's Scale** (1–2) and **Python White Hair** (50%)
+
+Admins: `/function slf:mob/boss/ravenous_snake/spawn`, `slf:give/devourers_scale`, `slf:give/python_white_hair`.
+
 ### Bosses
 
 Bosses appear near players by chance, rolled once a minute per player in survival, when the place, time and the
@@ -395,7 +409,7 @@ Combine two skills at the **Skill Garden** to forge a new one. Both input skills
 | Skills | Learn every skill, finish the skill you are focusing on, +1 Knight trial |
 | World | Karma 100 (bounty hunter) or 0, place / remove the altar, an altar compass |
 | Mobs | A Vorpal Bunny (random level, or level 30), a Goblin, a Redcap Goblin, an Orc with its goblins, a Mud Frog, remove SLF mobs nearby |
-| Bosses | Each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
+| Bosses | The Ravenous Snake and each of the seven bosses, six blocks ahead; midnight (full moon) or morning |
 | Me | Status sheet, the player menu, reset yourself |
 
 Every item can also be given on its own: `/function slf:give/<item>` (tab completion lists them), e.g. `/function slf:give/bilac_crescent_blade`. A few skill books (Acrobat, Gravity Zero, Managarm Pride, Reflexus) teach their skill and are used up the first time you pick them up; that is how they work in play.
