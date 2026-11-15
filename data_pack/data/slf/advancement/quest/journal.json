@@ -1,0 +1,19 @@
+{
+  "criteria": {
+    "found": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:item_model": "slf:tomic_journal"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "slf:quest/miner/found"
+  }
+}

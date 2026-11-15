@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:devourers_scale",minecraft:item_name={text:"Devourer's Scale",color:"gold",italic:false},minecraft:lore=[{text:"A square piece of hardened scale from the Ravenous Snake.",color:"gray",italic:true}]] 1

@@ -22,13 +22,21 @@
                     "slf.vorpal_knife"
                   ]
                 },
-                "minecraft:item_name": "{\"translate\":\"item.slf.vorpal_knife\",\"color\":\"white\",\"italic\":false}",
+                "minecraft:item_name": {
+                  "translate": "item.slf.vorpal_knife",
+                  "color": "white",
+                  "italic": false
+                },
                 "minecraft:enchantments": {
                   "minecraft:sharpness": 3
                 },
                 "minecraft:unbreakable": {},
                 "minecraft:lore": [
-                  "{\"text\":\"A claw from the Vorpal Bunny, honed by countless battles.\",\"color\":\"gray\",\"italic\":true}"
+                  {
+                    "text": "A claw from the Vorpal Bunny, honed by countless battles.",
+                    "color": "gray",
+                    "italic": true
+                  }
                 ]
               }
             }
@@ -49,6 +57,97 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:bone"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.03
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_book",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:custom_model_data": {
+                  "strings": [
+                    "slf.skill_acrobat"
+                  ]
+                },
+                "minecraft:item_name": {
+                  "translate": "item.slf.skill_acrobat",
+                  "color": "green",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "The Vorpal Bunny's leap. Resistance surges when your feet leave the ground.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.04
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_sword",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "slf:vorpal_chopper",
+                "minecraft:item_name": "Vorpal Choppers",
+                "minecraft:attribute_modifiers": [
+                  {
+                    "type": "minecraft:attack_damage",
+                    "id": "minecraft:base_attack_damage",
+                    "amount": 6,
+                    "operation": "add_value",
+                    "slot": "mainhand"
+                  },
+                  {
+                    "type": "minecraft:attack_speed",
+                    "id": "minecraft:base_attack_speed",
+                    "amount": -1.6,
+                    "operation": "add_value",
+                    "slot": "mainhand"
+                  }
+                ],
+                "minecraft:custom_data": {
+                  "slf": {
+                    "weapon": "vorpal_chopper",
+                    "pair": "vorpal_chopper"
+                  }
+                }
+              }
+            }
+          ]
         }
       ]
     }

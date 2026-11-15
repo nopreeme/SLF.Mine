@@ -1,0 +1,73 @@
+{
+ "parent": "slf:item/wood_shield",
+ "display": {
+  "thirdperson_righthand": {
+   "rotation": [
+    45.0,
+    -25.0,
+    10.0
+   ],
+   "translation": [
+    -3.0932,
+    -0.7568,
+    2.109
+   ],
+   "scale": [
+    0.6375,
+    0.6375,
+    0.6375
+   ]
+  },
+  "thirdperson_lefthand": {
+   "rotation": [
+    45.0,
+    -25.0,
+    10.0
+   ],
+   "translation": [
+    -2.5941,
+    0.0246,
+    1.8276
+   ],
+   "scale": [
+    0.6375,
+    0.6375,
+    0.6375
+   ]
+  },
+  "firstperson_righthand": {
+   "rotation": [
+    90.0,
+    -80.0,
+    70.0
+   ],
+   "translation": [
+    -3.8392,
+    4.0488,
+    -0.8168
+   ],
+   "scale": [
+    0.51,
+    0.51,
+    0.51
+   ]
+  },
+  "firstperson_lefthand": {
+   "rotation": [
+    90.0,
+    -80.0,
+    70.0
+   ],
+   "translation": [
+    -3.8392,
+    4.0492,
+    -0.8168
+   ],
+   "scale": [
+    0.51,
+    0.51,
+    0.51
+   ]
+  }
+ }
+}

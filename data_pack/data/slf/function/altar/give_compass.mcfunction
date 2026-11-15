@@ -1,0 +1,2 @@
+# Macro: $(ax) $(ay) $(az) = altar position. tracked:false means the compass needs no lodestone.
+$give @s minecraft:compass[minecraft:lodestone_tracker={target:{pos:[I;$(ax),$(ay),$(az)],dimension:"minecraft:overworld"},tracked:false},minecraft:item_name={text:"Altar Compass",color:"light_purple",italic:false},minecraft:lore=[{text:"Points to the Altar of Awakening.",color:"gray",italic:false}],minecraft:custom_data={slf_altar_compass:1b},minecraft:enchantment_glint_override=true] 1

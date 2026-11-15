@@ -1,7 +1,8 @@
 # Called when a player's exp meets the current level threshold
-# Increments level, resets exp, awards 5 stat points (7 at level milestones)
+# Increments level, spends the EXP requirement (surplus carries over), awards 5 stat points (7 at level milestones)
 scoreboard players add @s slf.level 1
-scoreboard players set @s slf.exp 0
+scoreboard players operation @s slf.exp -= @s slf.exp_next
+execute if score @s slf.exp matches ..-1 run scoreboard players set @s slf.exp 0
 scoreboard players add @s slf.sp_points 5
 
 # Milestone bonus: every 10 levels award 2 extra stat points
@@ -14,8 +15,16 @@ execute if score @s slf.level matches 60 run scoreboard players add @s slf.sp_po
 execute if score @s slf.level matches 70 run scoreboard players add @s slf.sp_points 2
 execute if score @s slf.level matches 80 run scoreboard players add @s slf.sp_points 2
 execute if score @s slf.level matches 90 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 100 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 110 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 120 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 130 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 140 run scoreboard players add @s slf.sp_points 2
+execute if score @s slf.level matches 150 run scoreboard players add @s slf.sp_points 2
 
 tellraw @s ["",{"text":"Level Up! ","color":"gold","bold":true},{"text":"Now level ","color":"yellow"},{"score":{"name":"@s","objective":"slf.level"},"color":"white"},{"text":". +5 stat points (+7 at milestone levels).","color":"yellow"}]
 
-# Cap at 99 (standby flag set in exp_tick next cycle)
-execute if score @s slf.level matches 99.. run scoreboard players set @s slf.level 99
+# Cap at 99 until awakened (standby flag set in exp_tick next cycle), 150 after
+execute unless score @s slf.awakened matches 1 if score @s slf.level matches 99.. run scoreboard players set @s slf.level 99
+execute if score @s slf.level matches 150.. run scoreboard players set @s slf.level 150
+playsound minecraft:entity.player.levelup player @s

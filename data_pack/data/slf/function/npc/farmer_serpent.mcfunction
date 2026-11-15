@@ -1,0 +1,4 @@
+tellraw @s ["",{"text":"[Distressed Farmer] ","color":"yellow"},{"text":"But... those goblins weren't raiding. They were running - from something monstrous deeper in the woods.","color":"white"}]
+tellraw @s ["",{"text":"[Distressed Farmer] ","color":"yellow"},{"text":"Don't go to Secondil without talking to the Guard Captain. He's locked down the trade bridge because of a beast.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Main quest: ","color":"gray"},{"text":"The Serpent's Shadow","color":"gold","bold":true},{"text":"  Return to the town gates and speak with the Guard Captain about the Rampant Forest bridge.  ","color":"gray"},{"text":"Reward: 50 EXP  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 5"},"hover_event":{"action":"show_text","value":"Accept \"The Serpent's Shadow\""}}]

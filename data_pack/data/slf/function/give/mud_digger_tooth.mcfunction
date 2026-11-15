@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:mud_digger_tooth",minecraft:item_name={text:"Mud Digger Tooth",color:"dark_green",italic:false},minecraft:lore=[{text:"Crafting material for piercing weapons.",color:"gray",italic:true}]] 1

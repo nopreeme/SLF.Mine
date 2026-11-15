@@ -1,0 +1,50 @@
+{
+  "type": "minecraft:command",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:written_book",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "slf:tomic_journal",
+                "minecraft:written_book_content": {
+                  "title": "Tomic's Journal",
+                  "author": "Tomic",
+                  "pages": [
+                    {
+                      "raw": {
+                        "text": "Day 1. Ore runs thin at the western veins. Garren pays fair, so I keep digging."
+                      }
+                    },
+                    {
+                      "raw": {
+                        "text": "Day 9. Mud to the knee all day. Two iron in half an hour - a good day, by marsh standards."
+                      }
+                    },
+                    {
+                      "raw": {
+                        "text": "Last entry. A humming in the deep pools again, low, like a song with no singer. And red hoods watching from the reeds. I am not alone out here."
+                      }
+                    }
+                  ]
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "Found half-buried in the Diremarsh mud.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

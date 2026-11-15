@@ -1,0 +1,1 @@
+give @s minecraft:black_banner[minecraft:banner_patterns=[{pattern:"minecraft:rhombus",color:"red"},{pattern:"minecraft:circle",color:"black"},{pattern:"minecraft:skull",color:"red"}],minecraft:item_name={text:"Unknown Sigil Banner",color:"dark_red",italic:false},minecraft:lore=[{text:"A heraldic mark nobody in Secondil recognises.",color:"gray",italic:true}]] 1

@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:solo_killers_trophy",minecraft:item_name={text:"Solo Killer's Trophy",color:"gold",italic:false},minecraft:lore=[{text:"Defeated the Mud Digger alone. Brave, or foolish.",color:"gray",italic:true}],minecraft:rarity="epic"] 1

@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"[Guard Captain] ","color":"aqua"},{"text":"The Ravenous Snake still holds the bridge to Secondil.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Main quest: ","color":"gray"},{"text":"The Rampant Forest Guardian","color":"gold","bold":true},{"text":"  Defeat the Ravenous Snake. Recommended: level 10, a party of three.  ","color":"gray"},{"text":"Reward: 300 EXP, Devourer's Scale, Python White Hair, 100 Mahni  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 6"},"hover_event":{"action":"show_text","value":"Accept \"The Rampant Forest Guardian\""}}]

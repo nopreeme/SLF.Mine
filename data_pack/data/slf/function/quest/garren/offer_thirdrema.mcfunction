@@ -1,0 +1,4 @@
+tellraw @s ["",{"text":"[Garren] ","color":"gold"},{"text":"Whatever's organising those Redcaps can't be fought from here. The trail leads west - to Thirdrema. The capital may have answers.","color":"white"}]
+tellraw @s ["",{"text":"[Garren] ","color":"gold"},{"text":"But the only road goes through the Mud Digger. The Solo Killer. Take the best I've got, and send word if you make it.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Garren's quest: ","color":"gray"},{"text":"Path to Thirdrema","color":"gold","bold":true},{"text":"  Travel to the western edge of the Diremarsh and defeat the Mud Digger.  ","color":"gray"},{"text":"Reward: 500 EXP, Garren's Plated Vambraces, 200 Mahni, the road to Thirdrema  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 18"},"hover_event":{"action":"show_text","value":"Accept \"Path to Thirdrema\""}}]

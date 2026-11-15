@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#minecraft:base_stone_overworld",
+    "minecraft:cobblestone",
+    "minecraft:mossy_cobblestone",
+    "#minecraft:logs",
+    "#minecraft:planks",
+    "#minecraft:wooden_slabs",
+    "#minecraft:stone_bricks",
+    "minecraft:gravel"
+  ]
+}

@@ -71,9 +71,88 @@ scoreboard objectives add slf.knight_trials dummy
 
 # --- Mob Level (set on mob entities at spawn) ---
 scoreboard objectives add slf.mob_level dummy
+# Level of the SLF mob a player just killed (mob/lv_bit/*, read by mob/kill_process)
+scoreboard objectives add slf.kill_lv dummy
+# Mahni, the currency (design doc V9). Purses picked up turn into Mahni (mahni/pickup)
+scoreboard objectives add slf.mahni dummy
+# Quests (quest/*): the accept trigger, and one score per quest (see quest/log)
+scoreboard objectives add slf.quest trigger
+scoreboard objectives add slf.q.awaken dummy
+scoreboard objectives add slf.q.outskirts dummy
+scoreboard objectives add slf.q.goblins dummy
+scoreboard objectives add slf.q.brute dummy
+scoreboard objectives add slf.q.orcs dummy
+scoreboard objectives add slf.q.herd dummy
+scoreboard objectives add slf.q.daughter dummy
+scoreboard objectives add slf.q.cows dummy
+scoreboard objectives add slf.q.serpent dummy
+scoreboard objectives add slf.q.guardian dummy
+scoreboard objectives add slf.q.snake dummy
+scoreboard objectives add slf.q.delivery dummy
+# A number per player (player/assign_pid). Quest scenes carry their player's number, so each player has their own camp.
+scoreboard objectives add slf.pid dummy
+scoreboard objectives add slf.q.bed dummy
+scoreboard objectives add slf.q.antidote dummy
+scoreboard objectives add slf.q.watch dummy
+scoreboard objectives add slf.q.watch_t dummy
+scoreboard objectives add slf.q.bar dummy
+scoreboard objectives add slf.q.pickaxe dummy
+scoreboard objectives add slf.q.splitblade dummy
+scoreboard objectives add slf.q.miner dummy
+scoreboard objectives add slf.q.reeds dummy
+scoreboard objectives add slf.q.wave dummy
+scoreboard objectives add slf.q.thirdrema dummy
+# Origin choice at character creation (wanderer/*): 1 Citizen, 2 Wanderer (shows the warning), 3 confirm Wanderer, 4 show the choice
+scoreboard objectives add slf.origin trigger
+scoreboard objectives add slf.q.letter dummy
+scoreboard objectives add slf.wtry dummy
+# Shop buy buttons (shop/buy)
+scoreboard objectives add slf.shop trigger
+# Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
+bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
+bossbar set slf:nightclaw color white
+bossbar set slf:nightclaw style notched_10
+bossbar add slf:bilac {text:"Bilac the Full Moon Fangs",color:"gold"}
+bossbar set slf:bilac color yellow
+bossbar set slf:bilac style notched_10
+bossbar add slf:oriana {text:"Oriana the Uncrowned",color:"dark_aqua"}
+bossbar set slf:oriana color blue
+bossbar set slf:oriana style notched_10
+bossbar add slf:lycagon {text:"Lycagon the Nightslayer",color:"dark_purple"}
+bossbar set slf:lycagon color purple
+bossbar set slf:lycagon style notched_10
+bossbar add slf:wethermon {text:"Wethermon the Tombguard",color:"dark_red"}
+bossbar set slf:wethermon color red
+bossbar set slf:wethermon style notched_10
+bossbar add slf:ravenous_snake {text:"Ravenous Snake",color:"gold"}
+bossbar set slf:ravenous_snake color yellow
+bossbar set slf:ravenous_snake style notched_10
+bossbar add slf:mud_digger {text:"Mud Digger",color:"dark_green"}
+bossbar set slf:mud_digger color green
+bossbar set slf:mud_digger style notched_10
+bossbar add slf:ctarnidd {text:"Ctarnidd of the Abyss",color:"dark_blue"}
+bossbar set slf:ctarnidd color blue
+bossbar set slf:ctarnidd style notched_10
+bossbar add slf:siegwurm {text:"Siegwurm the Sky Ruler",color:"aqua"}
+bossbar set slf:siegwurm color white
+bossbar set slf:siegwurm style notched_10
 
 # --- Ignition detection (separate from def_prev) ---
 scoreboard objectives add slf.ign.prev dummy
+
+# --- Menus and evolution (triggers work without OP) ---
+scoreboard objectives add slf.menu trigger
+scoreboard objectives add slf.evolve trigger
+
+# --- Join / death detection ---
+scoreboard objectives add slf.leave minecraft.custom:minecraft.leave_game
+scoreboard objectives add slf.deaths minecraft.custom:minecraft.deaths
+
+# --- Derived stats: mana pool (MP), max-health bonus (HP), EXP needed for the next level ---
+scoreboard objectives add slf.mana dummy
+scoreboard objectives add slf.mana_max dummy
+scoreboard objectives add slf.hp_applied dummy
+scoreboard objectives add slf.exp_next dummy
 
 # --- Temp scratch ---
 scoreboard objectives add slf.tmp dummy

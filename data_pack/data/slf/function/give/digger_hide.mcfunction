@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:digger_hide",minecraft:item_name={text:"Digger Hide",color:"dark_green",italic:false},minecraft:lore=[{text:"Crafting material for armour that resists knockback.",color:"gray",italic:true}]] 1

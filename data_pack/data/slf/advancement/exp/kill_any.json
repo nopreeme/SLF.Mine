@@ -1,0 +1,10 @@
+{
+  "criteria": {
+    "kill": {
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "rewards": {
+    "function": "slf:exp/kill_any"
+  }
+}

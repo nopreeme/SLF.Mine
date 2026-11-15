@@ -1,0 +1,76 @@
+{
+ "textures": {
+  "0": "slf:item/ravenous_snake",
+  "particle": "slf:item/ravenous_snake"
+ },
+ "elements": [
+  {
+   "from": [
+    3,
+    1,
+    1
+   ],
+   "to": [
+    13,
+    9.5,
+    15
+   ],
+   "faces": {
+    "north": {
+     "uv": [
+      4,
+      0,
+      8,
+      4
+     ],
+     "texture": "#0"
+    },
+    "east": {
+     "uv": [
+      4,
+      0,
+      8,
+      4
+     ],
+     "texture": "#0"
+    },
+    "south": {
+     "uv": [
+      4,
+      0,
+      8,
+      4
+     ],
+     "texture": "#0"
+    },
+    "west": {
+     "uv": [
+      4,
+      0,
+      8,
+      4
+     ],
+     "texture": "#0"
+    },
+    "up": {
+     "uv": [
+      0,
+      0,
+      4,
+      4
+     ],
+     "texture": "#0"
+    },
+    "down": {
+     "uv": [
+      8,
+      0,
+      12,
+      4
+     ],
+     "texture": "#0"
+    }
+   }
+  }
+ ]
+}

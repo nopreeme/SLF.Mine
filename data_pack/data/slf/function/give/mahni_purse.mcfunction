@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:mahni_purse",minecraft:item_name={text:"Mahni Purse",color:"gold",italic:false},minecraft:lore=[{text:"10 Mahni. Added to your purse when you pick it up.",color:"gray",italic:true}]] 1

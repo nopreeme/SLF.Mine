@@ -1,0 +1,3 @@
+tellraw @s ["",{"text":"[Guard Captain] ","color":"aqua"},{"text":"You did well with the goblins. But larger, meaner Orcs have started leading their scouting parties.","color":"white"}]
+scoreboard players enable @s slf.quest
+tellraw @s ["",{"text":" Quest: ","color":"gray"},{"text":"The Brute Threat","color":"gold","bold":true},{"text":"  Defeat 2 Orcs near the forest tree line.  ","color":"gray"},{"text":"Reward: 150 EXP, Beginner Leather Chestplate, 40 Mahni  ","color":"dark_gray"},{"text":"[Accept]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.quest set 3"},"hover_event":{"action":"show_text","value":"Accept \"The Brute Threat\""}}]

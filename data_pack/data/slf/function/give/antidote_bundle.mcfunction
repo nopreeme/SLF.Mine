@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:antidote_bundle",minecraft:item_name={text:"Antidote Bundle",color:"green",italic:false},minecraft:lore=[{text:"For the inn. Lysa's Antidote Run.",color:"gray",italic:true}]] 1

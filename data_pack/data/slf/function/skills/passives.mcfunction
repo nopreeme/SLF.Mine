@@ -52,5 +52,11 @@ effect give @a[tag=slf.skill.terraton_corapsa] minecraft:strength 3 0 true
 # Bradion
 execute as @a[tag=slf.skill.bradion] run function slf:skills/bradion_tick
 
+# Wisdom's Divine Eye — Night Vision (15s so it never flickers)
+effect give @a[tag=slf.skill.wisdoms_divine_eye] minecraft:night_vision 15 0 true
+
+# Every other skill: permanent attribute bonuses (generated, see tools/gen_skill_passives.py)
+function slf:skills/attributes
+
 # Title passives — unconditional; each line selects only tagged players
 function slf:titles/passives

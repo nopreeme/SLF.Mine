@@ -1,0 +1,56 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "value": "slf:lycagon_drops"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.25
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_book",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:custom_model_data": {
+                  "strings": [
+                    "slf.skill_managarm_pride"
+                  ]
+                },
+                "minecraft:item_name": {
+                  "text": "Managarm Pride",
+                  "color": "light_purple",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "The power of the wolf-god Lycagon. Strength grows with each wound.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -16,13 +16,21 @@
                     "slf.lycagon_fang"
                   ]
                 },
-                "minecraft:item_name": "{\"translate\":\"item.slf.lycagon_fang\",\"color\":\"dark_purple\",\"italic\":false}",
+                "minecraft:item_name": {
+                  "translate": "item.slf.lycagon_fang",
+                  "color": "dark_purple",
+                  "italic": false
+                },
                 "minecraft:enchantments": {
                   "minecraft:sharpness": 6
                 },
                 "minecraft:unbreakable": {},
                 "minecraft:lore": [
-                  "{\"text\":\"Torn from Lycagon the Nightslayer. Shadow-infused fang of the black wolf.\",\"color\":\"gray\",\"italic\":true}"
+                  {
+                    "text": "Torn from Lycagon the Nightslayer. Shadow-infused fang of the black wolf.",
+                    "color": "gray",
+                    "italic": true
+                  }
                 ]
               }
             }

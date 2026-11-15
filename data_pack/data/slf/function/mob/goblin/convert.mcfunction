@@ -1,0 +1,27 @@
+# Runs as a zombie: turns it into a Goblin, a small, quick, big-eared forest raider with a stone axe. Called by spawn and mob/zombie_seen.
+# Body: a zombie at 0.6 size (goblin height). Its head slot holds an item drawn as the 3D goblin head (resource pack model slf:item/goblin_head, tools/gen_mob_models.py), which also keeps it from burning by day; dyed leather makes the tunic and bandaged feet.
+execute store result score @s slf.mob_level run random value 3..10
+execute if score #spawn_lv slf.mob_level matches 1.. run scoreboard players operation @s slf.mob_level = #spawn_lv slf.mob_level
+scoreboard players set #spawn_lv slf.mob_level 0
+data merge entity @s {IsBaby:0b,CanBreakDoors:0b,DeathLootTable:"slf:goblin_drops",CustomNameVisible:1b,equipment:{head:{id:"minecraft:paper",count:1,components:{"minecraft:item_model":"slf:goblin_head"}},chest:{id:"minecraft:leather_chestplate",count:1,components:{"minecraft:dyed_color":8280650}},legs:{id:"minecraft:leather_leggings",count:1,components:{"minecraft:dyed_color":7228992}},feet:{id:"minecraft:leather_boots",count:1,components:{"minecraft:dyed_color":13617332}},mainhand:{id:"minecraft:stone_axe",count:1,components:{"minecraft:item_model":"slf:goblin_axe","minecraft:item_name":"Goblin Hand Axe"}}},drop_chances:{head:0.0f,chest:0.0f,legs:0.0f,feet:0.0f,mainhand:0.0f}}
+tag @s add slf.mob
+tag @s add slf.goblin
+tag @s add slf.forest_mob
+tag @s add slf.seen
+attribute @s minecraft:scale base set 0.6
+attribute @s minecraft:movement_speed base set 0.26
+attribute @s minecraft:spawn_reinforcements base set 0
+# Stats from level: health 8 + level, attack 1 + level/3
+scoreboard players operation #hp slf.tmp = @s slf.mob_level
+scoreboard players add #hp slf.tmp 8
+execute store result storage slf:mob hp int 1 run scoreboard players get #hp slf.tmp
+scoreboard players operation #atk slf.tmp = @s slf.mob_level
+scoreboard players set #3 slf.tmp 3
+scoreboard players operation #atk slf.tmp /= #3 slf.tmp
+scoreboard players add #atk slf.tmp 1
+execute store result storage slf:mob atk int 1 run scoreboard players get #atk slf.tmp
+execute store result storage slf:mob lv int 1 run scoreboard players get @s slf.mob_level
+data modify storage slf:mob name set value "Goblin"
+data modify storage slf:mob color set value "green"
+function slf:mob/apply_stats with storage slf:mob
+function slf:mob/level_tags

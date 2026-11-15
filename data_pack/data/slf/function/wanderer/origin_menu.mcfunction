@@ -1,0 +1,5 @@
+# The origin choice at character creation. Open while the player has no origin yet and is still level 1. Default: Citizen.
+execute if entity @s[tag=slf.origin_chosen] run return fail
+execute if score @s slf.level matches 2.. run return fail
+scoreboard players enable @s slf.origin
+tellraw @s ["",{"text":"━━━ ","color":"dark_gray"},{"text":"Choose Your Origin","color":"gold","bold":true},{"text":" ━━━\n","color":"dark_gray"},{"text":"[Citizen]","color":"green","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.origin set 1"},"hover_event":{"action":"show_text","value":"Start in Firstia, the town of origins, with its people and quests to guide you"}},{"text":"  Start in Firstia. Quests, guidance, a safe town.\n","color":"gray"},{"text":"[Wanderer]","color":"dark_red","bold":true,"click_event":{"action":"run_command","command":"/trigger slf.origin set 2"},"hover_event":{"action":"show_text","value":"Hard mode: no town, no quests, no safety net"}},{"text":"  Hard mode. The path Sunraku chose.","color":"gray"}]
