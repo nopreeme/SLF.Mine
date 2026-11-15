@@ -4,6 +4,9 @@ execute as @a at @s as @e[type=minecraft:rabbit,tag=!slf.seen,distance=..64] at 
 execute as @a at @s as @e[type=minecraft:frog,tag=!slf.seen,distance=..64] at @s run function slf:mob/frog_seen
 # Wild surface zombies near players: goblins and Vorpal Bunnies in forests, Redcaps in swamps at night (mob/zombie_seen).
 execute as @a at @s as @e[type=minecraft:zombie,tag=!slf.seen,distance=..64] at @s run function slf:mob/zombie_seen
+# Vorpal Bunnies and Mud Frogs from before their 3D bodies existed get one (mob/body)
+execute as @e[tag=slf.vorpal_bunny,tag=!slf.bodied] at @s run function slf:mob/body/bunny
+execute as @e[tag=slf.mud_frog,tag=!slf.bodied] at @s run function slf:mob/body/frog
 # Bosses: upkeep every second, encounter rolls once a minute (mob/boss/roll)
 function slf:mob/boss/tick
 execute as @e[tag=slf.snake] at @s run function slf:mob/boss/ravenous_snake/second
