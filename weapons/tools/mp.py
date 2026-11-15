@@ -33,7 +33,28 @@ RAMPS.update({
     "plank":   [c(36, 30, 36), c(62, 54, 54), c(90, 80, 70), c(120, 108, 92)],
     "rim":     flat(c(30, 26, 32)),
 })
+RAMPS.update({   # second batch of weapons; append only, the atlas position of a material is its index here
+    "rust":     [c(58, 28, 34), c(112, 56, 40), c(168, 92, 52), c(214, 150, 88)],
+    "night":    [c(14, 16, 40), c(30, 40, 84), c(52, 68, 124), c(104, 132, 186)],
+    "lilac":    [c(70, 60, 104), c(120, 110, 156), c(170, 160, 198), c(222, 214, 236)],
+    "gold":     [c(96, 52, 28), c(170, 108, 36), c(232, 178, 60), c(255, 232, 140)],
+    "tsuka":    [c(30, 20, 46), c(60, 40, 90), c(92, 66, 130), c(232, 190, 90)],
+    "sheen":    [c(150, 110, 60), c(214, 176, 96), c(246, 226, 150), c(255, 250, 214)],
+    "teal":     [c(16, 50, 62), c(30, 96, 104), c(56, 144, 146), c(130, 208, 196)],
+    "aqua":     flat(c(80, 214, 236), c(200, 250, 255)),
+    "rose":     [c(74, 22, 56), c(130, 40, 76), c(186, 70, 100), c(236, 140, 150)],
+    "ember":    flat(c(244, 120, 30), c(255, 214, 120)),
+    "crystal":  [c(70, 110, 150), c(130, 190, 214), c(190, 236, 240), c(244, 255, 255)],
+    "lavender": [c(74, 54, 110), c(128, 100, 164), c(180, 150, 206), c(226, 206, 240)],
+    "orchid":   [c(70, 18, 90), c(128, 36, 140), c(190, 70, 190), c(244, 160, 236)],
+    "void":     [c(10, 8, 22), c(22, 16, 44), c(38, 28, 68), c(70, 54, 110)],
+    "azure":    [c(18, 26, 70), c(34, 58, 128), c(58, 96, 178), c(120, 170, 226)],
+    "emerald":  [c(10, 70, 48), c(24, 130, 70), c(60, 196, 96), c(170, 246, 170)],
+    "amber":    [c(150, 70, 10), c(226, 130, 16), c(250, 186, 40), c(255, 236, 130)],
+    "crimson":  [c(70, 10, 24), c(130, 20, 34), c(190, 36, 44), c(236, 96, 84)],
+})
 MATS = list(RAMPS)
+assert len(MATS) * 3 <= (ATLAS_W // TILE_W) * (ATLAS_H // TILE_H), "atlas is full"
 SHADES = {"lit": 1.1, "mid": 0.94, "dark": 0.74}
 FACE_SHADE = {"up": "lit", "west": "lit", "north": "mid", "south": "mid", "east": "dark", "down": "dark"}
 
@@ -56,6 +77,18 @@ def pattern(m, x, y):
     if m == "bone": return 1 if y % 6 == 5 else 2
     if m == "plank": return 0 if x % 4 == 3 else (2 if (x // 4) % 2 == 0 else 1)
     if m == "cap": return 3 if y % 8 == 0 else 2
+    if m == "rust": return 0 if (x + 2 * y) % 9 == 0 else (3 if (x - y) % 7 == 3 else 2)      # pitted streaks
+    if m == "night": return 1 if (x + y) % 7 == 0 else 2
+    if m in ("lilac", "sheen", "rose"): return 3 if y % 9 == 0 else 2
+    if m == "gold": return 3 if (x + y) % 6 == 0 else 2
+    if m == "tsuka": return (2, 3, 2, 0)[y % 4]                                               # gold bands on the wrap
+    if m in ("teal", "azure"): return 1 if y % 4 == 3 else 2
+    if m in ("aqua", "ember"): return 3 if (x, y) == (0, 0) else 2
+    if m in ("crystal", "emerald", "orchid"): return 3 if (x + y) % 5 == 0 else (1 if (x - y) % 5 == 2 else 2)   # facets
+    if m == "lavender": return 1 if (x + y) % 8 == 0 else 2
+    if m == "void": return 0 if y % 5 == 4 else 2
+    if m == "amber": return 1 if (x * 2 + y) % 7 in (0, 1) else (3 if (x - y) % 6 == 0 else 2)   # mottled resin
+    if m == "crimson": return 3 if (x + y) % 11 == 0 else 2
     return 2
 
 def tile_origin(m, shade):
@@ -221,6 +254,191 @@ def wood_shield_cubes():
             if half < 1: continue
             C.append(cube(-half, 24 + k, z0, 2 * half, 1, d, m, uo=(8 - half) if half <= 8 else 0))
     C.append(cube(-1, 22.5, -1.5, 2, 3, 1.5, "rim"))   # hand strap
+    return C
+
+# ======================= second batch =======================
+def mirror(cubes):
+    """Left-handed copy: flip the model across x."""
+    out = []
+    for q in cubes:
+        q = dict(q); (x0, y0, z0), (w, _, _) = q["origin"], q["size"]
+        q["origin"] = [round(-(x0 + w), 3), y0, z0]
+        if q.get("rotation"):
+            q["rotation"] = [0, 0, -q["rotation"][2]]; q["pivot"] = [-q["pivot"][0]] + list(q["pivot"][1:])
+        out.append(q)
+    return out
+
+def bands(ys, s, m, h=1.2, x=0):
+    return [cube(x - s / 2, y, -s / 2, s, h, s, m) for y in ys]
+
+def vorpal_knife_cubes():
+    # after the anime's Vorpal Chopper: a long narrow crimson blade, no guard, dark wrapped grip
+    C = [P(-1.1, 17.4, 2.2, 1.3, 2.2, "rim"), P(-0.9, 18.7, 1.8, 8.6, 1.8, "knot"), P(-1.2, 27.3, 2.4, 0.9, 2.2, "rim")]
+    blade, _ = chain2((0, 28.2), [(5, 3, 2.6), (5, -1, 3.2), (5, -4, 3), (4, -7, 2.2), (3, -12, 1.2)], 1, "crimson",
+                      strips=((1, 0.7, "rose", 0.6), (-1, 0.6, "knot", 1.2))); C += blade
+    C.append(P(-2.7, 40, 1.3, 2.4, 1, "crimson", [0, 0, -32], [-1.5, 40, 0]))            # step on the spine
+    return C
+
+def rust_saber_cubes():
+    C = [P(-1.3, 18.3, 2.6, 1.7, 2.6, "knot"), P(-0.9, 20, 1.8, 7, 1.8, "wood"), P(-2.4, 27, 5.6, 1.4, 2.4, "rust")]
+    bow, _ = chain((2.8, 27.6), [(3.4, 166, 0.9), (3.2, 190, 0.9), (2.6, 236, 0.9)], "rust"); C += bow    # knuckle bow
+    blade, _ = chain2((0, 28.4), [(6, 0, 3.4), (6, -5, 3.4), (5, -11, 3.1), (4, -18, 2.5), (3, -27, 1.5)], 1, "rust",
+                      strips=((-1, 0.7, "knot", 1.3), (1, 0.6, "wrap", 0.6))); C += blade
+    return C
+
+def lycagon_fang_cubes():
+    C = [diamond(0, 18.2, 2, 2, "aqua"), P(-1.2, 19, 2.4, 1.2, 2.4, "silver"), P(-0.9, 20.2, 1.8, 6.8, 1.8, "cloth"),
+         P(-3, 27, 6, 1.4, 2.4, "silver"),
+         P(-4.4, 26.6, 2.4, 1.2, 2, "silver", [0, 0, -28], [-3, 27.6, 0]), P(2, 26.6, 2.4, 1.2, 2, "silver", [0, 0, 28], [3, 27.6, 0])]
+    blade, _ = chain2((0, 28.4), [(5, -8, 4.4), (5, -2, 4.6), (4.5, 8, 4.2), (4, 19, 3.4), (3.5, 31, 2.3), (2.6, 44, 1.2)], 1, "night",
+                      strips=((1, 0.9, "face", 0.6), (-1, 0.6, "cap", 1.3))); C += blade
+    return C
+
+def wethermon_katana_cubes():
+    # after the manga cover: a long nodachi, black grip crossed with rose cord, dark ring guard
+    C = [P(-1.1, 13.4, 2.2, 1.2, 2.2, "cap"), P(-0.9, 14.6, 1.8, 12, 1.8, "cloth"),
+         P(-2.5, 26.6, 5, 0.9, 4.4, "cap"), P(-1.7, 26.4, 3.4, 1.3, 5, "cap"), P(-1, 27.6, 2, 1.2, 1.4, "steel")]
+    C += bands((16, 18.4, 20.8, 23.2), 2.1, "rose", 0.7)
+    blade, _ = chain2((0, 28.8), [(7, 0, 2.3), (7, -3, 2.3), (6, -6, 2.2), (5, -9, 2), (3.4, -13, 1.6), (2, -22, 0.9)], 0.9, "silver",
+                      strips=((1, 0.6, "face", 0.5), (-1, 0.5, "cap", 1.1))); C += blade
+    return C
+
+def wethermon_rib_dagger_cubes():
+    C = [diamond(0, 18.3, 1.8, 1.8, "orchid"), P(-1.1, 19, 2.2, 1.2, 2.2, "cap"), P(-0.9, 20.2, 1.8, 6.8, 1.8, "handle"),
+         P(-2.3, 27, 4.6, 1.3, 2.4, "cap")]
+    rib, j = chain2((0, 28.3), [(4, -10, 2.4), (4, 0, 2.4), (4, 11, 2.2), (3.5, 22, 1.8), (3, 34, 1.2)], 1.4, "bone",
+                    strips=((1, 0.6, "face", 0.7),)); C += rib
+    for kx, ky in j[1:4]: C.append(diamond(kx - 0.9, ky, 1.3, 1.8, "bone"))      # knuckles along the back of the rib
+    return C
+
+def wethermon_scythe_cubes():
+    C, j = chain((0, 11), [(14, 0, 1.5), (14, -2, 1.5), (12, 2, 1.5)], "bone")
+    C += bands((21.4, 23.4, 25.4), 2.2, "handle") + [diamond(0, 10.6, 2, 2, "orchid")]
+    x, y = j[3]
+    C += [cube(x - 1.4, y - 3.4, -1.4, 2.8, 2.6, 2.8, "cap"), diamond(x - 0.4, y - 0.4, 3, 2, "cap")]
+    blade, _ = chain2((x - 1.2, y - 0.8), [(5, 66, 4.6), (5, 84, 4.3), (4.5, 103, 3.5), (4, 122, 2.5), (3.2, 140, 1.3)], 1, "lilac",
+                      strips=((1, 0.8, "face", 0.6), (-1, 0.6, "cap", 1.3))); C += blade
+    spur, _ = chain2((x - 0.6, y - 0.6), [(3.4, -72, 1.7), (2, -56, 0.9)], 1, "lilac"); C += spur
+    return C
+
+def _straight_sword(blade_m, line_m, guard_m, grip_m, gem_m, L, w=3.2):
+    C = [diamond(0, 17.6, 2.4, 2.4, gem_m), P(-1.2, 18.6, 2.4, 1.2, 2.4, guard_m), P(-0.9, 19.8, 1.8, 7.2, 1.8, grip_m),
+         P(-4.6, 27, 9.2, 1.3, 2.2, guard_m),
+         P(-6.2, 27.2, 2.4, 1.3, 2, guard_m, [0, 0, 32], [-4.4, 27.6, 0]), P(3.8, 27.2, 2.4, 1.3, 2, guard_m, [0, 0, -32], [4.4, 27.6, 0]),
+         diamond(0, 27.8, 2.8, 2.8, guard_m), diamond(0, 27.8, 1.5, 3.2, gem_m),
+         P(-w / 2, 28.4, w, L, 1, blade_m), P(-0.45, 29.2, 0.9, L - 1.6, 1.4, line_m),
+         diamond(0, 28.4 + L, w / math.sqrt(2), 1, blade_m)]
+    return C
+
+def _ball(y): return cube(-1.3, y - 1.3, -1.3, 2.6, 2.6, 2.6, "cap", [0, 0, 45], [0, y, 0])
+
+def whalelore_goldsheen_cubes():
+    # after manga chapter 227: long wrapped grip with a ball pommel, no guard, one broad curved single-edged blade
+    C = [_ball(16.4), P(-0.9, 17.6, 1.8, 10, 1.8, "wrap"), P(-1.6, 27.6, 3.2, 1.2, 2.4, "cap")]
+    base, j = chain2((0.3, 28.8), [(4, 7, 4.2), (4, 2, 5)], 1.2, "gold", strips=((-1, 0.7, "cap", 1.5),)); C += base   # rippled root
+    blade, k = chain2(j[2], [(5, -3, 5.4), (5, -8, 5), (4.5, -13, 4.2), (4, -18, 3), (3, -24, 1.6)], 1, "sheen",
+                      strips=((1, 0.9, "face", 0.6), (-1, 0.7, "gold", 1.3))); C += blade
+    x, y = k[1]
+    C += [P(x - 3.4, y - 0.6, 1.6, 2.6, 1.6, "cap"),                                     # block on the spine and its ribbon
+          P(x - 6.8, y + 0.2, 3.6, 0.7, 0.4, "wrap", [0, 0, 24], [x - 3.4, y + 0.5, 0]),
+          P(x - 6.2, y - 1.4, 3, 0.7, 0.4, "wrap", [0, 0, -30], [x - 3.4, y + 0.3, 0])]
+    return C
+
+def whalelore_netherlight_cubes():
+    # after manga chapter 227: the short one, a crescent blade with crystals growing at its root
+    C = [_ball(16.4), P(-0.9, 17.6, 1.8, 8.6, 1.8, "wrap"), P(-1.3, 26.2, 2.6, 2.4, 2.4, "rim"),
+         P(-3.6, 28.2, 1.3, 3.4, 1.3, "crystal", [0, 0, -42], [-1.4, 28.6, 0]),
+         P(-2.9, 26.6, 1, 2.4, 1, "crystal", [0, 0, -70], [-1.3, 27.4, 0])]
+    blade, _ = chain2((0.4, 28.6), [(4, -22, 3), (4, -6, 4), (4, 10, 4.2), (3.5, 26, 3.4), (3, 42, 2.2), (2.4, 56, 1.1)], 1, "night",
+                      strips=((1, 0.8, "face", 0.6), (-1, 0.5, "cap", 1.3))); C += blade
+    return C
+
+def _gauntlet(body_m, trim_m):
+    return [cube(-2.7, 18.6, -2.5, 5.4, 2.8, 5, trim_m),                        # cuff
+            cube(-3.2, 21.4, -2.8, 6.4, 5.6, 5.6, body_m),                      # back of the hand
+            cube(3.2, 22.4, -1.1, 1.4, 3.2, 2.2, trim_m),                       # thumb
+            cube(-3.5, 27, -3, 7, 1.5, 6, trim_m)]                              # knuckle plate
+
+def gilta_brille_cubes():
+    # after the anime (episode 34): a long dark machine housing with red slits and a vent pipe, the Golden
+    # Scorpion's amber stinger out of the front and a long crystal down each side. This is the right-hand one.
+    C = [cube(-3, 19, -2.6, 6, 13, 5.2, "iron"),                                         # housing
+         cube(-3.5, 24.5, -3, 7, 4.5, 6, "cap"), cube(-3.4, 32, -3, 6.8, 1.8, 6, "cap"), # armour band and front collar
+         cube(-2.3, 16.6, -2, 4.6, 2.4, 4, "cap"), P(-0.9, 13.4, 1.8, 3.2, 1.4, "amber"), diamond(0, 13.4, 1.27, 1.4, "amber"),
+         cube(-5.4, 15.6, -1, 2, 9.4, 2, "silver"), cube(-5.6, 14.8, -1.2, 2.4, 1, 2.4, "cap"),   # vent pipe
+         cube(3, 25.4, -1.4, 0.9, 2.8, 2.8, "face")]
+    for y in (20.4, 21.8, 30):
+        C.append(cube(-0.9, y, -2.75, 1.8, 0.5, 5.5, "gem"))                             # red slits
+    sting, _ = chain2((0, 33.6), [(5, -6, 4.6), (5, 4, 4.4), (4.5, 16, 3.6), (4, 30, 2.6), (3, 44, 1.4)], 1.6, "amber",
+                      strips=((1, 0.7, "sheen", 0.9),)); C += sting
+    for x, y0, L, a in ((5.2, 21, 14, 8), (-7.6, 22, 12, -8)):                           # side crystals
+        C += [cube(x - 0.9, y0, -0.9, 1.8, L, 1.8, "crystal", [0, 0, a], [x, y0, 0])]
+        for d in (0, L):                                                               # pointed ends
+            tx, ty = x + d * math.sin(math.radians(a)), y0 + d * math.cos(math.radians(a))
+            C.append(cube(tx - 0.64, ty - 0.64, -0.9, 1.27, 1.27, 1.8, "crystal", [0, 0, 45], [tx, ty, 0]))
+    return C
+
+def bilac_fang_gauntlet_cubes():
+    C = _gauntlet("lavender", "gold")
+    for x, h in ((-2.6, 3), (-0.9, 4.6), (0.8, 4.6), (2.5, 3)):                 # fangs over the knuckles
+        C += [P(x - 0.6, 28.5, 1.2, h, 1.4, "bone"), diamond(x, 28.5 + h, 0.85, 1.4, "bone")]
+    C.append(diamond(0, 24.2, 2.6, 6, "handle"))
+    return C
+
+def bilac_crescent_blade_cubes():
+    C = [diamond(0, 17.4, 2, 2, "gold"), P(-0.9, 18.2, 1.8, 9.2, 1.8, "wood"), P(-1.4, 27.4, 2.8, 1.4, 2.6, "gold")]
+    C += bands((20.5, 23, 25.5), 2.3, "gold", 0.9)
+    moon, _ = chain2((-0.4, 28.6), [(4.2, -62, 2), (4.2, -34, 3), (4.2, -6, 3.7), (4.2, 22, 4), (4.2, 50, 4), (4.2, 78, 3.6),
+                                    (4, 106, 2.9), (3.6, 134, 1.8)], 1, "lavender",
+                     strips=((-1, 0.8, "face", 0.6), (1, 0.6, "handle", 1.3))); C += moon
+    return C
+
+def nightclaw_talon_cubes():
+    C = [diamond(0, 18.2, 2, 2, "orchid"), P(-1, 19, 2, 7.4, 2, "cloth"), P(-2.7, 26.4, 5.4, 2.2, 3.2, "orchid"),
+         P(-2.2, 28.4, 4.4, 0.8, 2.4, "cap")]
+    claw, _ = chain2((0.2, 29), [(5, -12, 4), (5, 3, 3.8), (4.5, 20, 3.2), (4, 38, 2.4), (3.2, 57, 1.4)], 1.2, "iron",
+                     strips=((1, 0.7, "orchid", 0.7),)); C += claw
+    spur, _ = chain2((-1.6, 28.8), [(3.6, -34, 1.6), (2.8, -14, 1.2), (2, 8, 0.8)], 1, "iron"); C += spur
+    return C
+
+def oriana_scepter_cubes():
+    C = [diamond(0, 11.6, 2.2, 2.2, "gold"), cube(-0.9, 12.4, -0.9, 1.8, 29.6, 1.8, "rose")]
+    C += bands((20.6, 26.2, 34), 2.4, "gold", 1) + [cube(-1.5, 41, -1.5, 3, 1.2, 3, "gold"), cube(-2.8, 42.2, -1.8, 5.6, 1.8, 3.6, "gold")]
+    for x, h in ((-2.2, 2.6), (0, 4), (2.2, 2.6)):                              # crown points
+        C += [P(x - 0.6, 44, 1.2, h, 1.4, "gold"), diamond(x, 44 + h, 1.5, 1.4, "gold")]
+    C.append(diamond(0, 43.4, 2.4, 4.2, "orchid"))
+    return C
+
+def oriana_void_staff_cubes():
+    C, j = chain((0, 10), [(12, 0, 1.6), (12, -3, 1.6), (10, 3, 1.6)], "void")
+    C += bands((21.4, 23.4, 25.4), 2.3, "handle") + [diamond(0, 9.6, 2, 2, "orchid")]
+    x, y = j[3]
+    C.append(cube(x - 1.5, y - 1, -1.5, 3, 1.6, 3, "handle"))
+    for s in (-1, 1):                                                           # claws holding the orb
+        arm, _ = chain((x + s * 0.8, y + 0.4), [(3.6, s * 52, 1.2), (4.2, s * 6, 1.2), (3, s * -38, 1)], "void"); C += arm
+    C.append(cube(x - 2.2, y + 3, -2.2, 4.4, 4.4, 4.4, "orchid", [0, 0, 45], [x, y + 5.2, 0]))
+    return C
+
+def sunraku_blade_r_cubes():
+    C = [diamond(0, 18, 2, 2, "aqua"), P(-1.2, 18.8, 2.4, 1.2, 2.4, "azure"), P(-0.9, 20, 1.8, 7, 1.8, "cloth"),
+         P(-3.4, 27, 6.8, 1.3, 2.3, "azure"), P(2.4, 27.3, 1.3, 3.2, 2, "azure", [0, 0, 28], [3, 27.4, 0]),
+         diamond(0, 27.7, 2, 2.7, "aqua")]
+    blade, _ = chain2((0, 28.3), [(6, 0, 3.2), (5, 3, 3.1), (4, 9, 2.6), (3, 18, 1.6)], 1, "silver",
+                      strips=((1, 0.8, "face", 0.6),)); C += blade
+    line, _ = chain2((-0.8, 28.3), [(6, 0, 0.7), (5, 3, 0.7), (3, 9, 0.6)], 1.3, "azure"); C += line
+    return C
+
+def sunraku_blade_l_cubes(): return mirror(sunraku_blade_r_cubes())
+
+def sunraku_chaos_rod_cubes():
+    C, j = chain((0, 10), [(13, 0, 1.6), (12, -3, 1.6), (7, 3, 1.6)], "mgrip")
+    C += bands((21.4, 23.4, 25.4), 2.3, "handle") + [diamond(0, 9.6, 2, 2, "emerald")]
+    x, y = j[3]
+    C += [cube(x - 1.5, y - 1, -1.5, 3, 1.6, 3, "handle"),
+          cube(x - 2.4, y + 1.4, -2.4, 4.8, 4.8, 4.8, "emerald", [0, 0, 45], [x, y + 3.8, 0]),
+          P(x - 0.8, y + 5.6, 1.6, 4.2, 1.6, "emerald"), diamond(x, y + 9.8, 1.13, 1.6, "emerald"),
+          P(x - 4.6, y + 2.4, 1.4, 4.4, 1.4, "emerald", [0, 0, -34], [x - 2.4, y + 3, 0]),
+          P(x + 3.2, y + 2.4, 1.4, 3.4, 1.4, "emerald", [0, 0, 34], [x + 2.4, y + 3, 0])]
     return C
 
 # ---------------- icons drawn from the models ----------------

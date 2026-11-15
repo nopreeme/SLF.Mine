@@ -1,6 +1,6 @@
 # SLF Weapons
 
-Nine Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
+Twenty-six Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
 
 | Weapon | Base item | Notes |
 |---|---|---|
@@ -13,6 +13,22 @@ Nine Shangri-La Frontier weapons as 3D held models with flat inventory icons, fo
 | Vorpal Choppers | iron sword | pair (placeholder name) |
 | Fossil Rod | stick | |
 | Wood Shield | shield | raises when blocking |
+| Vorpal Knife | iron sword | |
+| Rust Saber | iron sword | |
+| Lycagon's Fang | netherite sword | |
+| Wethermon's Blade | netherite sword | katana |
+| Wethermon's Rib Dagger | netherite sword | |
+| Wethermon's Scythe | netherite sword | |
+| Whalelore: Goldsheen | diamond sword | |
+| Whalelore: Netherlight | diamond sword | |
+| Gilta Brille | golden sword | gauntlet |
+| Bilac's Crescent Blade | iron sword | |
+| Bilac's Fang Gauntlet | iron sword | gauntlet |
+| Nightclaw Talon | iron sword | |
+| Oriana's Scepter | stick | |
+| Oriana's Void Staff | stick | |
+| Sunraku's Blade (Left / Right) | iron sword | two separate items, mirror images |
+| Sunraku's Chaos Rod | stick | |
 
 Still to make: Stone Staff, Iron Spear.
 
@@ -28,7 +44,9 @@ Then in game (needs cheats/OP):
 /function slf:weapons/give/<name>
 ```
 
-`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`.
+`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade_l`, `sunraku_blade_r`, `sunraku_chaos_rod`.
+
+The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, both Whalelore blades, the Vorpal Knife (the anime's red Vorpal Chopper) and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
 
 ## How it works
 

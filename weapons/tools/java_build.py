@@ -18,7 +18,30 @@ WEAPONS = [
     ("vorpal_chopper", "Vorpal Chopper", mp.vorpal_chopper_cubes, "iron_sword", 7, 2.4, "Vorpal Choppers"),
     ("fossil_rod", "Fossil Rod", mp.fossil_rod_cubes, "stick", 3, 1.6, None),
     ("wood_shield", "Wood Shield", mp.wood_shield_cubes, "shield", None, None, None),
+    # second batch: the main pack's flat weapons, rebuilt in 3D
+    ("vorpal_knife", "Vorpal Knife", mp.vorpal_knife_cubes, "iron_sword", 5, 2.6, None),
+    ("rust_saber", "Rust Saber", mp.rust_saber_cubes, "iron_sword", 5, 1.8, None),
+    ("lycagon_fang", "Lycagon's Fang", mp.lycagon_fang_cubes, "netherite_sword", 9, 1.8, None),
+    ("wethermon_katana", "Wethermon's Blade", mp.wethermon_katana_cubes, "netherite_sword", 10, 1.6, None),
+    ("wethermon_rib_dagger", "Wethermon's Rib Dagger", mp.wethermon_rib_dagger_cubes, "netherite_sword", 7, 2.4, None),
+    ("wethermon_scythe", "Wethermon's Scythe", mp.wethermon_scythe_cubes, "netherite_sword", 11, 1.0, None),
+    ("whalelore_goldsheen", "Whalelore: Goldsheen", mp.whalelore_goldsheen_cubes, "diamond_sword", 8, 1.6, None),
+    ("whalelore_netherlight", "Whalelore: Netherlight", mp.whalelore_netherlight_cubes, "diamond_sword", 7, 2.0, None),
+    ("gilta_brille", "Gilta Brille", mp.gilta_brille_cubes, "golden_sword", 8, 2.0, None),
+    ("bilac_crescent_blade", "Bilac's Crescent Blade", mp.bilac_crescent_blade_cubes, "iron_sword", 8, 1.4, None),
+    ("bilac_fang_gauntlet", "Bilac's Fang Gauntlet", mp.bilac_fang_gauntlet_cubes, "iron_sword", 7, 2.0, None),
+    ("nightclaw_talon", "Nightclaw Talon", mp.nightclaw_talon_cubes, "iron_sword", 7, 2.2, None),
+    ("oriana_scepter", "Oriana's Scepter", mp.oriana_scepter_cubes, "stick", 5, 1.4, None),
+    ("oriana_void_staff", "Oriana's Void Staff", mp.oriana_void_staff_cubes, "stick", 6, 1.2, None),
+    ("sunraku_blade_l", "Sunraku's Blade (Left)", mp.sunraku_blade_l_cubes, "iron_sword", 6, 2.4, None),
+    ("sunraku_blade_r", "Sunraku's Blade (Right)", mp.sunraku_blade_r_cubes, "iron_sword", 6, 2.4, None),
+    ("sunraku_chaos_rod", "Sunraku's Chaos Rod", mp.sunraku_chaos_rod_cubes, "stick", 5, 1.4, None),
 ]
+
+# The main SLF.Mine resource pack has its own (flat) assets/slf/models/item/<name>.json for some of these weapons.
+# With both packs loaded one file would replace the other, so those weapons get a prefixed model file here.
+MAIN_MODELS = os.path.join(os.path.dirname(OUT), "..", "resource_pack", "assets", "slf", "models", "item")
+def model_id(name): return f"weapon_{name}" if os.path.exists(os.path.join(MAIN_MODELS, f"{name}.json")) else name
 
 def r4(v): return round(float(v), 4)
 
@@ -75,7 +98,9 @@ def centered(rot, s, bc, lift=0):
     return {"rotation": rot, "translation": [r4(v) for v in T], "scale": [s] * 3}
 
 # Weapons whose +x side (the sharp edge) should face down in the hand; by default +x faces up.
-EDGE_DOWN = {"mercenary_blade", "marsh_dagger"}
+EDGE_DOWN = {"mercenary_blade", "marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
+             "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade_r",
+             "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille"}
 
 def other_side(t):
     """Same hold turned half a turn about the weapon's length (the grip stays in the fist)."""
@@ -178,14 +203,15 @@ def build():
         weapon = base != "shield"
         cubes = fn(); m = model(cubes, flip=name in EDGE_DOWN, both_hands=weapon,
                                 fp_tilt=FP_TILT if weapon else 0, fp_yaw=FP_YAW if weapon else 0, fp_shift_x=FP_SHIFT_X if weapon else 0)
-        wj(f"{RP}/assets/slf/models/item/{name}.json", m)
+        mid = model_id(name)
+        wj(f"{RP}/assets/slf/models/item/{mid}.json", m)
         icons[name] = mp.icon_from(cubes); icons[name].save(f"{RP}/assets/slf/textures/item/{name}_icon.png")
         wj(f"{RP}/assets/slf/models/item/{name}_icon.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"slf:item/{name}_icon"}})
-        held = {"type": "minecraft:model", "model": f"slf:item/{name}"}
+        held = {"type": "minecraft:model", "model": f"slf:item/{mid}"}
         if base == "shield":   # raise it while blocking, like the vanilla shield
-            wj(f"{RP}/assets/slf/models/item/{name}_blocking.json", {"parent": f"slf:item/{name}", "display": blocking_display(m["display"])})
+            wj(f"{RP}/assets/slf/models/item/{mid}_blocking.json", {"parent": f"slf:item/{mid}", "display": blocking_display(m["display"])})
             held = {"type": "minecraft:condition", "property": "minecraft:using_item",
-                    "on_true": {"type": "minecraft:model", "model": f"slf:item/{name}_blocking"}, "on_false": held}
+                    "on_true": {"type": "minecraft:model", "model": f"slf:item/{mid}_blocking"}, "on_false": held}
         wj(f"{RP}/assets/slf/items/{name}.json", {"model": {"type": "minecraft:select", "property": "minecraft:display_context",
             "cases": [{"when": "gui", "model": {"type": "minecraft:model", "model": f"slf:item/{name}_icon"}}],
             "fallback": held}})
