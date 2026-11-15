@@ -14,7 +14,7 @@ WEAPONS = [
     ("iron_sword", "Iron Sword", mp.iron_sword_cubes, "iron_sword", 6, 1.6, None),
     ("iron_dagger", "Iron Dagger", mp.iron_dagger_cubes, "iron_sword", 4, 2.4, None),
     ("marsh_dagger", "Marsh Dagger", mp.marsh_dagger_cubes, "iron_sword", 5, 2.6, "Marsh Daggers"),
-    ("mercenary_blade", "Mercenary's Blade", mp.mercenary_blade_cubes, "iron_sword", 6, 2.2, "Mercenary's Blades"),
+    ("mercenary_blade", "Mercenary Twinblade", mp.mercenary_blade_cubes, "iron_sword", 6, 2.2, "Mercenary Twinblades"),
     ("vorpal_chopper", "Vorpal Chopper", mp.vorpal_chopper_cubes, "iron_sword", 7, 2.4, "Vorpal Choppers"),
     ("fossil_rod", "Fossil Rod", mp.fossil_rod_cubes, "stick", 3, 1.6, None),
     ("wood_shield", "Wood Shield", mp.wood_shield_cubes, "shield", None, None, None),
@@ -33,8 +33,7 @@ WEAPONS = [
     ("nightclaw_talon", "Nightclaw Talon", mp.nightclaw_talon_cubes, "iron_sword", 7, 2.2, None),
     ("oriana_scepter", "Oriana's Scepter", mp.oriana_scepter_cubes, "stick", 5, 1.4, None),
     ("oriana_void_staff", "Oriana's Void Staff", mp.oriana_void_staff_cubes, "stick", 6, 1.2, None),
-    ("sunraku_blade_l", "Sunraku's Blade (Left)", mp.sunraku_blade_l_cubes, "iron_sword", 6, 2.4, None),
-    ("sunraku_blade_r", "Sunraku's Blade (Right)", mp.sunraku_blade_r_cubes, "iron_sword", 6, 2.4, None),
+    ("sunraku_blade", "Sunraku's Blade", mp.sunraku_blade_cubes, "iron_sword", 6, 2.4, "Sunraku's Blades"),
     ("sunraku_chaos_rod", "Sunraku's Chaos Rod", mp.sunraku_chaos_rod_cubes, "stick", 5, 1.4, None),
 ]
 
@@ -98,8 +97,8 @@ def centered(rot, s, bc, lift=0):
     return {"rotation": rot, "translation": [r4(v) for v in T], "scale": [s] * 3}
 
 # Weapons whose +x side (the sharp edge) should face down in the hand; by default +x faces up.
-EDGE_DOWN = {"mercenary_blade", "marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
-             "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade_r",
+EDGE_DOWN = {"marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
+             "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade",
              "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille"}
 
 def other_side(t):
@@ -139,7 +138,8 @@ def model(cubes, size=0.75, flip=False, both_hands=True, fp_size=None, fp_tilt=0
             "elements": [element(q, oy) for q in cubes],
             "display": display}
 
-# Vanilla 26.2 shield hand poses (models/item/shield.json -> shield_blocking.json): (rotation, translation) pairs
+# Vanilla 26.2 shield hand poses (models/item/shield.json -> shield_blocking.json): (rotation, translation) pairs.
+# Vanilla's scale is 1 in third person and 1.25 in first person.
 SHIELD_VANILLA = {
     "thirdperson_righthand": (([0, 90, 0], [10, 6, -4]), ([45, 155, 0], [-3.49, 11, -2])),
     "thirdperson_lefthand": (([0, 90, 0], [10, 6, 12]), ([45, 155, 0], [11.51, 7, 2.5])),
@@ -152,29 +152,40 @@ def applied(rot, t, left):
     if left: return R([rot[0], -rot[1], -rot[2]]), np.array([-t[0], t[1], t[2]], float)
     return R(rot), np.array(t, float)
 
-def euler_xyz(M):
-    """Inverse of R(): angles (x, y, z) with M = Rx @ Ry @ Rz."""
-    b = math.asin(max(-1.0, min(1.0, M[0, 2])))
-    if abs(M[0, 2]) > 0.99999:   # gimbal lock: fold z into x
-        a, cz = math.atan2(M[2, 1], M[1, 1]), 0.0
-    else:
-        a, cz = math.atan2(-M[1, 2], M[2, 2]), math.atan2(-M[0, 1], M[0, 0])
-    out = [math.degrees(a), math.degrees(b), math.degrees(cz)]
-    assert np.allclose(R(out), M, atol=1e-6), out
-    return out
+# Our round board is 19 across; vanilla's plate is 12 x 22. In third person the shield is shrunk about the handle, so
+# the grip stays in the fist. In first person no arm is drawn and vanilla shows only the top of its tall plate, so
+# there the board is shrunk about a point above it, which puts its top edge where the vanilla plate's top edge is.
+SHIELD_SIZE = {"third": 0.7, "first": 0.8}
+SHIELD_R, VANILLA_TOP = 9.5, 11.0
+SHIELD_PIVOT = {"third": np.array([0.0, 0, -2]),   # centre of the vanilla shield's handle, in model pixels
+                "first": np.array([0.0, (VANILLA_TOP - SHIELD_SIZE["first"] * SHIELD_R) / (1 - SHIELD_SIZE["first"]), 1.5])}
 
-def blocking_display(disp):
-    """Hand poses for blocking: move our normal pose by the same rigid motion vanilla's shield makes when raised."""
-    out = {}
+def shield_pose(rot, t, s_v, left, view):
+    """Vanilla's shield pose, with the model shrunk by SHIELD_SIZE about SHIELD_PIVOT."""
+    Ra, Ta = applied(rot, t, left); s = s_v * SHIELD_SIZE[view]
+    T = Ta + (s_v - s) * (Ra @ (SHIELD_PIVOT[view] - C))
+    if left: T = [-T[0], T[1], T[2]]
+    return {"rotation": list(rot), "translation": [r4(v) for v in T], "scale": [r4(s)] * 3}
+
+def shield_model(cubes):
+    """The shield is laid out where the vanilla shield is (board centred on x = y = 0 just in front of z = 0, handle
+    behind it), so vanilla's own resting and blocking poses apply unchanged. Returns (model, blocking display)."""
+    els = []
+    for q in cubes:
+        el = element(q, 24); f, t = el["from"], el["to"]
+        f[0], t[0] = r4(f[0] - 8), r4(t[0] - 8)
+        f[2], t[2] = r4(-(t[2] - 8) + 0.5), r4(-(f[2] - 8) + 0.5)             # board faces +z, like vanilla's
+        el["faces"]["north"], el["faces"]["south"] = el["faces"]["south"], el["faces"]["north"]
+        els.append(el)
+    rest, block = {}, {}
     for ctx, ((rn, tn), (rb, tb)) in SHIELD_VANILLA.items():
-        left = ctx.endswith("lefthand")
-        own = disp.get(ctx) or disp[ctx.replace("lefthand", "righthand")]   # missing left-hand entries fall back to right
-        Rn, Tn = applied(rn, tn, left); Rb, Tb = applied(rb, tb, left); Ro, To = applied(own["rotation"], own["translation"], left)
-        D = Rb @ Rn.T
-        r, t = euler_xyz(D @ Ro), Tb + D @ (To - Tn)
-        if left: r, t = [r[0], -r[1], -r[2]], [-t[0], t[1], t[2]]
-        out[ctx] = {"rotation": [r4(v) for v in r], "translation": [r4(v) for v in t], "scale": own["scale"]}
-    return out
+        view = ctx[:5]; s_v = 1.25 if view == "first" else 1; left = ctx.endswith("lefthand")
+        rest[ctx], block[ctx] = shield_pose(rn, tn, s_v, left, view), shield_pose(rb, tb, s_v, left, view)
+    bc = np.array([0.0, 0, 3])
+    rest.update({"ground": centered([0, 0, 0], 0.5, bc, 2), "fixed": centered([0, 180, 0], 0.8, bc), "head": centered([0, 0, 0], 1, bc, 14)})
+    return ({"credit": "SLF.Mine weapons", "texture_size": [mp.ATLAS_W, mp.ATLAS_H],
+             "textures": {"0": "slf:item/weapons_atlas", "particle": "slf:item/weapons_atlas"},
+             "elements": els, "display": rest}, block)
 
 def wj(path, obj):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -201,15 +212,16 @@ def build():
     icons = {}
     for name, display, fn, base, dmg, spd, pair in WEAPONS:
         weapon = base != "shield"
-        cubes = fn(); m = model(cubes, flip=name in EDGE_DOWN, both_hands=weapon,
-                                fp_tilt=FP_TILT if weapon else 0, fp_yaw=FP_YAW if weapon else 0, fp_shift_x=FP_SHIFT_X if weapon else 0)
+        cubes = fn()
+        if weapon: m = model(cubes, flip=name in EDGE_DOWN, fp_tilt=FP_TILT, fp_yaw=FP_YAW, fp_shift_x=FP_SHIFT_X)
+        else: m, blocking = shield_model(cubes)
         mid = model_id(name)
         wj(f"{RP}/assets/slf/models/item/{mid}.json", m)
         icons[name] = mp.icon_from(cubes); icons[name].save(f"{RP}/assets/slf/textures/item/{name}_icon.png")
         wj(f"{RP}/assets/slf/models/item/{name}_icon.json", {"parent": "minecraft:item/generated", "textures": {"layer0": f"slf:item/{name}_icon"}})
         held = {"type": "minecraft:model", "model": f"slf:item/{mid}"}
         if base == "shield":   # raise it while blocking, like the vanilla shield
-            wj(f"{RP}/assets/slf/models/item/{mid}_blocking.json", {"parent": f"slf:item/{mid}", "display": blocking_display(m["display"])})
+            wj(f"{RP}/assets/slf/models/item/{mid}_blocking.json", {"parent": f"slf:item/{mid}", "display": blocking})
             held = {"type": "minecraft:condition", "property": "minecraft:using_item",
                     "on_true": {"type": "minecraft:model", "model": f"slf:item/{mid}_blocking"}, "on_false": held}
         wj(f"{RP}/assets/slf/items/{name}.json", {"model": {"type": "minecraft:select", "property": "minecraft:display_context",

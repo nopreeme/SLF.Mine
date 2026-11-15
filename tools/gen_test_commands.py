@@ -160,7 +160,7 @@ def main():
             "tellraw @s " + J(["", rule, T("\n SLF Test Menu ", "gold", bold=True), T(" (operators only)", "dark_gray")])]
     menu.append(row("Items", [run(f"[{label}]", color, f"/function slf:test/kit/{key}", f"{len(ns)} items: " + ", ".join(lang.get(f'item.slf.{n}', NAMES.get(n, title(n))) for n in ns[:12]) + (" ..." if len(ns) > 12 else ""))
                               for key, (label, color, ns) in kits.items()] +
-                       [run("[3D weapons]", "dark_aqua", "/function slf:weapons/give_all", "The 9 weapons of the separate weapons pack (needs it installed)"),
+                       [run("[3D weapons]", "dark_aqua", "/function slf:weapons/give_all", "Every weapon of the separate 3D weapons pack (needs it installed)"),
                         run("[Clear]", "dark_gray", "/clear @s", "Empty your inventory")]))
     lines = {}
     for k, c in sorted(classes.items(), key=lambda kv: kv[1]["id"]):

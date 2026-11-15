@@ -1,6 +1,6 @@
 {
  "parent": "minecraft:item/generated",
  "textures": {
-  "layer0": "slf:item/sunraku_blade_r_icon"
+  "layer0": "slf:item/sunraku_blade_icon"
  }
 }

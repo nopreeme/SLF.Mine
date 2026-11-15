@@ -1,6 +1,6 @@
 # SLF Weapons
 
-Twenty-six Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
+Twenty-five Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
 
 | Weapon | Base item | Notes |
 |---|---|---|
@@ -9,10 +9,10 @@ Twenty-six Shangri-La Frontier weapons as 3D held models with flat inventory ico
 | Iron Sword | iron sword | |
 | Iron Dagger | iron sword | single weapon |
 | Marsh Daggers | iron sword | pair |
-| Mercenary's Blades | iron sword | pair (placeholder name) |
+| Mercenary Twinblades | iron sword | pair; straight double-edged blades |
 | Vorpal Choppers | iron sword | pair (placeholder name) |
 | Fossil Rod | stick | |
-| Wood Shield | shield | raises when blocking |
+| Wood Shield | shield | uses the vanilla shield's resting and blocking poses |
 | Vorpal Knife | iron sword | |
 | Rust Saber | iron sword | |
 | Lycagon's Fang | netherite sword | |
@@ -27,7 +27,7 @@ Twenty-six Shangri-La Frontier weapons as 3D held models with flat inventory ico
 | Nightclaw Talon | iron sword | |
 | Oriana's Scepter | stick | |
 | Oriana's Void Staff | stick | |
-| Sunraku's Blade (Left / Right) | iron sword | two separate items, mirror images |
+| Sunraku's Blades | iron sword | pair |
 | Sunraku's Chaos Rod | stick | |
 
 Still to make: Stone Staff, Iron Spear.
@@ -44,7 +44,7 @@ Then in game (needs cheats/OP):
 /function slf:weapons/give/<name>
 ```
 
-`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade_l`, `sunraku_blade_r`, `sunraku_chaos_rod`.
+`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade`, `sunraku_chaos_rod`.
 
 The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, both Whalelore blades, the Vorpal Knife (the anime's red Vorpal Chopper) and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
 
@@ -79,8 +79,8 @@ Icons are rendered from the models, and a few edge pixels can differ between ope
 
 - `EDGE_DOWN` — weapons that are turned over so the model's +x side (the sharp edge) faces down in the hand. Default is +x up.
 - `FP_TILT`, `FP_YAW`, `FP_SHIFT_X` — first-person hold, relative to vanilla's handheld pose. Kept close to vanilla on purpose: bottom right of the screen, leaning outward. Pure vanilla values push long 3D models off the screen edge; much larger values make weapons lean in toward the crosshair.
-- Left-hand poses are written explicitly for every weapon. Without them the game reuses the right-hand pose with part of the rotation negated, which turns an off-hand blade over. The shield is the exception: it is symmetric left-to-right rather than front-to-back, so it keeps the game's fallback.
-- `SHIELD_VANILLA` — vanilla 26.2 shield poses (copied from the client jar). The blocking pose applies vanilla's normal-to-blocking motion on top of our normal hold, so retuning the normal hold moves the blocking pose with it.
+- Left-hand poses are written explicitly for every weapon. Without them the game reuses the right-hand pose with part of the rotation negated, which turns an off-hand blade over.
+- `SHIELD_VANILLA` — vanilla 26.2 shield poses (copied from the client jar). The shield model is laid out where the vanilla shield is (board in front of the origin, handle behind it), so those poses are used as they are, resting and blocking, in both hands. `SHIELD_SIZE` / `SHIELD_PIVOT` only shrink the board: about the handle in third person (the grip stays in the fist), and about a point above the board in first person (its top edge lands where the vanilla plate's does, so it is on screen).
 
 ## Style
 

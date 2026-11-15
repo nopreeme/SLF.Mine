@@ -21,6 +21,5 @@ function slf:weapons/give/bilac_fang_gauntlet
 function slf:weapons/give/nightclaw_talon
 function slf:weapons/give/oriana_scepter
 function slf:weapons/give/oriana_void_staff
-function slf:weapons/give/sunraku_blade_l
-function slf:weapons/give/sunraku_blade_r
+function slf:weapons/give/sunraku_blade
 function slf:weapons/give/sunraku_chaos_rod

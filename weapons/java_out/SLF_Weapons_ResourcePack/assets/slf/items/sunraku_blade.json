@@ -7,13 +7,13 @@
     "when": "gui",
     "model": {
      "type": "minecraft:model",
-     "model": "slf:item/sunraku_blade_l_icon"
+     "model": "slf:item/sunraku_blade_icon"
     }
    }
   ],
   "fallback": {
    "type": "minecraft:model",
-   "model": "slf:item/weapon_sunraku_blade_l"
+   "model": "slf:item/sunraku_blade"
   }
  }
 }

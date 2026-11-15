@@ -204,11 +204,16 @@ def iron_sword_cubes():
             P(-1.75, 28.25, 3.5, 21, 1, "iron"), P(-0.5, 29, 1, 19.5, 1.4, "ridge"), diamond(0, 49.25, 2.47, 1, "iron")]
 
 def mercenary_blade_cubes():
+    # Mercenary Twinblades: short, straight, double-edged; the same on both sides of the centre line
     C = [P(-1.25, 18.5, 2.5, 1.5, 2.5, "steel"), P(-1, 20, 2, 7, 2, "handle"),
-         P(-2.75, 27, 7, 1.75, 2.5, "steel", [0, 0, -8], [0, 27.8, 0]),
-         P(-2, 28.75, 4, 14, 1, "silver"), P(2, 28.75, 1, 14, 0.6, "face"), P(-1.25, 29.5, 0.75, 12.5, 1.3, "cap")]
-    for y0, w, h in ((42.75, 4.25, 2.5), (45.25, 3.25, 2), (47.25, 2.25, 1.75), (49, 1.25, 1.5)):   # clip point
-        C.append(P(-2, y0, w, h, 1, "silver")); C.append(P(-2 + w, y0, 0.75, h, 0.6, "face"))
+         P(-3.5, 27, 7, 1.75, 2.5, "steel"),
+         P(-2.25, 28.75, 4.5, 14, 1, "silver"), P(-0.4, 28.75, 0.8, 13, 1.3, "steel")]
+    for sx in (-1, 1):
+        C.append(P(1.6 if sx > 0 else -2.35, 28.75, 0.75, 14, 0.6, "face"))
+    for y0, w, h in ((42.75, 3.5, 2.25), (45, 2.5, 2), (47, 1.5, 1.75), (48.75, 0.7, 1.25)):   # point on the centre line
+        C.append(P(-w / 2, y0, w, h, 1, "silver"))
+        if w > 1:
+            for sx in (-1, 1): C.append(P(w / 2 - 0.65 if sx > 0 else -w / 2 - 0.1, y0, 0.75, h, 0.6, "face"))
     return C
 
 def marsh_dagger_cubes():
@@ -253,7 +258,7 @@ def wood_shield_cubes():
             half = round(math.sqrt(v) * 2) / 2
             if half < 1: continue
             C.append(cube(-half, 24 + k, z0, 2 * half, 1, d, m, uo=(8 - half) if half <= 8 else 0))
-    C.append(cube(-1, 22.5, -1.5, 2, 3, 1.5, "rim"))   # hand strap
+    C.append(cube(-1, 21, -1.5, 2, 6, 7, "rim"))   # handle, as deep as the vanilla shield's so the fist sits behind the board
     return C
 
 # ======================= second batch =======================
@@ -419,16 +424,15 @@ def oriana_void_staff_cubes():
     C.append(cube(x - 2.2, y + 3, -2.2, 4.4, 4.4, 4.4, "orchid", [0, 0, 45], [x, y + 5.2, 0]))
     return C
 
-def sunraku_blade_r_cubes():
+def sunraku_blade_cubes():
     C = [diamond(0, 18, 2, 2, "aqua"), P(-1.2, 18.8, 2.4, 1.2, 2.4, "azure"), P(-0.9, 20, 1.8, 7, 1.8, "cloth"),
          P(-3.4, 27, 6.8, 1.3, 2.3, "azure"), P(2.4, 27.3, 1.3, 3.2, 2, "azure", [0, 0, 28], [3, 27.4, 0]),
          diamond(0, 27.7, 2, 2.7, "aqua")]
-    blade, _ = chain2((0, 28.3), [(6, 0, 3.2), (5, 3, 3.1), (4, 9, 2.6), (3, 18, 1.6)], 1, "silver",
+    # sabre curve: the edge (+x) is the outside of the curve and the tip sweeps back toward the spine, as on the katana
+    blade, _ = chain2((0, 28.3), [(6, 0, 3.2), (5, -3, 3.1), (4, -9, 2.6), (3, -18, 1.6)], 1, "silver",
                       strips=((1, 0.8, "face", 0.6),)); C += blade
-    line, _ = chain2((-0.8, 28.3), [(6, 0, 0.7), (5, 3, 0.7), (3, 9, 0.6)], 1.3, "azure"); C += line
+    line, _ = chain2((-0.8, 28.3), [(6, 0, 0.7), (5, -3, 0.7), (3, -9, 0.6)], 1.3, "azure"); C += line
     return C
-
-def sunraku_blade_l_cubes(): return mirror(sunraku_blade_r_cubes())
 
 def sunraku_chaos_rod_cubes():
     C, j = chain((0, 10), [(13, 0, 1.6), (12, -3, 1.6), (7, 3, 1.6)], "mgrip")
