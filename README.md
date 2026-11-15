@@ -442,7 +442,7 @@ Seven unique boss monsters are hidden throughout the world. Defeating them is th
 
 ## Items
 
-**[ITEMS.md](ITEMS.md)** lists every item: icon, stats, description, where it comes from (drops, quests, shops) and its give
+**[ITEM_CATALOG.md](ITEM_CATALOG.md)** lists every item: icon, stats, description, where it comes from (drops, quests, shops) and its give
 command. It is generated from the packs by `tools/gen_item_docs.py`.
 
 ### Weapons

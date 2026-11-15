@@ -89,14 +89,14 @@ class TestGeneratorUpToDate(unittest.TestCase):
 
 class TestItemDocs(unittest.TestCase):
     def test_items_md_is_up_to_date(self):
-        """ITEMS.md is generated from the packs (tools/gen_item_docs.py): re-run the tool after changing an item."""
-        before = (ROOT / "ITEMS.md").read_text(encoding="utf-8")
+        """ITEM_CATALOG.md is generated from the packs (tools/gen_item_docs.py): re-run the tool after changing an item."""
+        before = (ROOT / "ITEM_CATALOG.md").read_text(encoding="utf-8")
         subprocess.run([sys.executable, str(ROOT / "tools" / "gen_item_docs.py")], check=True, capture_output=True)
-        after = (ROOT / "ITEMS.md").read_text(encoding="utf-8")
-        self.assertEqual(before, after, "ITEMS.md is out of date: run python tools/gen_item_docs.py")
+        after = (ROOT / "ITEM_CATALOG.md").read_text(encoding="utf-8")
+        self.assertEqual(before, after, "ITEM_CATALOG.md is out of date: run python tools/gen_item_docs.py")
 
     def test_every_give_command_is_documented(self):
-        text = (ROOT / "ITEMS.md").read_text(encoding="utf-8")
+        text = (ROOT / "ITEM_CATALOG.md").read_text(encoding="utf-8")
         for f in (FN / "give").glob("*.mcfunction"):
             lines = [l for l in f.read_text(encoding="utf-8").splitlines() if l.strip() and not l.startswith("#")]
             if len(lines) == 1: self.assertIn(f"/function slf:give/{f.stem}`", text, f.stem)

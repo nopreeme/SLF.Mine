@@ -1,11 +1,11 @@
 """
-Writes ITEMS.md: every item in the SLF packs - its name, icon, base item, stats, description, where it comes from, and the
+Writes ITEM_CATALOG.md: every item in the SLF packs - its name, icon, base item, stats, description, where it comes from, and the
 command that gives it. Everything is read from the packs themselves (give commands, loot tables, quest and shop functions,
 the resource pack's models and the lang file), so re-run it after adding or changing an item:
 
     python tools/gen_item_docs.py
 
-tests/test_test_suite.py fails while ITEMS.md is out of date.
+tests/test_test_suite.py fails while ITEM_CATALOG.md is out of date.
 """
 import json, re
 from pathlib import Path
@@ -17,7 +17,7 @@ RP = ROOT / "resource_pack" / "assets"
 WEAPONS_DP = ROOT / "weapons" / "java_out" / "SLF_Weapons_Datapack" / "data" / "slf" / "function" / "weapons" / "give"
 WEAPONS_RP = ROOT / "weapons" / "java_out" / "SLF_Weapons_ResourcePack" / "assets"
 LANG = json.loads((RP / "slf" / "lang" / "en_us.json").read_text(encoding="utf-8"))
-OUT = ROOT / "ITEMS.md"
+OUT = ROOT / "ITEM_CATALOG.md"
 
 # ------------------------------------------------------------------ names for the places an item comes from
 MOBS = {"vorpal_bunny": "Vorpal Bunny", "goblin": "Goblin", "red_hat_goblin": "Redcap Goblin", "orc": "Orc", "mud_frog": "Mud Frog",
@@ -238,7 +238,7 @@ def main():
         out += [f"## {s} ({len(groups[s])})", "", header] + [r for _, r in sorted(groups[s], key=lambda x: x[0].lower())] + [""]
     out += [f"## 3D weapons pack ({len(weapons)})", "", "These need the separate weapons data and resource packs.", "", header] + [r for _, r in weapons] + [""]
     OUT.write_text("\n".join(out), encoding="utf-8", newline="\n")
-    print(f"ITEMS.md: {count} items + {len(weapons)} weapons")
+    print(f"ITEM_CATALOG.md: {count} items + {len(weapons)} weapons")
 
 
 if __name__ == "__main__":
