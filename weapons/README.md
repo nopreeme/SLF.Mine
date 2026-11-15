@@ -46,7 +46,7 @@ Then in game (needs cheats/OP):
 
 `<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade_l`, `sunraku_blade_r`, `sunraku_chaos_rod`.
 
-The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Their shapes were designed without reference art and have not been checked in game yet.
+The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, both Whalelore blades, the Vorpal Knife (the anime's red Vorpal Chopper) and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
 
 ## How it works
 

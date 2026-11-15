@@ -99,7 +99,8 @@ def centered(rot, s, bc, lift=0):
 
 # Weapons whose +x side (the sharp edge) should face down in the hand; by default +x faces up.
 EDGE_DOWN = {"mercenary_blade", "marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
-             "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade_r"}
+             "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade_r",
+             "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille"}
 
 def other_side(t):
     """Same hold turned half a turn about the weapon's length (the grip stays in the fist)."""
