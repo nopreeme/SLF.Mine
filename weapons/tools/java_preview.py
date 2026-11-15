@@ -48,7 +48,7 @@ if __name__ == "__main__":
     atlas = Image.open(f"{jb.RP}/assets/slf/textures/item/weapons_atlas.png").convert("RGBA")
     tiles = []
     for n in args:
-        im = render(json.load(open(f"{jb.RP}/assets/slf/models/item/{n}.json")), atlas); ImageDraw.Draw(im).text((8, 6), n, fill="white"); tiles.append(im)
+        im = render(json.load(open(f"{jb.RP}/assets/slf/models/item/{jb.model_id(n)}.json")), atlas); ImageDraw.Draw(im).text((8, 6), n, fill="white"); tiles.append(im)
     if against: tiles.append(Image.open(against).convert("RGB").resize((960, 540), Image.LANCZOS))
     cols = 2 if len(tiles) > 1 else 1; rows = (len(tiles) + cols - 1) // cols
     sheet = Image.new("RGB", (960 * cols, 540 * rows), (20, 20, 20))
