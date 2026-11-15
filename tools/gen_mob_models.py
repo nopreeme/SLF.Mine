@@ -1,5 +1,6 @@
 """
 Mob look models for the resource pack: the Goblin / Redcap Goblin head and the goblin's stone axe.
+Also the full-body Vorpal Bunny and Mud Frog (weapons-pack look), each in a standing and a leaping pose.
 
 SLF mobs are vanilla creatures (a data pack can't add creature types). A goblin is a small zombie whose head slot holds
 an item with item_model slf:goblin_head: the client draws that 3D model over the zombie's head (any item in the head
@@ -436,6 +437,120 @@ def draw_letter(px):
     for x, y in ((7, 9), (8, 9), (7, 10), (8, 10)): px[x, y] = (170, 30, 30, 255)
 
 
+# ================================================================ full-body mobs, in the weapons pack's look
+# Chunky cuboids, one flat colour per material, three tones by face (top lit, sides mid, underside and back dark): the
+# scheme of weapons/tools/mp.py, kept separate here because the weapons pack is standalone. A model is a list of boxes
+# B(x0, y0, z0, w, h, d, material, rot); it faces +z (the item display turns it round, like the snake and Mud Digger),
+# stands on y = 0 and is centred on x = z = 8. Each model rides its invisible vanilla mob: see mob/body/*.mcfunction.
+MOB_MATS = {
+    "fur":     (170, 158, 150), "fur_d":  (134, 122, 118), "white":  (240, 236, 228), "pink":   (224, 160, 160),
+    "eye_red": (196, 30, 44),   "pupil":  (40, 10, 16),    "glint":  (255, 244, 244), "scarf":  (146, 40, 56),
+    "scarf_d": (104, 26, 44),   "grip":   (70, 40, 40),    "blade":  (190, 36, 44),   "blade_l": (236, 96, 84),
+    "teal":    (40, 132, 120),  "teal_d": (24, 96, 92),    "teal_l": (110, 204, 180), "cream":  (206, 214, 170),
+    "eye_y":   (236, 226, 150), "lid":    (60, 70, 60),    "mud":    (98, 78, 58),    "mud_d":  (70, 54, 42),
+}
+MOB_TONES = {"lit": 1.1, "mid": 0.94, "dark": 0.76}
+MOB_FACE_TONE = {"up": "lit", "south": "mid", "east": "mid", "west": "mid", "north": "dark", "down": "dark"}
+
+
+def mob_atlas():
+    """256x256, a 16x16 px tile per (material, tone), filled row by row (see _mob_tile)."""
+    im = Image.new("RGBA", (256, 256), (0, 0, 0, 0)); px = im.load()
+    for r, col in enumerate(MOB_MATS.values()):
+        for c, k in enumerate(MOB_TONES.values()):
+            shade = tuple(min(255, int(v * k)) for v in col) + (255,)
+            tx, ty = _mob_tile(r, c)
+            for x in range(16):
+                for y in range(16): px[tx * 16 + x, ty * 16 + y] = shade
+    return im
+
+
+def _mob_tile(mat, tone):
+    i = mat * len(MOB_TONES) + tone
+    return i % 16, i // 16
+
+
+def B(x0, y0, z0, w, h, d, m, rot=None):
+    """One box. rot = (axis, angle, pivot) turns it about one axis."""
+    r = list(MOB_MATS).index(m)
+    fs = {}
+    for f, tone in MOB_FACE_TONE.items():
+        c = list(MOB_TONES).index(tone)
+        tx, ty = _mob_tile(r, c)
+        fs[f] = {"uv": [tx + 0.25, ty + 0.25, tx + 0.75, ty + 0.75], "texture": "#0"}
+    e = {"from": [round(x0, 3), round(y0, 3), round(z0, 3)], "to": [round(x0 + w, 3), round(y0 + h, 3), round(z0 + d, 3)], "faces": fs}
+    if rot: e["rotation"] = {"angle": rot[1], "axis": rot[0], "origin": [round(v, 3) for v in rot[2]]}
+    return e
+
+
+def mob_model(els):
+    for e in els: assert all(-16 <= v <= 32 for v in e["from"] + e["to"]), e
+    return {"credit": "SLF.Mine mobs", "texture_size": [256, 256],
+            "textures": {"0": "slf:item/mob_atlas", "particle": "slf:item/mob_atlas"}, "elements": els}
+
+
+def vorpal_bunny_model(leap=False):
+    """After the anime design: a warm-grey rabbit standing upright, white paws and feet, long ears with pink insides, big red
+    eyes, a maroon scarf trailing behind, a crimson knife in its right paw. leap = the pose while it is off the ground."""
+    leg = 55 if leap else 0          # legs kicked back
+    ear = -50 if leap else -8        # ears swept back
+    els = [B(4, 4, 4.8, 8, 4.6, 6, "fur"), B(4.8, 8.6, 5.3, 6.4, 4.2, 5, "fur"),                  # pear-shaped body
+           B(5.4, 4.6, 10.6, 5.2, 5.6, 0.5, "white"),                                           # pale belly
+           B(6.4, 4.6, 2.6, 3.2, 3.2, 2.6, "white"),                                            # tail
+           B(4, 13.4, 4.4, 8, 6.4, 7, "fur"),                                                   # head
+           B(6, 13.8, 11.2, 4, 2.6, 1, "white"), B(7.4, 15.8, 12, 1.2, 0.9, 0.5, "pink"),       # muzzle, nose
+           B(4.2, 12, 4.4, 7.6, 2.4, 6.6, "scarf"), B(3.8, 12.4, 6, 8.4, 1.6, 3.4, "scarf_d")]  # scarf round the neck
+    for x in (4.3, 9.6):                                                                        # eyes
+        els += [B(x, 15.4, 11.2, 2.1, 2.6, 0.5, "eye_red"), B(x + 0.55, 15.9, 11.5, 1, 1.5, 0.4, "pupil"),
+                B(x + 0.3, 17.1, 11.6, 0.7, 0.6, 0.4, "glint")]
+    for x, lean in ((4.5, 12), (9.3, -24)):                                                     # ears: one up, one cocked out
+        px = x + 1.1
+        els += [B(x, 19.2, 6.6, 2.2, 8.5, 1.3, "fur", ("x", ear, [px, 19.6, 7.2])) if leap else B(x, 19.2, 6.6, 2.2, 8.5, 1.3, "fur", ("z", lean, [px, 19.6, 7.2])),
+                B(x + 0.45, 20.2, 7.8, 1.3, 6.4, 0.3, "pink", ("x", ear, [px, 19.6, 7.2])) if leap else B(x + 0.45, 20.2, 7.8, 1.3, 6.4, 0.3, "pink", ("z", lean, [px, 19.6, 7.2]))]
+    for x in (4.2, 8.6):                                                                        # thighs and long white feet
+        hip = [x + 1.6, 4.6, 7.5]
+        els += [B(x, 1.4, 5.6, 3.2, 3.6, 4.4, "fur_d", ("x", leg, hip)), B(x + 0.2, 0, 6.6, 2.8, 1.5, 5.6, "white", ("x", leg, hip))]
+    # left arm (its own left = +x): tucked against the chest, white paw
+    els += [B(11, 8.4, 7.4, 1.6, 3.6, 1.8, "fur", ("x", -35 if not leap else -70, [11.8, 11.6, 8.2])),
+            B(11, 7.2, 7.6, 1.6, 1.3, 1.9, "white", ("x", -35 if not leap else -70, [11.8, 11.6, 8.2]))]
+    # right arm (-x) held out and down, with the knife: dark wrapped grip, crimson blade pointing forward and down
+    a = -30 if not leap else -75; sh = [4.2, 11.6, 8.2]
+    els += [B(3.4, 7.6, 7.4, 1.6, 4.4, 1.8, "fur", ("x", a, sh)), B(3.4, 6.4, 7.6, 1.6, 1.3, 1.9, "white", ("x", a, sh)),
+            B(3.7, 5.6, 6.2, 1, 1, 3.6, "grip", ("x", a, sh)), B(3.6, 5.4, 9.6, 1.2, 1.4, 0.6, "pupil", ("x", a, sh)),
+            B(3.9, 5.2, 10.2, 0.6, 1.8, 6.5, "blade", ("x", a, sh)), B(3.9, 5.2, 10.2, 0.65, 0.6, 6.5, "blade_l", ("x", a, sh)),
+            B(3.9, 5.6, 16.7, 0.6, 1, 1.4, "blade", ("x", a, sh))]
+    # the scarf's tail streaming out behind
+    drop = 0 if leap else 1.3                                                                   # hangs in steps when standing
+    els += [B(9.4, 11.8, -1, 3.2, 2.4, 6, "scarf"), B(9.8, 11.8 - drop, -6.6, 2.6, 2.2, 6, "scarf_d"),
+            B(10.2, 11.9 - 2 * drop, -11.2, 1.8, 1.7, 5, "scarf")]
+    return mob_model(els)
+
+
+def mud_frog_model(leap=False):
+    """After the anime shot: a squat, glossy teal frog, a cream band running through sleepy pale-yellow eyes and round its
+    sides, cream belly and lip, mud smeared over its back. leap = hind legs stretched out (also its swimming pose)."""
+    els = [B(2.5, 1, 2, 11, 7.2, 11, "teal"), B(3.5, 8.2, 3, 9, 1.8, 9, "teal"),                # body and domed back
+           B(3, 1, 13, 10, 3.6, 1.4, "teal"), B(3.4, 4.6, 13, 9.2, 2.4, 1, "teal"),            # face
+           B(3, 0.4, 2.6, 10, 0.6, 11.4, "cream"),                                             # belly
+           B(3.2, 2.6, 14.3, 9.6, 0.5, 0.25, "cream"),                                         # lip line
+           B(2.2, 4.7, 8.6, 11.6, 1.3, 5.6, "cream"),                                          # the band through the eyes
+           B(6.9, 6.6, 14, 0.5, 0.4, 0.2, "teal_d"), B(8.6, 6.6, 14, 0.5, 0.4, 0.2, "teal_d"), # nostrils
+           B(4.2, 10, 8.6, 2.8, 0.3, 1.2, "teal_l"), B(10.4, 9.2, 5, 1.2, 0.4, 2.4, "teal_l"), # glossy highlights
+           B(4.6, 9.9, 3.6, 3.6, 0.6, 3, "mud"), B(8.6, 9.9, 6.4, 2.6, 0.5, 2.8, "mud_d"),      # mud on its back
+           B(2.2, 6, 3, 0.5, 2.2, 3.4, "mud"), B(13.3, 5.4, 6, 0.5, 2.6, 2.6, "mud_d"), B(6, 8.1, 1.7, 4, 1.4, 0.5, "mud")]
+    for x in (1.3, 12.3):                                                                       # bulging eyes, half shut
+        els += [B(x, 4.4, 10.6, 2.4, 2.6, 2.8, "eye_y"), B(x - 0.1, 6, 10.5, 2.6, 1.1, 3, "teal_d"),
+                B(x - 0.1, 5.2, 10.9, 2.6, 0.5, 2.6, "lid")]
+    for x in (0.9, 12.7):
+        if leap:                                                                                # hind legs trailing, front legs reaching
+            els += [B(x, 1.6, -4.5, 2.4, 2.4, 8, "teal_d"), B(x - 0.2, 1.2, -8.5, 2.8, 1, 4.4, "teal"),
+                    B(x + 0.6, 1.2, 12.6, 1.8, 1.8, 4.2, "teal")]
+        else:                                                                                   # folded hind legs, planted front feet
+            els += [B(x, 0.6, 1.6, 2.4, 4.6, 6.2, "teal_d"), B(x - 0.4, 0, 5.4, 2.8, 1, 4.6, "teal"),
+                    B(x + 0.6, 0, 11, 1.8, 3.6, 2.2, "teal"), B(x + 0.3, 0, 12.4, 2.4, 0.8, 2.6, "teal_d")]
+    return mob_model(els)
+
+
 def main():
     (RP / "textures" / "item").mkdir(parents=True, exist_ok=True)
     head_texture().save(RP / "textures" / "item" / "goblin_head.png")
@@ -443,11 +558,14 @@ def main():
     orc_texture().save(RP / "textures" / "item" / "orc_head.png")
     snake_texture().save(RP / "textures" / "item" / "ravenous_snake.png")
     digger_texture().save(RP / "textures" / "item" / "mud_digger.png")
+    mob_atlas().save(RP / "textures" / "item" / "mob_atlas.png")
     models = {"goblin_head": head_model(False), "red_hat_goblin_head": head_model(True), "goblin_axe": axe_model(), "orc_head": orc_head_model(),
               "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
               "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair),
               "mud_digger": digger_model(), "mud_digger_tooth": item_icon("mud_digger_tooth", draw_tooth), "digger_hide": item_icon("digger_hide", draw_hide),
-              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle), "tomic_journal": item_icon("tomic_journal", draw_journal), "plated_vambraces": item_icon("plated_vambraces", draw_vambraces), "sealed_letter": item_icon("sealed_letter", draw_letter)}
+              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle), "tomic_journal": item_icon("tomic_journal", draw_journal), "plated_vambraces": item_icon("plated_vambraces", draw_vambraces), "sealed_letter": item_icon("sealed_letter", draw_letter),
+              "vorpal_bunny": vorpal_bunny_model(), "vorpal_bunny_leap": vorpal_bunny_model(True),
+              "mud_frog": mud_frog_model(), "mud_frog_leap": mud_frog_model(True)}
     (RP / "items").mkdir(parents=True, exist_ok=True)
     for name, m in models.items():
         (RP / "models" / "item" / f"{name}.json").write_text(json.dumps(m, indent=1) + "\n", encoding="utf-8", newline="\n")

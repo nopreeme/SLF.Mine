@@ -25,3 +25,4 @@ data modify storage slf:mob color set value "red"
 attribute @s minecraft:movement_speed base set 0.38
 function slf:mob/apply_stats with storage slf:mob
 function slf:mob/level_tags
+function slf:mob/body/bunny

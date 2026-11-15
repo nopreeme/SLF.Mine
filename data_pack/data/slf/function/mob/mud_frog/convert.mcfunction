@@ -1,4 +1,4 @@
-# Runs as a frog: turns it into a Mud Frog (design doc V9, Diremarsh). Body: vanilla's green (cold) frog at 1.6 size,
+# Runs as a frog: turns it into a Mud Frog (design doc V9, Diremarsh). Hitbox: a vanilla frog at 1.6 size (its look is mob/body/frog),
 # "below knee level". Non-aggressive: it only hits back when attacked (mob/mud_frog/hit). Its mud coating makes swords
 # nearly useless; blunt, piercing and fire weapons do full damage. Drops Mud Frog Skin for the Splitblade set.
 execute store result score @s slf.mob_level run random value 14..18
@@ -24,3 +24,4 @@ data modify storage slf:mob color set value "dark_aqua"
 function slf:mob/apply_stats with storage slf:mob
 function slf:mob/level_tags
 attribute @s minecraft:attack_damage base set 10
+function slf:mob/body/frog
