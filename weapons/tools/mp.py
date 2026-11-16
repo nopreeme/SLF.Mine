@@ -223,12 +223,17 @@ def mercenary_blade_cubes():
     return C
 
 def marsh_dagger_cubes():
+    # Marsh Dagger, after the anime: a green blade veined with pale cracks that swells, steps in at a notch on the
+    # back, then sweeps to the point in one S-curve; a pale bevel on the edge (+x); an angular olive guard with
+    # paler plates; a dark wrapped grip and round pommel
     C = [P(-1.3, 17.5, 2.6, 2.2, 2.6, "rim"), P(-0.9, 19.5, 1.8, 7.5, 1.8, "mgrip"),
-         P(-2.5, 27, 5, 3.5, 2.75, "olive"), P(-1.5, 30, 3, 1, 2.2, "olive"),
+         P(-2.4, 27, 5.6, 3.3, 2.75, "olive"), P(-1.5, 30, 3, 1, 2.2, "olive"),
+         P(-1.9, 27.5, 1.5, 2.2, 2.95, "wrap"), P(1.3, 28.3, 1.5, 1.6, 2.95, "wrap"),
          P(1.75, 28, 1.75, 4.5, 1.75, "olive", [0, 0, 68], [2.5, 28.6, 0])]
-    blade, _ = chain2((0, 30.8), [(5, 18, 3.5), (5, -24, 3.5), (5, 22, 3.2), (4.5, -20, 2.6), (3.5, 12, 1.8), (2.5, -5, 1)],
-                      1, "marsh", strips=((1, 0.8, "medge", 0.6), (-1, 0.6, "mdark", 1.2)))
-    return C + blade
+    path = [(5, 12, 3.8), (4.5, 0, 4), (4.5, -16, 3.4), (4.5, -18, 3.6), (4, -4, 2.7), (3, 12, 1.5)]
+    blade, j = chain2((0, 30.8), path, 1, "marsh", strips=((1, 0.8, "medge", 0.6), (-1, 0.6, "mdark", 1.2))); C += blade
+    x, y = j[2]; C.append(P(x - 2.4, y - 0.4, 1.4, 3, 1, "marsh", [0, 0, -52], [x - 1.7, y, 0]))      # the step on the back
+    return C
 
 def vorpal_chopper_cubes():
     C = [P(-1.4, 18.5, 2.8, 1.5, 2.8, "cap"), diamond(0, 17.6, 1.6, 1.6, "gem"),
@@ -470,37 +475,47 @@ def togetsu_waning_cubes():   # the dark left-hand blade: hex nut, red bead and 
                                                P(-0.4, 14.6, 0.9, 2.8, 0.9, "bone", [0, 0, -24], [0, 17, 0])])
 
 def ducusram_cubes():
-    # Ducusram, after the anime: the Marsh Dagger's jagged line grown broad, deep blue shot with pale cracks,
-    # white edges, on a teal grip with swept guard horns
-    C = [P(-1.2, 17.6, 2.4, 1.8, 2.4, "teal"), P(-0.9, 19.4, 1.8, 7.6, 1.8, "teal"),
-         P(-2.6, 27, 5.2, 2.6, 2.6, "teal"),
-         P(-5.6, 26.2, 1.6, 4.6, 1.6, "teal", [0, 0, 52], [-2.6, 28, 0]), P(4, 26.2, 1.6, 4.6, 1.6, "teal", [0, 0, -52], [2.6, 28, 0])]
-    path = [(5.5, 15, 4.6), (5.5, -22, 4.6), (5.5, 20, 4.2), (5, -18, 3.4), (4, 11, 2.3), (3, -5, 1.2)]
-    blade, j = chain2((0, 29.4), path, 1, "ducus", strips=((1, 0.8, "face", 0.6), (-1, 0.8, "face", 0.6))); C += blade
-    for (x, y), a in ((j[1], 62), (j[2], -64), (j[3], 58)):                                    # barbs at the bends
-        C.append(P(x - 0.8, y - 0.6, 1.6, 4, 0.9, "ducus", [0, 0, a], [x, y, 0]))
-        C.append(P(x - 0.3, y + 2.6, 0.6, 1.4, 0.6, "face", [0, 0, a], [x, y, 0]))
+    # Ducusram, after the anime: the Marsh Dagger grown into a broad swept blade, deep blue shot with pale cracks.
+    # The pale edge (+x) is the outside of the curve; two horns hook back off the inside; a sculpted teal guard,
+    # dark wrapped grip and round pommel
+    C = [P(-1.3, 17.2, 2.6, 2.2, 2.6, "mgrip"), P(-0.9, 19.4, 1.8, 7.4, 1.8, "mgrip"),
+         P(-2.4, 26.6, 6.2, 3.4, 2.8, "teal"), P(-1.6, 30, 3.4, 1, 2.2, "teal"),
+         P(2.2, 27.4, 1.9, 4.6, 1.9, "teal", [0, 0, 64], [3, 28.2, 0]), P(-0.2, 27.4, 0.5, 2.4, 2.95, "crystal")]
+    path = [(5.5, 10, 4.4), (5.5, -6, 5), (5, -22, 4.6), (4.5, -36, 3.6), (4, -48, 2.4), (3, -58, 1.2)]
+    blade, j = chain2((0.4, 30.6), path, 1, "ducus", strips=((1, 1, "face", 0.6),)); C += blade
+    for k, a, L, w in ((1, 228, 5.4, 1.9), (3, 246, 3.6, 1.5)):                                   # horns off the inside
+        x, y = j[k]; x -= path[k][2] / 2 - 0.6
+        C.append(P(x - w / 2, y, w, L, 0.9, "ducus", [0, 0, a], [x, y, 0]))
+        C.append(P(x - w / 2 - 0.25, y, 0.6, L, 0.6, "face", [0, 0, a], [x, y, 0]))
+    C.append(P(2.4, 30.4, 1.4, 3, 0.9, "ducus", [0, 0, 62], [3, 31, 0]))                           # notch horn by the guard
     return C
 
 def empire_bee_estoc_cubes():
-    # Empire Bee Twinblade, right hand: a long violet estoc; black grip bound in gold, pale bulb at the guard,
-    # an angular black knuckle bow, a rose point on the pommel
-    C = [diamond(0, 16.2, 1.5, 1.5, "rose"), P(-0.85, 17, 1.7, 7.6, 1.7, "void"),
-         P(-1.5, 24.4, 3, 2.6, 2.8, "sheen"), P(-1.8, 27, 3.6, 1.2, 3, "gold")]
-    C += bands((18.2, 20.4, 22.6), 2.1, "gold", 0.6)
-    bow, _ = chain((1.7, 27.2), [(5.2, 152, 0.9), (5.4, 207, 0.9)], "void"); C += bow
-    for y0, w, h in ((28.2, 1.5, 8), (36.2, 1.3, 7), (43.2, 1.05, 5.5), (48.7, 0.75, 3.3)):
+    # Empire Bee Twinblade, right hand, after the anime: a long violet estoc. From the pommel up: a rose spike,
+    # gold ring, black grip, gold ring, a pale carved bulb, a black neck wound with gold, then the blade; an
+    # angular black bow runs from the neck out and back to the pommel
+    C = [diamond(0, 15.2, 1.4, 1.4, "rose"), P(-1.1, 15.9, 2.2, 0.8, 2.2, "gold"), P(-0.85, 16.7, 1.7, 9.4, 1.7, "void"),
+         P(-1.15, 26.1, 2.3, 0.7, 2.3, "gold"), P(-1.5, 26.8, 3, 3, 2.8, "sheen"), P(-0.85, 29.8, 1.7, 4, 1.7, "void")]
+    for k, gy in enumerate((30.1, 31.3, 32.5)):                                                  # the gold winding
+        C.append(P(-1.1, gy, 2.2, 0.7, 2.1, "gold", [0, 0, 24], [0, gy + 0.35, 0]))
+    bow, _ = chain((1.1, 32.4), [(8.4, 148, 0.9), (9.2, 205, 0.9)], "void"); C += bow
+    for y0, w, h in ((33.6, 1.5, 7), (40.6, 1.3, 6.4), (47, 1.05, 5), (52, 0.75, 3)):
         C.append(P(-w / 2, y0, w, h, 0.9, "orchid"))
-    C.append(P(-0.2, 28.2, 0.4, 20, 1.15, "lavender"))
+    C.append(P(-0.2, 33.6, 0.4, 19.6, 1.15, "lavender"))
     return C
 
 def empire_bee_maingauche_cubes():
-    # Empire Bee Twinblade, left hand: a steel parrying dagger with gold quillons and a violet-and-gold shell guard
-    return [diamond(0, 18.3, 1.5, 1.5, "rose"), P(-0.85, 19.1, 1.7, 7.9, 1.7, "void"),
-            P(-4.2, 27, 8.4, 1, 1.8, "gold"), P(-4.7, 26.6, 0.9, 1.8, 1.4, "gold"), P(3.8, 26.6, 0.9, 1.8, 1.4, "gold"),
-            P(1.3, 19.6, 2.4, 7.4, 3, "orchid"), P(3.5, 19.6, 0.5, 7.4, 3.2, "gold"), P(1.3, 19.2, 2.7, 0.6, 3.2, "gold"),
-            P(-1.1, 28, 2.2, 11, 0.9, "silver"), P(-0.3, 28, 0.6, 10.4, 1.2, "ridge"),
-            P(-0.75, 39, 1.5, 2, 0.9, "silver"), diamond(0, 41.2, 1.06, 0.9, "silver")]
+    # Empire Bee Twinblade, left hand, after the anime: a steel parrying dagger. Gold block at the blade, flared gold
+    # quillons, and a violet shell guard edged and scrolled in gold that bows from the quillon to the pommel
+    C = [diamond(0, 17.6, 1.4, 1.4, "rose"), P(-0.85, 18.4, 1.7, 8.6, 1.7, "void"),
+         P(-1.3, 27, 2.6, 1.8, 2.4, "gold"), P(-4.6, 27.2, 9.2, 0.9, 1.6, "gold"),
+         P(-5.2, 26.6, 1, 2, 1.3, "gold", [0, 0, -20], [-4.6, 27.6, 0]), P(4.2, 26.6, 1, 2, 1.3, "gold", [0, 0, 20], [4.6, 27.6, 0]),
+         P(-1.1, 28.8, 2.2, 11, 0.9, "silver"), P(-0.3, 28.8, 0.6, 10.4, 1.2, "ridge"),
+         P(-0.75, 39.8, 1.5, 2, 0.9, "silver"), diamond(0, 42, 1.06, 0.9, "silver")]
+    shell, _ = chain2((3.6, 27), [(3.4, 172, 2.6), (3.4, 190, 2.6), (2.6, 214, 2.2)], 3, "orchid",
+                      strips=((-1, 0.5, "gold", 3.2), (1, 0.5, "gold", 3.2))); C += shell
+    scroll, _ = chain2((3.6, 26.6), [(3, 178, 0.5), (3, 196, 0.5)], 3.3, "gold"); C += scroll
+    return C
 
 def dullahan_decapitator_cubes():
     # General Dullahan's Decapitator, after the anime: a two-handed executioner's sword. Long black grip, dark

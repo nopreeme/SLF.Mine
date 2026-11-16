@@ -119,7 +119,7 @@ def centered(rot, s, bc, lift=0):
 EDGE_DOWN = {"marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
              "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade",
              "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille", "togetsu", "togetsu_twin", "blue_predator",
-             "super_cat_teaser", "antinomy", "slaughter_bringer"}
+             "super_cat_teaser", "antinomy", "slaughter_bringer", "ducusram"}
 
 def other_side(t):
     """Same hold turned half a turn about the weapon's length (the grip stays in the fist)."""
