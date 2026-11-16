@@ -35,7 +35,20 @@ WEAPONS = [
     ("oriana_void_staff", "Oriana's Void Staff", mp.oriana_void_staff_cubes, "stick", 6, 1.2, None),
     ("sunraku_blade", "Sunraku's Blade", mp.sunraku_blade_cubes, "iron_sword", 6, 2.4, "Sunraku's Blades"),
     ("sunraku_chaos_rod", "Sunraku's Chaos Rod", mp.sunraku_chaos_rod_cubes, "stick", 5, 1.4, None),
+    # third batch: weapons from the source, modelled on the Shangri-La Frontier wiki's art and Evan's manga references
+    ("togetsu", "Togetsu: Waxing", mp.togetsu_waxing_cubes, "iron_sword", 8, 2.4, "Togetsu"),
+    ("ducusram", "Ducusram", mp.ducusram_cubes, "diamond_sword", 8, 2.6, "Ducusram"),
+    ("empire_bee_twinblade", "Empire Bee Twinblade", mp.empire_bee_estoc_cubes, "diamond_sword", 7, 2.6, "Empire Bee Twinblade"),
+    ("dullahan_decapitator", "General Dullahan's Decapitator", mp.dullahan_decapitator_cubes, "iron_sword", 11, 1.0, None),
+    ("vorpal_sledge", "Vorpal Sledge", mp.vorpal_sledge_cubes, "stick", 10, 0.8, None),
+    ("blue_predator", "Blue Predator", mp.blue_predator_cubes, "diamond_sword", 9, 1.6, None),
+    ("super_cat_teaser", "Super Cat-Teaser Lv.100", mp.super_cat_teaser_cubes, "iron_sword", 6, 2.0, None),
+    ("dis_pater", "Dis Pater", mp.dis_pater_cubes, "shield", None, None, None),
 ]
+
+# Pairs whose off-hand blade is a different weapon from the main-hand one: pair name -> the twin's cube list.
+# The twin is built as <name>_twin (model, icon and item definition, no give command of its own).
+TWINS = {"togetsu": mp.togetsu_waning_cubes, "empire_bee_twinblade": mp.empire_bee_maingauche_cubes}
 
 # The main SLF.Mine resource pack has its own (flat) assets/slf/models/item/<name>.json for some of these weapons.
 # With both packs loaded one file would replace the other, so those weapons get a prefixed model file here.
@@ -99,7 +112,8 @@ def centered(rot, s, bc, lift=0):
 # Weapons whose +x side (the sharp edge) should face down in the hand; by default +x faces up.
 EDGE_DOWN = {"marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
              "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade",
-             "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille"}
+             "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille", "togetsu", "togetsu_twin", "blue_predator",
+             "super_cat_teaser"}
 
 def other_side(t):
     """Same hold turned half a turn about the weapon's length (the grip stays in the fist)."""
@@ -176,6 +190,7 @@ def shield_model(cubes):
         f[0], t[0] = r4(f[0] - 8), r4(t[0] - 8)
         f[2], t[2] = r4(-(t[2] - 8) + 0.5), r4(-(f[2] - 8) + 0.5)             # board faces +z, like vanilla's
         el["faces"]["north"], el["faces"]["south"] = el["faces"]["south"], el["faces"]["north"]
+        if "rotation" in el: el["rotation"]["origin"] = [r4(el["rotation"]["origin"][0] - 8), el["rotation"]["origin"][1], 2]
         els.append(el)
     rest, block = {}, {}
     for ctx, ((rn, tn), (rb, tb)) in SHIELD_VANILLA.items():
@@ -210,7 +225,7 @@ def build():
     os.makedirs(f"{RP}/assets/slf/textures/item", exist_ok=True)
     mp.texture().save(f"{RP}/assets/slf/textures/item/weapons_atlas.png")
     icons = {}
-    for name, display, fn, base, dmg, spd, pair in WEAPONS:
+    for name, display, fn, base, dmg, spd, pair in WEAPONS + [(n + "_twin", None, f, "stick", None, None, None) for n, f in TWINS.items()]:
         weapon = base != "shield"
         cubes = fn()
         if weapon: m = model(cubes, flip=name in EDGE_DOWN, fp_tilt=FP_TILT, fp_yaw=FP_YAW, fp_shift_x=FP_SHIFT_X)
@@ -238,7 +253,7 @@ def build():
     for name, display, fn, base, dmg, spd, pair in WEAPONS:
         if pair:
             item = components(name, pair, base, dmg, spd, f'weapon:"{name}",pair:"{name}"')
-            twin = components(name, pair, "stick", None, None, f'twin:"{name}",is_twin:1b')
+            twin = components(name + "_twin" if name in TWINS else name, pair, "stick", None, None, f'twin:"{name}",is_twin:1b')
             sel = '*[minecraft:custom_data~{slf:{pair:"%s"}}]' % name
             check += [f"# {pair}",
                       'execute unless items entity @s weapon.mainhand %s run clear @s *[minecraft:custom_data~{slf:{twin:"%s"}}]' % (sel, name),

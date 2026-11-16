@@ -23,3 +23,11 @@ function slf:weapons/give/oriana_scepter
 function slf:weapons/give/oriana_void_staff
 function slf:weapons/give/sunraku_blade
 function slf:weapons/give/sunraku_chaos_rod
+function slf:weapons/give/togetsu
+function slf:weapons/give/ducusram
+function slf:weapons/give/empire_bee_twinblade
+function slf:weapons/give/dullahan_decapitator
+function slf:weapons/give/vorpal_sledge
+function slf:weapons/give/blue_predator
+function slf:weapons/give/super_cat_teaser
+function slf:weapons/give/dis_pater

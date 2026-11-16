@@ -1,0 +1,6 @@
+{
+ "parent": "minecraft:item/generated",
+ "textures": {
+  "layer0": "slf:item/empire_bee_twinblade_icon"
+ }
+}

@@ -53,6 +53,10 @@ RAMPS.update({   # second batch of weapons; append only, the atlas position of a
     "amber":    [c(150, 70, 10), c(226, 130, 16), c(250, 186, 40), c(255, 236, 130)],
     "crimson":  [c(70, 10, 24), c(130, 20, 34), c(190, 36, 44), c(236, 96, 84)],
 })
+RAMPS.update({   # source-accurate batch; append only
+    "ducus":    [c(14, 30, 110), c(24, 60, 170), c(36, 90, 214), c(200, 230, 255)],
+    "moss":     [c(40, 56, 20), c(84, 108, 30), c(132, 156, 44), c(196, 210, 96)],
+})
 MATS = list(RAMPS)
 assert len(MATS) * 3 <= (ATLAS_W // TILE_W) * (ATLAS_H // TILE_H), "atlas is full"
 SHADES = {"lit": 1.1, "mid": 0.94, "dark": 0.74}
@@ -89,6 +93,8 @@ def pattern(m, x, y):
     if m == "void": return 0 if y % 5 == 4 else 2
     if m == "amber": return 1 if (x * 2 + y) % 7 in (0, 1) else (3 if (x - y) % 6 == 0 else 2)   # mottled resin
     if m == "crimson": return 3 if (x + y) % 11 == 0 else 2
+    if m == "ducus": return 3 if ((x * 3 + y) % 7 == 0 or (x - 2 * y) % 9 == 0) else 2            # pale cracks through deep blue
+    if m == "moss": return 1 if y % 7 == 6 else 2
     return 2
 
 def tile_origin(m, shade):
@@ -441,6 +447,135 @@ def sunraku_chaos_rod_cubes():
           P(x - 0.8, y + 5.6, 1.6, 4.2, 1.6, "emerald"), diamond(x, y + 9.8, 1.13, 1.6, "emerald"),
           P(x - 4.6, y + 2.4, 1.4, 4.4, 1.4, "emerald", [0, 0, -34], [x - 2.4, y + 3, 0]),
           P(x + 3.2, y + 2.4, 1.4, 3.4, 1.4, "emerald", [0, 0, 34], [x + 2.4, y + 3, 0])]
+    return C
+
+# ======================= source-accurate batch (wiki art and Evan's manga references) =======================
+def _togetsu(body, edge, line, pommel):
+    # Togetsu, after the anime: a broad crescent chopper on a dark red wrapped grip. The cutting edge (+x) is the
+    # outside of the curve; a horn juts back from the heel of the blade.
+    C = pommel + [P(-0.95, 19.5, 1.9, 7.6, 1.9, "redwrap"), P(-1.4, 27, 2.8, 1.6, 2.6, "silver")]
+    path = [(4.5, 14, 6.4), (4.5, 2, 7.4), (4.5, -11, 7), (4, -24, 5.6), (3.5, -37, 3.9), (3, -50, 2.1)]
+    blade, _ = chain2((1.2, 28.4), path, 1, body, strips=((1, 0.9, edge, 0.6),)); C += blade
+    seam, _ = chain2((0.2, 28.4), [(L, a, 0.5) for L, a, w in path[:4]], 1.25, line); C += seam
+    C.append(P(-5.6, 27.6, 2.4, 4.6, 1, body, [0, 0, 38], [-3.2, 28.6, 0]))                    # horn at the heel
+    return C
+
+def togetsu_waxing_cubes():   # the white right-hand blade
+    return _togetsu("face", "silver", "cap", [diamond(0, 18.4, 1.7, 1.7, "gem"), P(-1.1, 18.9, 2.2, 0.8, 2.2, "cap")])
+
+def togetsu_waning_cubes():   # the dark left-hand blade: hex nut, red bead and a white fang on the pommel
+    return _togetsu("iron", "silver", "cap", [P(-1.3, 18.3, 2.6, 1.4, 2.6, "steel"), diamond(0, 17.5, 1.5, 1.5, "gem"),
+                                               P(-0.4, 14.6, 0.9, 2.8, 0.9, "bone", [0, 0, -24], [0, 17, 0])])
+
+def ducusram_cubes():
+    # Ducusram, after the anime: the Marsh Dagger's jagged line grown broad, deep blue shot with pale cracks,
+    # white edges, on a teal grip with swept guard horns
+    C = [P(-1.2, 17.6, 2.4, 1.8, 2.4, "teal"), P(-0.9, 19.4, 1.8, 7.6, 1.8, "teal"),
+         P(-2.6, 27, 5.2, 2.6, 2.6, "teal"),
+         P(-5.6, 26.2, 1.6, 4.6, 1.6, "teal", [0, 0, 52], [-2.6, 28, 0]), P(4, 26.2, 1.6, 4.6, 1.6, "teal", [0, 0, -52], [2.6, 28, 0])]
+    path = [(5.5, 15, 4.6), (5.5, -22, 4.6), (5.5, 20, 4.2), (5, -18, 3.4), (4, 11, 2.3), (3, -5, 1.2)]
+    blade, j = chain2((0, 29.4), path, 1, "ducus", strips=((1, 0.8, "face", 0.6), (-1, 0.8, "face", 0.6))); C += blade
+    for (x, y), a in ((j[1], 62), (j[2], -64), (j[3], 58)):                                    # barbs at the bends
+        C.append(P(x - 0.8, y - 0.6, 1.6, 4, 0.9, "ducus", [0, 0, a], [x, y, 0]))
+        C.append(P(x - 0.3, y + 2.6, 0.6, 1.4, 0.6, "face", [0, 0, a], [x, y, 0]))
+    return C
+
+def empire_bee_estoc_cubes():
+    # Empire Bee Twinblade, right hand: a long violet estoc; black grip bound in gold, pale bulb at the guard,
+    # an angular black knuckle bow, a rose point on the pommel
+    C = [diamond(0, 16.2, 1.5, 1.5, "rose"), P(-0.85, 17, 1.7, 7.6, 1.7, "void"),
+         P(-1.5, 24.4, 3, 2.6, 2.8, "sheen"), P(-1.8, 27, 3.6, 1.2, 3, "gold")]
+    C += bands((18.2, 20.4, 22.6), 2.1, "gold", 0.6)
+    bow, _ = chain((1.7, 27.2), [(5.2, 152, 0.9), (5.4, 207, 0.9)], "void"); C += bow
+    for y0, w, h in ((28.2, 1.5, 8), (36.2, 1.3, 7), (43.2, 1.05, 5.5), (48.7, 0.75, 3.3)):
+        C.append(P(-w / 2, y0, w, h, 0.9, "orchid"))
+    C.append(P(-0.2, 28.2, 0.4, 20, 1.15, "lavender"))
+    return C
+
+def empire_bee_maingauche_cubes():
+    # Empire Bee Twinblade, left hand: a steel parrying dagger with gold quillons and a violet-and-gold shell guard
+    return [diamond(0, 18.3, 1.5, 1.5, "rose"), P(-0.85, 19.1, 1.7, 7.9, 1.7, "void"),
+            P(-4.2, 27, 8.4, 1, 1.8, "gold"), P(-4.7, 26.6, 0.9, 1.8, 1.4, "gold"), P(3.8, 26.6, 0.9, 1.8, 1.4, "gold"),
+            P(1.3, 19.6, 2.4, 7.4, 3, "orchid"), P(3.5, 19.6, 0.5, 7.4, 3.2, "gold"), P(1.3, 19.2, 2.7, 0.6, 3.2, "gold"),
+            P(-1.1, 28, 2.2, 11, 0.9, "silver"), P(-0.3, 28, 0.6, 10.4, 1.2, "ridge"),
+            P(-0.75, 39, 1.5, 2, 0.9, "silver"), diamond(0, 41.2, 1.06, 0.9, "silver")]
+
+def dullahan_decapitator_cubes():
+    # General Dullahan's Decapitator, after the anime: a two-handed executioner's sword. Long black grip, dark
+    # cross guard with squared ends, a broad pale blade narrowing evenly to the point
+    C = [P(-1.3, 10.6, 2.6, 1.8, 2.6, "cap"), P(-0.9, 12.4, 1.8, 14.6, 1.8, "cloth"),
+         P(-6.5, 27, 13, 1.6, 2.2, "cap"), P(-7.3, 26.4, 1.6, 2.8, 2.8, "cap"), P(5.7, 26.4, 1.6, 2.8, 2.8, "cap"),
+         P(-1.4, 28.6, 2.8, 1.2, 1.6, "iron"), P(-0.5, 29.8, 1, 13, 1.4, "cap")]
+    for y0, w, h in ((29.8, 6.4, 5), (34.8, 5.8, 5), (39.8, 5, 5), (44.8, 4, 4), (48.8, 3, 3), (51.8, 2, 2.4), (54.2, 1, 1.8)):
+        C.append(P(-w / 2, y0, w, h, 1, "silver"))
+        for sx in (-1, 1): C.append(P(w / 2 - 0.7 if sx > 0 else -w / 2 - 0.1, y0, 0.8, h, 0.6, "face"))
+    return C
+
+def vorpal_sledge_cubes():
+    # Vorpal Sledge, after the manga: a long banded shaft with a spiked butt, and a blocky dark red head bound with
+    # gold rings, a spike on top
+    C = [cube(-0.5, 9.4, -0.5, 1, 2.4, 1, "rim", [0, 0, 45], [0, 10.6, 0]), cube(-1.3, 11.6, -1.3, 2.6, 1.6, 2.6, "gold"),
+         cube(-0.95, 13.2, -0.95, 1.9, 26, 1.9, "void")]
+    for gy in (17, 19.6, 22.2, 24.8, 27.4):
+        C.append(cube(-1.25, gy, -1.25, 2.5, 1.3, 2.5, "redwrap"))
+    C += [cube(-1.7, 38.4, -1.7, 3.4, 1.8, 3.4, "gold"), cube(-5, 40.2, -3, 10, 6.4, 6, "crimson")]
+    for x0 in (-3.9, -1.4, 1.1):                                                        # three gold rings round the head
+        C.append(cube(x0, 39.9, -3.3, 1.4, 7, 6.6, "gold"))
+    for sx in (-1, 1):
+        C.append(cube(5 if sx > 0 else -7.4, 39.5, -3.7, 2.4, 7.8, 7.4, "rim"))
+        C.append(cube(7.4 if sx > 0 else -8.1, 40.4, -2.8, 0.7, 6, 5.6, "gold"))
+    C += [cube(-1.3, 46.6, -1.3, 2.6, 1, 2.6, "rim"), cube(-0.9, 47, -0.9, 1.8, 1.8, 1.8, "rim", [0, 0, 45], [0, 47.9, 0])]
+    return C
+
+def blue_predator_cubes():
+    # Blue Predator, after the manga: a long wavy single-edged blade, the flat filled with a dark swirling grain,
+    # three fangs hanging off the back near the tip, on a knobbly bone hilt
+    C = [P(-1.5, 16.6, 3, 2.4, 2.8, "bone"), P(-1.05, 19, 2.1, 7.6, 2.1, "bone"),
+         P(-2.6, 26.6, 5.2, 2.2, 2.8, "bone"), diamond(0, 27.7, 1.6, 3, "void"),
+         P(-4.4, 26.4, 2.2, 1.1, 1.2, "bone", [0, 0, -30], [-2.6, 27.4, 0]), P(2.2, 26.4, 2.2, 1.1, 1.2, "bone", [0, 0, 30], [2.6, 27.4, 0])]
+    C += bands((20.2, 22.4, 24.6), 2.5, "bone", 0.9)
+    path = [(5, -6, 3.6), (5, 6, 4), (5, 14, 4.4), (5, 4, 4.6), (4.5, -10, 4.2), (4, -22, 3.2), (3, -34, 1.9)]
+    blade, j = chain2((0, 28.6), path, 1, "silver", strips=((1, 0.8, "face", 0.6),)); C += blade
+    grain, _ = chain2((-0.3, 28.6), [(L, a, w * 0.55) for L, a, w in path[:6]], 1.2, "night"); C += grain
+    for k, L in ((4, 2.6), (5, 2.3), (6, 1.9)):                                                # fangs on the back edge
+        x, y = j[k]
+        C.append(P(x - 2.6, y - 2.2, 0.9, L, 0.8, "bone", [0, 0, 62], [x - 1.6, y - 1, 0]))
+    return C
+
+def super_cat_teaser_cubes():
+    # Super Cat-Teaser Lv.100, after the colour art: a long olive-green comb of a sword, a row of pale spines
+    # down the whole edge, bolted plates along the back, a dark red wrapped grip with a hooked brown pommel
+    C = [P(-1, 17.4, 2.6, 1.6, 2, "knot", [0, 0, 30], [0, 18.4, 0]), P(-0.95, 19, 1.9, 8, 1.9, "redwrap"),
+         P(-1.9, 27, 3.8, 3.4, 2.4, "moss"), diamond(0, 28.7, 1.3, 2.7, "void")]
+    path = [(6, 4, 3.4), (6, -2, 3.4), (6, -8, 3.2), (5, -3, 3), (3, 24, 3)]
+    blade, j = chain2((0, 30.2), path, 1.3, "moss", strips=((-1, 0.7, "olive", 1.6),)); C += blade
+    for k in (1, 3):                                                                         # bolts on the back plates
+        x, y = j[k]; C.append(diamond(x - 1.2, y, 0.9, 1.9, "sheen"))
+    y = 30.8
+    while y < 53:                                                                            # the spines
+        seg = min(range(len(path)), key=lambda k: abs((j[k][1] + j[k + 1][1]) / 2 - y))
+        (x0, y0), (x1, y1) = j[seg], j[seg + 1]; t = max(0.0, min(1.0, (y - y0) / (y1 - y0)))
+        x = x0 + (x1 - x0) * t + 1.5; L = 3.4 if int(y * 10) % 3 else 2.4
+        C.append(P(x, y, L, 0.5, 0.5, "bone", [0, 0, -8 + (int(y * 7) % 5) * 4], [x, y, 0]))
+        y += 1.15
+    return C
+
+def dis_pater_cubes():
+    # Dis Pater, after the manga: a round shield in rings - a dark rune band on the rim, a pale ring split into four
+    # by spokes, and three crystals set round a dark boss. Laid out like wood_shield (board in front of z, handle behind)
+    C = []
+    for R, m, z0, d in ((9.5, "void", -3.1, 1.2), (8.4, "lilac", -3.5, 2), (4.2, "steel", -3.9, 2.2), (1.6, "void", -4.2, 2.4)):
+        for k in range(-int(R + .5), int(R + .5)):
+            v = R * R - (k + .5) ** 2
+            if v <= 0: continue
+            half = round(math.sqrt(v) * 2) / 2
+            if half < 1: continue
+            C.append(cube(-half, 24 + k, z0, 2 * half, 1, d, m))
+    for a in (0, 90):                                                                        # spokes
+        C.append(cube(-8.4, 23.75, -3.7, 16.8, 0.5, 0.4, "void", [0, 0, a + 45], [0, 24, 0]))
+    for a in (90, 210, 330):                                                                 # crystals
+        C.append(cube(-0.7, 25.2, -4.7, 1.4, 3.4, 1.2, "crystal", [0, 0, a], [0, 24, 0]))
+    C.append(cube(-1, 21, -1.5, 2, 6, 7, "rim"))
     return C
 
 # ---------------- icons drawn from the models ----------------

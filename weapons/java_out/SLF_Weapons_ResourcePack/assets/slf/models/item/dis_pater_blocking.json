@@ -1,0 +1,73 @@
+{
+ "parent": "slf:item/dis_pater",
+ "display": {
+  "thirdperson_righthand": {
+   "rotation": [
+    45,
+    155,
+    0
+   ],
+   "translation": [
+    -2.5827,
+    6.6632,
+    -1.0573
+   ],
+   "scale": [
+    0.7,
+    0.7,
+    0.7
+   ]
+  },
+  "thirdperson_lefthand": {
+   "rotation": [
+    45,
+    155,
+    0
+   ],
+   "translation": [
+    8.067,
+    4.0976,
+    2.0083
+   ],
+   "scale": [
+    0.7,
+    0.7,
+    0.7
+   ]
+  },
+  "firstperson_righthand": {
+   "rotation": [
+    0,
+    180,
+    -5
+   ],
+   "translation": [
+    -13.2037,
+    5.6657,
+    -9.375
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  "firstperson_lefthand": {
+   "rotation": [
+    0,
+    180,
+    -5
+   ],
+   "translation": [
+    2.8115,
+    7.0671,
+    -9.375
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ }
+}

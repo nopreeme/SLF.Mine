@@ -1,6 +1,6 @@
 # SLF Weapons
 
-Twenty-five Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
+Thirty-three Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
 
 | Weapon | Base item | Notes |
 |---|---|---|
@@ -29,6 +29,14 @@ Twenty-five Shangri-La Frontier weapons as 3D held models with flat inventory ic
 | Oriana's Void Staff | stick | |
 | Sunraku's Blades | iron sword | pair |
 | Sunraku's Chaos Rod | stick | |
+| Togetsu | iron sword | pair: Waxing (white) in the main hand, Waning (dark) in the off hand |
+| Ducusram | diamond sword | pair |
+| Empire Bee Twinblade | diamond sword | pair: estoc in the main hand, main-gauche in the off hand |
+| General Dullahan's Decapitator | iron sword | two-handed look |
+| Vorpal Sledge | stick | |
+| Blue Predator | diamond sword | |
+| Super Cat-Teaser Lv.100 | iron sword | |
+| Dis Pater | shield | blocks like the Wood Shield |
 
 Still to make: Stone Staff, Iron Spear.
 
@@ -44,14 +52,16 @@ Then in game (needs cheats/OP):
 /function slf:weapons/give/<name>
 ```
 
-`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade`, `sunraku_chaos_rod`.
+`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade`, `sunraku_chaos_rod`, or one of the third batch: `togetsu`, `ducusram`, `empire_bee_twinblade`, `dullahan_decapitator`, `vorpal_sledge`, `blue_predator`, `super_cat_teaser`, `dis_pater`.
 
 The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, both Whalelore blades, the Vorpal Knife (the anime's red Vorpal Chopper) and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
+
+The third batch are weapons from the source material, built first on purpose (the list to work through is the Shangri-La Frontier wiki's Weapons category, then the Japanese wiki's equipment page). Togetsu, Ducusram, the Empire Bee Twinblade and General Dullahan's Decapitator follow the anime art on the wiki; the Vorpal Sledge, Blue Predator and Dis Pater follow manga panels; the Super Cat-Teaser follows colour art. Their colours where only a manga panel exists (Blue Predator, Dis Pater) are a guess.
 
 ## How it works
 
 - **No CustomModelData.** Each weapon is a vanilla base item with the `item_model` component pointing at `assets/slf/items/<name>.json`. That definition switches on `display_context`: the inventory (`gui`) shows a flat pixel icon, everything else shows the 3D model.
-- **Pairs are one item.** While a paired weapon is in the main hand and the off hand is empty, `slf:weapons/pairs/tick` puts a display-only twin in the off hand. The twin is removed when you switch away, and dropped twins are deleted.
+- **Pairs are one item.** While a paired weapon is in the main hand and the off hand is empty, `slf:weapons/pairs/tick` puts a display-only twin in the off hand. The twin is removed when you switch away, and dropped twins are deleted. A pair whose two blades differ (`TWINS` in `java_build.py`: Togetsu, Empire Bee Twinblade) gets a second model, `<name>_twin`, shown in the off hand.
 - **Shield.** `wood_shield` switches to a second model while in use (`minecraft:using_item`), the same way the vanilla shield does.
 - The data pack adds its own `data/minecraft/tags/function/tick.json`. Function tags merge across packs, so it coexists with the main data pack. If these files are ever merged *into* the main data pack, combine the two `tick.json` files rather than overwriting one.
 
