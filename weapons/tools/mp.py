@@ -204,13 +204,11 @@ def iron_sword_cubes():
             P(-1.75, 28.25, 3.5, 21, 1, "iron"), P(-0.5, 29, 1, 19.5, 1.4, "ridge"), diamond(0, 49.25, 2.47, 1, "iron")]
 
 def mercenary_blade_cubes():
-    # Mercenary Twinblades: short, straight, double-edged; the same on both sides of the centre line
-    C = [P(-1.25, 18.5, 2.5, 1.5, 2.5, "steel"), P(-1, 20, 2, 7, 2, "handle"),
-         P(-3.5, 27, 7, 1.75, 2.5, "steel"),
-         P(-2.25, 28.75, 4.5, 14, 1, "silver"), P(-0.4, 28.75, 0.8, 13, 1.3, "steel")]
-    for sx in (-1, 1):
-        C.append(P(1.6 if sx > 0 else -2.35, 28.75, 0.75, 14, 0.6, "face"))
-    for y0, w, h in ((42.75, 3.5, 2.25), (45, 2.5, 2), (47, 1.5, 1.75), (48.75, 0.7, 1.25)):   # point on the centre line
+    # Mercenary Twinblade, after the anime (ep. 1): a broad short sword, the same on both sides of the centre line,
+    # with a thin dark fuller, a plain grey block guard, a black wrapped grip and a grey pommel cap
+    C = [P(-1.25, 18.5, 2.5, 1.5, 2.5, "steel"), P(-1, 20, 2, 7, 2, "cloth"),
+         P(-4, 27, 8, 1.75, 2.5, "steel"), P(-0.25, 28.75, 0.5, 15.5, 1.15, "cap")]
+    for y0, w, h in ((28.75, 4.5, 4.25), (33, 5, 7), (40, 4.5, 3), (43, 3.5, 2.25), (45.25, 2.5, 2), (47.25, 1.5, 1.75), (49, 0.7, 1.25)):
         C.append(P(-w / 2, y0, w, h, 1, "silver"))
         if w > 1:
             for sx in (-1, 1): C.append(P(w / 2 - 0.65 if sx > 0 else -w / 2 - 0.1, y0, 0.75, h, 0.6, "face"))
