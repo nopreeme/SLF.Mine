@@ -1,6 +1,6 @@
 # SLF Weapons
 
-Thirty-three Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
+Thirty-nine Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
 
 | Weapon | Base item | Notes |
 |---|---|---|
@@ -37,6 +37,12 @@ Thirty-three Shangri-La Frontier weapons as 3D held models with flat inventory i
 | Blue Predator | diamond sword | |
 | Super Cat-Teaser Lv.100 | iron sword | |
 | Dis Pater | shield | blocks like the Wood Shield |
+| Flame General's Decapitator | diamond sword | |
+| Darkhelm Spear Zanbaralia | stick | spear |
+| Giant-Killing Skewer | stick | spear |
+| Antinomy | netherite sword | the purple greatsword form |
+| Slaughter Bringer | stick | polearm |
+| Holy Spear Caledfwlch | stick | spear |
 
 Still to make: Stone Staff, Iron Spear.
 
@@ -52,11 +58,11 @@ Then in game (needs cheats/OP):
 /function slf:weapons/give/<name>
 ```
 
-`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade`, `sunraku_chaos_rod`, or one of the third batch: `togetsu`, `ducusram`, `empire_bee_twinblade`, `dullahan_decapitator`, `vorpal_sledge`, `blue_predator`, `super_cat_teaser`, `dis_pater`.
+`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `vorpal_knife`, `rust_saber`, `lycagon_fang`, `wethermon_katana`, `wethermon_rib_dagger`, `wethermon_scythe`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `bilac_crescent_blade`, `bilac_fang_gauntlet`, `nightclaw_talon`, `oriana_scepter`, `oriana_void_staff`, `sunraku_blade`, `sunraku_chaos_rod`, or one of the third batch: `togetsu`, `ducusram`, `empire_bee_twinblade`, `dullahan_decapitator`, `vorpal_sledge`, `blue_predator`, `super_cat_teaser`, `dis_pater`, `flame_decapitator`, `zanbaralia`, `giant_killing_skewer`, `antinomy`, `slaughter_bringer`, `caledfwlch`.
 
 The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, both Whalelore blades, the Vorpal Knife (the anime's red Vorpal Chopper) and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
 
-The third batch are weapons from the source material, built first on purpose (the list to work through is the Shangri-La Frontier wiki's Weapons category, then the Japanese wiki's equipment page). Togetsu, Ducusram, the Empire Bee Twinblade and General Dullahan's Decapitator follow the anime art on the wiki; the Vorpal Sledge, Blue Predator and Dis Pater follow manga panels; the Super Cat-Teaser follows colour art. Their colours where only a manga panel exists (Blue Predator, Dis Pater) are a guess.
+The third batch are weapons from the source material, built first on purpose (the list to work through is the Shangri-La Frontier wiki's Weapons category, then the Japanese wiki's equipment page). Togetsu, Ducusram, the Empire Bee Twinblade and General Dullahan's Decapitator follow the anime art on the wiki; the Vorpal Sledge, Blue Predator and Dis Pater follow manga panels; the Super Cat-Teaser follows colour art. The Flame General's Decapitator, Zanbaralia, Antinomy (its purple form), Slaughter Bringer and Holy Spear Caledfwlch follow the wiki's anime and colour art; the Giant-Killing Skewer follows a manga panel. Colours where only a manga panel exists (Blue Predator, Dis Pater, Giant-Killing Skewer, Vorpal Sledge) are a guess. Not built, because the wiki art does not show the weapon clearly enough: Shakkotsu Breaker, Underworld Keystaff, Holy Sword Excalibur; Regalecus Cestus is a pair of hand wraps, which a held item model cannot show.
 
 ## How it works
 

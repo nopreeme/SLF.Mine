@@ -31,3 +31,9 @@ function slf:weapons/give/vorpal_sledge
 function slf:weapons/give/blue_predator
 function slf:weapons/give/super_cat_teaser
 function slf:weapons/give/dis_pater
+function slf:weapons/give/flame_decapitator
+function slf:weapons/give/zanbaralia
+function slf:weapons/give/giant_killing_skewer
+function slf:weapons/give/antinomy
+function slf:weapons/give/slaughter_bringer
+function slf:weapons/give/caledfwlch

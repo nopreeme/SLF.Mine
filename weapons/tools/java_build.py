@@ -44,6 +44,12 @@ WEAPONS = [
     ("blue_predator", "Blue Predator", mp.blue_predator_cubes, "diamond_sword", 9, 1.6, None),
     ("super_cat_teaser", "Super Cat-Teaser Lv.100", mp.super_cat_teaser_cubes, "iron_sword", 6, 2.0, None),
     ("dis_pater", "Dis Pater", mp.dis_pater_cubes, "shield", None, None, None),
+    ("flame_decapitator", "Flame General's Decapitator", mp.flame_decapitator_cubes, "diamond_sword", 12, 1.2, None),
+    ("zanbaralia", "Darkhelm Spear Zanbaralia", mp.zanbaralia_cubes, "stick", 9, 1.4, None),
+    ("giant_killing_skewer", "Giant-Killing Skewer", mp.giant_killing_skewer_cubes, "stick", 9, 1.2, None),
+    ("antinomy", "Antinomy", mp.antinomy_cubes, "netherite_sword", 13, 0.9, None),
+    ("slaughter_bringer", "Slaughter Bringer", mp.slaughter_bringer_cubes, "stick", 10, 1.2, None),
+    ("caledfwlch", "Holy Spear Caledfwlch", mp.caledfwlch_cubes, "stick", 11, 1.3, None),
 ]
 
 # Pairs whose off-hand blade is a different weapon from the main-hand one: pair name -> the twin's cube list.
@@ -113,7 +119,7 @@ def centered(rot, s, bc, lift=0):
 EDGE_DOWN = {"marsh_dagger", "rust_saber", "lycagon_fang", "wethermon_katana", "wethermon_rib_dagger",
              "wethermon_scythe", "bilac_crescent_blade", "nightclaw_talon", "vorpal_knife", "sunraku_blade",
              "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille", "togetsu", "togetsu_twin", "blue_predator",
-             "super_cat_teaser"}
+             "super_cat_teaser", "antinomy", "slaughter_bringer"}
 
 def other_side(t):
     """Same hold turned half a turn about the weapon's length (the grip stays in the fist)."""

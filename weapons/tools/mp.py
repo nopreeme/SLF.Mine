@@ -56,6 +56,7 @@ RAMPS.update({   # second batch of weapons; append only, the atlas position of a
 RAMPS.update({   # source-accurate batch; append only
     "ducus":    [c(14, 30, 110), c(24, 60, 170), c(36, 90, 214), c(200, 230, 255)],
     "moss":     [c(40, 56, 20), c(84, 108, 30), c(132, 156, 44), c(196, 210, 96)],
+    "abyss":    [c(30, 14, 60), c(56, 28, 100), c(82, 44, 138), c(150, 110, 200)],
 })
 MATS = list(RAMPS)
 assert len(MATS) * 3 <= (ATLAS_W // TILE_W) * (ATLAS_H // TILE_H), "atlas is full"
@@ -95,6 +96,7 @@ def pattern(m, x, y):
     if m == "crimson": return 3 if (x + y) % 11 == 0 else 2
     if m == "ducus": return 3 if ((x * 3 + y) % 7 == 0 or (x - 2 * y) % 9 == 0) else 2            # pale cracks through deep blue
     if m == "moss": return 1 if y % 7 == 6 else 2
+    if m == "abyss": return 0 if (x * 2 + y) % 7 in (0, 1) else (3 if (x - y) % 9 == 0 else (1 if (x + y) % 3 == 0 else 2))   # mottled
     return 2
 
 def tile_origin(m, shade):
@@ -420,7 +422,7 @@ def oriana_scepter_cubes():
 
 def oriana_void_staff_cubes():
     C, j = chain((0, 10), [(12, 0, 1.6), (12, -3, 1.6), (10, 3, 1.6)], "void")
-    C += bands((21.4, 23.4, 25.4), 2.3, "handle") + [diamond(0, 9.6, 2, 2, "orchid")]
+    C += bands((21.4, 23.4, 25.4), 2.3, "handle") + [diamond(0, 10.2, 2, 2, "orchid")]
     x, y = j[3]
     C.append(cube(x - 1.5, y - 1, -1.5, 3, 1.6, 3, "handle"))
     for s in (-1, 1):                                                           # claws holding the orb
@@ -440,7 +442,7 @@ def sunraku_blade_cubes():
 
 def sunraku_chaos_rod_cubes():
     C, j = chain((0, 10), [(13, 0, 1.6), (12, -3, 1.6), (7, 3, 1.6)], "mgrip")
-    C += bands((21.4, 23.4, 25.4), 2.3, "handle") + [diamond(0, 9.6, 2, 2, "emerald")]
+    C += bands((21.4, 23.4, 25.4), 2.3, "handle") + [diamond(0, 10.2, 2, 2, "emerald")]
     x, y = j[3]
     C += [cube(x - 1.5, y - 1, -1.5, 3, 1.6, 3, "handle"),
           cube(x - 2.4, y + 1.4, -2.4, 4.8, 4.8, 4.8, "emerald", [0, 0, 45], [x, y + 3.8, 0]),
@@ -576,6 +578,80 @@ def dis_pater_cubes():
     for a in (90, 210, 330):                                                                 # crystals
         C.append(cube(-0.7, 25.2, -4.7, 1.4, 3.4, 1.2, "crystal", [0, 0, a], [0, 24, 0]))
     C.append(cube(-1, 21, -1.5, 2, 6, 7, "rim"))
+    return C
+
+def flame_decapitator_cubes():
+    # Flame General's Decapitator, after the anime: a long narrow longsword. Black cross-wrapped grip, a mottled dark
+    # bar under a slim silver guard with drooping tips, a plain steel blade
+    C = [P(-1.2, 10.4, 2.4, 1.6, 2.4, "silver"), P(-0.9, 12, 1.8, 12.6, 1.8, "cloth"), P(-3, 24.6, 6, 1.5, 2.2, "night"),
+         P(-4.6, 27, 9.2, 1, 1.8, "silver"), P(-5.4, 25.9, 1.1, 1.6, 1.4, "silver"), P(4.3, 25.9, 1.1, 1.6, 1.4, "silver"),
+         P(-0.3, 28, 0.6, 24, 1.3, "ridge")]
+    for y0, w, h in ((28, 2.6, 10), (38, 2.3, 8), (46, 1.9, 6), (52, 1.3, 2.6), (54.6, 0.7, 1.4)):
+        C.append(P(-w / 2, y0, w, h, 0.9, "silver"))
+    return C
+
+def zanbaralia_cubes():
+    # Darkhelm Spear Zanbaralia, after the anime: an all-black spear. Violet binding below a black-and-white collar,
+    # and a head of flat black blades - a long centre one flanked by two more
+    C = [cube(-0.75, 10.2, -0.75, 1.5, 32.4, 1.5, "void"), cube(-1.1, 42, -1.1, 2.2, 2.2, 2.2, "face"),
+         cube(-1.3, 42.7, -1.3, 2.6, 0.8, 2.6, "rim")]
+    for gy in (33, 34.8, 36.6, 38.4, 40.2):
+        C.append(cube(-0.95, gy, -0.95, 1.9, 1.1, 1.9, "lavender"))
+    C += [P(-0.9, 44.2, 1.8, 8.6, 0.9, "rim"), P(-0.55, 52.8, 1.1, 2, 0.9, "rim"), diamond(0, 55, 0.78, 0.9, "rim")]
+    for sx in (-1, 1):
+        C.append(P(sx * 1.9 - 0.6, 44, 1.2, 8.4, 0.8, "void", [0, 0, sx * 14], [sx * 1.4, 44.2, 0]))
+        C.append(P(sx * 2.6 - 0.5, 43.2, 1, 3.2, 0.8, "void", [0, 0, sx * 132], [sx * 1.6, 44.6, 0]))
+    return C
+
+def giant_killing_skewer_cubes():
+    # Giant-Killing Skewer, after the manga: a spear with a broad leaf blade and two long wings sweeping back down
+    # the shaft
+    C = [cube(-1.1, 10.2, -1.1, 2.2, 1.6, 2.2, "steel"), cube(-0.75, 11.2, -0.75, 1.5, 29, 1.5, "cloth"),
+         cube(-1.2, 39.4, -1.2, 2.4, 1.6, 2.4, "steel"), P(-0.35, 41, 0.7, 12, 1.3, "night")]
+    for y0, w, h in ((41, 2.4, 1.6), (42.6, 4, 2.6), (45.2, 4.8, 3.4), (48.6, 3.8, 2.8), (51.4, 2.6, 2.2), (53.6, 1.5, 1.6), (55.2, 0.7, 0.8)):
+        C.append(P(-w / 2, y0, w, h, 1, "silver"))
+        if w > 2:
+            for sx in (-1, 1): C.append(P(w / 2 - 0.65 if sx > 0 else -w / 2 - 0.1, y0, 0.75, h, 0.6, "face"))
+    for sx in (-1, 1):
+        wing, _ = chain2((sx * 1.3, 42.4), [(5.5, sx * 150, 2.4), (5, sx * 166, 1.7), (3.5, sx * 176, 0.9)], 0.9, "silver",
+                         strips=((sx, 0.6, "face", 0.6),)); C += wing
+    return C
+
+def antinomy_cubes():
+    # Antinomy, after the colour art: a huge slab of a greatsword in mottled deep purple, single-edged, with a dark
+    # thorned guard and a pale eye set in it
+    C = [P(-1.2, 10.4, 2.4, 1.8, 2.4, "void"), P(-0.95, 12.2, 1.9, 14, 1.9, "abyss"), P(-3.4, 26, 6.8, 2.8, 2.8, "void"),
+         diamond(0, 27.4, 1.4, 3, "face"),
+         P(-5.4, 26.4, 2.6, 1.2, 1.4, "void", [0, 0, -32], [-3.4, 27.2, 0]), P(2.8, 26.4, 2.6, 1.2, 1.4, "void", [0, 0, 32], [3.4, 27.2, 0])]
+    C += bands((14.4, 17.4, 20.4, 23.4), 2.3, "void", 0.7)
+    path = [(5.5, -4, 7.4), (5.5, 2, 8), (5, 6, 8), (5, 3, 7.2), (4, -14, 5.2), (3, -34, 2.8)]
+    blade, _ = chain2((0.6, 28.4), path, 1.2, "abyss", strips=((1, 0.9, "lavender", 0.7), (-1, 0.7, "void", 1.5))); C += blade
+    return C
+
+def slaughter_bringer_cubes():
+    # Slaughter Bringer, after the anime: a polearm with a ragged black blade veined in pink, torn spikes down both
+    # sides, on a banded shaft
+    C = [cube(-0.75, 10.2, -0.75, 1.5, 29, 1.5, "void"), cube(-1.2, 37.6, -1.2, 2.4, 1.4, 2.4, "rose")]
+    for gy in (13, 17, 21, 25, 29, 33):
+        C.append(cube(-0.95, gy, -0.95, 1.9, 1.4, 1.9, "teal"))
+    path = [(5, 8, 5.6), (5, -3, 6.6), (4.5, -14, 5.4), (3.5, -27, 3.2)]
+    blade, j = chain2((0, 38.6), path, 1, "void", strips=((1, 0.6, "rose", 0.6),)); C += blade
+    vein, _ = chain2((0, 38.6), [(L, a, 0.6) for L, a, w in path], 1.25, "rose"); C += vein
+    for k, (off, a, L) in enumerate(((1.2, 70, 3.2), (3.4, 62, 3.6), (1.6, -72, 3), (4, -64, 3.4), (2.4, 58, 3), (2.2, -60, 2.6), (1.6, 50, 2.2))):
+        x, y = j[min(k // 2, 3)]; y += off
+        C.append(P(x - 0.6, y, 1.2, L, 0.8, "void", [0, 0, a], [x, y, 0]))
+    return C
+
+def caledfwlch_cubes():
+    # Holy Spear Caledfwlch, after the anime: an all-gold spear whose head is an open diamond frame over a pair of
+    # swept side blades
+    C = [cube(-0.5, 10.2, -0.5, 1, 1.6, 1, "amber"), cube(-0.7, 11.2, -0.7, 1.4, 30, 1.4, "gold"),
+         cube(-1.2, 41, -1.2, 2.4, 1.6, 2.4, "amber")]
+    for sx in (-1, 1):
+        C.append(P(-0.6, 42.4, 1.2, 5.6, 0.9, "gold", [0, 0, sx * 58], [0, 42.8, 0]))        # side blades
+        C.append(P(-0.55, 43.2, 1.1, 6, 0.9, "gold", [0, 0, sx * 31], [0, 43.4, 0]))         # lower bars of the frame
+        C.append(P(sx * 3.05 - 0.55, 48.3, 1.1, 6, 0.9, "gold", [0, 0, -sx * 31], [sx * 3.05, 48.5, 0]))   # upper bars
+    C += [P(-0.5, 53.2, 1, 2.2, 0.9, "amber"), diamond(0, 55.4, 0.7, 0.9, "amber")]
     return C
 
 # ---------------- icons drawn from the models ----------------
