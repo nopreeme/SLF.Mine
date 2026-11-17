@@ -149,7 +149,6 @@ Skills are **earned through play**. Each has a **focus stat** and a **threshold*
 - **TEC** lowers every threshold by 1% per point, up to 50%
 - **Every skill does something once learned:** a permanent bonus that stacks with stats and gear. The full list is in
   [SKILL_EFFECTS.md](SKILL_EFFECTS.md)
-- **Acrobat** comes from a **skill book** the Vorpal Bunny drops: picking it up teaches the skill and uses the book
 - **Big Tantrum / Grand Tantrum** are toggled from the menu and drain mana while active
 
 ---
@@ -228,18 +227,18 @@ creature types). Each shows its level in its name.
 | Monster | Where it appears | Level | Notable drops |
 |---|---|---|---|
 | **Goblin** | Forests and taiga, above ground: two in five wild zombies | 3–10 | Goblin Hand Axe 25%, Mahni Purse 30% |
-| **Orc** | Forests and taiga: one in twenty wild zombies, always leading two goblins | 10–14 | 1–2 Mahni Purses |
-| **Vorpal Bunny** | Forests and taiga, rare: one in three wild rabbits, one in twenty wild zombies | 8–30 | Vorpal Knife 5%, **Vorpal Choppers 4%**, Acrobat skill book 3% |
-| **Redcap Goblin** | Swamps, **night only**: half of the wild zombies; gone at dawn | 14–22 | Redcap Iron Axe 20%, Red Hood 5%, 1–2 Mahni Purses |
+| **Orc** | The Rampant Forest between Firstia and Secondil (forests and taiga): one in twenty wild zombies, always leading two goblins | 10–14 | 1–2 Mahni Purses |
+| **Vorpal Bunny** | Forests and taiga, rare: one in three wild rabbits, one in twenty wild zombies | 8–30 | **Vorpal Choppers 5%**, Rabbit Neckband 12% |
+| **Redcap Goblin** | Swamps (the Diremarsh), **night only**: half of the wild zombies; gone at dawn | 14–22 | Redcap Iron Axe 20%, Red Hood 5%, 1–2 Mahni Purses |
 | **Mud Frog** | Swamps: every frog | 14–18 | Mud Frog Skin 50% |
 
 - **Goblin** — small and quick, with a 3D goblin head (big ears, red eyes), a tunic and a stone axe
-- **Orc** — big and slow, hits hard; tusked 3D head and a club
-- **Vorpal Bunny** — an upright grey rabbit with a red scarf and a crimson knife (a full 3D body). Fast, armoured
-  and hostile. Beating a high-level one early is the classic way to earn Vorpal Soul
-- **Redcap Goblin** — a deep red hood and a forged iron axe. **Hit one and it calls two more** (up to five nearby)
+- **Orc** — big and slow, hits hard; tusked 3D head and a club. Orcs roam the Rampant Forest, each leading two goblins
+- **Vorpal Bunny** — an upright grey rabbit with a red scarf (a full 3D body). Fast, armoured and hostile. Its rare
+  drop, the **Vorpal Choppers**, are the red twinblades. Beating a high-level one early is the classic way to earn Vorpal Soul
+- **Redcap Goblin** — a deep red hood and a forged iron axe. **It calls for backup if it isn't defeated quickly**
 - **Mud Frog** — a full 3D teal frog. Passive, but splashes mud back when attacked (2 damage and Slowness).
-  **Swords barely hurt it**; blunt, piercing and fire weapons work
+  **Slash weapons barely hurt it**; blunt, piercing and fire weapons work
 
 ---
 
@@ -258,18 +257,17 @@ red beads, an olive body with a cream belly, and a white-plumed tail.
 - Appears in forests near players of level 8–25 (2% a minute), or when you accept *The Rampant Forest Guardian*
 - Reward: its level in EXP + 300. Drops **Devourer's Scale** (1–2), **Python White Hair** (50%), 5–8 Mahni Purses
 
-### The Mud Digger, "Solo Killer" — the Diremarsh
+### The Mud Digger — the Diremarsh
 
 A chimera with a shark's head, fins and tail, a mole's body on long webbed legs, and catfish whiskers.
 
 - Level 25, 400 health, bite 9. A party of 3–4 is strongly recommended
 - **Dives and bursts:** 8 seconds above ground, then it dives (it cannot be hurt underground) and 3 seconds later
   bursts out beside its target, ramming everyone within 3 blocks. Alone, you are always the target
-- **Phase 2** (below 20% health): each dive starts with a quake that roots anyone standing in mud or water for
-  3 seconds, and each burst comes up right under a player and throws them high enough for the fall to kill
+- **Phase 2** (below 20% health): it dives underground and sets off a quake that paralyses everyone standing in the
+  mud, then bursts up from the mud under a **random player**, ramming them and launching them high into the air
 - Appears in swamps near players of level 14–30 (2% a minute), or when you accept *Path to Thirdrema*
-- Reward: its level in EXP + 800. Drops **Mud Digger Tooth** (1–3), **Digger Hide** (1–2), 10–15 Mahni Purses.
-  Kill it with nobody else within 32 blocks for the **Solo Killer's Trophy**
+- Reward: its level in EXP + 800. Drops **Mud Digger Tooth** (1–3), **Digger Hide** (1–2), 10–15 Mahni Purses
 
 ---
 
@@ -527,6 +525,7 @@ Described in the design or the lore, but not built yet:
 - **Goldhuneenay the Inexhaustible**, **the Orchestra of the Doom Echo** and **Vysache the Undying**
 - The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
   Brooch of Faraway Prayer, the Abyssal Warning Bell and Ctarnidd's grails; and real models in place of the stand-ins
+- The **Rabbit Neckband**, the Vorpal Bunny's 12% drop
 - **Crescent Blade** (formerly Bilac's Crescent Blade) sold in a shop in another town
 - Survival sources for the 30 items marked in the catalogue
 - Balance: every number in the pack is a first pass
