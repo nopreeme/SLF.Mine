@@ -62,3 +62,7 @@ model (5).json
 texture.png
 togetsu_waning.png
 togetsu_waxing.png
+
+# Local screenshots and handoff notes (kept out of git)
+screenshots/
+HANDOFF.md
