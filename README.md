@@ -318,6 +318,9 @@ Lycagon leaves at dawn without dropping anything. The vanilla bosses still count
 
 ## Quests
 
+The series skips Firstia, so its quests, people and town lore are this project's own. Secondil's quests and
+Garren's questline are original too.
+
 Talk to an NPC by right-clicking it. A quest offer comes with an **[Accept]** button, and **[Quests]** in the menu
 shows your progress. Each player gets their own camp or search site for quests that need one; chat gives its
 coordinates.
@@ -382,8 +385,7 @@ Swamps and mangrove swamps are the Diremarsh.
 
 - **The walking state:** standing on marsh ground roots one leg in the mud: −40% movement and −40% jump. Rock, logs
   and planks free you, so fight from high ground. This applies in the Mud Digger fight
-- **Splitblade leather turns a blade:** when something holding a sword or an axe hits you, the full Splitblade set
-  gives back 4 health; one or two pieces give back 1–2
+- **Splitblade leather resists slashes:** it reduces the damage you take from slash attacks
 
 ---
 
