@@ -103,11 +103,11 @@ Fighter ──── Barbarian (蛮兵) ──────── War King (戦�
 Swordsman ─┬─ Sword Master (剣豪) ──── Master Swordsman (剣聖)
            └─ ◆ Magic Swordsman (魔法剣士) ── ◆ Mysterious Swordsman (神秘の剣, Rätzel)
 
-Brawler ──── Destroyer (破壊者)
+Brawler ──── Destroyer (破壊者) ──────── Berserker (狂拳)
 
-Mercenary ── Veteran (戦巧者)
+Mercenary ── Veteran (戦巧者) ───────── (an original job, name to come)
 
-Monk ─────── Monk Soldier (僧兵)
+Monk ─────── Monk Soldier (僧兵) ────── Warrior Monk (武僧兵)
 
 Thief ─┬─ Master Thief (大盗賊) ──── Great Stealth (隠密)
        ├─ ◆ Assassin (暗殺者) ──────── ◆ Killing Joker (殺戮の鬼札)
@@ -129,6 +129,8 @@ Magician ── Sorcerer (魔術師) ── Sage (賢者)
 
 Notes from the series:
 - **Master Swordsman** (剣聖, *Kensei*) is the job sometimes written "Kansei"; it is also called "Master of the Sword"
+- **Berserker** (狂拳) is only partly revealed in the series; the reading "Berse…" points to Berserker. The
+  series has no job after **Veteran** yet, so the Mercenary's top job is the project's own
 - **Magic Swordsman** needs the Swordsman's basics plus extra magical aptitude
 - **Holy Knight** comes from raising your faith; **Dark Knight** from raising your slaughter count
 - **Bishop** heals, **Cleric** buffs, **Enchanter** enchants, and the **Pilgrim** is a solo job that only grows by
@@ -142,7 +144,7 @@ Evolve from the menu (**[Evolve]**). An evolution appears once your lineage allo
 |---|---|
 | Advanced jobs: Barbarian, Sword Master, Magic Swordsman, Destroyer, Veteran, Monk Soldier, Master Thief, Assassin, Bishop, Cleric, Enchanter, Pilgrim, Sorcerer | 20 |
 | Knight; Phantom Thief, Ninja | 30 |
-| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Great Stealth, Holy Knight, Dark Knight, Star Ninja, Jonin, Sage | 50 |
+| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Berserker, Mercenary's top job, Warrior Monk, Great Stealth, Holy Knight, Dark Knight, Star Ninja, Jonin, Sage | 50 |
 | Paladin, Dark Crusader | 70 |
 | Killing Joker, Still Joker, Sacred Star Ninja, Shinobi, The Saint | 80 |
 
@@ -567,7 +569,8 @@ Described in the design or the lore, but not built yet:
 
 - **Thirdrema** and everything beyond it
 - **More jobs:** the craft lines (Blacksmith → Master Craftsman, the hidden Ancient Craftsman → Divine Craftsman),
-  the hidden Revenger, and the Magic Archer; open slots in the class tree are kept for hidden and craft jobs
+  the hidden Revenger, the Magic Archer, and the hidden **Mastermind** (全能たる叡智, "Omnipotent Wisdom"), which
+  follows Sage; open slots in the class tree are kept for hidden and craft jobs
 - **The class rework:** the pack moves from its older 34-class list to the tree in [Classes](#classes)
 - **The Skill Garden** (combining two skills into a new one), skill levels I–X, and skill evolution chains
 - **The six other origins** (Guiding Blood, Private Hero, Beast Child, Swordsman, Optimist, Bluffer) and the NPC
