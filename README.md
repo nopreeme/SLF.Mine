@@ -17,7 +17,7 @@ all vanilla — no mods — and built from the project's design document (V9).
   planned
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
-- **Origins**: the Wanderer's Path, a hard-mode origin with the Dream Penalty; seven more origins planned
+- **Origins**: the Wanderer's Path, a hard-mode origin with the Dream Penalty; Average Joe; six more origins planned
 - **Items**: 82 in the main packs and 39 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
@@ -58,7 +58,7 @@ Worlds using the packs open normally: nothing here uses world generation, so Min
 
 ```
 Join the world
-  └─ Choose an origin: Citizen, or Wanderer (hard mode)
+  └─ Choose an origin: Average Joe, or Wanderer (hard mode)
        └─ Choose a class → you get your class and its starting skills
             └─ /trigger slf.menu — everything else is in this menu
                  ├─ [Skills]  focus a skill, then earn it by playing
@@ -208,11 +208,12 @@ away. Every player in Standby is told its coordinates and gets an **Altar Compas
 
 Two hidden scores shape the world.
 
-**Vorpal Soul** — the nerve to face what should kill you.
+**Vorpal Soul** — the Vorpal Bunnies' ideal: beating stronger opponents with style, under handicaps. In the series it
+falls for "boring" fights such as grinding or ganging up in a full party. The pack keeps it simple:
 - Rises by 1 when you defeat something at least 20 levels above you
 - Falls by 5 when you die
 
-**Karma** — the weight of malice.
+**Karma** — the weight of malice, kept against player killers. The higher it is, the worse. The pack keeps it simple:
 - Rises by 25 for killing a player, and by 5 for killing a villager, wandering trader or iron golem
 - Decays by 1 a minute
 - At 100, a **Bounty Hunter** comes for you. It caps at 200
@@ -391,9 +392,9 @@ Swamps and mangrove swamps are the Diremarsh.
 
 ## Origins
 
-New players choose an origin before their class. The series has eight origins. The pack has two today: the
-**Wanderer**, and **Citizen**, a placeholder that starts with Firstia's people and quests. The other seven need
-NPC affinity (how much each NPC likes you), which the pack doesn't have yet.
+New players choose an origin before their class. The series has eight origins. The pack has two of them today:
+**Average Joe**, the ordinary start in Firstia with its people and quests, and the **Wanderer**. Their NPC effects,
+and the other six origins, need NPC affinity (how much each NPC likes you), which the pack doesn't have yet.
 
 | Origin | Japanese | Effect | In the pack |
 |---|---|---|---|
@@ -401,7 +402,7 @@ NPC affinity (how much each NPC likes you), which the pack doesn't have yet.
 | **Guiding Blood** | 尊き血 (Tōtoki Chi) | NPCs start out liking you more, but NPCs with high Karma target you more often | Planned |
 | **Private Hero** | 在野の雄 (Zaiya no Yū) | Clearing a quest raises NPC affinity more; the more quests you clear, the further your name spreads among NPCs | Planned |
 | **Beast Child** | 獣の子 (Kemono no Ko) | Moves better in natural areas; starts in an exploration area | Planned |
-| **Average Joe** | 凡民 (Bonmin) | NPCs are less wary of you, by the same amount at every level | Planned |
+| **Average Joe** | 凡民 (Bonmin) | NPCs are less wary of you, by the same amount at every level. Starts in Firstia | Yes (the effect is planned) |
 | **Swordsman** | 剣客 (Kenkaku) | NPCs like you more while you carry a sword or katana; special rules for who can accept some quests | Planned |
 | **Optimist** | 楽天家 (Rakutenka) | NPC affinity shifts with your HP and MP percentages and with how you act | Planned |
 | **Bluffer** | 一見の実力者 (Ichigen no Jitsuryoku-sha) | NPC affinity changes with the rank of your equipment | Planned |
@@ -541,8 +542,8 @@ Described in the design or the lore, but not built yet:
 
 - **Thirdrema** and everything beyond it
 - **The Skill Garden** (combining two skills into a new one), skill levels I–X, and skill evolution chains
-- **The seven other origins** (Guiding Blood, Private Hero, Beast Child, Average Joe, Swordsman, Optimist,
-  Bluffer) and the NPC affinity they need
+- **The six other origins** (Guiding Blood, Private Hero, Beast Child, Swordsman, Optimist, Bluffer) and the NPC
+  affinity they and Average Joe need
 - **Vorpal Soul gates** for heroic skills, and karma affecting how NPCs treat you
 - **Goldhuneenay the Inexhaustible**, **the Orchestra of the Doom Echo** and **Vysache the Undying**
 - The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
