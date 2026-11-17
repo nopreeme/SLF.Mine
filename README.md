@@ -8,7 +8,8 @@ all vanilla — no mods — and built from the project's design document (V9).
 
 **What's in it**
 
-- **34 classes** across four tiers, starting from 8, with an evolution menu
+- **Classes** that evolve: 8 starting classes and their jobs from the series, with an evolution menu (being
+  reworked to the series' class tree)
 - **Skills learned through play**: focus one, then earn it by attacking, sprinting, jumping or taking hits
 - **9 stats**, levels 1–99, and levels 100–150 after the **Altar of Awakening**
 - **Monsters** with levels and their own drops: Goblin, Redcap Goblin, Orc, Mud Frog, Vorpal Bunny
@@ -77,51 +78,75 @@ Kill monsters for EXP. Each level gives **5 stat points**. Talk to NPCs by right
 
 ## Classes
 
-Choose one of **8 starting classes**. Your class decides which skills you learn fastest and which evolutions open up.
+> **Being reworked.** This is the class tree the pack is moving to, with the official English (anime) names. The
+> pack still has its older class list until that rework lands.
 
-| Class | Playstyle | Primary focus |
-|---|---|---|
-| Swordsman | Blade techniques, fast combos | DMG |
-| Warrior | Raw power, wide swings | DMG |
-| Fighter | Bare-fist brawler | DMG |
-| Mercenary | All-weapon freelancer | DMG / DEF |
-| Bandit | Speed and evasion | EVADE / MOVE |
-| Priest | Shield arts, stamina | DEF |
-| Monk | Body as weapon, iron defence | DMG / DEF |
-| Mage | Magic arts | DEF / DMG |
+Choose one of **8 starting classes**. Your class decides which skills you learn fastest and which jobs open up.
+**Knight** is a ninth line that a Fighter, Swordsman or Brawler can join.
+
+| Class | Japanese | Playstyle | Primary focus |
+|---|---|---|---|
+| Fighter | 戦士 (Senshi) | Any physical weapon, no magic | DMG |
+| Swordsman | 剣士 (Kenshi) | Blade techniques; magic with the right build | DMG |
+| Brawler | 闘士 (Tōshi) | Fists and heavy weapons, all offence | DMG |
+| Mercenary | 傭兵 (Yōhei) | All-weapon freelancer | DMG / DEF |
+| Thief | 盗賊 (Tōzoku) | Speed and evasion | EVADE / MOVE |
+| Monk | 修行僧 (Monku) | Body as weapon, iron defence | DMG / DEF |
+| Priest | 聖職者 (Purīsuto) | Healing and support | DEF |
+| Magician | 魔法使い (Majishan) | Magic arts | DEF / DMG |
+
+◆ marks a hidden or specialty job.
 
 ```
-Swordsman ─┬─ Sword Master ───── Kansei
-           └─ Magic Swordsman ── Mysterious Sword
+Fighter ──── Barbarian (蛮兵) ──────── War King (戦王)
 
-Warrior ──────────────────────┐
-                              ├─ Barbarian ── War King
-Fighter ─┬────────────────────┘
-         └─ Destroyer ── Crazy Fist
+Swordsman ─┬─ Sword Master (剣豪) ──── Master Swordsman (剣聖)
+           └─ ◆ Magic Swordsman (魔法剣士) ── ◆ Mysterious Swordsman (神秘の剣, Rätzel)
 
-Sword Master / Magic Swordsman / Barbarian
-          └── Knight ─┬─ Holy Knight ── King's Knight
-                      └─ Dark Knight ── Black Death
+Brawler ──── Destroyer (破壊者)
 
-Mercenary ── Veteran
+Mercenary ── Veteran (戦巧者)
 
-Bandit ───┬─ Thief ── Assassin ── Killing Joke
-          └─ Ninja ── Shinobi ─── Star Shinobi Sei
+Monk ─────── Monk Soldier (僧兵)
 
-Priest ──── Bishop ── Saint
-Monk ────── Monk Soldier ── Spirit Fist
-Mage ────── Sage ── Omnipotent Wisdom
+Thief ─┬─ Master Thief (大盗賊) ──── Great Stealth (隠密)
+       ├─ ◆ Assassin (暗殺者) ──────── ◆ Killing Joker (殺戮の鬼札)
+       ├─ ◆ Phantom Thief (怪盗) ───── ◆ Still Joker (華麗なる鬼札)
+       └─ ◆ Ninja (忍者) ─┬─ ◆ Star Ninja (星忍) ── ◆ Sacred Star Ninja (星忍聖)
+                         └─ ◆ Jonin (上忍) ─────── ◆ Shinobi (忍聖)
+
+Fighter / Swordsman / Brawler
+  └── Knight (騎士) ─┬─ Holy Knight (聖騎士) ── Paladin (聖輝士)
+                     └─ Dark Knight (暗黒騎士) ── Dark Crusader (黒忌士)
+
+Priest ─┬─ Bishop (僧侶)
+        ├─ Cleric (洗礼者)
+        ├─ Enchanter (恩寵者)
+        └─ Pilgrim (巡礼者) ── ◆ The Saint (大聖者)
+
+Magician ── Sorcerer (魔術師) ── Sage (賢者)
 ```
+
+Notes from the series:
+- **Master Swordsman** (剣聖, *Kensei*) is the job sometimes written "Kansei"; it is also called "Master of the Sword"
+- **Magic Swordsman** needs the Swordsman's basics plus extra magical aptitude
+- **Holy Knight** comes from raising your faith; **Dark Knight** from raising your slaughter count
+- **Bishop** heals, **Cleric** buffs, **Enchanter** enchants, and the **Pilgrim** is a solo job that only grows by
+  travelling on foot; the hidden **Saint** follows from it
+- **Killing Joker** needs high Karma and ten player kills while red-named; **Ninja** opens through a Thieves' Guild
+  trial for a Thief who knows some magic
 
 Evolve from the menu (**[Evolve]**). An evolution appears once your lineage allows it, and unlocks at a level:
 
 | Evolution | Level |
 |---|---|
-| Tier 2: Sword Master, Magic Swordsman, Barbarian, Destroyer, Thief, Ninja, Bishop, Monk Soldier, Sage | 20 |
-| Knight | 30 |
-| Tier 3: Kansei, Mysterious Sword, War King, Crazy Fist, Assassin, Shinobi, Saint, Spirit Fist, Omnipotent Wisdom; and Veteran | 50 |
-| King's Knight, Black Death | 70 |
-| Killing Joke, Star Shinobi Sei | 80 |
+| Advanced jobs: Barbarian, Sword Master, Magic Swordsman, Destroyer, Veteran, Monk Soldier, Master Thief, Assassin, Bishop, Cleric, Enchanter, Pilgrim, Sorcerer | 20 |
+| Knight; Phantom Thief, Ninja | 30 |
+| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Great Stealth, Holy Knight, Dark Knight, Star Ninja, Jonin, Sage | 50 |
+| Paladin, Dark Crusader | 70 |
+| Killing Joker, Still Joker, Sacred Star Ninja, Shinobi, The Saint | 80 |
+
+Hidden and specialty jobs (◆) will have extra unlock conditions on top of the level.
 
 Knights choose Holy or Dark after three **Knight Trials**: each elite monster or boss defeated as a Knight counts as one.
 You never lose a path you have walked; your class history is kept.
@@ -541,6 +566,9 @@ through the pack (127 tests, about 8 minutes); see [tests/live/README.md](tests/
 Described in the design or the lore, but not built yet:
 
 - **Thirdrema** and everything beyond it
+- **More jobs:** the craft lines (Blacksmith → Master Craftsman, the hidden Ancient Craftsman → Divine Craftsman),
+  the hidden Revenger, and the Magic Archer; open slots in the class tree are kept for hidden and craft jobs
+- **The class rework:** the pack moves from its older 34-class list to the tree in [Classes](#classes)
 - **The Skill Garden** (combining two skills into a new one), skill levels I–X, and skill evolution chains
 - **The six other origins** (Guiding Blood, Private Hero, Beast Child, Swordsman, Optimist, Bluffer) and the NPC
   affinity they and Average Joe need
