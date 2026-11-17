@@ -169,14 +169,16 @@ Skills are **earned through play**. Each has a **focus stat** and a **threshold*
 | DMG | Damage dealt | Power Slash, Megaton Swing, Spin Slash |
 | MOVE | Sprint distance | Formula Drift, Skatefoot |
 | EVADE | Jumps | Slide Step, Skywalker |
-| DEF | Damage taken | Iron Skin, Flash Counter, Ignition |
+| DEF | Damage taken | Unbreakable, Flash Counter, Ignition |
 
 - **Your class matters:** a skill that fits your class lineage has a much lower threshold
 - **Ideal Motion:** while sprinting in the air, SP builds **3×** as fast
 - **TEC** lowers every threshold by 1% per point, up to 50%
 - **Every skill does something once learned:** a permanent bonus that stacks with stats and gear. The full list is in
   [SKILL_EFFECTS.md](SKILL_EFFECTS.md)
-- **Big Tantrum / Grand Tantrum** are toggled from the menu and drain mana while active
+- **Big Tantrum** (大癇癪) draws nearby monsters to you — use it with care in a party
+- Skills come from the series. Names follow the anime: the katakana reading when there is one (Retaliate,
+  Moment Sight), otherwise the Japanese romanized (Tsujigiri, Hikkyō Un'yō)
 
 ---
 
@@ -572,7 +574,8 @@ Described in the design or the lore, but not built yet:
   the hidden Revenger, the Magic Archer, and the hidden **Mastermind** (全能たる叡智, "Omnipotent Wisdom"), which
   follows Sage; open slots in the class tree are kept for hidden and craft jobs
 - **The class rework:** the pack moves from its older 34-class list to the tree in [Classes](#classes)
-- **The Skill Garden** (combining two skills into a new one), skill levels I–X, and skill evolution chains
+- **The Skill Garden** (combining two skills into a new one, run by Skill Gardeners such as Elke; Firstia's tutorial
+  introduces it), skill levels I–X, and skill evolution chains
 - **The six other origins** (Guiding Blood, Private Hero, Beast Child, Swordsman, Optimist, Bluffer) and the NPC
   affinity they and Average Joe need
 - **Vorpal Soul gates** for heroic skills, and karma affecting how NPCs treat you
