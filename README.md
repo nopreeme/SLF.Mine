@@ -326,7 +326,7 @@ The seven strongest Unique Monsters in the world of Shangri-La Frontier. Four ar
 | 7 | **Vysache the Undying** | Planned |
 
 The Colossi in the pack appear near players by chance, rolled once a minute, when the place, the time and the
-player's level fit. One of each exists at a time; each shows a boss bar within 64 blocks. Health is 4 × level.
+player's level fit. One of each exists at a time; each shows a boss bar within 64 blocks. Health is 4 × level. Every Colossus is above level 100, so beating one at level 99 reaches 99 Extend.
 Killing one gives its level in EXP **+ 2,400** and counts as a Knight Trial. Meeting one gives 20 stat points and
 defeating one gives 200 (see [Stat points](#stat-points)).
 
@@ -335,10 +335,10 @@ closest one until it gets a proper model.
 
 | Colossus | Appears | Player level | Level | Stand-in body | Drops (from the series) |
 |---|---|---|---|---|---|
-| **Ctarnidd of the Abyss** | Swimming in a deep ocean | 40+ | 85 | Giant elder guardian | Tome of Truth: Abyss Edition and Abyssal Warning Bell (everyone who fought); one of Ctarnidd's eight grails each |
-| **Lycagon the Nightslayer** | Open sky at night | 50+ | 90 | Giant black wolf, always hunting | Lycagon's Fang |
-| **Siegwurm the Sky Ruler** | Open sky above y=150 | 55+ | 95 | Giant ghast | — |
-| **Wethermon the Tombguard** | The Nether | 60+ | 100 | Wither skeleton | Tome of Truth: The Tombguard and the Inventoria Key (everyone who fought); the Seiten Skillbook, the Non-Standard Ether Reactor and the Brooch of Faraway Prayer |
+| **Ctarnidd of the Abyss** | Swimming in a deep ocean | 40+ | 110 | Giant elder guardian | Tome of Truth: Abyss Edition and Abyssal Warning Bell (everyone who fought); one of Ctarnidd's eight grails each |
+| **Lycagon the Nightslayer** | Open sky at night | 50+ | 115 | Giant black wolf, always hunting | Lycagon's Fang |
+| **Siegwurm the Sky Ruler** | Open sky above y=150 | 55+ | 120 | Giant ghast | — |
+| **Wethermon the Tombguard** | The Nether | 60+ | 125 | Wither skeleton | Tome of Truth: The Tombguard and the Inventoria Key (everyone who fought); the Seiten Skillbook, the Non-Standard Ether Reactor and the Brooch of Faraway Prayer |
 
 Lycagon leaves at dawn without dropping anything. The vanilla bosses still count as boss kills too.
 
