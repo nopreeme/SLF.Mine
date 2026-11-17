@@ -105,7 +105,7 @@ Swordsman ─┬─ Sword Master (剣豪) ──── Master Swordsman (剣聖)
 
 Brawler ──── Destroyer (破壊者) ──────── Berserker (狂拳)
 
-Mercenary ── Veteran (戦巧者) ───────── (an original job, name to come)
+Mercenary ── Veteran (戦巧者) ───────── Warlord
 
 Monk ─────── Monk Soldier (僧兵) ────── Warrior Monk (武僧兵)
 
@@ -130,7 +130,7 @@ Magician ── Sorcerer (魔術師) ── Sage (賢者)
 Notes from the series:
 - **Master Swordsman** (剣聖, *Kensei*) is the job sometimes written "Kansei"; it is also called "Master of the Sword"
 - **Berserker** (狂拳) is only partly revealed in the series; the reading "Berse…" points to Berserker. The
-  series has no job after **Veteran** yet, so the Mercenary's top job is the project's own
+  series has no job after **Veteran** yet, so the Mercenary's top job, **Warlord**, is the project's own
 - **Magic Swordsman** needs the Swordsman's basics plus extra magical aptitude
 - **Holy Knight** comes from raising your faith; **Dark Knight** from raising your slaughter count
 - **Bishop** heals, **Cleric** buffs, **Enchanter** enchants, and the **Pilgrim** is a solo job that only grows by
@@ -144,7 +144,7 @@ Evolve from the menu (**[Evolve]**). An evolution appears once your lineage allo
 |---|---|
 | Advanced jobs: Barbarian, Sword Master, Magic Swordsman, Destroyer, Veteran, Monk Soldier, Master Thief, Assassin, Bishop, Cleric, Enchanter, Pilgrim, Sorcerer | 20 |
 | Knight; Phantom Thief, Ninja | 30 |
-| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Berserker, Mercenary's top job, Warrior Monk, Great Stealth, Holy Knight, Dark Knight, Star Ninja, Jonin, Sage | 50 |
+| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Berserker, Warlord, Warrior Monk, Great Stealth, Holy Knight, Dark Knight, Star Ninja, Jonin, Sage | 50 |
 | Paladin, Dark Crusader | 70 |
 | Killing Joker, Still Joker, Sacred Star Ninja, Shinobi, The Saint | 80 |
 
