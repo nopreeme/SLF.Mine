@@ -72,7 +72,7 @@ Join the world
 `/trigger slf.menu` works **without OP**. A status line above the hotbar shows your level, EXP, mana, focus progress,
 unspent points and Mahni; you can switch it off from the menu.
 
-Kill monsters for EXP. Each level gives **5 stat points**. Talk to NPCs by right-clicking them.
+Kill monsters for EXP. Each level gives **5 stat points** (10 above level 99). Talk to NPCs by right-clicking them.
 
 ---
 
@@ -202,9 +202,19 @@ level needs carries over.
 |---|---|
 | 1 → 10 | 100, 200, 350, 550, 850, 1,300, 2,000, 3,000, 4,500 |
 | 10 → 99 | 5,000 each |
-| 99 | **Standby** |
+| 99 | The level cap: **99 Extend** (below) |
 
-Every level gives 5 stat points; every tenth level gives 2 more.
+### Stat points
+
+As in the series, stat points come from levels and from meeting Unique Monsters such as the Seven Colossi:
+
+| Source | Points |
+|---|---|
+| Each level up to 99 | 5 |
+| Reaching level 99 | 50 |
+| Each level above 99 | 10 |
+| Encountering a Unique Monster (UME), once each | 20 |
+| Defeating a Unique Monster (UMB) | 200 |
 
 ### The nine stats
 
@@ -220,15 +230,16 @@ Spend points from **[Stats]** in the menu. Effects are applied every second.
 | TEC | −1% skill threshold per point (up to −50%) |
 | VIT | Absorption I at 5, II at 10, III at 20, IV at 30 |
 | STM | Saturation at 5, Haste I at 10 |
-| LCK | Luck 1/2/3/4 at 10/20/40/60; a chance to survive a fatal blow |
+| LUC | Luck 1/2/3/4 at 10/20/40/60. At 50+, **clench** (食いしばり): damage from your own attacks or recoil can't kill you — you're left at 1 HP |
 
-### Standby and the Altar of Awakening
+### 99 Extend and the Altar of Awakening
 
-At level 99 you enter **Standby**: EXP is banked instead of levelling you. Defeat a boss, then walk up to the
-**Altar of Awakening** to turn the banked EXP into levels 100–150.
+The first level cap is **99**. At level 99, defeat a monster of **level 100 or higher** and you reach **99 Extend**
+(the cap is waiting to be released): EXP is banked instead of levelling you. Use the **Altar of Awakening**
+(覚醒の祭壇) to release the cap to **150**, and the banked EXP levels you up all at once.
 
 Each world has one altar. When the first player reaches level 99, the pack raises it on dry ground about 320 blocks
-away. Every player in Standby is told its coordinates and gets an **Altar Compass** that points to it;
+away. Every player at 99 Extend is told its coordinates and gets an **Altar Compass** that points to it;
 **[Altar of Awakening]** in the menu repeats the directions.
 
 ---
@@ -274,8 +285,7 @@ creature types). Each shows its level in its name.
 
 ## Area bosses
 
-Area bosses guard the way between zones. One of each exists at a time, with a boss bar. They do not count as bosses
-for the Altar of Awakening.
+Area bosses guard the way between zones. One of each exists at a time, with a boss bar.
 
 ### The Ravenous Snake — the Rampant Forest
 
@@ -317,7 +327,8 @@ The seven strongest Unique Monsters in the world of Shangri-La Frontier. Four ar
 
 The Colossi in the pack appear near players by chance, rolled once a minute, when the place, the time and the
 player's level fit. One of each exists at a time; each shows a boss bar within 64 blocks. Health is 4 × level.
-Killing one gives its level in EXP **+ 2,400**, opens the Altar of Awakening for you, and counts as a Knight Trial.
+Killing one gives its level in EXP **+ 2,400** and counts as a Knight Trial. Meeting one gives 20 stat points and
+defeating one gives 200 (see [Stat points](#stat-points)).
 
 Their bodies are **stand-ins**: a data pack can only reshape vanilla creatures, so each Colossus borrows the
 closest one until it gets a proper model.
@@ -514,7 +525,7 @@ Set a monster's level first with `/scoreboard players set #spawn_lv slf.mob_leve
 |---|---|
 | Items | Kits of weapons, armour, skill books and materials; the 3D weapons; clear inventory |
 | Class | One button per class: resets you, then grants the whole lineage at the level it needs |
-| Level | Set your level, jump to 99 (Standby), +1,000 EXP, record a boss kill |
+| Level | Set your level, jump to 99 (99 Extend), +1,000 EXP, record a boss kill |
 | Stats | +10 points, every stat to 20 or 0, fill mana |
 | Skills | Learn every skill, finish the one you are focusing, +1 Knight Trial |
 | World | Karma 100 or 0, place or remove the altar, an Altar Compass |
@@ -579,6 +590,11 @@ Described in the design or the lore, but not built yet:
 - **The six other origins** (Guiding Blood, Private Hero, Beast Child, Swordsman, Optimist, Bluffer) and the NPC
   affinity they and Average Joe need
 - **Vorpal Soul gates** for heroic skills, and karma affecting how NPCs treat you
+- **Arcanum** (神秘): at level 99, Arcanoom, the Monk of Awakening, offers you a card of the Major Arcana — a
+  sub-job that raises your stats with a penalty, chosen by how you have played (The Fool: halved skill recast, but
+  healing items may fail and debuffs hit twice as hard)
+- **Race conversion** in the Altar of Awakening's lower floor (elf, fishfolk, beastfolk, birdfolk, insectfolk,
+  dwarf, giant), each with its own stat boost
 - **Goldhuneenay the Inexhaustible**, **the Orchestra of the Doom Echo** and **Vysache the Undying**
 - The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
   Brooch of Faraway Prayer, the Abyssal Warning Bell and Ctarnidd's grails; and real models in place of the stand-ins
