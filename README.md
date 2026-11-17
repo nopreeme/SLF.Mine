@@ -12,11 +12,13 @@ all vanilla — no mods — and built from the project's design document (V9).
 - **Skills learned through play**: focus one, then earn it by attacking, sprinting, jumping or taking hits
 - **9 stats**, levels 1–99, and levels 100–150 after the **Altar of Awakening**
 - **Monsters** with levels and their own drops: Goblin, Redcap Goblin, Orc, Mud Frog, Vorpal Bunny
-- **Two area bosses** with 3D bodies (the Ravenous Snake, the Mud Digger) and **seven bosses** with boss bars
+- **Two area bosses** with 3D bodies (the Ravenous Snake, the Mud Digger)
+- **The Seven Colossi**: four are in the pack with boss bars (Wethermon, Lycagon, Ctarnidd, Siegwurm); three are
+  planned
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
 - **The Wanderer's Path**, a hard-mode origin with the Dream Penalty
-- **108 items**: 82 in the main packs and 26 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
+- **Items**: 82 in the main packs and 39 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
 
@@ -25,7 +27,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 - [Installation](#installation)
 - [Getting started](#getting-started)
 - [Classes](#classes) · [Skills](#skills) · [Stats and levels](#stats-and-levels) · [Vorpal Soul and Karma](#vorpal-soul-and-karma)
-- [Monsters](#monsters) · [Area bosses](#area-bosses) · [Bosses](#bosses)
+- [Monsters](#monsters) · [Area bosses](#area-bosses) · [The Seven Colossi](#the-seven-colossi)
 - [Quests](#quests) · [Mahni and shops](#mahni-and-shops) · [The Diremarsh](#the-diremarsh) · [The Wanderer's Path](#the-wanderers-path)
 - [Items and weapons](#items-and-weapons)
 - [For server admins](#for-server-admins)
@@ -147,8 +149,7 @@ Skills are **earned through play**. Each has a **focus stat** and a **threshold*
 - **TEC** lowers every threshold by 1% per point, up to 50%
 - **Every skill does something once learned:** a permanent bonus that stacks with stats and gear. The full list is in
   [SKILL_EFFECTS.md](SKILL_EFFECTS.md)
-- Some skills come from **skill books** dropped by bosses (Acrobat, Gravity Zero, Managarm Pride, Reflexus): picking
-  one up teaches the skill and uses the book
+- **Acrobat** comes from a **skill book** the Vorpal Bunny drops: picking it up teaches the skill and uses the book
 - **Big Tantrum / Grand Tantrum** are toggled from the menu and drain mana while active
 
 ---
@@ -272,24 +273,48 @@ A chimera with a shark's head, fins and tail, a mole's body on long webbed legs,
 
 ---
 
-## Bosses
+## The Seven Colossi
 
-Bosses appear near players by chance, rolled once a minute, when the place, the time and the player's level fit.
-One of each exists at a time; each shows a boss bar within 64 blocks. Health is 4 × level.
+The seven strongest Unique Monsters in the world of Shangri-La Frontier. Four are in the pack; three are planned.
 
+| # | Colossus | In the pack |
+|---|---|---|
+| 1 | **Wethermon the Tombguard** | Yes |
+| 2 | **Lycagon the Nightslayer** | Yes |
+| 3 | **Ctarnidd of the Abyss** | Yes |
+| 4 | **Siegwurm the Sky Ruler** | Yes |
+| 5 | **Goldhuneenay the Inexhaustible** | Planned |
+| 6 | **The Orchestra of the Doom Echo** | Planned |
+| 7 | **Vysache the Undying** | Planned |
+
+The Colossi in the pack appear near players by chance, rolled once a minute, when the place, the time and the
+player's level fit. One of each exists at a time; each shows a boss bar within 64 blocks. Health is 4 × level.
 Killing one gives its level in EXP **+ 2,400**, opens the Altar of Awakening for you, and counts as a Knight Trial.
 
-| Boss | Appears | Player level | Level | Body | Notable drops |
-|---|---|---|---|---|---|
-| **Nightclaw** | Caves below y=0 | 10+ | 40 | Giant spider | Nightclaw Talon |
-| **Bilac the Full Moon Fangs** | Open sky, full-moon nights | 30+ | 60 | Giant phantom | Bilac's Crescent Blade |
-| **Ctarnidd of the Abyss** | Swimming in a deep ocean | 40+ | 85 | Giant elder guardian | Reflexus skill book 30% |
-| **Oriana the Uncrowned** | The End | 45+ | 75 | Evoker | Oriana's Void Staff |
-| **Lycagon the Nightslayer** | Open sky at night | 50+ | 90 | Giant black wolf, always hunting | Lycagon's Fang; Managarm Pride skill book 25% |
-| **Siegwurm the Sky Ruler** | Open sky above y=150 | 55+ | 95 | Giant ghast | Unique Monster Core; Gravity Zero skill book 30% |
-| **Wethermon the Tombguard** | The Nether | 60+ | 100 | Wither skeleton with its scythe | Wethermon's Scythe, Seiten Skillbook; a Tombguard armour piece 50% |
+Their bodies are **stand-ins**: a data pack can only reshape vanilla creatures, so each Colossus borrows the
+closest one until it gets a proper model.
 
-Bilac and Lycagon leave at dawn without dropping anything. The vanilla bosses still count as boss kills too.
+| Colossus | Appears | Player level | Level | Stand-in body | Drops (from the series) |
+|---|---|---|---|---|---|
+| **Ctarnidd of the Abyss** | Swimming in a deep ocean | 40+ | 85 | Giant elder guardian | Tome of Truth: Abyss Edition and Abyssal Warning Bell (everyone who fought); one of Ctarnidd's eight grails each |
+| **Lycagon the Nightslayer** | Open sky at night | 50+ | 90 | Giant black wolf, always hunting | Lycagon's Fang |
+| **Siegwurm the Sky Ruler** | Open sky above y=150 | 55+ | 95 | Giant ghast | — |
+| **Wethermon the Tombguard** | The Nether | 60+ | 100 | Wither skeleton | Tome of Truth: The Tombguard and the Inventoria Key (everyone who fought); the Seiten Skillbook, the Non-Standard Ether Reactor and the Brooch of Faraway Prayer |
+
+Lycagon leaves at dawn without dropping anything. The vanilla bosses still count as boss kills too.
+
+**Ctarnidd's grails** — each invert or nullify something for the one who holds it:
+
+| Grail | Effect |
+|---|---|
+| Blue | Inverts the avatar's gender (genderless characters are unaffected) |
+| Green | Inverts colours: photo-negative sight for everyone nearby |
+| Indigo | Swaps the values of two random stats |
+| Purple | Inverts damage and healing: taking damage heals, healing hurts |
+| Red | Nullifies damage from attacks made within 10 blocks |
+| Orange | Nullifies damage from attacks made beyond 10 blocks |
+| Yellow | Nullifies physical damage |
+| Chartreuse | Nullifies magic damage |
 
 ---
 
@@ -387,7 +412,7 @@ hard mode — the path Sunraku chose — and cannot be undone.
 chances, quest rewards, shop prices) and its give command. It is generated from the packs, so it is always current.
 It also marks the 30 items that nothing in survival gives yet.
 
-The **3D weapons pack** has 26 weapons with 3D held models and flat inventory icons, including paired weapons and a
+The **3D weapons pack** has 39 weapons with 3D held models and flat inventory icons, including paired weapons and a
 shield that raises when blocking. See [weapons/README.md](weapons/README.md).
 
 ---
@@ -425,8 +450,8 @@ facing you:
 
 ```
 /function slf:mob/<mob>/spawn          goblin, red_hat_goblin (Redcap), orc, mud_frog, vorpal_bunny
-/function slf:mob/boss/<boss>/spawn    ravenous_snake, mud_digger, nightclaw, bilac, oriana, lycagon,
-                                       ctarnidd, siegwurm, wethermon
+/function slf:mob/boss/<boss>/spawn    ravenous_snake, mud_digger, lycagon, ctarnidd,
+                                       siegwurm, wethermon
 /function slf:give/<item>              any item (tab completion lists them)
 /function slf:weapons/give/<weapon>    a 3D weapon (weapons pack)
 ```
@@ -499,6 +524,9 @@ Described in the design or the lore, but not built yet:
 - **Thirdrema** and everything beyond it
 - **The Skill Garden** (combining two skills into a new one), skill levels I–X, and skill evolution chains
 - **Vorpal Soul gates** for heroic skills, and karma affecting how NPCs treat you
-- **Goldhuneenay the Inexhaustible** and the **Orchestra of the Doom Echo**
+- **Goldhuneenay the Inexhaustible**, **the Orchestra of the Doom Echo** and **Vysache the Undying**
+- The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
+  Brooch of Faraway Prayer, the Abyssal Warning Bell and Ctarnidd's grails; and real models in place of the stand-ins
+- **Crescent Blade** (formerly Bilac's Crescent Blade) sold in a shop in another town
 - Survival sources for the 30 items marked in the catalogue
 - Balance: every number in the pack is a first pass
