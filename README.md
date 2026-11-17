@@ -16,7 +16,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
 - **The Wanderer's Path**, a hard-mode origin with the Dream Penalty
-- **108 items**: 82 in the main packs and 26 weapons with 3D held models — see **[ITEM_CATALOG.md](ITEM_CATALOG.md)**
+- **108 items**: 82 in the main packs and 26 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
 
@@ -383,7 +383,7 @@ hard mode — the path Sunraku chose — and cannot be undone.
 
 ## Items and weapons
 
-**[ITEM_CATALOG.md](ITEM_CATALOG.md)** lists every item with its icon, stats, description, where it comes from (drop
+**[ITEMS.md](ITEMS.md)** lists every item with its icon, stats, description, where it comes from (drop
 chances, quest rewards, shop prices) and its give command. It is generated from the packs, so it is always current.
 It also marks the 30 items that nothing in survival gives yet.
 
@@ -475,7 +475,7 @@ Edit the generator, not its output. A test fails while an output is out of date.
 | Generator | Writes |
 |---|---|
 | `tools/gen_test_commands.py` | Give commands, kits, class setups and the test menu |
-| `tools/gen_item_docs.py` | `ITEM_CATALOG.md` |
+| `tools/gen_item_docs.py` | `ITEMS.md` |
 | `tools/gen_mob_models.py` | Mob bodies and heads, and the newer item icons |
 | `tools/gen_skill_passives.py` | Skill bonuses and `SKILL_EFFECTS.md` |
 | `tools/gen_item_textures.py` | The flat item textures (placeholders: hand-made pixel art is very welcome) |
