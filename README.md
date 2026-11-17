@@ -17,7 +17,7 @@ all vanilla — no mods — and built from the project's design document (V9).
   planned
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
-- **The Wanderer's Path**, a hard-mode origin with the Dream Penalty
+- **Origins**: the Wanderer's Path, a hard-mode origin with the Dream Penalty; seven more origins planned
 - **Items**: 82 in the main packs and 39 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
@@ -28,7 +28,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 - [Getting started](#getting-started)
 - [Classes](#classes) · [Skills](#skills) · [Stats and levels](#stats-and-levels) · [Vorpal Soul and Karma](#vorpal-soul-and-karma)
 - [Monsters](#monsters) · [Area bosses](#area-bosses) · [The Seven Colossi](#the-seven-colossi)
-- [Quests](#quests) · [Mahni and shops](#mahni-and-shops) · [The Diremarsh](#the-diremarsh) · [The Wanderer's Path](#the-wanderers-path)
+- [Quests](#quests) · [Mahni and shops](#mahni-and-shops) · [The Diremarsh](#the-diremarsh) · [Origins](#origins)
 - [Items and weapons](#items-and-weapons)
 - [For server admins](#for-server-admins)
 - [For contributors](#for-contributors)
@@ -389,10 +389,28 @@ Swamps and mangrove swamps are the Diremarsh.
 
 ---
 
-## The Wanderer's Path
+## Origins
 
-New players choose an origin before their class. **Citizen** starts with Firstia's people and quests. **Wanderer** is
-hard mode — the path Sunraku chose — and cannot be undone.
+New players choose an origin before their class. The series has eight origins. The pack has two today: the
+**Wanderer**, and **Citizen**, a placeholder that starts with Firstia's people and quests. The other seven need
+NPC affinity (how much each NPC likes you), which the pack doesn't have yet.
+
+| Origin | Japanese | Effect | In the pack |
+|---|---|---|---|
+| **Wanderer** | 彷徨う者 (Samayō Mono) | Hard mode: start alone in the wilds (see below) | Yes |
+| **Guiding Blood** | 尊き血 (Tōtoki Chi) | NPCs start out liking you more, but NPCs with high Karma target you more often | Planned |
+| **Private Hero** | 在野の雄 (Zaiya no Yū) | Clearing a quest raises NPC affinity more; the more quests you clear, the further your name spreads among NPCs | Planned |
+| **Beast Child** | 獣の子 (Kemono no Ko) | Moves better in natural areas; starts in an exploration area | Planned |
+| **Average Joe** | 凡民 (Bonmin) | NPCs are less wary of you, by the same amount at every level | Planned |
+| **Swordsman** | 剣客 (Kenkaku) | NPCs like you more while you carry a sword or katana; special rules for who can accept some quests | Planned |
+| **Optimist** | 楽天家 (Rakutenka) | NPC affinity shifts with your HP and MP percentages and with how you act | Planned |
+| **Bluffer** | 一見の実力者 (Ichigen no Jitsuryoku-sha) | NPC affinity changes with the rank of your equipment | Planned |
+
+The **Swordsman** origin is not the Swordsman class.
+
+### The Wanderer's Path
+
+The **Wanderer** is hard mode — the path Sunraku chose — and cannot be undone.
 
 - **Traits:** +2 Luck (better drops) and −10% armour, permanently
 - **Start:** a random spot in a forest, alone. Firstia's people turn away strangers from the wilds
@@ -523,6 +541,8 @@ Described in the design or the lore, but not built yet:
 
 - **Thirdrema** and everything beyond it
 - **The Skill Garden** (combining two skills into a new one), skill levels I–X, and skill evolution chains
+- **The seven other origins** (Guiding Blood, Private Hero, Beast Child, Average Joe, Swordsman, Optimist,
+  Bluffer) and the NPC affinity they need
 - **Vorpal Soul gates** for heroic skills, and karma affecting how NPCs treat you
 - **Goldhuneenay the Inexhaustible**, **the Orchestra of the Doom Echo** and **Vysache the Undying**
 - The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
