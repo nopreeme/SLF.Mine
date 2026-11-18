@@ -78,7 +78,8 @@ class PackLoad(Base):
 
     def test_no_load_errors(self):
         log = S.read_log()
-        bad = [l for l in log.splitlines() if ("ERROR" in l or "Failed to load" in l or "Couldn't parse" in l or "Couldn't load" in l)]
+        bad = [l for l in log.splitlines() if ("ERROR" in l or "Failed to load" in l or "Couldn't parse" in l or "Couldn't load" in l)
+               and "Yggdrasil Key Fetcher" not in l]   # the offline-mode test server may have no route to Mojang's key service
         self.assertEqual(bad, [])
 
     def test_new_player_is_greeted_with_class_menu(self):
