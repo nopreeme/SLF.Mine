@@ -758,9 +758,9 @@ class Bosses(Base):
 
     def test_lycagon_keeps_its_health(self):
         S.cmd("time set 1000"); S.as_player("function slf:test/mob/boss_lycagon"); S.wait_cycle(); S.wait_cycle()
-        self.assertIn("is 360.0", S.cmd(f"attribute {self.boss('lycagon')} minecraft:max_health get"))
+        self.assertIn("is 460.0", S.cmd(f"attribute {self.boss('lycagon')} minecraft:max_health get"))
         health = float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {self.boss('lycagon')} Health")).group(1))
-        self.assertGreater(health, 300)   # not clamped to a plain wolf's 8 (a scrape from the terrain is fine)
+        self.assertGreater(health, 400)   # not clamped to a plain wolf's 8 (a scrape from the terrain is fine)
 
     def test_lycagon_hunts_players(self):
         S.platform(); S.cmd("time set 18000"); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10"); S.wait_ticks(4)
