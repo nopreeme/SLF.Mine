@@ -42,8 +42,9 @@ otherwise the Japanese romanized. The project keeps **Wethermon** (the wiki's "W
 
 ## 4. Origins and the Diremarsh
 
-- [ ] Origin Citizen → **Average Joe** (`wanderer/become_citizen`, `origin_menu`, `origin`, `dream`, setup, test menu)
-- [ ] Splitblade (`marsh/slashed.mcfunction`): reduce slash damage taken instead of healing; the set stays 4 pieces
+- [x] Origin Citizen → **Average Joe** (`wanderer/become_citizen`, `origin_menu`, `origin`, `dream`, setup, test menu)
+- [x] Splitblade (`marsh/slashed.mcfunction`): reduce slash damage taken instead of healing (a new `slf:splitblade` armour
+      enchantment: 12% less damage from swords and axes per piece); the set stays 4 pieces
       (Mask, Vest, Pants, Boots — the boots stand in for the source's belt)
 
 ## 5. Skills (`tools/gen_skill_passives.py`, `skills/learn|focus/*`, lang)

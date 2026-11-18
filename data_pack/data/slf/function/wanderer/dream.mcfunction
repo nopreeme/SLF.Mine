@@ -1,6 +1,6 @@
 # Runs as a Wanderer who died before sleeping at Secondil's inn (design doc V9, 6.2). Everything since the forest is
 # erased: what they dropped, their level, EXP, Mahni, stat points and skill progress. They keep their class, their skills
-# and the Wanderer traits, and wake at Firstia's inn (their respawn point) free to play on as a citizen would.
+# and the Wanderer traits, and wake at Firstia's inn (their respawn point) free to play on as an Average Joe would.
 execute at @s run kill @e[type=minecraft:item,distance=..8]
 clear @s
 scoreboard players set @s slf.level 1

@@ -7,7 +7,7 @@ Every item in the SLF packs: 62 in the main packs and 29 in the 3D weapons pack.
 the way the game's tooltip does, plus enchantments and other modifiers. Items without a custom icon use the vanilla
 item's look.
 
-**24 items are not obtainable in survival yet**: they exist in the packs but no monster, quest or shop gives
+**27 items are not obtainable in survival yet**: they exist in the packs but no monster, quest or shop gives
 them. They're marked in the tables below.
 
 ## Weapons (15)
@@ -45,9 +45,9 @@ them. They're marked in the tables below.
 | <img src="resource_pack/assets/slf/textures/item/belt_lacedaemon.png" width="32" alt=""> | **Lacedaemon Girdle** | diamond leggings | - | - | *Not obtainable in survival yet* (give command only) | `/function slf:give/belt_lacedaemon` |
 | <img src="resource_pack/assets/slf/textures/item/helm_lacedaemon.png" width="32" alt=""> | **Lacedaemon Helm** | diamond helmet | - | - | *Not obtainable in survival yet* (give command only) | `/function slf:give/helm_lacedaemon` |
 | <img src="resource_pack/assets/slf/textures/item/boots_splitblade.png" width="32" alt=""> | **Splitblade Boots** | leather boots | - | - | *Not obtainable in survival yet* (give command only) | `/function slf:give/boots_splitblade` |
-| <img src="resource_pack/assets/slf/textures/item/mask_splitblade.png" width="32" alt=""> | **Splitblade Mask** | leather helmet | - | - | Quest reward: Splitblade Set | `/function slf:give/mask_splitblade` |
-| <img src="resource_pack/assets/slf/textures/item/pants_splitblade.png" width="32" alt=""> | **Splitblade Pants** | leather leggings | - | - | Quest reward: Splitblade Set | `/function slf:give/pants_splitblade` |
-| <img src="resource_pack/assets/slf/textures/item/chest_splitblade.png" width="32" alt=""> | **Splitblade Vest** | leather chestplate | - | - | Quest reward: Splitblade Set | `/function slf:give/chest_splitblade` |
+| <img src="resource_pack/assets/slf/textures/item/mask_splitblade.png" width="32" alt=""> | **Splitblade Mask** | leather helmet | - | - | *Not obtainable in survival yet* (give command only) | `/function slf:give/mask_splitblade` |
+| <img src="resource_pack/assets/slf/textures/item/pants_splitblade.png" width="32" alt=""> | **Splitblade Pants** | leather leggings | - | - | *Not obtainable in survival yet* (give command only) | `/function slf:give/pants_splitblade` |
+| <img src="resource_pack/assets/slf/textures/item/chest_splitblade.png" width="32" alt=""> | **Splitblade Vest** | leather chestplate | - | - | *Not obtainable in survival yet* (give command only) | `/function slf:give/chest_splitblade` |
 
 ## Skill books (11)
 

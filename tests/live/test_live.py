@@ -1330,7 +1330,7 @@ class GarrensQuests(Base):
         for _ in range(4): S.as_player("function slf:give/mud_frog_skin")
         self.money(); self.talk("garren")
         self.assertEqual((S.score("slf.q.splitblade"), S.score("slf.exp"), S.score("slf.mahni")), (2, 250, 50))
-        for piece in ("chest", "pants", "mask"):
+        for piece in ("mask", "chest", "pants", "boots"):
             self.assertTrue(self.has(f'*[minecraft:custom_model_data={{strings:["slf.{piece}_splitblade"]}}]'), piece)
 
     def test_missing_miner(self):
@@ -1474,7 +1474,7 @@ class Diremarsh(Base):
         S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:mud"); S.wait_ticks(10)
         self.assertNotIn("slf.in_marsh", S.tags())
 
-    def test_splitblade_turns_a_blade(self):
+    def test_splitblade_resists_slashes(self):
         S.platform(); S.cmd(f"gamemode survival {S.player}")
         S.as_player("execute positioned ^ ^ ^3 run function slf:mob/red_hat_goblin/spawn"); S.wait_ticks(2)
         S.cmd("execute as @e[tag=slf.red_hat_goblin] run data merge entity @s {NoAI:1b}")
@@ -1484,13 +1484,16 @@ class Diremarsh(Base):
             return self.health()
         bare = hit()
         S.cmd(f"clear {S.player}")
-        S.cmd(f'item replace entity {S.player} armor.chest with minecraft:leather_chestplate[minecraft:custom_model_data={{strings:["slf.chest_splitblade"]}}]')
-        S.cmd(f'item replace entity {S.player} armor.legs with minecraft:leather_leggings[minecraft:custom_model_data={{strings:["slf.pants_splitblade"]}}]')
-        S.cmd(f'item replace entity {S.player} armor.head with minecraft:leather_helmet[minecraft:custom_model_data={{strings:["slf.mask_splitblade"]}}]')
+        ench = 'minecraft:enchantments={"slf:splitblade":1}'
+        for slot, base in (("head", "helmet"), ("chest", "chestplate"), ("legs", "leggings"), ("feet", "boots")):
+            S.cmd(f"item replace entity {S.player} armor.{slot} with minecraft:leather_{base}[{ench}]")
         full = hit()
-        S.cmd(f"clear {S.player}"); S.cmd(f"item replace entity {S.player} armor.chest with minecraft:leather_chestplate"); S.cmd(f"item replace entity {S.player} armor.legs with minecraft:leather_leggings"); S.cmd(f"item replace entity {S.player} armor.head with minecraft:leather_helmet")
+        S.cmd(f"clear {S.player}")
+        for slot, base in (("head", "helmet"), ("chest", "chestplate"), ("legs", "leggings"), ("feet", "boots")):
+            S.cmd(f"item replace entity {S.player} armor.{slot} with minecraft:leather_{base}")
         plain = hit()
-        self.assertGreaterEqual(full - plain, 3, (bare, full, plain))                               # the full set gives back ~4 health against a blade
+        self.assertGreaterEqual(full - plain, 2, (bare, full, plain))                               # the full set takes about half off a blade's hit
+
 
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""

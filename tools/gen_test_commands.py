@@ -203,7 +203,7 @@ def main():
                                  run("[Guard Halvor]", "aqua", "/function slf:npc/place/halvor", "The Night Watch (stand watch near him at night)"),
                                  run("[Old Borric]", "gray", "/function slf:npc/place/borric", "Bar Talk: three stories"),
                                  run("[Bartender]", "yellow", "/function slf:npc/place/bartender", "Ends Bar Talk; sells ale and stew")]))
-    menu.append(row("Origin", [run("[Origin choice]", "gold", "/function slf:wanderer/origin_menu", "The Citizen / Wanderer choice (only while you have no origin and are level 1)"),
+    menu.append(row("Origin", [run("[Origin choice]", "gold", "/function slf:wanderer/origin_menu", "The Average Joe / Wanderer choice (only while you have no origin and are level 1)"),
                                run("[Become Wanderer]", "dark_red", "/function slf:wanderer/become_wanderer", "Skip the warning: Wanderer traits, Dream Penalty, drop into a forest"),
                                run("[Set Firstia inn here]", "yellow", "/function slf:wanderer/set_firstia_inn", "Where Wanderers wake from the dream"),
                                run("[Set Rampant Forest here]", "dark_green", "/function slf:wanderer/set_forest", "Wanderers start within 64 blocks of this spot")]))

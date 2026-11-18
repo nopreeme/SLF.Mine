@@ -102,7 +102,7 @@ scoreboard objectives add slf.q.miner dummy
 scoreboard objectives add slf.q.reeds dummy
 scoreboard objectives add slf.q.wave dummy
 scoreboard objectives add slf.q.thirdrema dummy
-# Origin choice at character creation (wanderer/*): 1 Citizen, 2 Wanderer (shows the warning), 3 confirm Wanderer, 4 show the choice
+# Origin choice at character creation (wanderer/*): 1 Average Joe, 2 Wanderer (shows the warning), 3 confirm Wanderer, 4 show the choice
 scoreboard objectives add slf.origin trigger
 scoreboard objectives add slf.q.letter dummy
 scoreboard objectives add slf.wtry dummy
