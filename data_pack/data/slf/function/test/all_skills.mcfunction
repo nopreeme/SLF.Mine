@@ -25,7 +25,6 @@ tag @s add slf.skill.fortress_breaker
 tag @s add slf.skill.front_position
 tag @s add slf.skill.gigaton_swing
 tag @s add slf.skill.gobus_courage
-tag @s add slf.skill.grand_tantrum
 tag @s add slf.skill.grapple_train
 tag @s add slf.skill.gravity_zero
 tag @s add slf.skill.guardian_heart
@@ -87,4 +86,4 @@ tag @s add slf.skill.tsujizanri
 tag @s add slf.skill.unbreakable
 tag @s add slf.skill.wisdoms_divine_eye
 tag @s add slf.skill.zanzui_flying_blade_leg
-tellraw @s ["",{"text":"[SLF Test] ","color":"gold"},{"text":"Learned all 88 skills.","color":"yellow"}]
+tellraw @s ["",{"text":"[SLF Test] ","color":"gold"},{"text":"Learned all 87 skills.","color":"yellow"}]

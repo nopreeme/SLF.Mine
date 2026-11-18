@@ -4,16 +4,16 @@
 # Power Slash: +1 attack damage
 execute as @a[tag=slf.skill.power_slash] run attribute @s minecraft:attack_damage modifier add slf:skill/power_slash/attack_damage 1 add_value
 execute as @a[tag=!slf.skill.power_slash] run attribute @s minecraft:attack_damage modifier remove slf:skill/power_slash/attack_damage
-# Sword Of Rough Waves: +25% sweep damage
+# Aranami no Tachi: +25% sweep damage
 execute as @a[tag=slf.skill.sword_of_rough_waves] run attribute @s minecraft:sweeping_damage_ratio modifier add slf:skill/sword_of_rough_waves/sweeping_damage_ratio 0.25 add_value
 execute as @a[tag=!slf.skill.sword_of_rough_waves] run attribute @s minecraft:sweeping_damage_ratio modifier remove slf:skill/sword_of_rough_waves/sweeping_damage_ratio
 # Spin Slash: +0.2 attack speed
 execute as @a[tag=slf.skill.spin_slash] run attribute @s minecraft:attack_speed modifier add slf:skill/spin_slash/attack_speed 0.2 add_value
 execute as @a[tag=!slf.skill.spin_slash] run attribute @s minecraft:attack_speed modifier remove slf:skill/spin_slash/attack_speed
-# Lash Slash: +1.5 attack damage
+# Rush Slash: +1.5 attack damage
 execute as @a[tag=slf.skill.lash_slash] run attribute @s minecraft:attack_damage modifier add slf:skill/lash_slash/attack_damage 1.5 add_value
 execute as @a[tag=!slf.skill.lash_slash] run attribute @s minecraft:attack_damage modifier remove slf:skill/lash_slash/attack_damage
-# Lion Fall: +4 safe fall distance (blocks), −25% fall damage
+# Shishi-otoshi: +4 safe fall distance (blocks), −25% fall damage
 execute as @a[tag=slf.skill.lion_fall] run attribute @s minecraft:safe_fall_distance modifier add slf:skill/lion_fall/safe_fall_distance 4 add_value
 execute as @a[tag=!slf.skill.lion_fall] run attribute @s minecraft:safe_fall_distance modifier remove slf:skill/lion_fall/safe_fall_distance
 execute as @a[tag=slf.skill.lion_fall] run attribute @s minecraft:fall_damage_multiplier modifier add slf:skill/lion_fall/fall_damage_multiplier -0.25 add_value
@@ -35,7 +35,7 @@ execute as @a[tag=slf.skill.sword_dance_reincarnation] run attribute @s minecraf
 execute as @a[tag=!slf.skill.sword_dance_reincarnation] run attribute @s minecraft:attack_speed modifier remove slf:skill/sword_dance_reincarnation/attack_speed
 execute as @a[tag=slf.skill.sword_dance_reincarnation] run attribute @s minecraft:movement_speed modifier add slf:skill/sword_dance_reincarnation/movement_speed 0.1 add_multiplied_base
 execute as @a[tag=!slf.skill.sword_dance_reincarnation] run attribute @s minecraft:movement_speed modifier remove slf:skill/sword_dance_reincarnation/movement_speed
-# Sword God Danba: +3 attack damage
+# Kenshin Danpa: +3 attack damage
 execute as @a[tag=slf.skill.sword_god_danba] run attribute @s minecraft:attack_damage modifier add slf:skill/sword_god_danba/attack_damage 3 add_value
 execute as @a[tag=!slf.skill.sword_god_danba] run attribute @s minecraft:attack_damage modifier remove slf:skill/sword_god_danba/attack_damage
 # Asura Kagura: +2 armour, +1 attack damage
@@ -48,7 +48,7 @@ execute as @a[tag=slf.skill.megaton_swing] run attribute @s minecraft:attack_dam
 execute as @a[tag=!slf.skill.megaton_swing] run attribute @s minecraft:attack_damage modifier remove slf:skill/megaton_swing/attack_damage
 execute as @a[tag=slf.skill.megaton_swing] run attribute @s minecraft:attack_knockback modifier add slf:skill/megaton_swing/attack_knockback 0.5 add_value
 execute as @a[tag=!slf.skill.megaton_swing] run attribute @s minecraft:attack_knockback modifier remove slf:skill/megaton_swing/attack_knockback
-# Rigid Strength: +20% knockback resistance
+# Gōriki Jūku: +20% knockback resistance
 execute as @a[tag=slf.skill.rigid_strength] run attribute @s minecraft:knockback_resistance modifier add slf:skill/rigid_strength/knockback_resistance 0.2 add_value
 execute as @a[tag=!slf.skill.rigid_strength] run attribute @s minecraft:knockback_resistance modifier remove slf:skill/rigid_strength/knockback_resistance
 # Front Position: +2 armour
@@ -64,13 +64,13 @@ execute as @a[tag=slf.skill.fortress_breaker] run attribute @s minecraft:block_b
 execute as @a[tag=!slf.skill.fortress_breaker] run attribute @s minecraft:block_break_speed modifier remove slf:skill/fortress_breaker/block_break_speed
 execute as @a[tag=slf.skill.fortress_breaker] run attribute @s minecraft:mining_efficiency modifier add slf:skill/fortress_breaker/mining_efficiency 5 add_value
 execute as @a[tag=!slf.skill.fortress_breaker] run attribute @s minecraft:mining_efficiency modifier remove slf:skill/fortress_breaker/mining_efficiency
-# Gobus Courage: +2 hearts of max health
+# Gōbu Funtan: +2 hearts of max health
 execute as @a[tag=slf.skill.gobus_courage] run attribute @s minecraft:max_health modifier add slf:skill/gobus_courage/max_health 4 add_value
 execute as @a[tag=!slf.skill.gobus_courage] run attribute @s minecraft:max_health modifier remove slf:skill/gobus_courage/max_health
-# Break Attack: +2 attack damage
+# Power Straight: +2 attack damage
 execute as @a[tag=slf.skill.break_attack] run attribute @s minecraft:attack_damage modifier add slf:skill/break_attack/attack_damage 2 add_value
 execute as @a[tag=!slf.skill.break_attack] run attribute @s minecraft:attack_damage modifier remove slf:skill/break_attack/attack_damage
-# Tsujizanri: +0.3 attack speed, +25% sweep damage
+# Tsujigiri: +0.3 attack speed, +25% sweep damage
 execute as @a[tag=slf.skill.tsujizanri] run attribute @s minecraft:attack_speed modifier add slf:skill/tsujizanri/attack_speed 0.3 add_value
 execute as @a[tag=!slf.skill.tsujizanri] run attribute @s minecraft:attack_speed modifier remove slf:skill/tsujizanri/attack_speed
 execute as @a[tag=slf.skill.tsujizanri] run attribute @s minecraft:sweeping_damage_ratio modifier add slf:skill/tsujizanri/sweeping_damage_ratio 0.25 add_value
@@ -89,12 +89,12 @@ execute as @a[tag=slf.skill.meteor_fall] run attribute @s minecraft:safe_fall_di
 execute as @a[tag=!slf.skill.meteor_fall] run attribute @s minecraft:safe_fall_distance modifier remove slf:skill/meteor_fall/safe_fall_distance
 execute as @a[tag=slf.skill.meteor_fall] run attribute @s minecraft:attack_damage modifier add slf:skill/meteor_fall/attack_damage 1 add_value
 execute as @a[tag=!slf.skill.meteor_fall] run attribute @s minecraft:attack_damage modifier remove slf:skill/meteor_fall/attack_damage
-# Zanzui Flying Blade Leg: +0.1 jump strength, +5% movement speed
+# Gettoment Blaster: +0.1 jump strength, +5% movement speed
 execute as @a[tag=slf.skill.zanzui_flying_blade_leg] run attribute @s minecraft:jump_strength modifier add slf:skill/zanzui_flying_blade_leg/jump_strength 0.1 add_value
 execute as @a[tag=!slf.skill.zanzui_flying_blade_leg] run attribute @s minecraft:jump_strength modifier remove slf:skill/zanzui_flying_blade_leg/jump_strength
 execute as @a[tag=slf.skill.zanzui_flying_blade_leg] run attribute @s minecraft:movement_speed modifier add slf:skill/zanzui_flying_blade_leg/movement_speed 0.05 add_multiplied_base
 execute as @a[tag=!slf.skill.zanzui_flying_blade_leg] run attribute @s minecraft:movement_speed modifier remove slf:skill/zanzui_flying_blade_leg/movement_speed
-# Grapple Train: +0.5 attack reach, +10% knockback resistance
+# Grapple Drain: +0.5 attack reach, +10% knockback resistance
 execute as @a[tag=slf.skill.grapple_train] run attribute @s minecraft:entity_interaction_range modifier add slf:skill/grapple_train/entity_interaction_range 0.5 add_value
 execute as @a[tag=!slf.skill.grapple_train] run attribute @s minecraft:entity_interaction_range modifier remove slf:skill/grapple_train/entity_interaction_range
 execute as @a[tag=slf.skill.grapple_train] run attribute @s minecraft:knockback_resistance modifier add slf:skill/grapple_train/knockback_resistance 0.1 add_value
@@ -105,7 +105,7 @@ execute as @a[tag=!slf.skill.strong_puncher] run attribute @s minecraft:attack_d
 # One Inch Impact: +1.5 attack knockback
 execute as @a[tag=slf.skill.one_inch_impact] run attribute @s minecraft:attack_knockback modifier add slf:skill/one_inch_impact/attack_knockback 1.5 add_value
 execute as @a[tag=!slf.skill.one_inch_impact] run attribute @s minecraft:attack_knockback modifier remove slf:skill/one_inch_impact/attack_knockback
-# Hundred Sounding: +0.6 attack speed
+# Hundred Beat: +0.6 attack speed
 execute as @a[tag=slf.skill.hundred_sounding] run attribute @s minecraft:attack_speed modifier add slf:skill/hundred_sounding/attack_speed 0.6 add_value
 execute as @a[tag=!slf.skill.hundred_sounding] run attribute @s minecraft:attack_speed modifier remove slf:skill/hundred_sounding/attack_speed
 # Duelism: +1 armour, +0.5 attack damage
@@ -132,18 +132,18 @@ execute as @a[tag=!slf.skill.stealth_assault] run attribute @s minecraft:sneakin
 # Quick Spin: +0.25 attack speed
 execute as @a[tag=slf.skill.quick_spin] run attribute @s minecraft:attack_speed modifier add slf:skill/quick_spin/attack_speed 0.25 add_value
 execute as @a[tag=!slf.skill.quick_spin] run attribute @s minecraft:attack_speed modifier remove slf:skill/quick_spin/attack_speed
-# Desperate Sting: +2 attack damage
+# Fatal Sting: +2 attack damage
 execute as @a[tag=slf.skill.desperate_sting] run attribute @s minecraft:attack_damage modifier add slf:skill/desperate_sting/attack_damage 2 add_value
 execute as @a[tag=!slf.skill.desperate_sting] run attribute @s minecraft:attack_damage modifier remove slf:skill/desperate_sting/attack_damage
-# Masakuru Byte: +0.3 attack speed
+# Massacre Bite: +0.3 attack speed
 execute as @a[tag=slf.skill.masakuru_byte] run attribute @s minecraft:attack_speed modifier add slf:skill/masakuru_byte/attack_speed 0.3 add_value
 execute as @a[tag=!slf.skill.masakuru_byte] run attribute @s minecraft:attack_speed modifier remove slf:skill/masakuru_byte/attack_speed
-# Hate Trumple: +10% movement speed, +0.4 step height
+# Hate Trample: +10% movement speed, +0.4 step height
 execute as @a[tag=slf.skill.hate_trumple] run attribute @s minecraft:movement_speed modifier add slf:skill/hate_trumple/movement_speed 0.1 add_multiplied_base
 execute as @a[tag=!slf.skill.hate_trumple] run attribute @s minecraft:movement_speed modifier remove slf:skill/hate_trumple/movement_speed
 execute as @a[tag=slf.skill.hate_trumple] run attribute @s minecraft:step_height modifier add slf:skill/hate_trumple/step_height 0.4 add_value
 execute as @a[tag=!slf.skill.hate_trumple] run attribute @s minecraft:step_height modifier remove slf:skill/hate_trumple/step_height
-# Limit Break Rees: +20% movement speed, +0.3 attack speed
+# Limit Break Race: +20% movement speed, +0.3 attack speed
 execute as @a[tag=slf.skill.limit_break_rees] run attribute @s minecraft:movement_speed modifier add slf:skill/limit_break_rees/movement_speed 0.2 add_multiplied_base
 execute as @a[tag=!slf.skill.limit_break_rees] run attribute @s minecraft:movement_speed modifier remove slf:skill/limit_break_rees/movement_speed
 execute as @a[tag=slf.skill.limit_break_rees] run attribute @s minecraft:attack_speed modifier add slf:skill/limit_break_rees/attack_speed 0.3 add_value
@@ -156,7 +156,7 @@ execute as @a[tag=!slf.skill.ablaze_advanced_ale] run attribute @s minecraft:bur
 # Serial Killer: +2.5 attack damage
 execute as @a[tag=slf.skill.serial_killer] run attribute @s minecraft:attack_damage modifier add slf:skill/serial_killer/attack_damage 2.5 add_value
 execute as @a[tag=!slf.skill.serial_killer] run attribute @s minecraft:attack_damage modifier remove slf:skill/serial_killer/attack_damage
-# After All Unyo: +8 safe fall distance (blocks), −50% fall damage
+# Hikkyō Un'yō: +8 safe fall distance (blocks), −50% fall damage
 execute as @a[tag=slf.skill.after_all_unyo] run attribute @s minecraft:safe_fall_distance modifier add slf:skill/after_all_unyo/safe_fall_distance 8 add_value
 execute as @a[tag=!slf.skill.after_all_unyo] run attribute @s minecraft:safe_fall_distance modifier remove slf:skill/after_all_unyo/safe_fall_distance
 execute as @a[tag=slf.skill.after_all_unyo] run attribute @s minecraft:fall_damage_multiplier modifier add slf:skill/after_all_unyo/fall_damage_multiplier -0.5 add_value
@@ -164,7 +164,7 @@ execute as @a[tag=!slf.skill.after_all_unyo] run attribute @s minecraft:fall_dam
 # Burnout: +15% movement speed
 execute as @a[tag=slf.skill.burnout] run attribute @s minecraft:movement_speed modifier add slf:skill/burnout/movement_speed 0.15 add_multiplied_base
 execute as @a[tag=!slf.skill.burnout] run attribute @s minecraft:movement_speed modifier remove slf:skill/burnout/movement_speed
-# Breath Of Anti Harm: +1 heart of max health
+# Breath of Resistance: +1 heart of max health
 execute as @a[tag=slf.skill.breath_of_anti_harm] run attribute @s minecraft:max_health modifier add slf:skill/breath_of_anti_harm/max_health 2 add_value
 execute as @a[tag=!slf.skill.breath_of_anti_harm] run attribute @s minecraft:max_health modifier remove slf:skill/breath_of_anti_harm/max_health
 # Phalanx: +2 armour
@@ -179,13 +179,13 @@ execute as @a[tag=!slf.skill.guardian_heart] run attribute @s minecraft:max_heal
 # Protect Smash: +2 armour toughness
 execute as @a[tag=slf.skill.protect_smash] run attribute @s minecraft:armor_toughness modifier add slf:skill/protect_smash/armor_toughness 2 add_value
 execute as @a[tag=!slf.skill.protect_smash] run attribute @s minecraft:armor_toughness modifier remove slf:skill/protect_smash/armor_toughness
-# Shield Bashing: +1 attack knockback
+# Raging Shield: +1 attack knockback
 execute as @a[tag=slf.skill.shield_bashing] run attribute @s minecraft:attack_knockback modifier add slf:skill/shield_bashing/attack_knockback 1 add_value
 execute as @a[tag=!slf.skill.shield_bashing] run attribute @s minecraft:attack_knockback modifier remove slf:skill/shield_bashing/attack_knockback
-# Embrace Of Devil: +3 armour
+# Embrace of the Karmic Demon: +3 armour
 execute as @a[tag=slf.skill.embrace_of_devil] run attribute @s minecraft:armor modifier add slf:skill/embrace_of_devil/armor 3 add_value
 execute as @a[tag=!slf.skill.embrace_of_devil] run attribute @s minecraft:armor modifier remove slf:skill/embrace_of_devil/armor
-# Causal Accumulation: +1 luck, +20 max mana
+# Retaliate: +1 luck, +20 max mana
 execute as @a[tag=slf.skill.causal_accumulation] run attribute @s minecraft:luck modifier add slf:skill/causal_accumulation/luck 1 add_value
 execute as @a[tag=!slf.skill.causal_accumulation] run attribute @s minecraft:luck modifier remove slf:skill/causal_accumulation/luck
 # Unbreakable: +50% knockback resistance, +2 armour toughness
@@ -199,7 +199,7 @@ execute as @a[tag=!slf.skill.tasram_fist] run attribute @s minecraft:attack_dama
 # Skull Shaker: +0.5 attack knockback
 execute as @a[tag=slf.skill.skull_shaker] run attribute @s minecraft:attack_knockback modifier add slf:skill/skull_shaker/attack_knockback 0.5 add_value
 execute as @a[tag=!slf.skill.skull_shaker] run attribute @s minecraft:attack_knockback modifier remove slf:skill/skull_shaker/attack_knockback
-# Tanda Breathing: +2 oxygen, +1 mana per second
+# Tanden Breathing: +2 oxygen, +1 mana per second
 execute as @a[tag=slf.skill.tanda_breathing] run attribute @s minecraft:oxygen_bonus modifier add slf:skill/tanda_breathing/oxygen_bonus 2 add_value
 execute as @a[tag=!slf.skill.tanda_breathing] run attribute @s minecraft:oxygen_bonus modifier remove slf:skill/tanda_breathing/oxygen_bonus
 # Infight: +0.3 attack speed
@@ -208,12 +208,12 @@ execute as @a[tag=!slf.skill.infight] run attribute @s minecraft:attack_speed mo
 # Hand Of Fortune: +2 luck
 execute as @a[tag=slf.skill.hand_of_fortune] run attribute @s minecraft:luck modifier add slf:skill/hand_of_fortune/luck 2 add_value
 execute as @a[tag=!slf.skill.hand_of_fortune] run attribute @s minecraft:luck modifier remove slf:skill/hand_of_fortune/luck
-# Kings Silver Arm: +3 armour, +1 attack damage
+# Nuada Airgetlám: +3 armour, +1 attack damage
 execute as @a[tag=slf.skill.kings_silver_arm] run attribute @s minecraft:armor modifier add slf:skill/kings_silver_arm/armor 3 add_value
 execute as @a[tag=!slf.skill.kings_silver_arm] run attribute @s minecraft:armor modifier remove slf:skill/kings_silver_arm/armor
 execute as @a[tag=slf.skill.kings_silver_arm] run attribute @s minecraft:attack_damage modifier add slf:skill/kings_silver_arm/attack_damage 1 add_value
 execute as @a[tag=!slf.skill.kings_silver_arm] run attribute @s minecraft:attack_damage modifier remove slf:skill/kings_silver_arm/attack_damage
-# Instant Vision: +1 attack reach, +1 block reach
+# Moment Sight: +1 attack reach, +1 block reach
 execute as @a[tag=slf.skill.instant_vision] run attribute @s minecraft:entity_interaction_range modifier add slf:skill/instant_vision/entity_interaction_range 1 add_value
 execute as @a[tag=!slf.skill.instant_vision] run attribute @s minecraft:entity_interaction_range modifier remove slf:skill/instant_vision/entity_interaction_range
 execute as @a[tag=slf.skill.instant_vision] run attribute @s minecraft:block_interaction_range modifier add slf:skill/instant_vision/block_interaction_range 1 add_value
@@ -221,7 +221,7 @@ execute as @a[tag=!slf.skill.instant_vision] run attribute @s minecraft:block_in
 # Analyze Legacy: +2 luck
 execute as @a[tag=slf.skill.analyze_legacy] run attribute @s minecraft:luck modifier add slf:skill/analyze_legacy/luck 2 add_value
 execute as @a[tag=!slf.skill.analyze_legacy] run attribute @s minecraft:luck modifier remove slf:skill/analyze_legacy/luck
-# Blaze Shot: +0.5 attack damage, −50% time spent on fire
+# Bloodburn Burst: +0.5 attack damage, −50% time spent on fire
 execute as @a[tag=slf.skill.blaze_shot] run attribute @s minecraft:attack_damage modifier add slf:skill/blaze_shot/attack_damage 0.5 add_value
 execute as @a[tag=!slf.skill.blaze_shot] run attribute @s minecraft:attack_damage modifier remove slf:skill/blaze_shot/attack_damage
 execute as @a[tag=slf.skill.blaze_shot] run attribute @s minecraft:burning_time modifier add slf:skill/blaze_shot/burning_time -0.5 add_multiplied_total
@@ -229,10 +229,10 @@ execute as @a[tag=!slf.skill.blaze_shot] run attribute @s minecraft:burning_time
 # Flash Counter: +0.3 attack speed
 execute as @a[tag=slf.skill.flash_counter] run attribute @s minecraft:attack_speed modifier add slf:skill/flash_counter/attack_speed 0.3 add_value
 execute as @a[tag=!slf.skill.flash_counter] run attribute @s minecraft:attack_speed modifier remove slf:skill/flash_counter/attack_speed
-# Paring Protect: +2 armour
+# Parrying Protect: +2 armour
 execute as @a[tag=slf.skill.paring_protect] run attribute @s minecraft:armor modifier add slf:skill/paring_protect/armor 2 add_value
 execute as @a[tag=!slf.skill.paring_protect] run attribute @s minecraft:armor modifier remove slf:skill/paring_protect/armor
-# Total Body Takeshi: +30% knockback resistance, +1 heart of max health
+# Full Body Parrying: +30% knockback resistance, +1 heart of max health
 execute as @a[tag=slf.skill.total_body_takeshi] run attribute @s minecraft:knockback_resistance modifier add slf:skill/total_body_takeshi/knockback_resistance 0.3 add_value
 execute as @a[tag=!slf.skill.total_body_takeshi] run attribute @s minecraft:knockback_resistance modifier remove slf:skill/total_body_takeshi/knockback_resistance
 execute as @a[tag=slf.skill.total_body_takeshi] run attribute @s minecraft:max_health modifier add slf:skill/total_body_takeshi/max_health 2 add_value
@@ -240,7 +240,7 @@ execute as @a[tag=!slf.skill.total_body_takeshi] run attribute @s minecraft:max_
 # Fatal Gain: +1.5 attack damage
 execute as @a[tag=slf.skill.fatal_gain] run attribute @s minecraft:attack_damage modifier add slf:skill/fatal_gain/attack_damage 1.5 add_value
 execute as @a[tag=!slf.skill.fatal_gain] run attribute @s minecraft:attack_damage modifier remove slf:skill/fatal_gain/attack_damage
-# Iggist Requiem: +3 attack damage
+# Exist Requiem: +3 attack damage
 execute as @a[tag=slf.skill.iggist_requiem] run attribute @s minecraft:attack_damage modifier add slf:skill/iggist_requiem/attack_damage 3 add_value
 execute as @a[tag=!slf.skill.iggist_requiem] run attribute @s minecraft:attack_damage modifier remove slf:skill/iggist_requiem/attack_damage
 # Reflexus: +10% movement speed, +0.2 attack speed

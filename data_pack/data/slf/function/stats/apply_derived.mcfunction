@@ -20,9 +20,6 @@ scoreboard players add #m slf.tmp 20
 # Skills that deepen the pool or speed up regeneration
 function slf:skills/mana_bonus
 scoreboard players operation @s slf.mana_max = #m slf.tmp
-# An active Tantrum drains 3 mana per second instead of regenerating, and ends when the pool is empty
-execute if entity @s[tag=slf.tantrum_active] run scoreboard players set #r slf.tmp -3
 scoreboard players operation @s slf.mana += #r slf.tmp
 execute if score @s slf.mana > @s slf.mana_max run scoreboard players operation @s slf.mana = @s slf.mana_max
-execute if score @s slf.mana matches ..0 if entity @s[tag=slf.tantrum_active] run function slf:skills/tantrum_end
 execute if score @s slf.mana matches ..-1 run scoreboard players set @s slf.mana 0

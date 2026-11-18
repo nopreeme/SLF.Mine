@@ -237,24 +237,20 @@ class Skills(Base):
         S.wait_cycle(); fx = S.effects()
         self.assertEqual(fx.get("resistance"), 1); self.assertEqual(fx.get("speed"), 0); self.assertEqual(fx.get("strength"), 0)
 
-    def test_tantrum_spends_mana_and_counts_kills(self):
-        self.grant("bandit"); self.set("slf.stat.mp", 0); S.wait_cycle(); self.set("slf.mana", 20); self.set("slf.bt_kills", 49)
+    def test_big_tantrum_draws_monsters(self):
+        """Series: Big Tantrum draws other monsters to you. Toggled from the menu, no mana."""
+        self.grant("bandit"); S.cmd(f"gamemode survival {S.player}")
+        S.as_player('summon minecraft:zombie ~30 ~ ~ {NoAI:1b,PersistenceRequired:1b,Tags:["slf.test"]}'); S.wait_ticks(3)
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
-        self.assertIn("slf.tantrum_active", S.tags()); self.assertLessEqual(S.score("slf.mana"), 10)
-        S.wait_cycle(); self.assertIn("glowing", S.effects())
-        S.cmd(f"gamemode survival {S.player}")
-        S.as_player('summon minecraft:pig ~3 ~ ~ {NoAI:1b,Tags:["slf.test"]}'); S.wait_ticks(3)
-        S.as_player("damage @e[type=minecraft:pig,tag=slf.test,limit=1] 1000 minecraft:player_attack by @s"); S.wait_ticks(6)
-        self.assertEqual(S.score("slf.bt_kills"), 50); self.assertIn("slf.skill.grand_tantrum", S.tags())
-        self.set("slf.mana", 2); S.wait_cycle(); S.wait_cycle()
-        self.assertNotIn("slf.tantrum_active", S.tags()); self.assertGreaterEqual(S.score("slf.mana"), 0)
+        self.assertIn("slf.tantrum_active", S.tags()); self.assertTrue(any("Big Tantrum!" in c for c in S.bot.chat_since(mark)))
+        S.wait_cycle(); S.wait_cycle(); self.assertIn("glowing", S.effects())
+        self.assertIn("is 64", S.cmd("attribute @e[type=minecraft:zombie,tag=slf.test,limit=1] minecraft:follow_range base get"))
+        S.as_player("trigger slf.menu set 8"); S.wait_ticks(4); self.assertNotIn("slf.tantrum_active", S.tags())
+        S.cmd("kill @e[tag=slf.test]")
 
-    def test_tantrum_refused_without_skill_or_mana(self):
+    def test_tantrum_refused_without_skill(self):
         self.grant("swordsman"); mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
         self.assertNotIn("slf.tantrum_active", S.tags()); self.assertTrue(any("not learned" in c for c in S.bot.chat_since(mark)))
-        S.as_player("function slf:admin/reset_player"); S.wait_ticks(2); self.grant("bandit"); S.wait_cycle(); self.set("slf.mana", 3)
-        mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
-        self.assertNotIn("slf.tantrum_active", S.tags()); self.assertTrue(any("Not enough mana" in c for c in S.bot.chat_since(mark)))
 
 
 class Stats(Base):

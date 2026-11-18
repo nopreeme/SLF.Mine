@@ -109,8 +109,8 @@ HANDWRITTEN = {
     "slide_step": "Speed I", "gravity_zero": "Slow Falling", "acrobat": "Resistance I while airborne",
     "managarm_pride": "Strength I–III, stronger the lower your health", "ignition": "Strength I and Speed I for a minute after taking damage",
     "slash_ignition": "Strength II and Speed II for a minute after taking damage", "holy_shield": "Resistance I", "iron_skin": "Resistance II",
-    "rechette_step": "Speed I and Jump Boost I", "big_tantrum": "Activated from the menu: glowing, kills count toward Grand Tantrum (drains mana)",
-    "grand_tantrum": "Activated from the menu: glowing and Strength I (drains mana)", "inexhaustible_beasts": "Strength I", "terraton_corapsa": "Strength I",
+    "rechette_step": "Speed I and Jump Boost I", "big_tantrum": "Toggled from the menu: you glow and monsters within 48 blocks come for you",
+    "inexhaustible_beasts": "Strength I", "terraton_corapsa": "Strength I",
     "bradion": "Haste I–II while sprinting",
 }
 NAMES = {"armor": "armour", "armor_toughness": "armour toughness", "attack_damage": "attack damage", "attack_knockback": "attack knockback",
@@ -121,7 +121,46 @@ NAMES = {"armor": "armour", "armor_toughness": "armour toughness", "attack_damag
          "sneaking_speed": "sneaking speed", "step_height": "step height", "sweeping_damage_ratio": "sweep damage"}
 
 def num(x): return str(int(x)) if float(x).is_integer() else repr(float(x))
-def title(k): return " ".join(w.capitalize() for w in k.split("_"))
+DISPLAY = {  # skill id -> the series' name (ids stay as they were so players keep their skills)
+    "after_all_unyo": "Hikkyō Un'yō",
+    "causal_accumulation": 'Retaliate',
+    "chanting_and_memorizing": 'Chant Memorization',
+    "desperate_sting": 'Fatal Sting',
+    "embrace_of_devil": 'Embrace of the Karmic Demon',
+    "gobus_courage": 'Gōbu Funtan',
+    "grapple_train": 'Grapple Drain',
+    "hate_trumple": 'Hate Trample',
+    "hegemony_world": 'Hadan Seikai',
+    "hundred_sounding": 'Hundred Beat',
+    "iggist_requiem": 'Exist Requiem',
+    "inexhaustible_beasts": 'Jūō Mujin',
+    "instant_vision": 'Moment Sight',
+    "kings_silver_arm": 'Nuada Airgetlám',
+    "lash_slash": 'Rush Slash',
+    "limit_break_rees": 'Limit Break Race',
+    "lion_fall": 'Shishi-otoshi',
+    "manbufu": 'Banbu Futō',
+    "masakuru_byte": 'Massacre Bite',
+    "paring_protect": 'Parrying Protect',
+    "rechette_step": 'Ricochet Step',
+    "rigid_strength": 'Gōriki Jūku',
+    "sword_god_danba": 'Kenshin Danpa',
+    "sword_of_rough_waves": 'Aranami no Tachi',
+    "tanda_breathing": 'Tanden Breathing',
+    "terraton_corapsa": 'Teraton Collapsar',
+    "total_body_takeshi": 'Full Body Parrying',
+    "tsujizanri": 'Tsujigiri',
+    "wisdoms_divine_eye": "Odin's Surpr-Eyes",
+    "zanzui_flying_blade_leg": 'Gettoment Blaster',
+    "breath_of_anti_harm": 'Breath of Resistance',
+    "blaze_shot": 'Bloodburn Burst',
+    "bradion": 'Accel',
+    "break_attack": 'Power Straight',
+    "holy_shield": 'Spirit of Guardian',
+    "iron_skin": 'Futō Fukutsu',
+    "shield_bashing": 'Raging Shield',
+}
+def title(k): return DISPLAY.get(k) or " ".join(w.capitalize() for w in k.split("_"))
 def describe(e):
     if e[0] == "mana_max": return f"+{e[1]} max mana"
     if e[0] == "mana_regen": return f"+{e[1]} mana per second"

@@ -49,7 +49,9 @@ otherwise the Japanese romanized. The project keeps **Wethermon** (the wiki's "W
 
 ## 5. Skills (`tools/gen_skill_passives.py`, `skills/learn|focus/*`, lang)
 
-- [ ] Renames:
+Display names only: the skill ids (tags like `slf.skill.manbufu`) stay, so players keep the skills they have.
+
+- [x] Renames:
       After All Unyo → Hikkyō Un'yō · Causal Accumulation → Retaliate · Chanting And Memorizing → Chant Memorization ·
       Desperate Sting → Fatal Sting · Embrace Of Devil → Embrace of the Karmic Demon · Gobus Courage → Gōbu Funtan ·
       Grapple Train → Grapple Drain · Hate Trumple → Hate Trample · Hegemony World → Hadan Seikai ·
@@ -61,10 +63,10 @@ otherwise the Japanese romanized. The project keeps **Wethermon** (the wiki's "W
       Tanda Breathing → Tanden Breathing · Terraton Corapsa → Teraton Collapsar ·
       Total Body Takeshi → Full Body Parrying · Tsujizanri → Tsujigiri · Wisdoms Divine Eye → Odin's Surpr-Eyes ·
       Zanzui Flying Blade Leg → Gettoment Blaster · Breath Of Anti Harm → Breath of Resistance
-- [ ] Made-up skills replaced with real ones (same effect): Blaze Shot → Bloodburn Burst, Bradion → Accel,
+- [x] Made-up skills replaced with real ones (same effect): Blaze Shot → Bloodburn Burst, Bradion → Accel,
       Break Attack → Power Straight, Holy Shield → Spirit of Guardian, Iron Skin → Futō Fukutsu,
       Shield Bashing → Raging Shield
-- [ ] Remove Grand Tantrum; Big Tantrum (大癇癪) draws nearby monsters instead of the mana toggle
+- [x] Remove Grand Tantrum; Big Tantrum (大癇癪) draws nearby monsters instead of the mana toggle
 
 ## 6. Weapons
 
