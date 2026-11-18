@@ -622,7 +622,7 @@ class TestSuite(Base):
 
     def test_boss_drops_have_real_names(self):
         """Regression: loot tables stored names as JSON strings, shown in game as {"translate":...}."""
-        for table in ("bilac_drops", "nightclaw_drops", "oriana_drops", "wethermon_drops", "wezaemon_drops", "lycagon_drops"):
+        for table in ("wezaemon_drops",):
             with self.subTest(table):
                 for _ in range(8):   # drops are random: roll until the unique item comes
                     S.cmd(f"clear {S.player}"); S.cmd(f"loot give {S.player} loot slf:{table}")
@@ -717,10 +717,9 @@ class Mobs(Base):
 
 
 class Bosses(Base):
-    """The five SLF bosses: stats from level, boss bars, the boss kill reward, natural encounters, night bosses leaving at dawn."""
+    """The Colossi in the pack: stats from level, boss bars, the boss kill reward, natural encounters, Lycagon leaving at dawn."""
     # id: (body, level, full name, size)
-    BOSSES = {"nightclaw": ("spider", 40, "Nightclaw", 2.5), "bilac": ("phantom", 60, "Bilac the Full Moon Fangs", 3.0),
-              "oriana": ("evoker", 75, "Oriana the Uncrowned", 1.3), "lycagon": ("wolf", 90, "Lycagon the Nightslayer", 3.0),
+    BOSSES = {"lycagon": ("wolf", 90, "Lycagon the Nightslayer", 3.0),
               "ctarnidd": ("elder_guardian", 85, "Ctarnidd of the Abyss", 2.0), "siegwurm": ("ghast", 95, "Siegwurm the Sky Ruler", 1.5),
               "wethermon": ("wither_skeleton", 100, "Wethermon the Tombguard", 1.6)}
 
@@ -745,9 +744,9 @@ class Bosses(Base):
         S.cmd("kill @e[tag=slf.mob]"); S.wait_cycle()
         for bid in self.BOSSES: self.assertIn("hidden", S.cmd(f"bossbar get slf:{bid} visible"), bid)
 
-    def test_wethermon_carries_its_scythe_and_does_not_drop_its_gear(self):
+    def test_wethermon_carries_its_blade_and_does_not_drop_its_gear(self):
         S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3)
-        self.assertIn("slf.wethermon_scythe", S.cmd(f"data get entity {self.boss('wethermon')} equipment.mainhand"))
+        self.assertIn("slf.wethermon_katana", S.cmd(f"data get entity {self.boss('wethermon')} equipment.mainhand"))
         self.assertIn("mainhand: 0.0f", S.cmd(f"data get entity {self.boss('wethermon')} drop_chances"))
 
     def test_boss_kill_gives_exp_soul_and_opens_the_gate(self):
@@ -798,17 +797,12 @@ class Bosses(Base):
         S.platform(); self.grant("swordsman"); self.set("slf.level", 5); S.cmd("time set 18000")
         for _ in range(30): S.as_player("function slf:mob/boss/roll")
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss]"))
-        self.set("slf.level", 99)   # now Bilac (full moon, open sky, 10%) and Lycagon (night, 1.7%) both qualify
-        for _ in range(60): S.as_player("function slf:mob/boss/roll")
-        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_bilac]"))   # 60 rolls at 10%: misses 0.2% of the time
-        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_nightclaw]"))   # caves only
+        self.set("slf.level", 99)   # now Lycagon (night, open sky, 1.7%) qualifies
+        for _ in range(400): S.as_player("function slf:mob/boss/roll")
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_lycagon]"))   # 400 rolls at 1.7%: misses 0.1% of the time
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_wethermon]"))   # Nether only
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_ctarnidd]"))    # deep ocean, in the water only
 
-    def test_siegwurm_always_drops_a_unique_core(self):
-        S.platform(); S.as_player("function slf:test/mob/boss_siegwurm"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
-        out = S.as_player("damage @e[tag=slf.boss_siegwurm,limit=1] 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
-        self.assertIn("passed", S.as_player('execute if items entity @e[type=minecraft:item,distance=..32] contents *[minecraft:custom_model_data={strings:["slf.unique_core"]}]'))
 
 
 class Goblins(Base):
@@ -1031,17 +1025,15 @@ class MudDigger(Base):
         self.assertTrue(self.wait_for(lambda: "levitation" in S.effects(), 6), "the Phase 2 burst never launched the player")
         self.assertGreaterEqual(S.effects().get("levitation", 0), 24)
 
-    def test_solo_kill_reward_and_trophy(self):
+    def test_kill_reward_and_drops(self):
         self.grant("swordsman"); self.set("slf.level", 30); self.set("slf.exp", 0); self.set("slf.boss_gate", 0); S.cmd(f"clear {S.player}")
         self.spawn_near()
         out = S.as_player(f"damage {self.DIG} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
         self.assertEqual(S.score("slf.exp"), 25 + 2 + 800)
         self.assertEqual(S.score("slf.boss_gate"), 0)
-        self.assertIn("slf.title.solo_killer", S.tags())
-        self.assertIn("passed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:solo_killers_trophy"]'))
         self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:mud_digger_tooth"]'))
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.digger_part]"))
-        S.cmd(f"tag {S.player} remove slf.title.solo_killer"); S.cmd(f"clear {S.player}")
+        S.cmd(f"clear {S.player}")
 
 class Mahni(Base):
     """Mahni currency: purses turn into Mahni on pickup; the balance shows on the status sheet."""

@@ -109,15 +109,10 @@ scoreboard objectives add slf.wtry dummy
 # Shop buy buttons (shop/buy)
 scoreboard objectives add slf.shop trigger
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
-bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
-bossbar set slf:nightclaw color white
-bossbar set slf:nightclaw style notched_10
-bossbar add slf:bilac {text:"Bilac the Full Moon Fangs",color:"gold"}
-bossbar set slf:bilac color yellow
-bossbar set slf:bilac style notched_10
-bossbar add slf:oriana {text:"Oriana the Uncrowned",color:"dark_aqua"}
-bossbar set slf:oriana color blue
-bossbar set slf:oriana style notched_10
+# Bosses that are no longer in the pack (removed from worlds made with older versions)
+bossbar remove slf:nightclaw
+bossbar remove slf:bilac
+bossbar remove slf:oriana
 bossbar add slf:lycagon {text:"Lycagon the Nightslayer",color:"dark_purple"}
 bossbar set slf:lycagon color purple
 bossbar set slf:lycagon style notched_10

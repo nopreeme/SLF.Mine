@@ -8,9 +8,6 @@ execute if items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"m
 # Vorpal Choppers
 execute unless items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"vorpal_chopper"}}] run clear @s *[minecraft:custom_data~{slf:{twin:"vorpal_chopper"}}]
 execute if items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"vorpal_chopper"}}] unless items entity @s weapon.offhand * run item replace entity @s weapon.offhand with minecraft:stick[minecraft:item_model="slf:vorpal_chopper",minecraft:item_name="Vorpal Choppers",minecraft:max_stack_size=1,minecraft:custom_data={slf:{twin:"vorpal_chopper",is_twin:1b}}]
-# Sunraku's Blades
-execute unless items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"sunraku_blade"}}] run clear @s *[minecraft:custom_data~{slf:{twin:"sunraku_blade"}}]
-execute if items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"sunraku_blade"}}] unless items entity @s weapon.offhand * run item replace entity @s weapon.offhand with minecraft:stick[minecraft:item_model="slf:sunraku_blade",minecraft:item_name="Sunraku's Blades",minecraft:max_stack_size=1,minecraft:custom_data={slf:{twin:"sunraku_blade",is_twin:1b}}]
 # Togetsu
 execute unless items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"togetsu"}}] run clear @s *[minecraft:custom_data~{slf:{twin:"togetsu"}}]
 execute if items entity @s weapon.mainhand *[minecraft:custom_data~{slf:{pair:"togetsu"}}] unless items entity @s weapon.offhand * run item replace entity @s weapon.offhand with minecraft:stick[minecraft:item_model="slf:togetsu_twin",minecraft:item_name="Togetsu",minecraft:max_stack_size=1,minecraft:custom_data={slf:{twin:"togetsu",is_twin:1b}}]

@@ -9,22 +9,24 @@ otherwise the Japanese romanized. The project keeps **Wethermon** (the wiki's "W
 
 ## 1. Remove the fake bosses and invented items
 
-- [ ] Bosses: Nightclaw, Oriana the Uncrowned, Bilac the Full Moon Fangs — `function/mob/boss/{nightclaw,oriana,bilac}/`,
+- [x] Bosses: Nightclaw, Oriana the Uncrowned, Bilac the Full Moon Fangs — `function/mob/boss/{nightclaw,oriana,bilac}/`,
       spawn rolls, loot tables, advancements, test-menu buttons
-- [ ] Weapons: Nightclaw Talon, Oriana's Scepter, Oriana's Void Staff, Wethermon's Scythe, Wethermon's Rib Dagger,
+- [x] Weapons: Nightclaw Talon, Oriana's Scepter, Oriana's Void Staff, Wethermon's Scythe, Wethermon's Rib Dagger,
       Lycagon's Fang, Vorpal Knife, Bilac's Fang Gauntlet, Sunraku's Blades (L/R), Sunraku's Chaos Rod (no source)
-- [ ] Wethermon's Blade: only Wethermon wields it — not obtainable by players
-- [ ] Bilac's Crescent Blade → **Crescent Blade**, unlinked from any boss (later: sold in a shop in another town)
-- [ ] Armour: the Tombguard set (4 pieces), the Fullmoon Chestplate
-- [ ] Items: Solo Killer's Trophy (and `mob/boss/mud_digger/solo.mcfunction`), Unique Monster Core
-- [ ] Skill books dropped by the Colossi: Reflexus, Gravity Zero, Managarm Pride, and the Acrobat book. The skills
+- [x] Wethermon's Blade: only Wethermon wields it — not obtainable by players
+- [x] Bilac's Crescent Blade → **Crescent Blade**, unlinked from any boss (later: sold in a shop in another town)
+- [x] Armour: the Tombguard set (4 pieces), the Fullmoon Chestplate
+- [x] Items: Solo Killer's Trophy (and `mob/boss/mud_digger/solo.mcfunction`), Unique Monster Core
+- [x] Skill books dropped by the Colossi: Reflexus, Gravity Zero, Managarm Pride, and the Acrobat book. The skills
       themselves stay (they are real)
 
 ## 2. Monster and Colossus drops and levels
 
-- [ ] Vorpal Bunny: Vorpal Choppers 5%, **Rabbit Neckband** (兎の首巻布, new item) 12%; nothing else
+- [ ] Vorpal Bunny: Vorpal Choppers 5% (now 4%), **Rabbit Neckband** (兎の首巻布, new item) 12% (the knife and Acrobat
+      book are already gone)
 - [ ] Ravenous Snake: add the guaranteed **Ravenous Fang** (貪食の牙); keep Devourer's Scale (喰蛇の鱗) and Python
       White Hair (喰蛇の白髪)
+- [x] Solo Killer's Trophy removed (step 1)
 - [ ] Mud Digger phase 2: the burst targets a **random** player
 - [ ] Colossi levels: Ctarnidd 110, Lycagon 115, Siegwurm 120, Wethermon 125
 - [ ] Colossus drops per the README (Tome of Truth, Inventoria Key, Seiten Skillbook, …) — the ones not yet built

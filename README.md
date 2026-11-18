@@ -19,7 +19,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
 - **Origins**: the Wanderer's Path, a hard-mode origin with the Dream Penalty; Average Joe; six more origins planned
-- **Items**: 82 in the main packs and 39 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
+- **Items**: 60 in the main packs and 29 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
 
@@ -469,9 +469,9 @@ The **Wanderer** is hard mode — the path Sunraku chose — and cannot be undon
 
 **[ITEMS.md](ITEMS.md)** lists every item with its icon, stats, description, where it comes from (drop
 chances, quest rewards, shop prices) and its give command. It is generated from the packs, so it is always current.
-It also marks the 30 items that nothing in survival gives yet.
+It also marks the 24 items that nothing in survival gives yet.
 
-The **3D weapons pack** has 39 weapons with 3D held models and flat inventory icons, including paired weapons and a
+The **3D weapons pack** has 29 weapons with 3D held models and flat inventory icons, including paired weapons and a
 shield that raises when blocking. See [weapons/README.md](weapons/README.md).
 
 ---
@@ -604,5 +604,5 @@ Described in the design or the lore, but not built yet:
 - **Shop armour from the series:** the Mercenary's Helm (傭兵の兜), the Snakeskin set (蛇革) and the Hard Chain set,
   and the Stone Shield
 - **Crescent Blade** (formerly Bilac's Crescent Blade) sold in a shop in another town
-- Survival sources for the 30 items marked in the catalogue
+- Survival sources for the 24 items marked in the catalogue
 - Balance: every number in the pack is a first pass

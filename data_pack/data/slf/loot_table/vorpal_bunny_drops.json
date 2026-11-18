@@ -5,44 +5,6 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "minecraft:iron_sword",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.05
-            }
-          ],
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:custom_model_data": {
-                  "strings": [
-                    "slf.vorpal_knife"
-                  ]
-                },
-                "minecraft:item_name": {
-                  "translate": "item.slf.vorpal_knife",
-                  "color": "white",
-                  "italic": false
-                },
-                "minecraft:enchantments": {
-                  "minecraft:sharpness": 3
-                },
-                "minecraft:unbreakable": {},
-                "minecraft:lore": [
-                  {
-                    "text": "A claw from the Vorpal Bunny, honed by countless battles.",
-                    "color": "gray",
-                    "italic": true
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
           "type": "minecraft:empty"
         }
       ]
@@ -57,48 +19,6 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:bone"
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance",
-          "chance": 0.03
-        }
-      ],
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:enchanted_book",
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:custom_model_data": {
-                  "strings": [
-                    "slf.skill_acrobat"
-                  ]
-                },
-                "minecraft:item_name": {
-                  "translate": "item.slf.skill_acrobat",
-                  "color": "green",
-                  "italic": false
-                },
-                "minecraft:lore": [
-                  {
-                    "text": "The Vorpal Bunny's leap. Resistance surges when your feet leave the ground.",
-                    "color": "gray",
-                    "italic": true
-                  }
-                ]
-              }
-            }
-          ]
         }
       ]
     },

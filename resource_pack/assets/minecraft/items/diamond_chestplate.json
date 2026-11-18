@@ -2,15 +2,7 @@
   "model": {
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
-    "cases": [
-      {
-        "when": "slf.chestplate_fullmoon",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/chestplate_fullmoon"
-        }
-      }
-    ],
+    "cases": [],
     "fallback": {
       "type": "minecraft:select",
       "cases": [

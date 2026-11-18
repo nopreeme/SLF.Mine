@@ -22,8 +22,8 @@ OUT = ROOT / "ITEMS.md"
 # ------------------------------------------------------------------ names for the places an item comes from
 MOBS = {"vorpal_bunny": "Vorpal Bunny", "goblin": "Goblin", "red_hat_goblin": "Redcap Goblin", "orc": "Orc", "mud_frog": "Mud Frog",
         "ravenous_snake": "the Ravenous Snake (area boss)", "mud_digger": "the Mud Digger (area boss)", "lycagon": "Lycagon the Nightslayer (boss)",
-        "wethermon": "Wethermon the Tombguard (boss)", "wezaemon": "Wethermon the Tombguard (boss)", "bilac": "Bilac the Full Moon Fangs (boss)",
-        "nightclaw": "Nightclaw (boss)", "oriana": "Oriana the Uncrowned (boss)", "ctarnidd": "Ctarnidd of the Abyss (boss)", "siegwurm": "Siegwurm the Sky Ruler (boss)"}
+        "wethermon": "Wethermon the Tombguard (boss)", "wezaemon": "Wethermon the Tombguard (boss)",
+        "ctarnidd": "Ctarnidd of the Abyss (boss)", "siegwurm": "Siegwurm the Sky Ruler (boss)"}
 QUESTS = {"awaken": "A Pioneer's Awakening", "outskirts": "Clearing the Outskirts", "brute": "The Brute Threat", "herd": "The Missing Herd",
           "serpent": "The Serpent's Shadow", "guardian": "The Rampant Forest Guardian", "delivery": "Secondil Supply Delivery", "bed": "A Soft Bed at Last",
           "slept": "A Soft Bed at Last", "antidote": "Antidote Run", "watch": "The Night Watch", "bar": "Bar Talk", "pickaxe": "The Iron Pickaxe",

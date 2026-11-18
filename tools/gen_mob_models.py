@@ -363,14 +363,6 @@ def draw_hide(px):
             px[x, y] = (MD_L if (x * 5 + y * 3) % 13 < 3 else MD_D if x in (2, 13) or y in (3, 12) else MD) + (255,)
 
 
-def draw_trophy(px):
-    for x in range(4, 12):
-        for y in range(2, 8): px[x, y] = ((236, 196, 60) if (x + y) % 5 else (255, 230, 120)) + (255,)      # gold cup
-    for y in range(8, 11): px[7, y] = px[8, y] = (200, 160, 40, 255)
-    for x in range(5, 11): px[x, 11] = px[x, 12] = (120, 90, 30, 255)
-    for x, y in ((6, 4), (7, 3), (8, 3), (9, 4), (7, 5), (8, 5)): px[x, y] = MD_TOOTH + (255,)                  # a tooth set in it
-
-
 def draw_purse(px):
     """Mahni Purse: a tied brown pouch with a gold coin peeking out."""
     for y in range(5, 15):
@@ -563,7 +555,7 @@ def main():
               "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
               "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair),
               "mud_digger": digger_model(), "mud_digger_tooth": item_icon("mud_digger_tooth", draw_tooth), "digger_hide": item_icon("digger_hide", draw_hide),
-              "solo_killers_trophy": item_icon("solo_killers_trophy", draw_trophy), "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle), "tomic_journal": item_icon("tomic_journal", draw_journal), "plated_vambraces": item_icon("plated_vambraces", draw_vambraces), "sealed_letter": item_icon("sealed_letter", draw_letter),
+              "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle), "tomic_journal": item_icon("tomic_journal", draw_journal), "plated_vambraces": item_icon("plated_vambraces", draw_vambraces), "sealed_letter": item_icon("sealed_letter", draw_letter),
               "vorpal_bunny": vorpal_bunny_model(), "vorpal_bunny_leap": vorpal_bunny_model(True),
               "mud_frog": mud_frog_model(), "mud_frog_leap": mud_frog_model(True)}
     (RP / "items").mkdir(parents=True, exist_ok=True)

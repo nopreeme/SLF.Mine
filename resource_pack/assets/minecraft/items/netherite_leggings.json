@@ -2,15 +2,7 @@
   "model": {
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
-    "cases": [
-      {
-        "when": "slf.legs_tombguard",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/legs_tombguard"
-        }
-      }
-    ],
+    "cases": [],
     "fallback": {
       "type": "minecraft:select",
       "cases": [

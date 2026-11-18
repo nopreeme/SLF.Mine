@@ -20,7 +20,7 @@
     "show_toast": true,
     "announce_to_chat": true
   },
-  "parent": "slf:tombguard_awaits",
+  "parent": "slf:root",
   "criteria": {
     "get_skillbook": {
       "trigger": "minecraft:inventory_changed",

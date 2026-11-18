@@ -7,13 +7,13 @@
     "when": "gui",
     "model": {
      "type": "minecraft:model",
-     "model": "slf:item/wethermon_scythe_icon"
+     "model": "slf:item/crescent_blade_icon"
     }
    }
   ],
   "fallback": {
    "type": "minecraft:model",
-   "model": "slf:item/weapon_wethermon_scythe"
+   "model": "slf:item/weapon_crescent_blade"
   }
  }
 }
