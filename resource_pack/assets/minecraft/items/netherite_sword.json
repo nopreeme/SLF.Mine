@@ -11,45 +11,10 @@
         }
       },
       {
-        "when": "slf.lycagon_fang",
+        "when": "slf.crescent_blade",
         "model": {
           "type": "minecraft:model",
-          "model": "slf:item/lycagon_fang"
-        }
-      },
-      {
-        "when": "slf.bilac_crescent_blade",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/bilac_crescent_blade"
-        }
-      },
-      {
-        "when": "slf.nightclaw_talon",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/nightclaw_talon"
-        }
-      },
-      {
-        "when": "slf.wethermon_scythe",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/wethermon_scythe"
-        }
-      },
-      {
-        "when": "slf.bilac_fang_gauntlet",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/bilac_fang_gauntlet"
-        }
-      },
-      {
-        "when": "slf.wethermon_rib_dagger",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/wethermon_rib_dagger"
+          "model": "slf:item/crescent_blade"
         }
       }
     ],

@@ -2,15 +2,7 @@
   "model": {
     "type": "minecraft:select",
     "property": "minecraft:custom_model_data",
-    "cases": [
-      {
-        "when": "slf.helm_tombguard",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/helm_tombguard"
-        }
-      }
-    ],
+    "cases": [],
     "fallback": {
       "type": "minecraft:select",
       "cases": [

@@ -31,17 +31,12 @@ def tearDownModule():
     if S: S.__exit__(None, None, None)
 
 
-T1 = {"Swordsman": 1, "Warrior": 2, "Bandit": 3, "Priest": 4, "Monk": 5, "Mage": 6, "Fighter": 20, "Mercenary": 30}
-# evolution id -> (grant chain to become eligible, required level)
-EVOLUTIONS = {
-    10: (["swordsman"], 20), 11: (["swordsman"], 20), 14: (["warrior"], 20), 21: (["fighter"], 20), 18: (["priest"], 20),
-    60: (["monk"], 20), 70: (["mage"], 20), 50: (["bandit"], 20), 51: (["bandit"], 20), 40: (["swordsman", "sword_master"], 30),
-    12: (["swordsman", "sword_master"], 50), 13: (["swordsman", "magic_swordsman"], 50), 15: (["warrior", "barbarian"], 50),
-    22: (["fighter", "destroyer"], 50), 19: (["priest", "bishop"], 50), 61: (["monk", "monk_soldier"], 50), 62: (["mage", "sage"], 50),
-    16: (["bandit", "thief"], 50), 52: (["bandit", "ninja"], 50), 31: (["mercenary"], 50),
-    43: (["swordsman", "sword_master", "knight", "holy_knight"], 70), 44: (["swordsman", "sword_master", "knight", "dark_knight"], 70),
-    17: (["bandit", "thief", "assassin"], 80), 53: (["bandit", "ninja", "shinobi"], 80),
-}
+T1 = {"Swordsman": 1, "Fighter": 2, "Thief": 3, "Priest": 4, "Monk": 5, "Magician": 6, "Brawler": 20, "Mercenary": 30}
+# evolution id -> (grant chain to become eligible, required level), from the class table (tools/gen_classes.py)
+sys.path.insert(0, os.path.join(REPO, "tools")); import gen_classes
+_JOB = {j[0]: j for j in gen_classes.JOBS}
+def _chain(key): return (_chain(_JOB[key][6][0]) if _JOB[key][6] else []) + [key]
+EVOLUTIONS = {j[1]: (_chain(j[6][0]), j[5]) for j in gen_classes.JOBS if j[5] is not None}
 
 
 class Base(unittest.TestCase):
@@ -78,7 +73,8 @@ class PackLoad(Base):
 
     def test_no_load_errors(self):
         log = S.read_log()
-        bad = [l for l in log.splitlines() if ("ERROR" in l or "Failed to load" in l or "Couldn't parse" in l or "Couldn't load" in l)]
+        bad = [l for l in log.splitlines() if ("ERROR" in l or "Failed to load" in l or "Couldn't parse" in l or "Couldn't load" in l)
+               and "Yggdrasil Key Fetcher" not in l]   # the offline-mode test server may have no route to Mojang's key service
         self.assertEqual(bad, [])
 
     def test_new_player_is_greeted_with_class_menu(self):
@@ -105,10 +101,10 @@ class Menus(Base):
             out = S.as_player("trigger slf.menu"); self.assertIn("Triggered", out); S.wait_ticks(3)
 
     def test_status_sheet_shows_class_and_numbers(self):
-        self.grant("warrior"); self.set("slf.sp_points", 7); S.wait_cycle()
+        self.grant("fighter"); self.set("slf.sp_points", 7); S.wait_cycle()
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 7"); S.wait_ticks(4)
         text = "\n".join(S.bot.chat_since(mark))
-        self.assertIn("Class: Warrior", text); self.assertIn("Level 1", text); self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 7", text)
+        self.assertIn("Class: Fighter", text); self.assertIn("Level 1", text); self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 7", text)
 
     def test_fresh_player_sees_numbers_not_blanks(self):
         """Regression: a player whose scores were never set saw "EXP /100" and stat names without values."""
@@ -116,8 +112,8 @@ class Menus(Base):
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 7"); S.wait_ticks(4)
         text = "\n".join(S.bot.chat_since(mark))
         self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 0", text)
-        for label in ("HP 0", "MP 0", "STR 0", "DEX 0", "VIT 0", "AGI 0", "TEC 0", "LCK 0", "STM 0"): self.assertIn(label, text)
-        S.cmd(f"scoreboard players reset {S.player}"); self.grant("warrior"); S.wait_cycle()   # the once-per-second pass covers players who never open a menu
+        for label in ("HP 0", "MP 0", "STR 0", "DEX 0", "VIT 0", "AGI 0", "TEC 0", "LUC 0", "STM 0"): self.assertIn(label, text)
+        S.cmd(f"scoreboard players reset {S.player}"); self.grant("fighter"); S.wait_cycle()   # the once-per-second pass covers players who never open a menu
         self.assertEqual((S.score("slf.exp"), S.score("slf.stat.hp"), S.score("slf.vorpal_soul")), (0, 0, 0))
 
     def test_hud_toggle(self):
@@ -139,7 +135,7 @@ class ClassSelection(Base):
                 self.assertTrue(any(f"You have become a {name}" in c for c in chat), chat)
 
     def test_second_starting_class_is_refused(self):
-        self.grant("mage")
+        self.grant("magician")
         S.as_player("trigger slf.choose_class set 1"); S.wait_ticks(4)
         self.assertEqual(S.score("slf.class"), 6)
         self.grant("swordsman"); self.assertEqual(S.score("slf.class"), 6)
@@ -164,18 +160,18 @@ class Evolution(Base):
         self.grant("swordsman"); self.set("slf.level", 20)
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 5"); S.wait_ticks(4)
         cmds = sorted(c for _, c in S.bot.clicks_since(mark) if "slf.evolve" in c)
-        self.assertEqual(cmds, ["trigger slf.evolve set 10", "trigger slf.evolve set 11"])
+        self.assertEqual(cmds, ["trigger slf.evolve set 10", "trigger slf.evolve set 11", "trigger slf.evolve set 40"])
 
     def test_evolution_through_menu_click(self):
-        self.grant("fighter"); self.set("slf.level", 25)
+        self.grant("brawler"); self.set("slf.level", 25)
         chat = self.click("[Destroyer]", "trigger slf.menu set 5")
         self.assertEqual(S.score("slf.class"), 21); self.assertTrue(any("Destroyer" in c for c in chat))
 
     def test_wrong_lineage_is_refused(self):
-        self.grant("warrior"); self.set("slf.level", 99); mark = S.bot.mark()
-        S.as_player("trigger slf.evolve set 21"); S.wait_ticks(4)   # Destroyer needs Fighter
+        self.grant("fighter"); self.set("slf.level", 99); mark = S.bot.mark()
+        S.as_player("trigger slf.evolve set 21"); S.wait_ticks(4)   # Destroyer needs Brawler
         self.assertEqual(S.score("slf.class"), 2); self.assertTrue(any("not on your path" in c for c in S.bot.chat_since(mark)))
-        S.as_player("trigger slf.evolve set 12"); S.wait_ticks(4)   # Kansei needs Sword Master
+        S.as_player("trigger slf.evolve set 12"); S.wait_ticks(4)   # Master Swordsman needs Sword Master
         self.assertEqual(S.score("slf.class"), 2)
 
     def test_no_evolution_without_a_class(self):
@@ -212,12 +208,12 @@ class Skills(Base):
         self.assertEqual(S.score("slf.focus"), 0); self.assertTrue(any("already know" in c for c in S.bot.chat_since(mark)))
 
     def test_class_affinity_lowers_threshold(self):
-        self.grant("warrior"); S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4)   # Gigaton Swing: 2000, Warrior 300
+        self.grant("fighter"); S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4)   # Gigaton Swing: 2000, Fighter 300
         self.assertEqual(S.score("slf.threshold"), 300)
-        S.as_player("function slf:admin/reset_player"); S.wait_ticks(2); self.grant("mage")
+        S.as_player("function slf:admin/reset_player"); S.wait_ticks(2); self.grant("magician")
         mark = S.bot.mark(); S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4)
         self.assertEqual(S.score("slf.focus"), 0); self.assertTrue(any("Requires: Megaton Swing" in c for c in S.bot.chat_since(mark)))
-        S.cmd(f"tag {S.player} add slf.skill.megaton_swing")   # with the prerequisite but no Warrior lineage: full price
+        S.cmd(f"tag {S.player} add slf.skill.megaton_swing")   # with the prerequisite but no Fighter lineage: full price
         S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4); self.assertEqual(S.score("slf.threshold"), 2000)
 
     def test_tec_lowers_threshold(self):
@@ -237,24 +233,20 @@ class Skills(Base):
         S.wait_cycle(); fx = S.effects()
         self.assertEqual(fx.get("resistance"), 1); self.assertEqual(fx.get("speed"), 0); self.assertEqual(fx.get("strength"), 0)
 
-    def test_tantrum_spends_mana_and_counts_kills(self):
-        self.grant("bandit"); self.set("slf.stat.mp", 0); S.wait_cycle(); self.set("slf.mana", 20); self.set("slf.bt_kills", 49)
+    def test_big_tantrum_draws_monsters(self):
+        """Series: Big Tantrum draws other monsters to you. Toggled from the menu, no mana."""
+        self.grant("thief"); S.cmd(f"gamemode survival {S.player}")
+        S.as_player('summon minecraft:zombie ~30 ~ ~ {NoAI:1b,PersistenceRequired:1b,Tags:["slf.test"]}'); S.wait_ticks(3)
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
-        self.assertIn("slf.tantrum_active", S.tags()); self.assertLessEqual(S.score("slf.mana"), 10)
-        S.wait_cycle(); self.assertIn("glowing", S.effects())
-        S.cmd(f"gamemode survival {S.player}")
-        S.as_player('summon minecraft:pig ~3 ~ ~ {NoAI:1b,Tags:["slf.test"]}'); S.wait_ticks(3)
-        S.as_player("damage @e[type=minecraft:pig,tag=slf.test,limit=1] 1000 minecraft:player_attack by @s"); S.wait_ticks(6)
-        self.assertEqual(S.score("slf.bt_kills"), 50); self.assertIn("slf.skill.grand_tantrum", S.tags())
-        self.set("slf.mana", 2); S.wait_cycle(); S.wait_cycle()
-        self.assertNotIn("slf.tantrum_active", S.tags()); self.assertGreaterEqual(S.score("slf.mana"), 0)
+        self.assertIn("slf.tantrum_active", S.tags()); self.assertTrue(any("Big Tantrum!" in c for c in S.bot.chat_since(mark)))
+        S.wait_cycle(); S.wait_cycle(); self.assertIn("glowing", S.effects())
+        self.assertIn("is 64", S.cmd("attribute @e[type=minecraft:zombie,tag=slf.test,limit=1] minecraft:follow_range base get"))
+        S.as_player("trigger slf.menu set 8"); S.wait_ticks(4); self.assertNotIn("slf.tantrum_active", S.tags())
+        S.cmd("kill @e[tag=slf.test]")
 
-    def test_tantrum_refused_without_skill_or_mana(self):
+    def test_tantrum_refused_without_skill(self):
         self.grant("swordsman"); mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
         self.assertNotIn("slf.tantrum_active", S.tags()); self.assertTrue(any("not learned" in c for c in S.bot.chat_since(mark)))
-        S.as_player("function slf:admin/reset_player"); S.wait_ticks(2); self.grant("bandit"); S.wait_cycle(); self.set("slf.mana", 3)
-        mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
-        self.assertNotIn("slf.tantrum_active", S.tags()); self.assertTrue(any("Not enough mana" in c for c in S.bot.chat_since(mark)))
 
 
 class Stats(Base):
@@ -330,21 +322,26 @@ class Leveling(Base):
         self.grant("swordsman"); self.set("slf.exp", 330); S.wait_cycle(); S.wait_cycle(); S.wait_ticks(10)
         self.assertEqual(S.score("slf.level"), 3); self.assertEqual(S.score("slf.exp"), 30)
 
-    def test_milestone_bonus(self):
+    def test_stat_points_per_level(self):
+        """Series rule: 5 a level, a 50-point bonus on reaching 99."""
         self.grant("swordsman"); self.set("slf.level", 9); self.set("slf.sp_points", 0); S.wait_cycle(); self.set("slf.exp", 4500); S.wait_cycle()
-        self.assertEqual(S.score("slf.level"), 10); self.assertEqual(S.score("slf.sp_points"), 7)
+        self.assertEqual(S.score("slf.level"), 10); self.assertEqual(S.score("slf.sp_points"), 5)
+        self.set("slf.level", 98); self.set("slf.sp_points", 0); self.set("slf.exp", 5000); S.wait_cycle(); S.wait_cycle()
+        self.assertEqual(S.score("slf.level"), 99); self.assertEqual(S.score("slf.sp_points"), 55)
 
     def test_boss_kill_opens_the_gate(self):
         self.grant("swordsman"); self.set("slf.level", 50); self.kill("elder_guardian")   # level 50 needs 5000 EXP, so no level-up interferes
         self.assertEqual(S.score("slf.boss_gate"), 1); self.assertEqual(S.score("slf.boss_kills"), 1); self.assertEqual(S.score("slf.exp"), 2500)
         self.assertEqual(S.score("slf.vorpal_soul"), 1)
 
-    def test_standby_altar_and_awakened_levels(self):
+    def test_extend_altar_and_awakened_levels(self):
         self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 12000); S.wait_cycle()
-        self.assertEqual((S.score("slf.level"), S.score("slf.standby"), S.score("slf.exp_extend")), (99, 1, 12000))
+        self.assertEqual((S.score("slf.level"), S.score("slf.standby"), S.score("slf.exp")), (99, 0, 0))   # at the cap, EXP is lost
         mark = S.bot.mark(); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
-        self.assertEqual(S.score("slf.standby"), 1); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)))
-        self.set("slf.boss_gate", 1); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
+        self.assertEqual(S.score("slf.standby"), 0); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)))
+        self.kill("elder_guardian"); S.wait_cycle()                       # a vanilla boss counts as level 120: 99 Extend
+        self.assertEqual(S.score("slf.standby"), 1); self.assertGreaterEqual(S.score("slf.exp_extend"), 2500)
+        self.set("slf.exp_extend", 12000); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
         self.assertEqual((S.score("slf.standby"), S.score("slf.awakened")), (0, 1))
         S.wait_cycle(); S.wait_cycle(); S.wait_cycle()
         self.assertEqual(S.score("slf.level"), 101); self.assertEqual(S.score("slf.standby"), 0)   # 12000 banked EXP = 2 levels, 2000 left
@@ -468,13 +465,13 @@ class SkillBonuses(Base):
         self.assertEqual(S.attribute("max_health"), 20.0)
 
     def test_class_skills_change_real_numbers(self):
-        self.grant("warrior"); S.wait_cycle()   # megaton_swing +1 damage, front_position +2 armour, rigid_strength +20% knockback resistance
+        self.grant("fighter"); S.wait_cycle()   # megaton_swing +1 damage, front_position +2 armour, rigid_strength +20% knockback resistance
         S.cmd(f"clear {S.player}"); S.wait_ticks(4)   # empty hands and no armour, so only the skills count
         self.assertEqual(S.attribute("attack_damage"), 2.0); self.assertEqual(S.attribute("armor"), 2.0)
         self.assertAlmostEqual(S.attribute("knockback_resistance"), 0.2, places=3)
 
     def test_mana_skills(self):
-        self.grant("mage"); S.wait_cycle()       # chanting_and_memorizing +20 max mana, tanda_breathing +1 regen
+        self.grant("magician"); S.wait_cycle()       # chanting_and_memorizing +20 max mana, tanda_breathing +1 regen
         self.assertEqual(S.score("slf.mana_max"), 40)
         self.set("slf.mana", 0); S.wait_cycle(); S.wait_cycle(); mana = S.score("slf.mana"); self.assertTrue(2 <= mana <= 8, mana)
         self.assertIn("night_vision", S.effects())   # wisdoms_divine_eye
@@ -496,13 +493,13 @@ class Altar(Base):
         self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:text_display,tag=slf.altar_label]"))
 
     def test_walking_up_awakens_only_the_worthy(self):
-        self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 6000); S.wait_cycle()
-        self.assertEqual(S.score("slf.standby"), 1)
-        mark = S.bot.mark(); self.place(); S.wait_cycle(); S.wait_cycle()          # arrives without a boss kill
+        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle()
+        self.assertEqual(S.score("slf.standby"), 0)
+        mark = S.bot.mark(); self.place(); S.wait_cycle(); S.wait_cycle()          # arrives without a level 100+ kill
         self.assertEqual(S.score("slf.awakened"), 0); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark))
         self.assertEqual(sum("altar is dormant" in c for c in S.bot.chat_since(mark)), 1, "the altar repeated itself while the player stood there")
         S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.assertNotIn("slf.at_altar", S.tags())
-        self.set("slf.boss_gate", 1); S.as_player("tp @s ~ ~ ~12"); S.wait_cycle(); S.wait_cycle()
+        self.set("slf.standby", 1); self.set("slf.exp_extend", 6000); S.as_player("tp @s ~ ~ ~12"); S.wait_cycle(); S.wait_cycle()
         self.assertEqual((S.score("slf.awakened"), S.score("slf.standby")), (1, 0))
         S.wait_cycle(); S.wait_cycle(); self.assertEqual(S.score("slf.level"), 100)
 
@@ -514,12 +511,12 @@ class Altar(Base):
     def test_altar_rises_when_first_needed_and_the_compass_leads_to_it(self):
         S.cmd(f"clear {S.player}"); self.grant("swordsman"); S.cmd(f"clear {S.player}")
         px, _, pz = [float(v) for v in re.findall(r"(-?[\d.]+)d", S.cmd(f"data get entity {S.player} Pos"))]
-        self.set("slf.boss_gate", 1); self.set("slf.level", 99); mark = S.bot.mark()
+        self.set("slf.level", 99); self.set("slf.standby", 1); mark = S.bot.mark()
         deadline = time.time() + 90
         while time.time() < deadline and S.score("slf.timer", "#altar_placed") != 1: time.sleep(1)
         self.assertEqual(S.score("slf.timer", "#altar_placed"), 1, f"no altar rose; chat: {S.bot.chat_since(mark)}")
         S.wait_ticks(10); chat = "\n".join(S.bot.chat_since(mark))
-        self.assertIn("Standby.", chat); self.assertIn("is rising", chat); self.assertIn("has risen", chat)
+        self.assertIn("99 Extend.", chat); self.assertIn("is rising", chat); self.assertIn("has risen", chat)
         ax, ay, az = (S.score("slf.timer", f"#altar_{k}") for k in "xyz")
         self.assertIn(f"stands at {ax} {ay} {az}", chat)
         d = ((ax - px) ** 2 + (az - pz) ** 2) ** 0.5   # 320 away, or 480 if no spot on the inner ring was dry ground
@@ -571,10 +568,10 @@ class Altar(Base):
         self.assertTrue(300 <= ((ax - ox) ** 2 + (az - oz + 320) ** 2) ** 0.5 <= 500, "the moved altar left the rings around the player")
 
     def test_only_one_altar_rises(self):
-        self.grant("swordsman"); self.set("slf.level", 99)
+        self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.standby", 1)
         deadline = time.time() + 3
         while time.time() < deadline and S.score("slf.timer", "#altar_pending") != 1: time.sleep(0.05)
-        self.assertEqual(S.score("slf.timer", "#altar_pending"), 1, "entering Standby did not start raising an altar")
+        self.assertEqual(S.score("slf.timer", "#altar_pending"), 1, "reaching 99 Extend did not start raising an altar")
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 6"); S.wait_ticks(3)       # asking while it may still be rising
         chat = S.bot.chat_since(mark)
         if S.score("slf.timer", "#altar_placed") != 1:                                     # (the far chunk can already exist: then it rises at once)
@@ -585,8 +582,8 @@ class Altar(Base):
         self.assertEqual([S.score("slf.timer", f"#altar_{k}") for k in "xyz"], placed, "the far altar was still raised after one was placed")
 
     def test_menu_points_to_the_altar_once_placed(self):
-        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle(); self.place()   # no boss kill yet: the altar stays dormant
-        S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.set("slf.boss_gate", 1)
+        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle(); self.place()   # no level 100+ kill yet: the altar stays dormant
+        S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.set("slf.standby", 1)
         chat = self.click("[Altar of Awakening]", "trigger slf.menu")
         self.assertTrue(any("Altar of Awakening stands at" in c for c in chat), chat)
         self.assertEqual(S.score("slf.awakened"), 0)   # the menu only gives directions: no shortcut past the altar
@@ -622,7 +619,7 @@ class TestSuite(Base):
 
     def test_boss_drops_have_real_names(self):
         """Regression: loot tables stored names as JSON strings, shown in game as {"translate":...}."""
-        for table in ("bilac_drops", "nightclaw_drops", "oriana_drops", "wethermon_drops", "wezaemon_drops", "lycagon_drops"):
+        for table in ("wezaemon_drops",):
             with self.subTest(table):
                 for _ in range(8):   # drops are random: roll until the unique item comes
                     S.cmd(f"clear {S.player}"); S.cmd(f"loot give {S.player} loot slf:{table}")
@@ -717,12 +714,11 @@ class Mobs(Base):
 
 
 class Bosses(Base):
-    """The five SLF bosses: stats from level, boss bars, the boss kill reward, natural encounters, night bosses leaving at dawn."""
+    """The Colossi in the pack: stats from level, boss bars, the boss kill reward, natural encounters, Lycagon leaving at dawn."""
     # id: (body, level, full name, size)
-    BOSSES = {"nightclaw": ("spider", 40, "Nightclaw", 2.5), "bilac": ("phantom", 60, "Bilac the Full Moon Fangs", 3.0),
-              "oriana": ("evoker", 75, "Oriana the Uncrowned", 1.3), "lycagon": ("wolf", 90, "Lycagon the Nightslayer", 3.0),
-              "ctarnidd": ("elder_guardian", 85, "Ctarnidd of the Abyss", 2.0), "siegwurm": ("ghast", 95, "Siegwurm the Sky Ruler", 1.5),
-              "wethermon": ("wither_skeleton", 100, "Wethermon the Tombguard", 1.6)}
+    BOSSES = {"lycagon": ("wolf", 115, "Lycagon the Nightslayer", 3.0),
+              "ctarnidd": ("elder_guardian", 110, "Ctarnidd of the Abyss", 2.0), "siegwurm": ("ghast", 120, "Siegwurm the Sky Ruler", 1.5),
+              "wethermon": ("wither_skeleton", 125, "Wethermon the Tombguard", 1.6)}
 
     def tearDown(self):
         S.cmd("kill @e[tag=slf.mob]"); S.cmd("time set 1000"); S.cmd(f"gamemode creative {S.player}")
@@ -745,24 +741,26 @@ class Bosses(Base):
         S.cmd("kill @e[tag=slf.mob]"); S.wait_cycle()
         for bid in self.BOSSES: self.assertIn("hidden", S.cmd(f"bossbar get slf:{bid} visible"), bid)
 
-    def test_wethermon_carries_its_scythe_and_does_not_drop_its_gear(self):
+    def test_wethermon_carries_its_blade_and_does_not_drop_its_gear(self):
         S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3)
-        self.assertIn("slf.wethermon_scythe", S.cmd(f"data get entity {self.boss('wethermon')} equipment.mainhand"))
+        self.assertIn("slf.wethermon_katana", S.cmd(f"data get entity {self.boss('wethermon')} equipment.mainhand"))
         self.assertIn("mainhand: 0.0f", S.cmd(f"data get entity {self.boss('wethermon')} drop_chances"))
 
     def test_boss_kill_gives_exp_soul_and_opens_the_gate(self):
         self.grant("swordsman"); self.set("slf.exp", 0); self.set("slf.vorpal_soul", 0); self.set("slf.boss_gate", 0); self.set("slf.boss_kills", 0)
+        self.set("slf.sp_points", 0); S.cmd(f"tag {S.player} remove slf.ume_wethermon")
         self.set("slf.level", 10)   # next level needs 5000 EXP, so the reward can't be spent on a level-up before it is read
         S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
         out = S.as_player(f"damage {self.boss('wethermon')} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(6)
-        self.assertEqual(S.score("slf.exp"), 100 + 2 + 2400)   # its level + every kill's 2 + the boss reward; not also an elite (wither skeleton) kill
+        self.assertEqual(S.score("slf.exp"), 125 + 2 + 2400)   # its level + every kill's 2 + the boss reward; not also an elite (wither skeleton) kill
         self.assertEqual((S.score("slf.boss_gate"), S.score("slf.boss_kills"), S.score("slf.vorpal_soul")), (1, 1, 1))
+        self.assertEqual(S.score("slf.sp_points"), 20 + 200)   # Unique Monster Encounter + Unique Monster Break
 
     def test_lycagon_keeps_its_health(self):
         S.cmd("time set 1000"); S.as_player("function slf:test/mob/boss_lycagon"); S.wait_cycle(); S.wait_cycle()
-        self.assertIn("is 360.0", S.cmd(f"attribute {self.boss('lycagon')} minecraft:max_health get"))
+        self.assertIn("is 460.0", S.cmd(f"attribute {self.boss('lycagon')} minecraft:max_health get"))
         health = float(re.search(r"([\d.]+)f", S.cmd(f"data get entity {self.boss('lycagon')} Health")).group(1))
-        self.assertGreater(health, 300)   # not clamped to a plain wolf's 8 (a scrape from the terrain is fine)
+        self.assertGreater(health, 400)   # not clamped to a plain wolf's 8 (a scrape from the terrain is fine)
 
     def test_lycagon_hunts_players(self):
         S.platform(); S.cmd("time set 18000"); S.cmd(f"gamemode survival {S.player}"); S.cmd(f"effect give {S.player} instant_health 1 10"); S.wait_ticks(4)
@@ -798,17 +796,12 @@ class Bosses(Base):
         S.platform(); self.grant("swordsman"); self.set("slf.level", 5); S.cmd("time set 18000")
         for _ in range(30): S.as_player("function slf:mob/boss/roll")
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss]"))
-        self.set("slf.level", 99)   # now Bilac (full moon, open sky, 10%) and Lycagon (night, 1.7%) both qualify
-        for _ in range(60): S.as_player("function slf:mob/boss/roll")
-        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_bilac]"))   # 60 rolls at 10%: misses 0.2% of the time
-        self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_nightclaw]"))   # caves only
+        self.set("slf.level", 99)   # now Lycagon (night, open sky, 1.7%) qualifies
+        for _ in range(400): S.as_player("function slf:mob/boss/roll")
+        self.assertIn("passed", S.cmd("execute if entity @e[tag=slf.boss_lycagon]"))   # 400 rolls at 1.7%: misses 0.1% of the time
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_wethermon]"))   # Nether only
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.boss_ctarnidd]"))    # deep ocean, in the water only
 
-    def test_siegwurm_always_drops_a_unique_core(self):
-        S.platform(); S.as_player("function slf:test/mob/boss_siegwurm"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
-        out = S.as_player("damage @e[tag=slf.boss_siegwurm,limit=1] 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
-        self.assertIn("passed", S.as_player('execute if items entity @e[type=minecraft:item,distance=..32] contents *[minecraft:custom_model_data={strings:["slf.unique_core"]}]'))
 
 
 class Goblins(Base):
@@ -984,6 +977,7 @@ class RavenousSnake(Base):
         self.assertEqual(S.score("slf.boss_gate"), 0)                                          # not an Altar boss
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.snake_part]"), "body parts outlived the snake")
         self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:devourers_scale"]'))
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:ravenous_fang"]'))   # always drops
         S.wait_cycle(); self.assertIn("hidden", S.cmd("bossbar get slf:ravenous_snake visible"))
 
 class MudDigger(Base):
@@ -1031,17 +1025,15 @@ class MudDigger(Base):
         self.assertTrue(self.wait_for(lambda: "levitation" in S.effects(), 6), "the Phase 2 burst never launched the player")
         self.assertGreaterEqual(S.effects().get("levitation", 0), 24)
 
-    def test_solo_kill_reward_and_trophy(self):
+    def test_kill_reward_and_drops(self):
         self.grant("swordsman"); self.set("slf.level", 30); self.set("slf.exp", 0); self.set("slf.boss_gate", 0); S.cmd(f"clear {S.player}")
         self.spawn_near()
         out = S.as_player(f"damage {self.DIG} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(10)
         self.assertEqual(S.score("slf.exp"), 25 + 2 + 800)
         self.assertEqual(S.score("slf.boss_gate"), 0)
-        self.assertIn("slf.title.solo_killer", S.tags())
-        self.assertIn("passed", S.cmd(f'execute if items entity {S.player} container.* *[minecraft:item_model="slf:solo_killers_trophy"]'))
         self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:mud_digger_tooth"]'))
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.digger_part]"))
-        S.cmd(f"tag {S.player} remove slf.title.solo_killer"); S.cmd(f"clear {S.player}")
+        S.cmd(f"clear {S.player}")
 
 class Mahni(Base):
     """Mahni currency: purses turn into Mahni on pickup; the balance shows on the status sheet."""
@@ -1330,7 +1322,7 @@ class GarrensQuests(Base):
         for _ in range(4): S.as_player("function slf:give/mud_frog_skin")
         self.money(); self.talk("garren")
         self.assertEqual((S.score("slf.q.splitblade"), S.score("slf.exp"), S.score("slf.mahni")), (2, 250, 50))
-        for piece in ("chest", "pants", "mask"):
+        for piece in ("mask", "chest", "pants", "boots"):
             self.assertTrue(self.has(f'*[minecraft:custom_model_data={{strings:["slf.{piece}_splitblade"]}}]'), piece)
 
     def test_missing_miner(self):
@@ -1474,7 +1466,7 @@ class Diremarsh(Base):
         S.as_player("fill ~-2 ~-1 ~-2 ~2 ~-1 ~2 minecraft:mud"); S.wait_ticks(10)
         self.assertNotIn("slf.in_marsh", S.tags())
 
-    def test_splitblade_turns_a_blade(self):
+    def test_splitblade_resists_slashes(self):
         S.platform(); S.cmd(f"gamemode survival {S.player}")
         S.as_player("execute positioned ^ ^ ^3 run function slf:mob/red_hat_goblin/spawn"); S.wait_ticks(2)
         S.cmd("execute as @e[tag=slf.red_hat_goblin] run data merge entity @s {NoAI:1b}")
@@ -1484,13 +1476,16 @@ class Diremarsh(Base):
             return self.health()
         bare = hit()
         S.cmd(f"clear {S.player}")
-        S.cmd(f'item replace entity {S.player} armor.chest with minecraft:leather_chestplate[minecraft:custom_model_data={{strings:["slf.chest_splitblade"]}}]')
-        S.cmd(f'item replace entity {S.player} armor.legs with minecraft:leather_leggings[minecraft:custom_model_data={{strings:["slf.pants_splitblade"]}}]')
-        S.cmd(f'item replace entity {S.player} armor.head with minecraft:leather_helmet[minecraft:custom_model_data={{strings:["slf.mask_splitblade"]}}]')
+        ench = 'minecraft:enchantments={"slf:splitblade":1}'
+        for slot, base in (("head", "helmet"), ("chest", "chestplate"), ("legs", "leggings"), ("feet", "boots")):
+            S.cmd(f"item replace entity {S.player} armor.{slot} with minecraft:leather_{base}[{ench}]")
         full = hit()
-        S.cmd(f"clear {S.player}"); S.cmd(f"item replace entity {S.player} armor.chest with minecraft:leather_chestplate"); S.cmd(f"item replace entity {S.player} armor.legs with minecraft:leather_leggings"); S.cmd(f"item replace entity {S.player} armor.head with minecraft:leather_helmet")
+        S.cmd(f"clear {S.player}")
+        for slot, base in (("head", "helmet"), ("chest", "chestplate"), ("legs", "leggings"), ("feet", "boots")):
+            S.cmd(f"item replace entity {S.player} armor.{slot} with minecraft:leather_{base}")
         plain = hit()
-        self.assertGreaterEqual(full - plain, 3, (bare, full, plain))                               # the full set gives back ~4 health against a blade
+        self.assertGreaterEqual(full - plain, 2, (bare, full, plain))                               # the full set takes about half off a blade's hit
+
 
 class WeaponsPack(Base):
     """The separate weapons data pack, loaded next to the main one (both add a tick function tag)."""

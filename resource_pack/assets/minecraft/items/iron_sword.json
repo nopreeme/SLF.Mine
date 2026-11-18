@@ -4,13 +4,6 @@
     "property": "minecraft:custom_model_data",
     "cases": [
       {
-        "when": "slf.vorpal_knife",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/vorpal_knife"
-        }
-      },
-      {
         "when": "slf.togetsu_waxing",
         "model": {
           "type": "minecraft:select",
@@ -115,27 +108,6 @@
             "type": "minecraft:model",
             "model": "slf:item/togetsu_waning_v2"
           }
-        }
-      },
-      {
-        "when": "slf.sunraku_blade_l",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/sunraku_blade_l"
-        }
-      },
-      {
-        "when": "slf.sunraku_blade_r",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/sunraku_blade_r"
-        }
-      },
-      {
-        "when": "slf.sunraku_chaos_rod",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/sunraku_chaos_rod"
         }
       }
     ],

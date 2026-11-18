@@ -6,6 +6,6 @@ scoreboard players set @s slf.focus 16
 scoreboard players set @s slf.focus_stat 1
 scoreboard players set @s slf.sp 0
 scoreboard players set @s slf.threshold 2000
-execute if entity @s[tag=slf.was_fighter] run scoreboard players set @s slf.threshold 400
+execute if entity @s[tag=slf.was_brawler] run scoreboard players set @s slf.threshold 400
 function slf:skills/apply_tec
 tellraw @s ["",{"text":"Focusing: ","color":"gray"},{"text":"One Inch Impact","color":"gold"},{"text":" [0/","color":"dark_gray"},{"score":{"name":"@s","objective":"slf.threshold"}},{"text":"]","color":"dark_gray"}]

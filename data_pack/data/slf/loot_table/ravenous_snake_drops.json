@@ -2,6 +2,35 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:paper",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "slf:ravenous_fang",
+                "minecraft:item_name": {
+                  "text": "Ravenous Fang",
+                  "color": "gold",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "The Ravenous Snake's fang. It never fails to drop.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "rolls": {
         "type": "minecraft:uniform",
         "min": 1,

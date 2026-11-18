@@ -55,3 +55,5 @@ execute unless score @s slf.level matches 1.. run scoreboard players set @s slf.
 # Values that are normally worked out once per second: work them out now so a brand-new class shows them at once
 function slf:stats/exp_next
 execute unless score @s slf.mana_max matches 1.. run function slf:stats/apply_derived
+# Class rework: rename old class history tags once
+execute unless entity @s[tag=slf.classes_v2] run function slf:class/migrate_v2

@@ -46,34 +46,6 @@
         }
       },
       {
-        "when": "slf.skill_acrobat",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/skill_acrobat"
-        }
-      },
-      {
-        "when": "slf.skill_gravity_zero",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/skill_gravity_zero"
-        }
-      },
-      {
-        "when": "slf.skill_managarm_pride",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/skill_managarm_pride"
-        }
-      },
-      {
-        "when": "slf.skill_reflexus",
-        "model": {
-          "type": "minecraft:model",
-          "model": "slf:item/skill_reflexus"
-        }
-      },
-      {
         "when": "slf.skill_book_blade_rush",
         "model": {
           "type": "minecraft:model",

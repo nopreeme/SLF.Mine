@@ -26,33 +26,31 @@ execute as @a[tag=slf.skill.ignition] run function slf:skills/ignition_check
 # Slash Ignition — Strength II + Speed II on damage taken
 execute as @a[tag=slf.skill.slash_ignition] run function slf:skills/slash_ignition_check
 
-# Holy Shield — Resistance I
+# Spirit of Guardian — Resistance I
 effect give @a[tag=slf.skill.holy_shield] minecraft:resistance 3 0 true
 
-# Iron Skin — Resistance II
+# Futō Fukutsu — Resistance II
 effect give @a[tag=slf.skill.iron_skin] minecraft:resistance 3 1 true
 
-# Rechette Step — Speed I + Jump Boost I
+# Ricochet Step — Speed I + Jump Boost I
 effect give @a[tag=slf.skill.rechette_step] minecraft:speed 3 0 true
 effect give @a[tag=slf.skill.rechette_step] minecraft:jump_boost 3 0 true
 
-# Big Tantrum — Glowing while tantrum_active tag is set
+# Big Tantrum — while active: glowing, and monsters within 48 blocks come for you
 execute as @a[tag=slf.skill.big_tantrum,tag=slf.tantrum_active] run effect give @s minecraft:glowing 3 0 true
+execute as @a[tag=slf.skill.big_tantrum,tag=slf.tantrum_active] at @s run function slf:skills/tantrum_pull
 
-# Grand Tantrum — Glowing + Strength I while active
-execute as @a[tag=slf.skill.grand_tantrum,tag=slf.tantrum_active] run effect give @s minecraft:glowing 3 0 true
-execute as @a[tag=slf.skill.grand_tantrum,tag=slf.tantrum_active] run effect give @s minecraft:strength 3 0 true
 
-# Inexhaustible Beasts — Strength I passive
+# Jūō Mujin — Strength I passive
 effect give @a[tag=slf.skill.inexhaustible_beasts] minecraft:strength 3 0 true
 
-# Terraton Corapsa — Strength I passive
+# Teraton Collapsar — Strength I passive
 effect give @a[tag=slf.skill.terraton_corapsa] minecraft:strength 3 0 true
 
-# Bradion
+# Accel
 execute as @a[tag=slf.skill.bradion] run function slf:skills/bradion_tick
 
-# Wisdom's Divine Eye — Night Vision (15s so it never flickers)
+# Odin's Surpr-Eyes — Night Vision (15s so it never flickers)
 effect give @a[tag=slf.skill.wisdoms_divine_eye] minecraft:night_vision 15 0 true
 
 # Every other skill: permanent attribute bonuses (generated, see tools/gen_skill_passives.py)

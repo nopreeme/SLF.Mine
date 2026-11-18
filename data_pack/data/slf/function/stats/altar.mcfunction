@@ -1,9 +1,8 @@
 # Altar of Awakening — converts exp_extend into post-99 levels (100-150)
 # Reached by walking up to an altar (altar/enter), or from the menu when the world has no altar in reach (altar/guide).
-# Requires: slf.standby=1 AND slf.boss_gate=1
+# Requires 99 Extend (slf.standby=1): level 99 and a level 100+ monster defeated
+execute unless score @s slf.standby matches 1 if score @s slf.level matches 99 unless score @s slf.awakened matches 1 run tellraw @s {"text":"The altar is dormant. Defeat a monster above level 100 to reach 99 Extend first.","color":"dark_red"}
 execute unless score @s slf.standby matches 1 run return fail
-execute unless score @s slf.boss_gate matches 1 run tellraw @s {"text":"The altar is dormant. Prove yourself against a worthy foe first.","color":"dark_red"}
-execute unless score @s slf.boss_gate matches 1 run return fail
 
 scoreboard players set @s slf.standby 0
 scoreboard players set @s slf.awakened 1

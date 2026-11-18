@@ -7,6 +7,7 @@ tag @s add slf.skill.assassin_pierce
 tag @s add slf.skill.asura_kagura
 tag @s add slf.skill.big_tantrum
 tag @s add slf.skill.blaze_shot
+tag @s add slf.skill.bradion
 tag @s add slf.skill.break_attack
 tag @s add slf.skill.breath_of_anti_harm
 tag @s add slf.skill.burnout
@@ -25,7 +26,6 @@ tag @s add slf.skill.fortress_breaker
 tag @s add slf.skill.front_position
 tag @s add slf.skill.gigaton_swing
 tag @s add slf.skill.gobus_courage
-tag @s add slf.skill.grand_tantrum
 tag @s add slf.skill.grapple_train
 tag @s add slf.skill.gravity_zero
 tag @s add slf.skill.guardian_heart

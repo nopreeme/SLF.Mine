@@ -1,11 +1,11 @@
 """
-Writes ITEM_CATALOG.md: every item in the SLF packs - its name, icon, base item, stats, description, where it comes from, and the
+Writes ITEMS.md: every item in the SLF packs - its name, icon, base item, stats, description, where it comes from, and the
 command that gives it. Everything is read from the packs themselves (give commands, loot tables, quest and shop functions,
 the resource pack's models and the lang file), so re-run it after adding or changing an item:
 
     python tools/gen_item_docs.py
 
-tests/test_test_suite.py fails while ITEM_CATALOG.md is out of date.
+tests/test_test_suite.py fails while ITEMS.md is out of date.
 """
 import json, re
 from pathlib import Path
@@ -17,13 +17,13 @@ RP = ROOT / "resource_pack" / "assets"
 WEAPONS_DP = ROOT / "weapons" / "java_out" / "SLF_Weapons_Datapack" / "data" / "slf" / "function" / "weapons" / "give"
 WEAPONS_RP = ROOT / "weapons" / "java_out" / "SLF_Weapons_ResourcePack" / "assets"
 LANG = json.loads((RP / "slf" / "lang" / "en_us.json").read_text(encoding="utf-8"))
-OUT = ROOT / "ITEM_CATALOG.md"
+OUT = ROOT / "ITEMS.md"
 
 # ------------------------------------------------------------------ names for the places an item comes from
 MOBS = {"vorpal_bunny": "Vorpal Bunny", "goblin": "Goblin", "red_hat_goblin": "Redcap Goblin", "orc": "Orc", "mud_frog": "Mud Frog",
         "ravenous_snake": "the Ravenous Snake (area boss)", "mud_digger": "the Mud Digger (area boss)", "lycagon": "Lycagon the Nightslayer (boss)",
-        "wethermon": "Wethermon the Tombguard (boss)", "wezaemon": "Wethermon the Tombguard (boss)", "bilac": "Bilac the Full Moon Fangs (boss)",
-        "nightclaw": "Nightclaw (boss)", "oriana": "Oriana the Uncrowned (boss)", "ctarnidd": "Ctarnidd of the Abyss (boss)", "siegwurm": "Siegwurm the Sky Ruler (boss)"}
+        "wethermon": "Wethermon the Tombguard (boss)", "wezaemon": "Wethermon the Tombguard (boss)",
+        "ctarnidd": "Ctarnidd of the Abyss (boss)", "siegwurm": "Siegwurm the Sky Ruler (boss)"}
 QUESTS = {"awaken": "A Pioneer's Awakening", "outskirts": "Clearing the Outskirts", "brute": "The Brute Threat", "herd": "The Missing Herd",
           "serpent": "The Serpent's Shadow", "guardian": "The Rampant Forest Guardian", "delivery": "Secondil Supply Delivery", "bed": "A Soft Bed at Last",
           "slept": "A Soft Bed at Last", "antidote": "Antidote Run", "watch": "The Night Watch", "bar": "Bar Talk", "pickaxe": "The Iron Pickaxe",
@@ -31,6 +31,19 @@ QUESTS = {"awaken": "A Pioneer's Awakening", "outskirts": "Clearing the Outskirt
           "reeds": "Red Hoods in the Reeds", "thirdrema": "Path to Thirdrema", "fellow_survivor": "Fellow Survivor (Wanderer)",
           "letter_start": "A Brother's Letter (Wanderer)", "letter_turn_in": "A Brother's Letter (Wanderer)", "site": "The Missing Miner",
           "tick": "Red Hoods in the Reeds", "journal_item": "The Missing Miner", "camp": "The Missing Herd"}
+# Items that are the project's own rather than from Shangri-La Frontier (give command name). Marked * in the tables.
+ORIGINAL = {"rust_saber", "crescent_blade", "goblin_hand_axe", "redcap_axe", "garrens_pickaxe", "reinforced_pickaxe", "basic_iron_chestplate",
+            "plated_vambraces", "guard_cloak", "mud_digger_tooth", "digger_hide", "seiten_memory", "antidote", "health_potion",
+            "fresh_baked_bread", "garrens_full_meal", "stew", "strong_ale", "sealed_letter", "antidote_bundle", "tomic_journal",
+            "sigil_banner", "wild_herb"}
+# Weapons that evolve or were reforged in the series (give command name -> note)
+EVOLVES = {"togetsu_waxing": "Evolves into Whalelore", "togetsu_waning": "Evolves into Whalelore", "togetsu_waning_v2": "Evolves into Whalelore",
+           "togetsu": "Evolves into Whalelore", "whalelore_goldsheen": "Togetsu, evolved", "whalelore_netherlight": "Togetsu, evolved",
+           "whalelore": "Togetsu, evolved", "marsh_dagger": "Evolves into Ducusram", "ducusram": "Marsh Daggers, evolved",
+           "flame_decapitator": "General Dullahan's Decapitator, reforged"}
+# A 3D-pack weapon that is the same weapon as a main-pack item: listed once, with both give commands
+SAME_WEAPON = {"crescent_blade": "crescent_blade", "gilta_brille": "gilta_brille", "rust_saber": "rust_saber", "wethermon_katana": "wethermon_katana",
+               "mercenary_blade": "mercenary_twin_blades_v1", "togetsu": "togetsu_waxing", "whalelore": "whalelore_goldsheen"}
 SECTIONS = ["Weapons", "Armour and accessories", "Skill books", "Consumables", "Materials and trophies", "Quest items", "Currency"]
 
 
@@ -193,13 +206,14 @@ def stats(item):
     return ", ".join(parts + item["extras"])
 
 
-def row(item, srcs, command, rp_root=RP):
+def row(item, srcs, command, rp_root=RP, stem=None):
     icon = icon_for(item, rp_root)
     img = f'<img src="{icon.relative_to(ROOT).as_posix()}" width="32" alt="">' if icon else ""
     name = item["name"] or item["key"] or item["base"]
-    desc = " / ".join(item["lore"])
+    mark = " \\*" if stem in ORIGINAL else ""
+    desc = " / ".join(item["lore"] + ([f"*{EVOLVES[stem]}*"] if stem in EVOLVES else []))
     where = "<br>".join(srcs) if srcs else "*Not obtainable in survival yet* (give command only)"
-    return f"| {img} | **{name}** | {item['base'].replace('_', ' ')} | {stats(item) or '-'} | {desc or '-'} | {where} | `{command}` |"
+    return f"| {img} | **{name}**{mark} | {item['base'].replace('_', ' ')} | {stats(item) or '-'} | {desc or '-'} | {where} | `{command}` |"
 
 
 def main():
@@ -215,15 +229,21 @@ def main():
             item = parse_give(line)
         if not item: continue
         srcs = sources(item)
-        groups[section(item, srcs)].append((item["name"] or f.stem, row(item, srcs, f"/function slf:give/{f.stem}")))
+        groups[section(item, srcs)].append((item["name"] or f.stem, row(item, srcs, f"/function slf:give/{f.stem}", stem=f.stem), f.stem))
         count += 1
     weapons = []
+    rows = {stem: (sec, i) for sec in SECTIONS for i, (_, _, stem) in enumerate(groups[sec])}
     for f in sorted(WEAPONS_DP.glob("*.mcfunction")):
         item = parse_give(f.read_text(encoding="utf-8").strip().splitlines()[-1])
         if not item: continue
+        main = SAME_WEAPON.get(f.stem)
+        if main in rows:                                                    # one entry per weapon: add the 3D give to the main row
+            sec, i = rows[main]; n, r, st = groups[sec][i]
+            groups[sec][i] = (n, r[:-2] + f"<br>`/function slf:weapons/give/{f.stem}` (3D) |", st)
+            continue
         srcs = sources(item) + ["The 3D weapons pack (`weapons/`)"]
-        weapons.append((item["name"] or f.stem, row(item, srcs, f"/function slf:weapons/give/{f.stem}", WEAPONS_RP)))
-    unobtainable = sum(r.count("Not obtainable in survival yet") for s in SECTIONS for _, r in groups[s]) + sum(r.count("Not obtainable in survival yet") for _, r in weapons)
+        weapons.append((item["name"] or f.stem, row(item, srcs, f"/function slf:weapons/give/{f.stem}", WEAPONS_RP, f.stem)))
+    unobtainable = sum(r.count("Not obtainable in survival yet") for s in SECTIONS for _, r, _ in groups[s]) + sum(r.count("Not obtainable in survival yet") for _, r in weapons)
     header = "| | Item | Base | Stats | Description | Where it comes from | Give command |\n|---|---|---|---|---|---|---|"
     out = ["# SLF items", "",
            f"Every item in the SLF packs: {count} in the main packs and {len(weapons)} in the 3D weapons pack. Generated by",
@@ -232,13 +252,15 @@ def main():
            "the way the game's tooltip does, plus enchantments and other modifiers. Items without a custom icon use the vanilla",
            "item's look.", "",
            f"**{unobtainable} items are not obtainable in survival yet**: they exist in the packs but no monster, quest or shop gives",
-           "them. They're marked in the tables below.", ""]
+           "them. They're marked in the tables below.", "",
+           "\\* the project's own: not from Shangri-La Frontier (quest rewards, shop goods and gear made for this pack).", "",
+           "Weapons that also have a 3D model in the weapons pack are listed once, with both give commands.", ""]
     for s in SECTIONS:
         if not groups[s]: continue
-        out += [f"## {s} ({len(groups[s])})", "", header] + [r for _, r in sorted(groups[s], key=lambda x: x[0].lower())] + [""]
-    out += [f"## 3D weapons pack ({len(weapons)})", "", "These need the separate weapons data and resource packs.", "", header] + [r for _, r in weapons] + [""]
+        out += [f"## {s} ({len(groups[s])})", "", header] + [r for _, r, _ in sorted(groups[s], key=lambda x: x[0].lower())] + [""]
+    out += [f"## 3D weapons pack ({len(weapons)})", "", "Weapons that only the separate weapons data and resource packs have.", "", header] + [r for _, r in weapons] + [""]
     OUT.write_text("\n".join(out), encoding="utf-8", newline="\n")
-    print(f"ITEM_CATALOG.md: {count} items + {len(weapons)} weapons")
+    print(f"ITEMS.md: {count} items + {len(weapons)} weapons")
 
 
 if __name__ == "__main__":

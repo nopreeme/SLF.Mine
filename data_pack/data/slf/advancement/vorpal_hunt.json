@@ -3,11 +3,7 @@
     "icon": {
       "id": "minecraft:iron_sword",
       "components": {
-        "minecraft:custom_model_data": {
-          "strings": [
-            "slf.vorpal_knife"
-          ]
-        }
+        "minecraft:item_model": "slf:vorpal_chopper"
       }
     },
     "title": {
@@ -22,17 +18,13 @@
   },
   "parent": "slf:root",
   "criteria": {
-    "get_vorpal": {
+    "get_choppers": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "components": {
-              "minecraft:custom_model_data": {
-                "strings": [
-                  "slf.vorpal_knife"
-                ]
-              }
+              "minecraft:item_model": "slf:vorpal_chopper"
             }
           }
         ]

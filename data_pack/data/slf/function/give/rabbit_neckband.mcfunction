@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:rabbit_neckband",minecraft:item_name={text:"Rabbit Neckband",color:"red",italic:false},minecraft:lore=[{text:"A red cloth scarf, the kind every Vorpal Bunny wears.",color:"gray",italic:true}]] 1

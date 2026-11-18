@@ -3,30 +3,48 @@
 # Class tags
 tag @s remove slf.class_chosen
 tag @s remove slf.was_swordsman
-tag @s remove slf.was_warrior
 tag @s remove slf.was_fighter
+tag @s remove slf.was_brawler
 tag @s remove slf.was_mercenary
 tag @s remove slf.was_thief
-tag @s remove slf.was_priest
 tag @s remove slf.was_monk
-tag @s remove slf.was_mage
+tag @s remove slf.was_priest
+tag @s remove slf.was_magician
+tag @s remove slf.was_barbarian
 tag @s remove slf.was_sword_master
 tag @s remove slf.was_magic_swordsman
-tag @s remove slf.was_barbarian
 tag @s remove slf.was_destroyer
-tag @s remove slf.was_bandit
-tag @s remove slf.was_ninja
 tag @s remove slf.was_veteran
-tag @s remove slf.was_bishop
 tag @s remove slf.was_monk_soldier
-tag @s remove slf.was_sage
-tag @s remove slf.was_war_king
-tag @s remove slf.was_mysterious_sword
+tag @s remove slf.was_master_thief
 tag @s remove slf.was_assassin
-tag @s remove slf.was_shinobi
+tag @s remove slf.was_bishop
+tag @s remove slf.was_cleric
+tag @s remove slf.was_enchanter
+tag @s remove slf.was_pilgrim
+tag @s remove slf.was_sorcerer
 tag @s remove slf.was_knight
+tag @s remove slf.was_phantom_thief
+tag @s remove slf.was_ninja
+tag @s remove slf.was_war_king
+tag @s remove slf.was_master_swordsman
+tag @s remove slf.was_mysterious_swordsman
+tag @s remove slf.was_berserker
+tag @s remove slf.was_warlord
+tag @s remove slf.was_warrior_monk
+tag @s remove slf.was_great_stealth
+tag @s remove slf.was_star_ninja
+tag @s remove slf.was_jonin
+tag @s remove slf.was_sage
 tag @s remove slf.was_holy_knight
 tag @s remove slf.was_dark_knight
+tag @s remove slf.was_paladin
+tag @s remove slf.was_dark_crusader
+tag @s remove slf.was_killing_joker
+tag @s remove slf.was_still_joker
+tag @s remove slf.was_sacred_star_ninja
+tag @s remove slf.was_shinobi
+tag @s remove slf.was_the_saint
 tag @s remove slf.alignment_offered
 
 # Skill tags
@@ -193,6 +211,10 @@ scoreboard players set @s slf.stat.stm 0
 scoreboard players set @s slf.karma 0
 scoreboard players set @s slf.knight_trials 0
 scoreboard players set @s slf.standby 0
+tag @s remove slf.ume_lycagon
+tag @s remove slf.ume_wethermon
+tag @s remove slf.ume_ctarnidd
+tag @s remove slf.ume_siegwurm
 scoreboard players set @s slf.exp_extend 0
 scoreboard players set @s slf.awakened 0
 scoreboard players set @s slf.stat.hp 0

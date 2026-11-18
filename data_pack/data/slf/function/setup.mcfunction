@@ -53,7 +53,7 @@ scoreboard objectives add slf.focus_stat dummy
 scoreboard objectives add slf.sp dummy
 scoreboard objectives add slf.threshold dummy
 
-# --- Level 99 Standby Gate ---
+# --- Level 99 Extend (slf.standby = 1) ---
 scoreboard objectives add slf.exp_extend dummy
 scoreboard objectives add slf.standby dummy
 scoreboard objectives add slf.boss_gate dummy
@@ -102,22 +102,17 @@ scoreboard objectives add slf.q.miner dummy
 scoreboard objectives add slf.q.reeds dummy
 scoreboard objectives add slf.q.wave dummy
 scoreboard objectives add slf.q.thirdrema dummy
-# Origin choice at character creation (wanderer/*): 1 Citizen, 2 Wanderer (shows the warning), 3 confirm Wanderer, 4 show the choice
+# Origin choice at character creation (wanderer/*): 1 Average Joe, 2 Wanderer (shows the warning), 3 confirm Wanderer, 4 show the choice
 scoreboard objectives add slf.origin trigger
 scoreboard objectives add slf.q.letter dummy
 scoreboard objectives add slf.wtry dummy
 # Shop buy buttons (shop/buy)
 scoreboard objectives add slf.shop trigger
 # Boss bars (mob/boss/bars); adding one that exists already just fails quietly on /reload
-bossbar add slf:nightclaw {text:"Nightclaw",color:"dark_gray"}
-bossbar set slf:nightclaw color white
-bossbar set slf:nightclaw style notched_10
-bossbar add slf:bilac {text:"Bilac the Full Moon Fangs",color:"gold"}
-bossbar set slf:bilac color yellow
-bossbar set slf:bilac style notched_10
-bossbar add slf:oriana {text:"Oriana the Uncrowned",color:"dark_aqua"}
-bossbar set slf:oriana color blue
-bossbar set slf:oriana style notched_10
+# Bosses that are no longer in the pack (removed from worlds made with older versions)
+bossbar remove slf:nightclaw
+bossbar remove slf:bilac
+bossbar remove slf:oriana
 bossbar add slf:lycagon {text:"Lycagon the Nightslayer",color:"dark_purple"}
 bossbar set slf:lycagon color purple
 bossbar set slf:lycagon style notched_10

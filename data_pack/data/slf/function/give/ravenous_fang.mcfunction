@@ -1,0 +1,1 @@
+give @s minecraft:paper[minecraft:item_model="slf:ravenous_fang",minecraft:item_name={text:"Ravenous Fang",color:"gold",italic:false},minecraft:lore=[{text:"The Ravenous Snake's fang. It never fails to drop.",color:"gray",italic:true}]] 1

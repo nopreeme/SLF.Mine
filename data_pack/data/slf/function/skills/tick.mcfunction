@@ -22,12 +22,12 @@ execute if entity @e[tag=slf.mob_body,limit=1] run function slf:mob/body/tick
 # --- Class selection ---
 # Trigger-based (alignment_choice + admin direct grants)
 execute as @a if score @s slf.choose_class matches 1 run function slf:class/grant/swordsman
-execute as @a if score @s slf.choose_class matches 2 run function slf:class/grant/warrior
-execute as @a if score @s slf.choose_class matches 3 run function slf:class/grant/bandit
+execute as @a if score @s slf.choose_class matches 2 run function slf:class/grant/fighter
+execute as @a if score @s slf.choose_class matches 3 run function slf:class/grant/thief
 execute as @a if score @s slf.choose_class matches 4 run function slf:class/grant/priest
 execute as @a if score @s slf.choose_class matches 5 run function slf:class/grant/monk
-execute as @a if score @s slf.choose_class matches 6 run function slf:class/grant/mage
-execute as @a if score @s slf.choose_class matches 20 run function slf:class/grant/fighter
+execute as @a if score @s slf.choose_class matches 6 run function slf:class/grant/magician
+execute as @a if score @s slf.choose_class matches 20 run function slf:class/grant/brawler
 execute as @a if score @s slf.choose_class matches 30 run function slf:class/grant/mercenary
 execute as @a if score @s slf.choose_class matches 41 run function slf:class/grant/holy_knight
 execute as @a if score @s slf.choose_class matches 42 run function slf:class/grant/dark_knight

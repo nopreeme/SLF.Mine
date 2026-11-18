@@ -1,6 +1,0 @@
-{
- "parent": "minecraft:item/generated",
- "textures": {
-  "layer0": "slf:item/wethermon_rib_dagger_icon"
- }
-}

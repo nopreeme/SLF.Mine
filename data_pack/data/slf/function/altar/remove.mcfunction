@@ -4,4 +4,4 @@ kill @e[type=minecraft:marker,tag=slf.altar_placed]
 kill @e[type=minecraft:text_display,tag=slf.altar_placed]
 scoreboard players set #altar_placed slf.timer 0
 tag @a remove slf.at_altar
-tellraw @s ["",{"text":"[SLF] ","color":"gold"},{"text":"Altar of Awakening retired. A new one will rise when a player in Standby needs it.","color":"yellow"}]
+tellraw @s ["",{"text":"[SLF] ","color":"gold"},{"text":"Altar of Awakening retired. A new one will rise when a player at 99 Extend needs it.","color":"yellow"}]
