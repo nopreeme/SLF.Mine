@@ -599,6 +599,8 @@ Described in the design or the lore, but not built yet:
 - The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
   Brooch of Faraway Prayer, the Abyssal Warning Bell and Ctarnidd's grails; and real models in place of the stand-ins
 - The **Rabbit Neckband**, the Vorpal Bunny's 12% drop
+- **Shop armour from the series:** the Mercenary's Helm (傭兵の兜), the Snakeskin set (蛇革) and the Hard Chain set,
+  and the Stone Shield
 - **Crescent Blade** (formerly Bilac's Crescent Blade) sold in a shop in another town
 - Survival sources for the 30 items marked in the catalogue
 - Balance: every number in the pack is a first pass
