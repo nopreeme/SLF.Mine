@@ -719,9 +719,9 @@ class Mobs(Base):
 class Bosses(Base):
     """The Colossi in the pack: stats from level, boss bars, the boss kill reward, natural encounters, Lycagon leaving at dawn."""
     # id: (body, level, full name, size)
-    BOSSES = {"lycagon": ("wolf", 90, "Lycagon the Nightslayer", 3.0),
-              "ctarnidd": ("elder_guardian", 85, "Ctarnidd of the Abyss", 2.0), "siegwurm": ("ghast", 95, "Siegwurm the Sky Ruler", 1.5),
-              "wethermon": ("wither_skeleton", 100, "Wethermon the Tombguard", 1.6)}
+    BOSSES = {"lycagon": ("wolf", 115, "Lycagon the Nightslayer", 3.0),
+              "ctarnidd": ("elder_guardian", 110, "Ctarnidd of the Abyss", 2.0), "siegwurm": ("ghast", 120, "Siegwurm the Sky Ruler", 1.5),
+              "wethermon": ("wither_skeleton", 125, "Wethermon the Tombguard", 1.6)}
 
     def tearDown(self):
         S.cmd("kill @e[tag=slf.mob]"); S.cmd("time set 1000"); S.cmd(f"gamemode creative {S.player}")
@@ -754,7 +754,7 @@ class Bosses(Base):
         self.set("slf.level", 10)   # next level needs 5000 EXP, so the reward can't be spent on a level-up before it is read
         S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
         out = S.as_player(f"damage {self.boss('wethermon')} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(6)
-        self.assertEqual(S.score("slf.exp"), 100 + 2 + 2400)   # its level + every kill's 2 + the boss reward; not also an elite (wither skeleton) kill
+        self.assertEqual(S.score("slf.exp"), 125 + 2 + 2400)   # its level + every kill's 2 + the boss reward; not also an elite (wither skeleton) kill
         self.assertEqual((S.score("slf.boss_gate"), S.score("slf.boss_kills"), S.score("slf.vorpal_soul")), (1, 1, 1))
 
     def test_lycagon_keeps_its_health(self):
@@ -978,6 +978,7 @@ class RavenousSnake(Base):
         self.assertEqual(S.score("slf.boss_gate"), 0)                                          # not an Altar boss
         self.assertIn("failed", S.cmd("execute if entity @e[tag=slf.snake_part]"), "body parts outlived the snake")
         self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:devourers_scale"]'))
+        self.assertIn("passed", S.cmd('execute if items entity @e[type=minecraft:item] contents *[minecraft:item_model="slf:ravenous_fang"]'))   # always drops
         S.wait_cycle(); self.assertIn("hidden", S.cmd("bossbar get slf:ravenous_snake visible"))
 
 class MudDigger(Base):

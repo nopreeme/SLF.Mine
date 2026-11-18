@@ -38,9 +38,9 @@ def T(text, color=None, **kw):
 def run(label, color, command, hover): return T(label, color, click_event={"action": "run_command", "command": command}, hover_event={"action": "show_text", "value": hover})
 # SLF bosses (data_pack/data/slf/function/mob/boss/<id>): id, button label, full name, colour, level
 BOSSES = [("ravenous_snake", "Ravenous Snake", "the Ravenous Snake (area boss)", "gold", 15), ("mud_digger", "Mud Digger", "the Mud Digger (area boss)", "dark_green", 25), 
-          ("lycagon", "Lycagon", "Lycagon the Nightslayer", "dark_purple", 90),
-          ("ctarnidd", "Ctarnidd", "Ctarnidd of the Abyss", "dark_blue", 85), ("siegwurm", "Siegwurm", "Siegwurm the Sky Ruler", "aqua", 95),
-          ("wethermon", "Wethermon", "Wethermon the Tombguard", "dark_red", 100)]
+          ("lycagon", "Lycagon", "Lycagon the Nightslayer", "dark_purple", 115),
+          ("ctarnidd", "Ctarnidd", "Ctarnidd of the Abyss", "dark_blue", 110), ("siegwurm", "Siegwurm", "Siegwurm the Sky Ruler", "aqua", 120),
+          ("wethermon", "Wethermon", "Wethermon the Tombguard", "dark_red", 125)]
 
 
 def write(rel, lines):

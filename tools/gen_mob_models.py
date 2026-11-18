@@ -357,6 +357,24 @@ def draw_tooth(px):
         for x in range(8 - w_, 8 + w_): px[x, y] = (MD_TOOTH if x > 6 else (200, 200, 190)) + (255,)
 
 
+def draw_fang(px):
+    """Ravenous Fang (貪食の牙): a long curved ivory fang with a dark root."""
+    for y in range(1, 15):
+        w_ = max(1, (15 - y) // 4)
+        cx = 6 + (y * y) // 40
+        for x in range(cx - w_, cx + w_ + 1):
+            if 0 <= x < 16: px[x, y] = ((90, 70, 60) if y < 3 else (236, 230, 210) if x < cx else (200, 192, 170)) + (255,)
+
+
+def draw_neckband(px):
+    """Rabbit Neckband (兎の首巻布): a red cloth scarf, looped, with a hanging tail."""
+    RED, DARK, LIGHT = (178, 34, 40), (120, 20, 26), (214, 70, 70)
+    for x in range(2, 14):
+        for y in range(4, 8): px[x, y] = (DARK if y == 7 or x in (2, 13) else LIGHT if y == 4 else RED) + (255,)
+    for y in range(8, 15):
+        for x in range(9, 12): px[x, y] = (DARK if x == 11 or y == 14 else RED) + (255,)
+
+
 def draw_hide(px):
     for x in range(2, 14):
         for y in range(3, 13):
@@ -555,6 +573,7 @@ def main():
               "ravenous_snake_head": snake_head_model(), "ravenous_snake_body": snake_body_model(), "ravenous_snake_tail": snake_tail_model(),
               "devourers_scale": item_icon("devourers_scale", draw_scale), "python_white_hair": item_icon("python_white_hair", draw_hair),
               "mud_digger": digger_model(), "mud_digger_tooth": item_icon("mud_digger_tooth", draw_tooth), "digger_hide": item_icon("digger_hide", draw_hide),
+              "ravenous_fang": item_icon("ravenous_fang", draw_fang), "rabbit_neckband": item_icon("rabbit_neckband", draw_neckband),
               "mahni_purse": item_icon("mahni_purse", draw_purse), "wild_herb": item_icon("wild_herb", draw_herb), "beef_package": item_icon("beef_package", draw_package), "antidote_bundle": item_icon("antidote_bundle", draw_antidote_bundle), "tomic_journal": item_icon("tomic_journal", draw_journal), "plated_vambraces": item_icon("plated_vambraces", draw_vambraces), "sealed_letter": item_icon("sealed_letter", draw_letter),
               "vorpal_bunny": vorpal_bunny_model(), "vorpal_bunny_leap": vorpal_bunny_model(True),
               "mud_frog": mud_frog_model(), "mud_frog_leap": mud_frog_model(True)}

@@ -22,14 +22,14 @@ otherwise the Japanese romanized. The project keeps **Wethermon** (the wiki's "W
 
 ## 2. Monster and Colossus drops and levels
 
-- [ ] Vorpal Bunny: Vorpal Choppers 5% (now 4%), **Rabbit Neckband** (兎の首巻布, new item) 12% (the knife and Acrobat
+- [x] Vorpal Bunny: Vorpal Choppers 5% (now 4%), **Rabbit Neckband** (兎の首巻布, new item) 12% (the knife and Acrobat
       book are already gone)
-- [ ] Ravenous Snake: add the guaranteed **Ravenous Fang** (貪食の牙); keep Devourer's Scale (喰蛇の鱗) and Python
+- [x] Ravenous Snake: add the guaranteed **Ravenous Fang** (貪食の牙); keep Devourer's Scale (喰蛇の鱗) and Python
       White Hair (喰蛇の白髪)
 - [x] Solo Killer's Trophy removed (step 1)
-- [ ] Mud Digger phase 2: the burst targets a **random** player
-- [ ] Colossi levels: Ctarnidd 110, Lycagon 115, Siegwurm 120, Wethermon 125
-- [ ] Colossus drops per the README (Tome of Truth, Inventoria Key, Seiten Skillbook, …) — the ones not yet built
+- [x] Mud Digger phase 2: the burst targets a **random** player (it already did, with `@r`)
+- [x] Colossi levels: Ctarnidd 110, Lycagon 115, Siegwurm 120, Wethermon 125
+- [x] Colossus drops per the README (Tome of Truth, Inventoria Key, Seiten Skillbook, …) — the ones not yet built
       stay in Planned
 
 ## 3. Levels and stats

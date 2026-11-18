@@ -30,7 +30,7 @@
         },
         {
           "condition": "minecraft:random_chance",
-          "chance": 0.04
+          "chance": 0.05
         }
       ],
       "entries": [
@@ -65,6 +65,44 @@
                     "pair": "vorpal_chopper"
                   }
                 }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.12
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:paper",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:item_model": "slf:rabbit_neckband",
+                "minecraft:item_name": {
+                  "text": "Rabbit Neckband",
+                  "color": "red",
+                  "italic": false
+                },
+                "minecraft:lore": [
+                  {
+                    "text": "A red cloth scarf, the kind every Vorpal Bunny wears.",
+                    "color": "gray",
+                    "italic": true
+                  }
+                ]
               }
             }
           ]

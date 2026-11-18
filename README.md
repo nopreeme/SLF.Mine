@@ -19,7 +19,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
 - **Origins**: the Wanderer's Path, a hard-mode origin with the Dream Penalty; Average Joe; six more origins planned
-- **Items**: 60 in the main packs and 29 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
+- **Items**: 62 in the main packs and 29 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
 
@@ -295,7 +295,8 @@ red beads, an olive body with a cream belly, and a white-plumed tail.
 - Level 15, 150 health, bite 6. Recommended: level 10, a party of three
 - Every 5 seconds its tail leaves a pool of **poison** that lasts 30 seconds — it is still on you after the fight
 - Appears in forests near players of level 8–25 (2% a minute), or when you accept *The Rampant Forest Guardian*
-- Reward: its level in EXP + 300. Drops **Devourer's Scale** (1–2), **Python White Hair** (50%), 5–8 Mahni Purses
+- Reward: its level in EXP + 300. Drops the **Ravenous Fang** (貪食の牙, always), **Devourer's Scale** (1–2), **Python White Hair**
+  (50%), 5–8 Mahni Purses
 
 ### The Mud Digger — the Diremarsh
 
@@ -598,9 +599,7 @@ Described in the design or the lore, but not built yet:
 - **Goldhuneenay the Inexhaustible**, **the Orchestra of the Doom Echo** and **Vysache the Undying**
 - The Colossi's drops from the series: the Tomes of Truth, the Inventoria Key, the Non-Standard Ether Reactor, the
   Brooch of Faraway Prayer, the Abyssal Warning Bell and Ctarnidd's grails; and real models in place of the stand-ins
-- The **Rabbit Neckband**, the Vorpal Bunny's 12% drop
-- **The Ravenous Serpent Spear** (貪食の蛇槍), a poison spear made from the Ravenous Snake's materials, and the snake's
-  guaranteed **Ravenous Fang** (貪食の牙) drop
+- **The Ravenous Serpent Spear** (貪食の蛇槍), a poison spear made from the Ravenous Snake's materials
 - **Shop armour from the series:** the Mercenary's Helm (傭兵の兜), the Snakeskin set (蛇革) and the Hard Chain set,
   and the Stone Shield
 - **Crescent Blade** (formerly Bilac's Crescent Blade) sold in a shop in another town
