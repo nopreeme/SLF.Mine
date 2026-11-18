@@ -70,15 +70,16 @@ Display names only: the skill ids (tags like `slf.skill.manbufu`) stay, so playe
 
 ## 6. Weapons
 
-- [ ] One entry per weapon (merge the main-pack and 3D-pack copies; the 3D model where there is one)
-- [ ] Official names: Togetsu 兎月 [Waxing 上弦 / Waning 下弦] → evolves into **Whalelore** 勇魚兎月 [Gold Sheen 金照 /
+- [x] One entry per weapon in ITEMS.md (a weapon in both packs is listed once, with both give commands); Whalelore is now
+      one paired weapon in the 3D pack, like Togetsu; Empire Bee Twinblade → Empire Bee Twin
+- [x] Official names: Togetsu 兎月 [Waxing 上弦 / Waning 下弦] → evolves into **Whalelore** 勇魚兎月 [Gold Sheen 金照 /
       Nether Light 冥輝; joined: Pale Sheen 蒼耀月] (fix "Goldsheen/Netherlight"); Marsh Daggers 湖沼の短剣 → evolves into
       Ducusram 傑剣への憧刃; Vorpal Choppers 致命の包丁; Vorpal Sledge 致命の大鎚; Blue Predator 海喰の剣;
       General Dullahan's Decapitator 喪失骸将の斬首剣 (reforged: Flame General's Decapitator); Empire Bee Twinblade 帝蜂双剣;
       Holy Spear Caledfwlch; Dis Pater 冥王の鏡盾; Zanbaralia 黒兇槍ザンバラリア; Giant-Killing Skewer 巨人殺し・串刺し;
       Fossil Rod 化石のロッド; Super Cat-Teaser Lv.100; Antinomy 神魔の大剣; Slaughter Bringer 殺戮者の魔剣;
       Gilta Brille 煌蠍の籠手
-- [ ] Rust Saber stays, marked as the project's own
+- [x] Rust Saber stays, marked as the project's own
 
 ## 7. The class rework
 
@@ -90,7 +91,7 @@ Display names only: the skill ids (tags like `slf.skill.manbufu`) stay, so playe
 
 ## 8. ITEMS.md
 
-- [ ] `tools/gen_item_docs.py`: mark the project's own items with `*` and add a legend line (Rust Saber, Garren's
+- [x] `tools/gen_item_docs.py`: mark the project's own items with `*` and add a legend line (Rust Saber, Garren's
       Plated Vambraces, Mud Digger Tooth, Digger Hide, Age of Divinity Memory, the consumables and quest items)
 - [ ] Regenerate everything (`gen_test_commands.py`, `gen_skill_passives.py`, `gen_item_docs.py`) and run the tests
 - [ ] Update the README's admin and contributor sections for the changed commands; delete this file

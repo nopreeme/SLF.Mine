@@ -7,13 +7,13 @@
     "when": "gui",
     "model": {
      "type": "minecraft:model",
-     "model": "slf:item/whalelore_goldsheen_icon"
+     "model": "slf:item/whalelore_icon"
     }
    }
   ],
   "fallback": {
    "type": "minecraft:model",
-   "model": "slf:item/weapon_whalelore_goldsheen"
+   "model": "slf:item/whalelore"
   }
  }
 }

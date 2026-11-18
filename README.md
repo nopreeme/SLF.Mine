@@ -19,7 +19,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 - **Quests and NPCs** for Firstia and Secondil, Garren's questline, and a quest log
 - **Mahni** currency and shops
 - **Origins**: the Wanderer's Path, a hard-mode origin with the Dream Penalty; Average Joe; six more origins planned
-- **Items**: 62 in the main packs and 29 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
+- **Items**: 62 in the main packs and 28 weapons with 3D held models — see **[ITEMS.md](ITEMS.md)**
 
 ---
 
@@ -472,7 +472,7 @@ The **Wanderer** is hard mode — the path Sunraku chose — and cannot be undon
 chances, quest rewards, shop prices) and its give command. It is generated from the packs, so it is always current.
 It also marks the 24 items that nothing in survival gives yet.
 
-The **3D weapons pack** has 29 weapons with 3D held models and flat inventory icons, including paired weapons and a
+The **3D weapons pack** has 28 weapons with 3D held models and flat inventory icons, including paired weapons and a
 shield that raises when blocking. See [weapons/README.md](weapons/README.md).
 
 ---

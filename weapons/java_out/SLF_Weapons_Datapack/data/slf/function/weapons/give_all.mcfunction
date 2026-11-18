@@ -9,8 +9,7 @@ function slf:weapons/give/fossil_rod
 function slf:weapons/give/wood_shield
 function slf:weapons/give/rust_saber
 function slf:weapons/give/wethermon_katana
-function slf:weapons/give/whalelore_goldsheen
-function slf:weapons/give/whalelore_netherlight
+function slf:weapons/give/whalelore
 function slf:weapons/give/gilta_brille
 function slf:weapons/give/crescent_blade
 function slf:weapons/give/togetsu

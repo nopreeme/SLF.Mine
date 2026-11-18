@@ -7,13 +7,13 @@
     "when": "gui",
     "model": {
      "type": "minecraft:model",
-     "model": "slf:item/whalelore_netherlight_icon"
+     "model": "slf:item/whalelore_twin_icon"
     }
    }
   ],
   "fallback": {
    "type": "minecraft:model",
-   "model": "slf:item/weapon_whalelore_netherlight"
+   "model": "slf:item/whalelore_twin"
   }
  }
 }

@@ -21,14 +21,14 @@ WEAPONS = [
     # second batch: the main pack's flat weapons, rebuilt in 3D
     ("rust_saber", "Rust Saber", mp.rust_saber_cubes, "iron_sword", 5, 1.8, None),
     ("wethermon_katana", "Wethermon's Blade", mp.wethermon_katana_cubes, "netherite_sword", 10, 1.6, None),
-    ("whalelore_goldsheen", "Whalelore: Goldsheen", mp.whalelore_goldsheen_cubes, "diamond_sword", 8, 1.6, None),
-    ("whalelore_netherlight", "Whalelore: Netherlight", mp.whalelore_netherlight_cubes, "diamond_sword", 7, 2.0, None),
+    # Whalelore (勇魚兎月): Togetsu evolved; Gold Sheen (金照) in the main hand, Nether Light (冥輝) in the off hand
+    ("whalelore", "Whalelore: Gold Sheen", mp.whalelore_goldsheen_cubes, "diamond_sword", 8, 2.0, "Whalelore"),
     ("gilta_brille", "Gilta Brille", mp.gilta_brille_cubes, "golden_sword", 8, 2.0, None),
     ("crescent_blade", "Crescent Blade", mp.crescent_blade_cubes, "iron_sword", 8, 1.4, None),
     # third batch: weapons from the source, modelled on the Shangri-La Frontier wiki's art and Evan's manga references
     ("togetsu", "Togetsu: Waxing", mp.togetsu_waxing_cubes, "iron_sword", 8, 2.4, "Togetsu"),
     ("ducusram", "Ducusram", mp.ducusram_cubes, "diamond_sword", 8, 2.6, "Ducusram"),
-    ("empire_bee_twinblade", "Empire Bee Twinblade", mp.empire_bee_estoc_cubes, "diamond_sword", 7, 2.6, "Empire Bee Twinblade"),
+    ("empire_bee_twinblade", "Empire Bee Twin", mp.empire_bee_estoc_cubes, "diamond_sword", 7, 2.6, "Empire Bee Twin"),
     ("dullahan_decapitator", "General Dullahan's Decapitator", mp.dullahan_decapitator_cubes, "iron_sword", 11, 1.0, None),
     ("vorpal_sledge", "Vorpal Sledge", mp.vorpal_sledge_cubes, "stick", 10, 0.8, None),
     ("blue_predator", "Blue Predator", mp.blue_predator_cubes, "diamond_sword", 9, 1.6, None),
@@ -44,7 +44,8 @@ WEAPONS = [
 
 # Pairs whose off-hand blade is a different weapon from the main-hand one: pair name -> the twin's cube list.
 # The twin is built as <name>_twin (model, icon and item definition, no give command of its own).
-TWINS = {"togetsu": mp.togetsu_waning_cubes, "empire_bee_twinblade": mp.empire_bee_maingauche_cubes}
+TWINS = {"togetsu": mp.togetsu_waning_cubes, "empire_bee_twinblade": mp.empire_bee_maingauche_cubes,
+         "whalelore": mp.whalelore_netherlight_cubes}
 
 # The main SLF.Mine resource pack has its own (flat) assets/slf/models/item/<name>.json for some of these weapons.
 # With both packs loaded one file would replace the other, so those weapons get a prefixed model file here.
@@ -107,7 +108,7 @@ def centered(rot, s, bc, lift=0):
 
 # Weapons whose +x side (the sharp edge) should face down in the hand; by default +x faces up.
 EDGE_DOWN = {"marsh_dagger", "rust_saber", "wethermon_katana", "crescent_blade",
-             "whalelore_goldsheen", "whalelore_netherlight", "gilta_brille", "togetsu", "togetsu_twin", "blue_predator",
+             "whalelore", "whalelore_twin", "gilta_brille", "togetsu", "togetsu_twin", "blue_predator",
              "super_cat_teaser", "antinomy", "slaughter_bringer", "ducusram"}
 
 def other_side(t):

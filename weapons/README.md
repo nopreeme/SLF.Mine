@@ -1,6 +1,6 @@
 # SLF Weapons
 
-Twenty-nine Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
+Twenty-eight Shangri-La Frontier weapons as 3D held models with flat inventory icons, for Minecraft Java **26.2** (resource pack format 88, data pack format 107). They ship as their own resource pack + data pack, separate from the main SLF.Mine packs, and can be loaded alongside them.
 
 | Weapon | Base item | Notes |
 |---|---|---|
@@ -8,20 +8,19 @@ Twenty-nine Shangri-La Frontier weapons as 3D held models with flat inventory ic
 | Iron Hammer | stick | |
 | Iron Sword | iron sword | |
 | Iron Dagger | iron sword | single weapon |
-| Marsh Daggers | iron sword | pair |
+| Marsh Daggers | iron sword | pair; evolve into Ducusram |
 | Mercenary Twinblades | iron sword | pair; straight double-edged blades |
 | Vorpal Choppers | iron sword | pair (placeholder name) |
 | Fossil Rod | stick | |
 | Wood Shield | shield | uses the vanilla shield's resting and blocking poses |
-| Rust Saber | iron sword | |
+| Rust Saber | iron sword | the project's own (not from the source) |
 | Wethermon's Blade | netherite sword | katana; only Wethermon wields it |
-| Whalelore: Goldsheen | diamond sword | |
-| Whalelore: Netherlight | diamond sword | |
+| Whalelore | diamond sword | pair: Gold Sheen (金照) in the main hand, Nether Light (冥輝) in the off hand; Togetsu evolved |
 | Gilta Brille | golden sword | gauntlet |
 | Crescent Blade | iron sword | |
-| Togetsu | iron sword | pair: Waxing (white) in the main hand, Waning (dark) in the off hand |
+| Togetsu | iron sword | pair: Waxing (white) in the main hand, Waning (dark) in the off hand; evolves into Whalelore |
 | Ducusram | diamond sword | pair |
-| Empire Bee Twinblade | diamond sword | pair: estoc in the main hand, main-gauche in the off hand |
+| Empire Bee Twin | diamond sword | pair: estoc in the main hand, main-gauche in the off hand |
 | General Dullahan's Decapitator | iron sword | two-handed look |
 | Vorpal Sledge | stick | |
 | Blue Predator | diamond sword | |
@@ -48,16 +47,16 @@ Then in game (needs cheats/OP):
 /function slf:weapons/give/<name>
 ```
 
-`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `rust_saber`, `wethermon_katana`, `whalelore_goldsheen`, `whalelore_netherlight`, `gilta_brille`, `crescent_blade`, or one of the third batch: `togetsu`, `ducusram`, `empire_bee_twinblade`, `dullahan_decapitator`, `vorpal_sledge`, `blue_predator`, `super_cat_teaser`, `dis_pater`, `flame_decapitator`, `zanbaralia`, `giant_killing_skewer`, `antinomy`, `slaughter_bringer`, `caledfwlch`.
+`<name>` is one of `wood_staff`, `iron_hammer`, `iron_sword`, `iron_dagger`, `marsh_dagger`, `mercenary_blade`, `vorpal_chopper`, `fossil_rod`, `wood_shield`, or one of the second batch: `rust_saber`, `wethermon_katana`, `whalelore`, `gilta_brille`, `crescent_blade`, or one of the third batch: `togetsu`, `ducusram`, `empire_bee_twinblade`, `dullahan_decapitator`, `vorpal_sledge`, `blue_predator`, `super_cat_teaser`, `dis_pater`, `flame_decapitator`, `zanbaralia`, `giant_killing_skewer`, `antinomy`, `slaughter_bringer`, `caledfwlch`.
 
-The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, both Whalelore blades, the Vorpal Knife (the anime's red Vorpal Chopper) and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
+The second batch are 3D versions of weapons that are flat sprites in the main pack. They are separate items from the main pack's (different give functions), and their model files are written as `weapon_<name>.json` so the two packs do not overwrite each other. Gilta Brille, Whalelore, and Wethermon's Blade follow the anime and manga art on the Shangri-La Frontier wiki; the rest have no art there and are original designs. None of the second batch has been checked in game yet.
 
-The third batch are weapons from the source material, built first on purpose (the list to work through is the Shangri-La Frontier wiki's Weapons category, then the Japanese wiki's equipment page). Togetsu, Ducusram, the Empire Bee Twinblade and General Dullahan's Decapitator follow the anime art on the wiki; the Vorpal Sledge, Blue Predator and Dis Pater follow manga panels; the Super Cat-Teaser follows colour art. The Flame General's Decapitator, Zanbaralia, Antinomy (its purple form), Slaughter Bringer and Holy Spear Caledfwlch follow the wiki's anime and colour art; the Giant-Killing Skewer follows a manga panel. Colours where only a manga panel exists (Blue Predator, Dis Pater, Giant-Killing Skewer, Vorpal Sledge) are a guess. Not built, because the wiki art does not show the weapon clearly enough: Shakkotsu Breaker, Underworld Keystaff, Holy Sword Excalibur; Regalecus Cestus is a pair of hand wraps, which a held item model cannot show.
+The third batch are weapons from the source material, built first on purpose (the list to work through is the Shangri-La Frontier wiki's Weapons category, then the Japanese wiki's equipment page). Togetsu, Ducusram, the Empire Bee Twin and General Dullahan's Decapitator follow the anime art on the wiki; the Vorpal Sledge, Blue Predator and Dis Pater follow manga panels; the Super Cat-Teaser follows colour art. The Flame General's Decapitator, Zanbaralia, Antinomy (its purple form), Slaughter Bringer and Holy Spear Caledfwlch follow the wiki's anime and colour art; the Giant-Killing Skewer follows a manga panel. Colours where only a manga panel exists (Blue Predator, Dis Pater, Giant-Killing Skewer, Vorpal Sledge) are a guess. Not built, because the wiki art does not show the weapon clearly enough: Shakkotsu Breaker, Underworld Keystaff, Holy Sword Excalibur; Regalecus Cestus is a pair of hand wraps, which a held item model cannot show.
 
 ## How it works
 
 - **No CustomModelData.** Each weapon is a vanilla base item with the `item_model` component pointing at `assets/slf/items/<name>.json`. That definition switches on `display_context`: the inventory (`gui`) shows a flat pixel icon, everything else shows the 3D model.
-- **Pairs are one item.** While a paired weapon is in the main hand and the off hand is empty, `slf:weapons/pairs/tick` puts a display-only twin in the off hand. The twin is removed when you switch away, and dropped twins are deleted. A pair whose two blades differ (`TWINS` in `java_build.py`: Togetsu, Empire Bee Twinblade) gets a second model, `<name>_twin`, shown in the off hand.
+- **Pairs are one item.** While a paired weapon is in the main hand and the off hand is empty, `slf:weapons/pairs/tick` puts a display-only twin in the off hand. The twin is removed when you switch away, and dropped twins are deleted. A pair whose two blades differ (`TWINS` in `java_build.py`: Togetsu, Empire Bee Twin, Whalelore) gets a second model, `<name>_twin`, shown in the off hand.
 - **Shield.** `wood_shield` switches to a second model while in use (`minecraft:using_item`), the same way the vanilla shield does.
 - The data pack adds its own `data/minecraft/tags/function/tick.json`. Function tags merge across packs, so it coexists with the main data pack. If these files are ever merged *into* the main data pack, combine the two `tick.json` files rather than overwriting one.
 
