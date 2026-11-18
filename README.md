@@ -528,7 +528,7 @@ Set a monster's level first with `/scoreboard players set #spawn_lv slf.mob_leve
 | Skills | Learn every skill, finish the one you are focusing, +1 Knight Trial |
 | World | Karma 100 or 0, place or remove the altar, an Altar Compass |
 | Mobs | Spawn each monster; remove SLF mobs nearby |
-| Bosses | Spawn each area boss and boss; set midnight (full moon) or morning |
+| Bosses | Spawn each area boss and Colossus; set midnight or morning |
 | NPCs / Secondil | Place each NPC; 5 Wild Herbs; the quest log |
 | Origin | The origin choice; become a Wanderer; set Firstia's inn and the forest |
 | Me | Status sheet, +100 Mahni, the player menu, reset yourself |

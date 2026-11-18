@@ -293,7 +293,7 @@ Create or edit `data_pack/data/slf/loot_table/<boss>_drops.json` and add an entr
 | `slf.stat_agi` | trigger | Player spend trigger for AGI |
 | `slf.stat_int` | trigger | Player spend trigger for INT |
 | `slf.stat_tec` | trigger | Player spend trigger for TEC |
-| `slf.stat_lck` | trigger | Player spend trigger for LCK |
+| `slf.stat_lck` | trigger | Player spend trigger for LUC |
 | `slf.stat_stm` | trigger | Player spend trigger for STM |
 | `slf.raw.dmg` | criterion | Vanilla: `damage_dealt` (read-only, auto-tracked) |
 | `slf.raw.move` | criterion | Vanilla: `sprint_one_cm` (read-only) |
@@ -311,9 +311,9 @@ Create or edit `data_pack/data/slf/loot_table/<boss>_drops.json` and add an entr
 | `slf.focus_stat` | dummy | Stat category of focused skill (1–4) |
 | `slf.sp` | dummy | Accumulated skill progress toward threshold |
 | `slf.threshold` | dummy | SP required to learn the focused skill |
-| `slf.exp_extend` | dummy | EXP banked after reaching level 99 (Standby) |
-| `slf.standby` | dummy | 1 = at level 99, awaiting Awakening |
-| `slf.boss_gate` | dummy | 1 = awakening boss defeated; altar can convert exp_extend |
+| `slf.exp_extend` | dummy | EXP banked at 99 Extend |
+| `slf.standby` | dummy | 1 = at 99 Extend (a level 100+ monster defeated at level 99), awaiting the Altar of Awakening |
+| `slf.boss_gate` | dummy | 1 = has defeated a boss (kept for records; the altar only needs 99 Extend) |
 | `slf.awakened` | dummy | 1 = Altar used; levels 100–150 accessible |
 | `slf.vorpal_soul` | dummy | Hidden: rises killing high-level mobs, falls on death |
 | `slf.karma` | dummy | Hidden: rises killing passives, triggers bounty hunter at 100 |
