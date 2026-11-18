@@ -31,17 +31,12 @@ def tearDownModule():
     if S: S.__exit__(None, None, None)
 
 
-T1 = {"Swordsman": 1, "Warrior": 2, "Bandit": 3, "Priest": 4, "Monk": 5, "Mage": 6, "Fighter": 20, "Mercenary": 30}
-# evolution id -> (grant chain to become eligible, required level)
-EVOLUTIONS = {
-    10: (["swordsman"], 20), 11: (["swordsman"], 20), 14: (["warrior"], 20), 21: (["fighter"], 20), 18: (["priest"], 20),
-    60: (["monk"], 20), 70: (["mage"], 20), 50: (["bandit"], 20), 51: (["bandit"], 20), 40: (["swordsman", "sword_master"], 30),
-    12: (["swordsman", "sword_master"], 50), 13: (["swordsman", "magic_swordsman"], 50), 15: (["warrior", "barbarian"], 50),
-    22: (["fighter", "destroyer"], 50), 19: (["priest", "bishop"], 50), 61: (["monk", "monk_soldier"], 50), 62: (["mage", "sage"], 50),
-    16: (["bandit", "thief"], 50), 52: (["bandit", "ninja"], 50), 31: (["mercenary"], 50),
-    43: (["swordsman", "sword_master", "knight", "holy_knight"], 70), 44: (["swordsman", "sword_master", "knight", "dark_knight"], 70),
-    17: (["bandit", "thief", "assassin"], 80), 53: (["bandit", "ninja", "shinobi"], 80),
-}
+T1 = {"Swordsman": 1, "Fighter": 2, "Thief": 3, "Priest": 4, "Monk": 5, "Magician": 6, "Brawler": 20, "Mercenary": 30}
+# evolution id -> (grant chain to become eligible, required level), from the class table (tools/gen_classes.py)
+sys.path.insert(0, os.path.join(REPO, "tools")); import gen_classes
+_JOB = {j[0]: j for j in gen_classes.JOBS}
+def _chain(key): return (_chain(_JOB[key][6][0]) if _JOB[key][6] else []) + [key]
+EVOLUTIONS = {j[1]: (_chain(j[6][0]), j[5]) for j in gen_classes.JOBS if j[5] is not None}
 
 
 class Base(unittest.TestCase):
@@ -106,10 +101,10 @@ class Menus(Base):
             out = S.as_player("trigger slf.menu"); self.assertIn("Triggered", out); S.wait_ticks(3)
 
     def test_status_sheet_shows_class_and_numbers(self):
-        self.grant("warrior"); self.set("slf.sp_points", 7); S.wait_cycle()
+        self.grant("fighter"); self.set("slf.sp_points", 7); S.wait_cycle()
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 7"); S.wait_ticks(4)
         text = "\n".join(S.bot.chat_since(mark))
-        self.assertIn("Class: Warrior", text); self.assertIn("Level 1", text); self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 7", text)
+        self.assertIn("Class: Fighter", text); self.assertIn("Level 1", text); self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 7", text)
 
     def test_fresh_player_sees_numbers_not_blanks(self):
         """Regression: a player whose scores were never set saw "EXP /100" and stat names without values."""
@@ -118,7 +113,7 @@ class Menus(Base):
         text = "\n".join(S.bot.chat_since(mark))
         self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 0", text)
         for label in ("HP 0", "MP 0", "STR 0", "DEX 0", "VIT 0", "AGI 0", "TEC 0", "LUC 0", "STM 0"): self.assertIn(label, text)
-        S.cmd(f"scoreboard players reset {S.player}"); self.grant("warrior"); S.wait_cycle()   # the once-per-second pass covers players who never open a menu
+        S.cmd(f"scoreboard players reset {S.player}"); self.grant("fighter"); S.wait_cycle()   # the once-per-second pass covers players who never open a menu
         self.assertEqual((S.score("slf.exp"), S.score("slf.stat.hp"), S.score("slf.vorpal_soul")), (0, 0, 0))
 
     def test_hud_toggle(self):
@@ -140,7 +135,7 @@ class ClassSelection(Base):
                 self.assertTrue(any(f"You have become a {name}" in c for c in chat), chat)
 
     def test_second_starting_class_is_refused(self):
-        self.grant("mage")
+        self.grant("magician")
         S.as_player("trigger slf.choose_class set 1"); S.wait_ticks(4)
         self.assertEqual(S.score("slf.class"), 6)
         self.grant("swordsman"); self.assertEqual(S.score("slf.class"), 6)
@@ -165,18 +160,18 @@ class Evolution(Base):
         self.grant("swordsman"); self.set("slf.level", 20)
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 5"); S.wait_ticks(4)
         cmds = sorted(c for _, c in S.bot.clicks_since(mark) if "slf.evolve" in c)
-        self.assertEqual(cmds, ["trigger slf.evolve set 10", "trigger slf.evolve set 11"])
+        self.assertEqual(cmds, ["trigger slf.evolve set 10", "trigger slf.evolve set 11", "trigger slf.evolve set 40"])
 
     def test_evolution_through_menu_click(self):
-        self.grant("fighter"); self.set("slf.level", 25)
+        self.grant("brawler"); self.set("slf.level", 25)
         chat = self.click("[Destroyer]", "trigger slf.menu set 5")
         self.assertEqual(S.score("slf.class"), 21); self.assertTrue(any("Destroyer" in c for c in chat))
 
     def test_wrong_lineage_is_refused(self):
-        self.grant("warrior"); self.set("slf.level", 99); mark = S.bot.mark()
-        S.as_player("trigger slf.evolve set 21"); S.wait_ticks(4)   # Destroyer needs Fighter
+        self.grant("fighter"); self.set("slf.level", 99); mark = S.bot.mark()
+        S.as_player("trigger slf.evolve set 21"); S.wait_ticks(4)   # Destroyer needs Brawler
         self.assertEqual(S.score("slf.class"), 2); self.assertTrue(any("not on your path" in c for c in S.bot.chat_since(mark)))
-        S.as_player("trigger slf.evolve set 12"); S.wait_ticks(4)   # Kansei needs Sword Master
+        S.as_player("trigger slf.evolve set 12"); S.wait_ticks(4)   # Master Swordsman needs Sword Master
         self.assertEqual(S.score("slf.class"), 2)
 
     def test_no_evolution_without_a_class(self):
@@ -213,12 +208,12 @@ class Skills(Base):
         self.assertEqual(S.score("slf.focus"), 0); self.assertTrue(any("already know" in c for c in S.bot.chat_since(mark)))
 
     def test_class_affinity_lowers_threshold(self):
-        self.grant("warrior"); S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4)   # Gigaton Swing: 2000, Warrior 300
+        self.grant("fighter"); S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4)   # Gigaton Swing: 2000, Fighter 300
         self.assertEqual(S.score("slf.threshold"), 300)
-        S.as_player("function slf:admin/reset_player"); S.wait_ticks(2); self.grant("mage")
+        S.as_player("function slf:admin/reset_player"); S.wait_ticks(2); self.grant("magician")
         mark = S.bot.mark(); S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4)
         self.assertEqual(S.score("slf.focus"), 0); self.assertTrue(any("Requires: Megaton Swing" in c for c in S.bot.chat_since(mark)))
-        S.cmd(f"tag {S.player} add slf.skill.megaton_swing")   # with the prerequisite but no Warrior lineage: full price
+        S.cmd(f"tag {S.player} add slf.skill.megaton_swing")   # with the prerequisite but no Fighter lineage: full price
         S.as_player("trigger slf.focus_choose set 21"); S.wait_ticks(4); self.assertEqual(S.score("slf.threshold"), 2000)
 
     def test_tec_lowers_threshold(self):
@@ -240,7 +235,7 @@ class Skills(Base):
 
     def test_big_tantrum_draws_monsters(self):
         """Series: Big Tantrum draws other monsters to you. Toggled from the menu, no mana."""
-        self.grant("bandit"); S.cmd(f"gamemode survival {S.player}")
+        self.grant("thief"); S.cmd(f"gamemode survival {S.player}")
         S.as_player('summon minecraft:zombie ~30 ~ ~ {NoAI:1b,PersistenceRequired:1b,Tags:["slf.test"]}'); S.wait_ticks(3)
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 8"); S.wait_ticks(4)
         self.assertIn("slf.tantrum_active", S.tags()); self.assertTrue(any("Big Tantrum!" in c for c in S.bot.chat_since(mark)))
@@ -470,13 +465,13 @@ class SkillBonuses(Base):
         self.assertEqual(S.attribute("max_health"), 20.0)
 
     def test_class_skills_change_real_numbers(self):
-        self.grant("warrior"); S.wait_cycle()   # megaton_swing +1 damage, front_position +2 armour, rigid_strength +20% knockback resistance
+        self.grant("fighter"); S.wait_cycle()   # megaton_swing +1 damage, front_position +2 armour, rigid_strength +20% knockback resistance
         S.cmd(f"clear {S.player}"); S.wait_ticks(4)   # empty hands and no armour, so only the skills count
         self.assertEqual(S.attribute("attack_damage"), 2.0); self.assertEqual(S.attribute("armor"), 2.0)
         self.assertAlmostEqual(S.attribute("knockback_resistance"), 0.2, places=3)
 
     def test_mana_skills(self):
-        self.grant("mage"); S.wait_cycle()       # chanting_and_memorizing +20 max mana, tanda_breathing +1 regen
+        self.grant("magician"); S.wait_cycle()       # chanting_and_memorizing +20 max mana, tanda_breathing +1 regen
         self.assertEqual(S.score("slf.mana_max"), 40)
         self.set("slf.mana", 0); S.wait_cycle(); S.wait_cycle(); mana = S.score("slf.mana"); self.assertTrue(2 <= mana <= 8, mana)
         self.assertIn("night_vision", S.effects())   # wisdoms_divine_eye

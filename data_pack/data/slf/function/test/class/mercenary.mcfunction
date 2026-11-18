@@ -2,4 +2,4 @@
 # Become Mercenary (class 30): reset, then mercenary, at level 1.
 function slf:admin/reset_player
 function slf:class/grant/mercenary
-tellraw @s ["",{"text":"[SLF Test] ","color":"gold"},{"text":"You are now ","color":"yellow"},{"text":"Mercenary","color":"yellow","bold":true},{"text":" (level 1).","color":"yellow"}]
+tellraw @s ["",{"text":"[SLF Test] ","color":"gold"},{"text":"You are now ","color":"yellow"},{"text":"Mercenary","color":"dark_green","bold":true},{"text":" (level 1).","color":"yellow"}]

@@ -7,6 +7,7 @@ tag @s add slf.skill.assassin_pierce
 tag @s add slf.skill.asura_kagura
 tag @s add slf.skill.big_tantrum
 tag @s add slf.skill.blaze_shot
+tag @s add slf.skill.bradion
 tag @s add slf.skill.break_attack
 tag @s add slf.skill.breath_of_anti_harm
 tag @s add slf.skill.burnout
@@ -86,4 +87,4 @@ tag @s add slf.skill.tsujizanri
 tag @s add slf.skill.unbreakable
 tag @s add slf.skill.wisdoms_divine_eye
 tag @s add slf.skill.zanzui_flying_blade_leg
-tellraw @s ["",{"text":"[SLF Test] ","color":"gold"},{"text":"Learned all 87 skills.","color":"yellow"}]
+tellraw @s ["",{"text":"[SLF Test] ","color":"gold"},{"text":"Learned all 88 skills.","color":"yellow"}]

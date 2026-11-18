@@ -160,7 +160,7 @@ def main():
     lines = {}
     for k, c in sorted(classes.items(), key=lambda kv: kv[1]["id"]):
         root = chain(classes, k)[0]; lines.setdefault(root, []).append(k)
-    for root in ("swordsman", "warrior", "fighter", "mercenary", "bandit", "priest", "monk", "mage"):
+    for root in ("swordsman", "fighter", "brawler", "mercenary", "thief", "priest", "monk", "magician"):
         if root in lines:
             menu.append(row("Class" if root == "swordsman" else "", [run(f"[{classes[k]['name']}]", classes[k]["color"], f"/function slf:test/class/{k}",
                         f"Reset, then {' -> '.join(classes[s]['name'] for s in chain(classes, k))}, level {classes[k]['level']}") for k in lines[root]]))

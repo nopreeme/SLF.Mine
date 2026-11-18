@@ -83,12 +83,14 @@ Display names only: the skill ids (tags like `slf.skill.manbufu`) stay, so playe
 
 ## 7. The class rework
 
-- [ ] Move from the old 34-class list to the tree in the README's Classes section (8 starting classes + Knight,
+- [x] Move from the old 34-class list to the tree in the README's Classes section (8 starting classes + Knight,
       Warlord as the Mercenary's top job, hidden/specialty jobs, unlock levels 20 / 30 / 50 / 70 / 80)
-- [ ] Old → new: Warrior → Fighter, Fighter → Brawler, Bandit → Thief (Bandit becomes Master Thief), Mage → Magician,
+- [x] Old → new: Warrior → Fighter, Fighter → Brawler, Bandit → Thief (Bandit becomes Master Thief), Mage → Magician,
       Kansei → Master Swordsman, Crazy Fist → Berserker, Killing Joke → Killing Joker, Star Shinobi Sei → Sacred Star
       Ninja; removed: Black Death, King's Knight, Spirit Fist, Saint (from Bishop), Omnipotent Wisdom (planned)
 
+- [x] One table for every job: `tools/gen_classes.py` (grants, evolution menu and checks, the status sheet's class name);
+      players from older versions are migrated once (`class/migrate_v2`): their history tags are renamed, class ids kept
 ## 8. ITEMS.md
 
 - [x] `tools/gen_item_docs.py`: mark the project's own items with `*` and add a legend line (Rust Saber, Garren's

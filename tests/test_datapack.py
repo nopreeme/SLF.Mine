@@ -172,8 +172,8 @@ class TestClassIDs(unittest.TestCase):
 
     def test_standard_t1_id_trigger_match(self):
         # The 6 base classes use trigger value == class ID
-        expected = {1: "swordsman", 2: "warrior", 3: "bandit",
-                    4: "priest", 5: "monk", 6: "mage"}
+        expected = {1: "swordsman", 2: "fighter", 3: "thief",
+                    4: "priest", 5: "monk", 6: "magician"}
         for trigger_val, expected_class in expected.items():
             self.assertEqual(
                 self.dispatch.get(trigger_val), expected_class,
@@ -187,26 +187,20 @@ class TestClassIDs(unittest.TestCase):
             )
 
     def test_brawler_ids(self):
-        self.assertEqual(self.ids.get("fighter"), 20)
+        self.assertEqual(self.ids.get("brawler"), 20)
         self.assertEqual(self.ids.get("mercenary"), 30)
-        self.assertEqual(self.dispatch.get(20), "fighter")
+        self.assertEqual(self.dispatch.get(20), "brawler")
         self.assertEqual(self.dispatch.get(30), "mercenary")
 
     def test_shadow_tree_ids(self):
-        # Bandit=3 (T1), Thief=50 (T2) — not colliding with assassin=16
-        self.assertEqual(self.ids.get("bandit"), 3)
-        self.assertEqual(self.ids.get("thief"), 50)
+        # Ids are kept from before the class rework so saved slf.class scores stay valid:
+        # Thief=3 (was Bandit), Master Thief=50 (was Thief), Star Ninja=52 (was Shinobi), Sacred Star Ninja=53
+        self.assertEqual(self.ids.get("thief"), 3)
+        self.assertEqual(self.ids.get("master_thief"), 50)
         self.assertEqual(self.ids.get("ninja"), 51)
-        self.assertEqual(self.ids.get("assassin"), 16,
-                         "assassin ID should be 16 (was previously colliding with star_shinobi_sei)")
-
-    def test_star_shinobi_sei_id_not_colliding(self):
-        # Was previously 16, colliding with assassin — fixed to 53
-        sei_id = self.ids.get("star_shinobi_sei")
-        assassin_id = self.ids.get("assassin")
-        self.assertIsNotNone(sei_id, "star_shinobi_sei has no class ID")
-        self.assertNotEqual(sei_id, assassin_id,
-                            f"star_shinobi_sei and assassin share class ID {sei_id}")
+        self.assertEqual(self.ids.get("star_ninja"), 52)
+        self.assertEqual(self.ids.get("sacred_star_ninja"), 53)
+        self.assertEqual(self.ids.get("assassin"), 16)
 
 
 # ---------------------------------------------------------------------------
@@ -290,22 +284,12 @@ class TestPrerequisiteChains(unittest.TestCase):
                               f"{f.name}: guard requires '{prereq}' but no grant file adds it")
 
     def test_shadow_tree_chain(self):
-        # Bandit(T1) → {Thief, Ninja}(T2) → Assassin/Shinobi(T3)
-        thief = _read(GRANT_DIR / "thief.mcfunction")
-        self.assertIn('unless entity @s[tag=slf.was_bandit] run return fail', thief,
-                      "thief.mcfunction must require was_bandit (Bandit → Thief)")
-
-        ninja = _read(GRANT_DIR / "ninja.mcfunction")
-        self.assertIn('unless entity @s[tag=slf.was_bandit] run return fail', ninja,
-                      "ninja.mcfunction must require was_bandit (Bandit → Ninja)")
-
-        assassin = _read(GRANT_DIR / "assassin.mcfunction")
-        self.assertIn('unless entity @s[tag=slf.was_thief] run return fail', assassin,
-                      "assassin.mcfunction must require was_thief (Thief → Assassin)")
-
-        shinobi = _read(GRANT_DIR / "shinobi.mcfunction")
-        self.assertIn('unless entity @s[tag=slf.was_ninja] run return fail', shinobi,
-                      "shinobi.mcfunction must require was_ninja (Ninja → Shinobi)")
+        # Thief(T1) → Master Thief, Assassin, Phantom Thief, Ninja → ... (README, Classes)
+        for job, prereq in (("master_thief", "thief"), ("assassin", "thief"), ("phantom_thief", "thief"), ("ninja", "thief"),
+                            ("great_stealth", "master_thief"), ("killing_joker", "assassin"), ("still_joker", "phantom_thief"),
+                            ("star_ninja", "ninja"), ("jonin", "ninja"), ("sacred_star_ninja", "star_ninja"), ("shinobi", "jonin")):
+            self.assertIn(f'unless entity @s[tag=slf.was_{prereq}] run return fail', _read(GRANT_DIR / f"{job}.mcfunction"),
+                          f"{job}.mcfunction must require was_{prereq}")
 
     def test_veteran_requires_mercenary(self):
         veteran = _read(GRANT_DIR / "veteran.mcfunction")
@@ -313,7 +297,7 @@ class TestPrerequisiteChains(unittest.TestCase):
                       "veteran.mcfunction must require was_mercenary")
 
     def test_thief_sets_class_chosen(self):
-        # Thief is T2 but still sets class_chosen (needed for skill focus/stat triggers)
+        # Thief is a starting class: it sets class_chosen (needed for skill focus/stat triggers)
         thief = _read(GRANT_DIR / "thief.mcfunction")
         self.assertIn("tag @s add slf.class_chosen", thief,
                       "thief.mcfunction must set class_chosen so skill focus triggers activate")

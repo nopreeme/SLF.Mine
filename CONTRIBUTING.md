@@ -11,7 +11,7 @@ Thank you for helping bring the world of Shangri-La Frontier into Minecraft. Thi
 | 🔥 High | 16×16 pixel art textures | `resource_pack/assets/slf/textures/item/` |
 | 🔥 High | Quest advancement JSON for class transitions | `data_pack/data/slf/advancement/` |
 | ⬆ Medium | New skills (focus + learn + passive) | `data_pack/data/slf/function/skills/` |
-| ⬆ Medium | New class nodes (grant + tick dispatch) | `data_pack/data/slf/function/class/grant/` |
+| ⬆ Medium | New class nodes | `tools/gen_classes.py` |
 | ➡ Normal | New SLF items (model + give function) | `resource_pack/` + `data_pack/` |
 | ➡ Normal | Balance feedback (threshold values, exp curve) | GitHub Issues |
 | ➡ Normal | Bug reports | GitHub Issues |
@@ -210,42 +210,17 @@ effect give @a[tag=slf.skill.iron_fist] minecraft:resistance 3 0 true
 
 ## How to Add a Class
 
-This example adds **Blade Dancer** (ID 14, evolves from Sword Master).
+Every job lives in one table, `JOBS` in `tools/gen_classes.py`: its id, name, Japanese name, colour, the level it
+evolves at, the jobs it evolves from, the skills it grants and any extra lines (starting gear, titles). Add a row, then:
 
-### 1. Assign a class ID
-
-See the [Class ID Table](#class-id-table) below. Pick the next unused ID in the appropriate range.
-
-### 2. Create the grant file
-
-`data_pack/data/slf/function/class/grant/blade_dancer.mcfunction`
-
-```mcfunction
-# Prerequisite guard
-execute unless entity @s[tag=slf.was_sword_master] run return fail
-
-scoreboard players set @s slf.class 14
-tag @s add slf.was_blade_dancer
-
-# Grant T3 skill availability tags unlocked by this class
-tag @s add slf.avail.phantom_step
-
-tellraw @s {"text":"You have become a Blade Dancer.","color":"aqua","bold":true}
+```
+python tools/gen_classes.py        # grant files, the evolution menu and checks, the status sheet's class name
+python tools/gen_test_commands.py  # the test menu's one-click class setups
 ```
 
-For **dead-end classes** (no further evolution), add:
-
-```mcfunction
-tag @s add slf.title.apex_blade_dancer
-tellraw @s {"text":"You have reached the pinnacle of this path. No further evolution exists — your mastery is complete.","color":"gold"}
-playsound minecraft:ui.toast.challenge_complete master @s
-```
-
-### 3. Wire the trigger (if class choosable from tick)
-
-Class grants triggered by `slf.choose_class` need a dispatch line in `skills/tick.mcfunction`. If the class is granted by a quest advancement reward instead, point the reward function directly at the grant function — no tick change needed.
-
----
+`tests/test_test_suite.py` fails while the class files are out of date. Pick an unused id from the
+[Class ID Table](#class-id-table). Starting classes also need a button in `class/select.mcfunction` and a
+`choose_class` line in `skills/tick.mcfunction`.
 
 ## How to Add an Item
 
@@ -356,25 +331,32 @@ Create or edit `data_pack/data/slf/loot_table/<boss>_drops.json` and add an entr
 
 ## Class ID Table
 
+Copied from the table in `tools/gen_classes.py`; ids are what players' saves hold, so never reuse one.
+
 | ID | Class | ID | Class |
 |---|---|---|---|
-| 1 | Swordsman | 20 | Fighter |
-| 2 | Warrior | 21 | Destroyer |
-| 3 | Thief | 22 | Crazy Fist |
-| 4 | Priest | 30 | Mercenary |
-| 5 | Monk | 31 | Veteran |
-| 6 | Mage | 40 | Knight |
-| 10 | Sword Master | 41 | Holy Knight |
-| 11 | Magic Swordsman | 42 | Dark Knight |
-| 12 | Kansei | 43 | King's Knight |
-| 13 | Mysterious Sword | 44 | Black Death |
-| 14 | Barbarian | 50 | Bandit |
-| 15 | War King | 51 | Ninja |
-| 16 | Assassin | 52 | Shinobi |
-| 17 | Killing Joke | 53 | Star Shinobi Sei |
+| 1 | Swordsman | 40 | Knight |
+| 2 | Fighter | 41 | Holy Knight |
+| 3 | Thief | 42 | Dark Knight |
+| 4 | Priest | 43 | Paladin |
+| 5 | Monk | 44 | Dark Crusader |
+| 6 | Magician | 50 | Master Thief |
+| 10 | Sword Master | 51 | Ninja |
+| 11 | Magic Swordsman | 52 | Star Ninja |
+| 12 | Master Swordsman | 53 | Sacred Star Ninja |
+| 13 | Mysterious Swordsman | 54 | Phantom Thief |
+| 14 | Barbarian | 55 | Great Stealth |
+| 15 | War King | 56 | Jonin |
+| 16 | Assassin | 57 | Shinobi |
+| 17 | Killing Joker | 58 | Still Joker |
 | 18 | Bishop | 60 | Monk Soldier |
-| 19 | Saint | 61 | Spirit Fist |
-| 70 | Sage | 71 | Omnipotent Wisdom |
+| 19 | The Saint | 61 | Warrior Monk |
+| 20 | Brawler | 70 | Sage |
+| 21 | Destroyer | 71 | Sorcerer |
+| 22 | Berserker | 80 | Cleric |
+| 30 | Mercenary | 81 | Enchanter |
+| 31 | Veteran | 82 | Pilgrim |
+| 32 | Warlord |  |  |
 
 ---
 

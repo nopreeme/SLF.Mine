@@ -8,8 +8,7 @@ all vanilla — no mods — and built from the project's design document (V9).
 
 **What's in it**
 
-- **Classes** that evolve: 8 starting classes and their jobs from the series, with an evolution menu (being
-  reworked to the series' class tree)
+- **Classes** that evolve: 8 starting classes and 43 jobs from the series, with an evolution menu
 - **Skills learned through play**: focus one, then earn it by attacking, sprinting, jumping or taking hits
 - **9 stats**, levels 1–99, and levels 100–150 after the **Altar of Awakening**
 - **Monsters** with levels and their own drops: Goblin, Redcap Goblin, Orc, Mud Frog, Vorpal Bunny
@@ -78,9 +77,6 @@ Kill monsters for EXP. Each level gives **5 stat points** (10 above level 99). T
 
 ## Classes
 
-> **Being reworked.** This is the class tree the pack is moving to, with the official English (anime) names. The
-> pack still has its older class list until that rework lands.
-
 Choose one of **8 starting classes**. Your class decides which skills you learn fastest and which jobs open up.
 **Knight** is a ninth line that a Fighter, Swordsman or Brawler can join.
 
@@ -132,7 +128,8 @@ Notes from the series:
 - **Berserker** (狂拳) is only partly revealed in the series; the reading "Berse…" points to Berserker. The
   series has no job after **Veteran** yet, so the Mercenary's top job, **Warlord**, is the project's own
 - **Magic Swordsman** needs the Swordsman's basics plus extra magical aptitude
-- **Holy Knight** comes from raising your faith; **Dark Knight** from raising your slaughter count
+- **Holy Knight** comes from raising your faith; **Dark Knight** from raising your slaughter count. In the pack, a
+  Knight chooses between them after three Knight Trials
 - **Bishop** heals, **Cleric** buffs, **Enchanter** enchants, and the **Pilgrim** is a solo job that only grows by
   travelling on foot; the hidden **Saint** follows from it
 - **Killing Joker** needs high Karma and ten player kills while red-named; **Ninja** opens through a Thieves' Guild
@@ -144,7 +141,7 @@ Evolve from the menu (**[Evolve]**). An evolution appears once your lineage allo
 |---|---|
 | Advanced jobs: Barbarian, Sword Master, Magic Swordsman, Destroyer, Veteran, Monk Soldier, Master Thief, Assassin, Bishop, Cleric, Enchanter, Pilgrim, Sorcerer | 20 |
 | Knight; Phantom Thief, Ninja | 30 |
-| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Berserker, Warlord, Warrior Monk, Great Stealth, Holy Knight, Dark Knight, Star Ninja, Jonin, Sage | 50 |
+| Top jobs: War King, Master Swordsman, Mysterious Swordsman, Berserker, Warlord, Warrior Monk, Great Stealth, Star Ninja, Jonin, Sage | 50 |
 | Paladin, Dark Crusader | 70 |
 | Killing Joker, Still Joker, Sacred Star Ninja, Shinobi, The Saint | 80 |
 
@@ -559,6 +556,7 @@ Edit the generator, not its output. A test fails while an output is out of date.
 
 | Generator | Writes |
 |---|---|
+| `tools/gen_classes.py` | Every job: grants, the evolution menu and checks, the class name on the status sheet |
 | `tools/gen_test_commands.py` | Give commands, kits, class setups and the test menu |
 | `tools/gen_item_docs.py` | `ITEMS.md` |
 | `tools/gen_mob_models.py` | Mob bodies and heads, and the newer item icons |
@@ -585,7 +583,6 @@ Described in the design or the lore, but not built yet:
 - **More jobs:** the craft lines (Blacksmith → Master Craftsman, the hidden Ancient Craftsman → Divine Craftsman),
   the hidden Revenger, the Magic Archer, and the hidden **Mastermind** (全能たる叡智, "Omnipotent Wisdom"), which
   follows Sage; open slots in the class tree are kept for hidden and craft jobs
-- **The class rework:** the pack moves from its older 34-class list to the tree in [Classes](#classes)
 - **The Skill Garden** (combining two skills into a new one, run by Skill Gardeners such as Elke; Firstia's tutorial
   introduces it), skill levels I–X, and skill evolution chains
 - **The six other origins** (Guiding Blood, Private Hero, Beast Child, Swordsman, Optimist, Bluffer) and the NPC
