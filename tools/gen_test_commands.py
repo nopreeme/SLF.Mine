@@ -165,9 +165,9 @@ def main():
             menu.append(row("Class" if root == "swordsman" else "", [run(f"[{classes[k]['name']}]", classes[k]["color"], f"/function slf:test/class/{k}",
                         f"Reset, then {' -> '.join(classes[s]['name'] for s in chain(classes, k))}, level {classes[k]['level']}") for k in lines[root]]))
     menu.append(row("Level", [run(f"[{lv}]", "white", f"/function slf:test/level/{lv}", f"Set your level to {lv}") for lv in (1, 10, 20, 30, 50, 70, 80)] +
-                     [run("[99: Standby]", "light_purple", "/function slf:test/level/99", "Level 99 with banked EXP: Standby, then the altar rises"),
+                     [run("[99 Extend]", "light_purple", "/function slf:test/level/99", "Level 99 at 99 Extend with banked EXP: the altar rises"),
                       run("[+1000 EXP]", "green", "/function slf:test/exp", "Adds 1000 EXP"),
-                      run("[Boss kill]", "dark_red", "/function slf:test/boss_gate", "Counts as defeating a boss: opens the Altar of Awakening")]))
+                      run("[Boss kill]", "dark_red", "/function slf:test/boss_gate", "Counts as a boss kill (Knight Trials, boss count)")]))
     menu.append(row("Stats", [run("[+10 points]", "yellow", "/function slf:test/points", "Ten unspent stat points"),
                               run("[All stats 20]", "yellow", "/function slf:test/stats_20", "Sets every stat to 20"),
                               run("[Stats to 0]", "dark_gray", "/function slf:test/stats_0", "Sets every stat to 0"),
@@ -218,13 +218,13 @@ def main():
         write(f"test/level/{lv}.mcfunction", [GENERATED, "scoreboard players set @s slf.standby 0", "scoreboard players set @s slf.awakened 0",
               f"scoreboard players set @s slf.level {lv}", "scoreboard players set @s slf.exp 0",
               "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T(f"Level set to {lv}.", "yellow")])])
-    write("test/level/99.mcfunction", [GENERATED, "scoreboard players set @s slf.awakened 0", "scoreboard players set @s slf.level 99", "scoreboard players add @s slf.exp 5000",
-          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Level 99 with 5000 banked EXP. Standby starts within a second.", "yellow")])])
+    write("test/level/99.mcfunction", [GENERATED, "scoreboard players set @s slf.awakened 0", "scoreboard players set @s slf.level 99", "scoreboard players set @s slf.standby 1", "scoreboard players add @s slf.exp_extend 5000",
+          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Level 99 Extend with 5000 banked EXP.", "yellow")])])
     write("test/herbs.mcfunction", [GENERATED] + ["function slf:give/wild_herb"] * 5)
     write("test/mahni.mcfunction", [GENERATED, "scoreboard players add @s slf.mahni 100", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+100 Mahni.", "yellow")])])
     write("test/exp.mcfunction", [GENERATED, "scoreboard players add @s slf.exp 1000", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+1000 EXP.", "yellow")])])
     write("test/boss_gate.mcfunction", [GENERATED, "scoreboard players set @s slf.boss_gate 1", "scoreboard players add @s slf.boss_kills 1",
-          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Boss kill recorded: the Altar of Awakening will answer you at level 99.", "yellow")])])
+          "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("Boss kill recorded.", "yellow")])])
     write("test/points.mcfunction", [GENERATED, "scoreboard players add @s slf.sp_points 10", "tellraw @s " + J(["", T("[SLF Test] ", "gold"), T("+10 stat points.", "yellow")])])
     for v, name in ((20, "stats_20"), (0, "stats_0")):
         write(f"test/{name}.mcfunction", [GENERATED] + [f"scoreboard players set @s slf.stat.{s} {v}" for s in "hp mp str dex vit agi tec lck stm".split()] +

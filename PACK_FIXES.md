@@ -34,10 +34,11 @@ otherwise the Japanese romanized. The project keeps **Wethermon** (the wiki's "W
 
 ## 3. Levels and stats
 
-- [ ] Standby → **99 Extend**: at 99, killing a **level 100+ monster** (not "any boss") banks EXP
-- [ ] Stat points: 5 a level, +50 on reaching 99, 10 a level after 99 (remove the +2 every tenth level);
+- [x] Standby → **99 Extend**: at 99, killing a **level 100+ monster** (not "any boss") banks EXP
+- [x] Stat points: 5 a level, +50 on reaching 99, 10 a level after 99 (remove the +2 every tenth level);
       +20 the first time you meet each Colossus (UME), +200 for defeating one (UMB)
-- [ ] LCK → **LUC**; clench at 50+: damage from your own attacks or recoil leaves you at 1 HP
+- [x] LCK → **LUC**; clench at 50+ (a data pack can't tell self-inflicted damage apart, so at 50+ the existing LUC save
+      always triggers instead of being a LUC% chance)
 
 ## 4. Origins and the Diremarsh
 

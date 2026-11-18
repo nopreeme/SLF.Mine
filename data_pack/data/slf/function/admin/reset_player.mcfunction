@@ -193,6 +193,10 @@ scoreboard players set @s slf.stat.stm 0
 scoreboard players set @s slf.karma 0
 scoreboard players set @s slf.knight_trials 0
 scoreboard players set @s slf.standby 0
+tag @s remove slf.ume_lycagon
+tag @s remove slf.ume_wethermon
+tag @s remove slf.ume_ctarnidd
+tag @s remove slf.ume_siegwurm
 scoreboard players set @s slf.exp_extend 0
 scoreboard players set @s slf.awakened 0
 scoreboard players set @s slf.stat.hp 0

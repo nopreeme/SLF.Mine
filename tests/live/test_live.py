@@ -116,7 +116,7 @@ class Menus(Base):
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 7"); S.wait_ticks(4)
         text = "\n".join(S.bot.chat_since(mark))
         self.assertIn("EXP 0/100", text); self.assertIn("Unspent points 0", text)
-        for label in ("HP 0", "MP 0", "STR 0", "DEX 0", "VIT 0", "AGI 0", "TEC 0", "LCK 0", "STM 0"): self.assertIn(label, text)
+        for label in ("HP 0", "MP 0", "STR 0", "DEX 0", "VIT 0", "AGI 0", "TEC 0", "LUC 0", "STM 0"): self.assertIn(label, text)
         S.cmd(f"scoreboard players reset {S.player}"); self.grant("warrior"); S.wait_cycle()   # the once-per-second pass covers players who never open a menu
         self.assertEqual((S.score("slf.exp"), S.score("slf.stat.hp"), S.score("slf.vorpal_soul")), (0, 0, 0))
 
@@ -330,21 +330,26 @@ class Leveling(Base):
         self.grant("swordsman"); self.set("slf.exp", 330); S.wait_cycle(); S.wait_cycle(); S.wait_ticks(10)
         self.assertEqual(S.score("slf.level"), 3); self.assertEqual(S.score("slf.exp"), 30)
 
-    def test_milestone_bonus(self):
+    def test_stat_points_per_level(self):
+        """Series rule: 5 a level, a 50-point bonus on reaching 99."""
         self.grant("swordsman"); self.set("slf.level", 9); self.set("slf.sp_points", 0); S.wait_cycle(); self.set("slf.exp", 4500); S.wait_cycle()
-        self.assertEqual(S.score("slf.level"), 10); self.assertEqual(S.score("slf.sp_points"), 7)
+        self.assertEqual(S.score("slf.level"), 10); self.assertEqual(S.score("slf.sp_points"), 5)
+        self.set("slf.level", 98); self.set("slf.sp_points", 0); self.set("slf.exp", 5000); S.wait_cycle(); S.wait_cycle()
+        self.assertEqual(S.score("slf.level"), 99); self.assertEqual(S.score("slf.sp_points"), 55)
 
     def test_boss_kill_opens_the_gate(self):
         self.grant("swordsman"); self.set("slf.level", 50); self.kill("elder_guardian")   # level 50 needs 5000 EXP, so no level-up interferes
         self.assertEqual(S.score("slf.boss_gate"), 1); self.assertEqual(S.score("slf.boss_kills"), 1); self.assertEqual(S.score("slf.exp"), 2500)
         self.assertEqual(S.score("slf.vorpal_soul"), 1)
 
-    def test_standby_altar_and_awakened_levels(self):
+    def test_extend_altar_and_awakened_levels(self):
         self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 12000); S.wait_cycle()
-        self.assertEqual((S.score("slf.level"), S.score("slf.standby"), S.score("slf.exp_extend")), (99, 1, 12000))
+        self.assertEqual((S.score("slf.level"), S.score("slf.standby"), S.score("slf.exp")), (99, 0, 0))   # at the cap, EXP is lost
         mark = S.bot.mark(); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
-        self.assertEqual(S.score("slf.standby"), 1); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)))
-        self.set("slf.boss_gate", 1); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
+        self.assertEqual(S.score("slf.standby"), 0); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)))
+        self.kill("elder_guardian"); S.wait_cycle()                       # a vanilla boss counts as level 120: 99 Extend
+        self.assertEqual(S.score("slf.standby"), 1); self.assertGreaterEqual(S.score("slf.exp_extend"), 2500)
+        self.set("slf.exp_extend", 12000); S.as_player("function slf:stats/altar"); S.wait_ticks(4)
         self.assertEqual((S.score("slf.standby"), S.score("slf.awakened")), (0, 1))
         S.wait_cycle(); S.wait_cycle(); S.wait_cycle()
         self.assertEqual(S.score("slf.level"), 101); self.assertEqual(S.score("slf.standby"), 0)   # 12000 banked EXP = 2 levels, 2000 left
@@ -496,13 +501,13 @@ class Altar(Base):
         self.assertIn("passed", S.cmd("execute if entity @e[type=minecraft:text_display,tag=slf.altar_label]"))
 
     def test_walking_up_awakens_only_the_worthy(self):
-        self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.exp", 6000); S.wait_cycle()
-        self.assertEqual(S.score("slf.standby"), 1)
-        mark = S.bot.mark(); self.place(); S.wait_cycle(); S.wait_cycle()          # arrives without a boss kill
+        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle()
+        self.assertEqual(S.score("slf.standby"), 0)
+        mark = S.bot.mark(); self.place(); S.wait_cycle(); S.wait_cycle()          # arrives without a level 100+ kill
         self.assertEqual(S.score("slf.awakened"), 0); self.assertTrue(any("altar is dormant" in c for c in S.bot.chat_since(mark)), S.bot.chat_since(mark))
         self.assertEqual(sum("altar is dormant" in c for c in S.bot.chat_since(mark)), 1, "the altar repeated itself while the player stood there")
         S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.assertNotIn("slf.at_altar", S.tags())
-        self.set("slf.boss_gate", 1); S.as_player("tp @s ~ ~ ~12"); S.wait_cycle(); S.wait_cycle()
+        self.set("slf.standby", 1); self.set("slf.exp_extend", 6000); S.as_player("tp @s ~ ~ ~12"); S.wait_cycle(); S.wait_cycle()
         self.assertEqual((S.score("slf.awakened"), S.score("slf.standby")), (1, 0))
         S.wait_cycle(); S.wait_cycle(); self.assertEqual(S.score("slf.level"), 100)
 
@@ -514,12 +519,12 @@ class Altar(Base):
     def test_altar_rises_when_first_needed_and_the_compass_leads_to_it(self):
         S.cmd(f"clear {S.player}"); self.grant("swordsman"); S.cmd(f"clear {S.player}")
         px, _, pz = [float(v) for v in re.findall(r"(-?[\d.]+)d", S.cmd(f"data get entity {S.player} Pos"))]
-        self.set("slf.boss_gate", 1); self.set("slf.level", 99); mark = S.bot.mark()
+        self.set("slf.level", 99); self.set("slf.standby", 1); mark = S.bot.mark()
         deadline = time.time() + 90
         while time.time() < deadline and S.score("slf.timer", "#altar_placed") != 1: time.sleep(1)
         self.assertEqual(S.score("slf.timer", "#altar_placed"), 1, f"no altar rose; chat: {S.bot.chat_since(mark)}")
         S.wait_ticks(10); chat = "\n".join(S.bot.chat_since(mark))
-        self.assertIn("Standby.", chat); self.assertIn("is rising", chat); self.assertIn("has risen", chat)
+        self.assertIn("99 Extend.", chat); self.assertIn("is rising", chat); self.assertIn("has risen", chat)
         ax, ay, az = (S.score("slf.timer", f"#altar_{k}") for k in "xyz")
         self.assertIn(f"stands at {ax} {ay} {az}", chat)
         d = ((ax - px) ** 2 + (az - pz) ** 2) ** 0.5   # 320 away, or 480 if no spot on the inner ring was dry ground
@@ -571,10 +576,10 @@ class Altar(Base):
         self.assertTrue(300 <= ((ax - ox) ** 2 + (az - oz + 320) ** 2) ** 0.5 <= 500, "the moved altar left the rings around the player")
 
     def test_only_one_altar_rises(self):
-        self.grant("swordsman"); self.set("slf.level", 99)
+        self.grant("swordsman"); self.set("slf.level", 99); self.set("slf.standby", 1)
         deadline = time.time() + 3
         while time.time() < deadline and S.score("slf.timer", "#altar_pending") != 1: time.sleep(0.05)
-        self.assertEqual(S.score("slf.timer", "#altar_pending"), 1, "entering Standby did not start raising an altar")
+        self.assertEqual(S.score("slf.timer", "#altar_pending"), 1, "reaching 99 Extend did not start raising an altar")
         mark = S.bot.mark(); S.as_player("trigger slf.menu set 6"); S.wait_ticks(3)       # asking while it may still be rising
         chat = S.bot.chat_since(mark)
         if S.score("slf.timer", "#altar_placed") != 1:                                     # (the far chunk can already exist: then it rises at once)
@@ -585,8 +590,8 @@ class Altar(Base):
         self.assertEqual([S.score("slf.timer", f"#altar_{k}") for k in "xyz"], placed, "the far altar was still raised after one was placed")
 
     def test_menu_points_to_the_altar_once_placed(self):
-        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle(); self.place()   # no boss kill yet: the altar stays dormant
-        S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.set("slf.boss_gate", 1)
+        self.grant("swordsman"); self.set("slf.level", 99); S.wait_cycle(); self.place()   # no level 100+ kill yet: the altar stays dormant
+        S.as_player("tp @s ~ ~ ~-12"); S.wait_cycle(); self.set("slf.standby", 1)
         chat = self.click("[Altar of Awakening]", "trigger slf.menu")
         self.assertTrue(any("Altar of Awakening stands at" in c for c in chat), chat)
         self.assertEqual(S.score("slf.awakened"), 0)   # the menu only gives directions: no shortcut past the altar
@@ -751,11 +756,13 @@ class Bosses(Base):
 
     def test_boss_kill_gives_exp_soul_and_opens_the_gate(self):
         self.grant("swordsman"); self.set("slf.exp", 0); self.set("slf.vorpal_soul", 0); self.set("slf.boss_gate", 0); self.set("slf.boss_kills", 0)
+        self.set("slf.sp_points", 0); S.cmd(f"tag {S.player} remove slf.ume_wethermon")
         self.set("slf.level", 10)   # next level needs 5000 EXP, so the reward can't be spent on a level-up before it is read
         S.as_player("function slf:test/mob/boss_wethermon"); S.wait_ticks(3); S.cmd(f"gamemode survival {S.player}")
         out = S.as_player(f"damage {self.boss('wethermon')} 100000 minecraft:player_attack by @s"); self.assertIn("Applied", out); S.wait_ticks(6)
         self.assertEqual(S.score("slf.exp"), 125 + 2 + 2400)   # its level + every kill's 2 + the boss reward; not also an elite (wither skeleton) kill
         self.assertEqual((S.score("slf.boss_gate"), S.score("slf.boss_kills"), S.score("slf.vorpal_soul")), (1, 1, 1))
+        self.assertEqual(S.score("slf.sp_points"), 20 + 200)   # Unique Monster Encounter + Unique Monster Break
 
     def test_lycagon_keeps_its_health(self):
         S.cmd("time set 1000"); S.as_player("function slf:test/mob/boss_lycagon"); S.wait_cycle(); S.wait_cycle()

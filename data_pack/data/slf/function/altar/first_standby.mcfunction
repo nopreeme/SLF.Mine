@@ -1,3 +1,3 @@
 tag @s add slf.altar_told
-tellraw @s ["",{"text":"Standby. ","color":"light_purple","bold":true},{"text":"You have reached level 99. Your EXP is being banked. Defeat a boss, then find the Altar of Awakening to break the limit.","color":"light_purple"}]
+tellraw @s ["",{"text":"99 Extend. ","color":"light_purple","bold":true},{"text":"You defeated a monster above the level cap. Your EXP is now banked: find the Altar of Awakening to release the cap to 150.","color":"light_purple"}]
 function slf:altar/guide

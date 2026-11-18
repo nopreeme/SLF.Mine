@@ -27,7 +27,7 @@ execute as @a if score @s slf.stat.dex matches 5..9 run attribute @s minecraft:a
 execute as @a if score @s slf.stat.dex matches 10..19 run attribute @s minecraft:attack_speed modifier add slf:dex_speed 0.8 add_value
 execute as @a if score @s slf.stat.dex matches 20.. run attribute @s minecraft:attack_speed modifier add slf:dex_speed 1.2 add_value
 
-# LCK -> Minecraft luck attribute (affects loot table rolls)
+# LUC -> Minecraft luck attribute (affects loot table rolls)
 execute as @a run attribute @s minecraft:luck base set 0
 execute as @a if score @s slf.stat.lck matches 10..19 run attribute @s minecraft:luck base set 1
 execute as @a if score @s slf.stat.lck matches 20..39 run attribute @s minecraft:luck base set 2

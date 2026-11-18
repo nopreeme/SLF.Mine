@@ -230,7 +230,7 @@ Spend points from **[Stats]** in the menu. Effects are applied every second.
 | TEC | −1% skill threshold per point (up to −50%) |
 | VIT | Absorption I at 5, II at 10, III at 20, IV at 30 |
 | STM | Saturation at 5, Haste I at 10 |
-| LUC | Luck 1/2/3/4 at 10/20/40/60. At 50+, **clench** (食いしばり): damage from your own attacks or recoil can't kill you — you're left at 1 HP |
+| LUC | Luck 1/2/3/4 at 10/20/40/60. At 1 heart or less, a LUC% chance to hold on (heal and resist); at 50+ this always happens — **clench** (食いしばり). Once every 100 seconds |
 
 ### 99 Extend and the Altar of Awakening
 

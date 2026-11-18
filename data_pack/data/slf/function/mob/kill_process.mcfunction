@@ -9,4 +9,5 @@ execute if entity @s[tag=slf.forest_kill] if score @s slf.level matches 12.. run
 tag @s remove slf.forest_kill
 scoreboard players operation @s slf.exp += #gain slf.tmp
 execute if score @s slf.level matches 1.. run function slf:mask/vorpal_kill_check
+function slf:stats/extend_check
 scoreboard players set @s slf.kill_lv 0

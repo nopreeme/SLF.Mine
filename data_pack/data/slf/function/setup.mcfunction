@@ -53,7 +53,7 @@ scoreboard objectives add slf.focus_stat dummy
 scoreboard objectives add slf.sp dummy
 scoreboard objectives add slf.threshold dummy
 
-# --- Level 99 Standby Gate ---
+# --- Level 99 Extend (slf.standby = 1) ---
 scoreboard objectives add slf.exp_extend dummy
 scoreboard objectives add slf.standby dummy
 scoreboard objectives add slf.boss_gate dummy
